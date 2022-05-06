@@ -1,8 +1,10 @@
-package com.cnjava.moviereview;
+package com.cnjava.moviereview.view.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+
+import com.cnjava.moviereview.R;
 
 public class MainActivity extends AppCompatActivity {
 
