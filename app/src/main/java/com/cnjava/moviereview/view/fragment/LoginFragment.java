@@ -1,18 +1,18 @@
 package com.cnjava.moviereview.view.fragment;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.databinding.FragmentLoginBinding;
-import com.cnjava.moviereview.viewmodel.BaseViewModel;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonViewModel>{
 
-    private static final String TAG = LoginFragment.class.getName();
+    public static final String TAG = LoginFragment.class.getName();
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -21,7 +21,26 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
 
     @Override
     protected void initViews() {
+        binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(ForgotPasswordFragment.TAG, null, true);
+            }
+        });
 
+        binding.btLogin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(NavigateFragment.TAG, null, false);
+            }
+        });
+
+        binding.tvRegister.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(RegisterFragment.TAG, null, true);
+            }
+        });
     }
 
     @Override
