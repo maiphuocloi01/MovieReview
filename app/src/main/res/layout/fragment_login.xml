@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:background="@color/background"
+    android:background="@color/dark"
     android:orientation="vertical"
     android:layout_height="match_parent">
 
@@ -24,7 +24,7 @@
             android:layout_width="wrap_content"
             android:textSize="24sp"
             android:textStyle="bold"
-            android:textColor="@color/text"
+            android:textColor="@color/light_white"
             android:text="Movie Review"/>
     </TableRow>
 
@@ -34,7 +34,7 @@
         android:textSize="42sp"
         android:layout_gravity="center"
         android:layout_marginTop="50dp"
-        android:textColor="@color/text"
+        android:textColor="@color/light_white"
         android:text="Welcome back."/>
 
 
@@ -58,8 +58,8 @@
             android:inputType="text"
             android:drawablePadding="15dp"
             android:padding="15dp"
-            android:textColor="@color/background"
-            android:textColorHint="@color/border"
+            android:textColor="@color/dark"
+            android:textColorHint="@color/light_black"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -84,8 +84,8 @@
             android:inputType="textPassword"
             android:drawablePadding="15dp"
             android:padding="15dp"
-            android:textColor="@color/background"
-            android:textColorHint="@color/border"
+            android:textColor="@color/dark"
+            android:textColorHint="@color/light_black"
             android:textSize="18sp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +113,7 @@
         android:stateListAnimator="@null"
         android:text="Login"
         android:textAllCaps="false"
-        android:textColor="@color/background"
+        android:textColor="@color/dark"
         android:textSize="22sp" />
 
     <View
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:text="Don't have an account?"
             android:textAlignment="center"
-            android:textColor="@color/text"
+            android:textColor="@color/light_white"
             android:textSize="16sp" />
 
         <TextView
