@@ -23,6 +23,17 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/menu/menu_bottom_navigation.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/bg_primary_corner_30.xml" value="0.1235" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/activity_main.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_detail.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_forgot_password.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_home.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_login.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_navigate.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_profile.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_register.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_search.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_list.xml" value="0.6266447368421053" />
       </map>
     </option>
   </component>
