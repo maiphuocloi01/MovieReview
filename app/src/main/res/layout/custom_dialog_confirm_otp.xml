@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="20dp"
+    android:background="@drawable/bg_light_dark_corner_20"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="Confirm OTP code"
+        android:textAlignment="center"
+        android:textColor="@color/light_white"
+        android:textSize="24sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="10dp"
+        android:fontFamily="@font/roboto_regular"
+        android:text="Verification code sent to email"
+        android:textAlignment="center"
+        android:textColor="@color/light_white"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/tv_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="5dp"
+        android:fontFamily="@font/roboto_bold"
+        android:text="maiphuocloi01@gmail.com"
+        android:textAlignment="center"
+        android:textColor="@color/light_white"
+        android:textSize="18sp" />
+
+    <EditText
+        android:id="@+id/et_otp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/bg_white_corner_20"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="OTP code"
+        android:inputType="number"
+        android:padding="15dp"
+        android:textColorHint="@color/light_black"
+        android:textSize="18sp" />
+
+    <TableRow
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content">
+
+        <TextView
+            android:id="@+id/tv_countdown_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Resend code in "
+            android:layout_marginEnd="5dp"
+            android:textColor="@color/light_white"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_countdown"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="00:59"
+            android:layout_marginEnd="15dp"
+            android:textColor="@color/primary"
+            android:textSize="18sp" />
+
+        <TextView
+            android:id="@+id/tv_resend"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/roboto_regular"
+            android:text="Resend code"
+            android:visibility="gone"
+            android:textColor="@color/primary"
+            android:textSize="18sp" />
+
+    </TableRow>
+
+
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="30dp"
+
+        android:weightSum="2">
+
+        <Button
+            android:id="@+id/bt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_light_dark_corner_20"
+            android:enabled="true"
+            android:fontFamily="@font/roboto_bold"
+            android:padding="15dp"
+            android:text="Cancel"
+            android:textAllCaps="false"
+            android:textColor="@color/light_white"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/bt_confirm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_weight="1"
+            android:background="@drawable/bg_primary_corner_20"
+            android:fontFamily="@font/roboto_bold"
+            android:padding="15dp"
+            android:stateListAnimator="@null"
+            android:text="Confirm"
+            android:textAllCaps="false"
+            android:textColor="@color/dark"
+            android:textSize="20sp" />
+
+    </TableRow>
+
+</LinearLayout>

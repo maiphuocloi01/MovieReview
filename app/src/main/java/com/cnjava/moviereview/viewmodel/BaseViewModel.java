@@ -21,7 +21,6 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public abstract class BaseViewModel extends ViewModel {
 
-
     private static final String TAG = BaseViewModel.class.getName();
 
     protected OnAPICallBack callBack;
