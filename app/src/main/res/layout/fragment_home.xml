@@ -22,7 +22,8 @@
                 android:layout_width="28dp"
                 android:layout_height="28dp"
                 android:layout_marginEnd="5dp"
-                app:srcCompat="@drawable/ic_logo_app" />
+                app:srcCompat="@drawable/ic_logo_app"
+                app:tint="@color/primary" />
 
             <TextView
                 android:layout_height="wrap_content"
