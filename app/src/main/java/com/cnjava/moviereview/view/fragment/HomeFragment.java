@@ -53,14 +53,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     @Override
     protected void initViews() {
 
-        ViewUtils.show(binding.progressCircular);
-        ViewUtils.gone(binding.layoutHome);
-
         if(MyApplication.getInstance().getStorage().moviePopular == null){
             viewModel.getPopularMovie();
+            ViewUtils.show(binding.progressCircular);
+            ViewUtils.gone(binding.layoutHome);
         } else {
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutHome);
             moviePopular = MyApplication.getInstance().getStorage().moviePopular;
             initPopularView();
         }
@@ -68,8 +65,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         if(MyApplication.getInstance().getStorage().movieNowPlaying == null){
             viewModel.getNowPlayingMovie();
         } else {
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutHome);
             movieNowPlaying = MyApplication.getInstance().getStorage().movieNowPlaying;
             initNowPlayingView();
         }
@@ -77,8 +72,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         if(MyApplication.getInstance().getStorage().movieTopRated == null){
             viewModel.getTopRatedMovie();
         } else {
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutHome);
             movieTopRated = MyApplication.getInstance().getStorage().movieTopRated;
             initTopRatedView();
         }
@@ -86,8 +79,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         if(MyApplication.getInstance().getStorage().movieUpcoming == null){
             viewModel.getUpcomingMovie();
         } else {
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutHome);
             movieUpcoming = MyApplication.getInstance().getStorage().movieUpcoming;
             initUpcomingView();
         }
