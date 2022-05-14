@@ -3,7 +3,7 @@ package com.cnjava.moviereview.util;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-import com.cnjava.moviereview.MovieReviewApplication;
+import com.cnjava.moviereview.MyApplication;
 
 public class PrefUtils {
 
@@ -22,17 +22,17 @@ public class PrefUtils {
     }
 
     public void savePref(String key, String value) {
-        SharedPreferences pref = MovieReviewApplication.getInstance().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+        SharedPreferences pref = MyApplication.getInstance().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         pref.edit().putString(key, value).apply();
     }
 
     public String getPref(String key) {
-        SharedPreferences pref = MovieReviewApplication.getInstance().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+        SharedPreferences pref = MyApplication.getInstance().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         return pref.getString(key, null);
     }
 
     public void clearPref(String key) {
-        SharedPreferences pref = MovieReviewApplication.getInstance().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
+        SharedPreferences pref = MyApplication.getInstance().getSharedPreferences(PREF_FILE, Context.MODE_PRIVATE);
         pref.edit().remove(key).apply();
     }
 }

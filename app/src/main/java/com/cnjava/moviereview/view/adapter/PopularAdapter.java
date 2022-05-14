@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.databinding.ItemPopularMovieBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
@@ -21,10 +22,19 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
     private Context context;
     private Movie movie;
 
-    public PopularAdapter(Context context, Movie movie) {
+    private MovieCallBack callBack;
+
+    public interface MovieCallBack{
+        void gotoMovieDetail(int id);
+    }
+
+    public PopularAdapter(Context context, Movie movie, MovieCallBack callBack) {
+        this.callBack = callBack;
         this.context = context;
         this.movie = movie;
     }
+
+
 
     @NonNull
     @Override
@@ -37,8 +47,17 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movie.Result item = movie.results.get(position);
         Log.d("adapter", "onBindViewHolder: " + item.title + item.backdropPath);
-        Glide.with(context).load(String.format(Constants.IMAGE_URL + item.backdropPath)).into(holder.binding.ivCover);
+        Glide.with(context)
+                .load(String.format(Constants.IMAGE_URL + item.backdropPath))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.binding.ivCover);
         holder.binding.tvName.setText(item.title);
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.gotoMovieDetail(item.id);
+            }
+        });
     }
 
     @Override

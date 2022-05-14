@@ -1,12 +1,14 @@
 package com.cnjava.moviereview.api;
 
 import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.model.MovieDetail;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
+import retrofit2.http.Path;
 
 public interface Api {
 
@@ -28,5 +30,8 @@ public interface Api {
     @Headers("Content-type: application/json")
     Call<Movie> getTopRatedMovie();
 
+    @GET("movie/{id}?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<MovieDetail> getMovieDetail(@Path("id") int id);
 
 }

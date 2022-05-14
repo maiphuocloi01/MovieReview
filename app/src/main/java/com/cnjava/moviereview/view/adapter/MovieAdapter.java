@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.databinding.ItemMovieBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
@@ -18,7 +19,10 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     private Context context;
     private Movie movie;
 
-    public MovieAdapter(Context context, Movie movie) {
+    private PopularAdapter.MovieCallBack callBack;
+
+    public MovieAdapter(Context context, Movie movie, PopularAdapter.MovieCallBack callBack) {
+        this.callBack = callBack;
         this.context = context;
         this.movie = movie;
     }
@@ -35,7 +39,16 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         Movie.Result item = movie.results.get(position);
         holder.binding.tvDate.setText(item.releaseDate);
         holder.binding.tvName.setText(item.title);
-        Glide.with(context).load(String.format(Constants.IMAGE_URL + item.posterPath)).into(holder.binding.ivPoster);
+        Glide.with(context)
+                .load(String.format(Constants.IMAGE_URL + item.posterPath))
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .into(holder.binding.ivPoster);
+        holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.gotoMovieDetail(item.id);
+            }
+        });
     }
 
     @Override

@@ -1,5 +1,9 @@
 package com.cnjava.moviereview.view.activity;
 
+
+import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
+import static com.cnjava.moviereview.util.IMEUtils.isActive;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -12,6 +16,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.cnjava.moviereview.R;
+import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.LoginFragment;
@@ -67,9 +72,9 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     public void showFragment(String tag, Object data, boolean isBack) {
         try {
 
-//            if (isActive(this)) {
-//                hideSoftInput(MainActivity.this);
-//            }
+            if (isActive(this)) {
+                hideSoftInput(MainActivity.this);
+            }
             Class<?> clazz = Class.forName(tag);
             Constructor<?> cons = clazz.getConstructor();
             BaseFragment<?, ?> frg = (BaseFragment<?, ?>) cons.newInstance();
@@ -80,7 +85,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             if (isBack) {
                 trans.addToBackStack(null);
             }
-            //trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+            trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
             trans.replace(R.id.layout_main, frg, tag).commit();
 
         } catch (Exception e) {
@@ -90,6 +95,9 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     @Override
     public void backToPrev() {
-
+        if (isActive(this)) {
+            hideSoftInput(MainActivity.this);
+        }
+        onBackPressed();
     }
 }

@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">MovieReview</string>
+    <string name="undefined">Undefined</string>
 </resources>

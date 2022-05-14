@@ -11,4 +11,5 @@
     <color name="light_black">#3A3F47</color>
     <color name="dark">#242A32</color>
     <color name="primary">#4fcca3</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>

@@ -22,4 +22,8 @@ public class CommonViewModel extends BaseViewModel {
     public void getNowPlayingMovie(){
         getApi().getNowPlayingMovie().enqueue(initHandleResponse(Constants.KEY_GET_TOP_RATED_MOVIE));
     }
+
+    public void getMovieDetail(int id){
+        getApi().getMovieDetail(id).enqueue(initHandleResponse(Constants.KEY_GET_MOVIE_DETAIL));
+    }
 }
