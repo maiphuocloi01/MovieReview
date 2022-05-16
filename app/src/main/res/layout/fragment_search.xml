@@ -33,6 +33,7 @@
                 android:drawableTint="@color/primary"
                 android:hint="Search for movies..."
                 android:inputType="text"
+                android:singleLine="true"
                 android:imeOptions="actionSearch"
                 android:padding="15dp"
                 android:textColor="@color/dark"
@@ -71,6 +72,7 @@
             android:layout_marginHorizontal="20dp"
             android:layout_height="wrap_content"
             tools:listitem="@layout/item_trending_search"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             android:id="@+id/rv_trending"
             tools:itemCount="4"
             android:layout_marginTop="10dp"/>

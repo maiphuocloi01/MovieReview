@@ -417,7 +417,56 @@
 
                     </LinearLayout>
 
+
                 </TableRow>
+
+                <TableRow android:layout_height="wrap_content"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Reviews"
+                        android:textColor="@color/white"
+                        android:textSize="16sp" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="16dp"
+                        android:textAlignment="textEnd"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Add your review"
+
+                        android:textColor="@color/primary"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    tools:itemCount="3"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_review" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Read all reviews"
+                    android:drawableRight="@drawable/ic_show_more"
+                    android:drawablePadding="10dp"
+                    android:textAlignment="center"
+                    android:layout_gravity="center"
+                    android:drawableTint="@color/primary"
+                    android:textColor="@color/primary"
+                    android:textSize="16sp"/>
 
                 <View
                     android:layout_width="wrap_content"

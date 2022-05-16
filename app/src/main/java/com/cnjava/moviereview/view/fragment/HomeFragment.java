@@ -37,11 +37,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
-            int currentPosition = binding.vpPopular.getCurrentItem();
-            if (currentPosition == moviePopular.results.size() - 1) {
-                binding.vpPopular.setCurrentItem(0);
-            } else {
-                binding.vpPopular.setCurrentItem(currentPosition + 1);
+            if (moviePopular != null) {
+                int currentPosition = binding.vpPopular.getCurrentItem();
+                if (currentPosition == moviePopular.results.size() - 1) {
+                    binding.vpPopular.setCurrentItem(0);
+                } else {
+                    binding.vpPopular.setCurrentItem(currentPosition + 1);
+                }
             }
         }
     };
@@ -62,6 +64,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             moviePopular = MyApplication.getInstance().getStorage().moviePopular;
             initPopularView();
         }
+
 
         if (MyApplication.getInstance().getStorage().movieNowPlaying == null) {
             viewModel.getNowPlayingMovie();

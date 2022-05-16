@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="56dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="15dp"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/light_white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="15dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="Write your review"
+            android:textAlignment="center"
+            android:textColor="@color/light_white"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+    <TableRow
+        android:layout_marginTop="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp">
+
+        <ImageView
+            android:layout_width="70dp"
+            android:layout_height="70dp"
+            android:src="@drawable/img_poster" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Doctor Strange in the Multiverse of Madness"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/light_white"
+                android:textSize="18sp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/roboto_regular"
+                android:text="2022-03-10"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/light_white"
+                android:textSize="16sp" />
+
+        </LinearLayout>
+
+    </TableRow>
+
+    <RatingBar
+        android:id="@+id/ratingBar"
+        android:stepSize="1"
+        android:numStars="5"
+        android:rating="5"
+        android:isIndicator="false"
+        android:layout_gravity="center_horizontal"
+        android:theme="@style/RatingBar"
+        android:layout_marginTop="50dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/et_name"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/bg_light_dark_corner_20"
+        android:fontFamily="@font/roboto_regular"
+        android:hint="Write your movie about this movie."
+        android:inputType="textMultiLine"
+        android:gravity="top|left"
+        android:padding="15dp"
+        android:textColorHint="@color/light_white"
+        android:textSize="18sp" />
+
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"/>
+
+    <Button
+        android:id="@+id/bt_send"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/bg_primary_corner_20"
+        android:fontFamily="@font/roboto_bold"
+        android:padding="12dp"
+        android:stateListAnimator="@null"
+        android:text="Upload"
+        android:textAllCaps="false"
+        android:textColor="@color/dark"
+        android:textSize="22sp" />
+
+</LinearLayout>

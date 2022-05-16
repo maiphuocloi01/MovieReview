@@ -3,6 +3,7 @@ package com.cnjava.moviereview.view.fragment;
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
@@ -12,13 +13,18 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentSearchBinding;
+import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.view.adapter.TrendingAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
-public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonViewModel>{
+import java.util.ArrayList;
+import java.util.List;
+
+public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonViewModel> implements TrendingAdapter.TrendingCallBack {
 
     public static final String TAG = SearchFragment.class.getName();
-
 
 
     @Override
@@ -28,6 +34,23 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
 
     @Override
     protected void initViews() {
+
+        if(MyApplication.getInstance().getStorage().moviePopular != null){
+            int count = 0;
+            Movie popularMovie = MyApplication.getInstance().getStorage().moviePopular;
+            List<String> nameTrending = new ArrayList<>();
+            for (Movie.Result item: popularMovie.results){
+                if(count < 4) {
+                    nameTrending.add(item.title);
+                    count++;
+                } else {
+                    break;
+                }
+            }
+            Log.d(TAG, "initViews: " + nameTrending.get(0));
+            TrendingAdapter trendingAdapter = new TrendingAdapter(context, nameTrending, this);
+            binding.rvTrending.setAdapter(trendingAdapter);
+        }
 
         binding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -64,5 +87,13 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
         if (parentFrag != null) {
             parentFrag.setActionShowFragment(tag, data, isBack);
         }
+    }
+
+    @Override
+    public void selectTrending(String name) {
+        hideSoftInput(binding.etSearch);
+        Bundle bundle = new Bundle();
+        bundle.putString("search", name);
+        actionShowFragment(SearchResultFragment.TAG, bundle, true);
     }
 }

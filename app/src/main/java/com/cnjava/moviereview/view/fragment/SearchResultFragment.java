@@ -22,6 +22,9 @@ import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.ResultAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class SearchResultFragment extends BaseFragment<FragmentSearchResultBinding, CommonViewModel> implements PopularAdapter.MovieCallBack {
 
     public static final String TAG = SearchResultFragment.class.getName();
@@ -47,6 +50,8 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
             ResultAdapter resultAdapter = new ResultAdapter(context, movie, this);
             binding.rvResult.setAdapter(resultAdapter);
         }
+
+
 
         binding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override

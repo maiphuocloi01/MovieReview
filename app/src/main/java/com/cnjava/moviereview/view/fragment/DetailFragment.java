@@ -78,6 +78,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             Glide.with(context)
                     .load(String.format(Constants.IMAGE_URL + movieDetail.posterPath))
                     .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(R.drawable.ic_image)
                     .into(binding.ivPoster);
             if (movieDetail.budget == 0){
                 binding.tvBudget.setText(R.string.undefined);
