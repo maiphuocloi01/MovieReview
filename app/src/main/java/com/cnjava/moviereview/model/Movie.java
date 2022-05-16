@@ -30,6 +30,8 @@ public class Movie implements Serializable {
         public String posterPath;
         @SerializedName("release_date")
         public String releaseDate;
+        @SerializedName("vote_average")
+        public double voteAverage;
     }
 
     @Override

@@ -1,8 +1,10 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -62,6 +64,13 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             ViewUtils.show(binding.layoutMovieDetail);
             movieDetail = (MovieDetail) data;
             List<String> listGenres = new ArrayList<>();
+            binding.tvName.setText(movieDetail.title);
+            binding.tvRuntime.setText(String.format(movieDetail.runtime + " min"));
+            binding.tvRating.setText(String.valueOf(movieDetail.voteAverage));
+            binding.tvOverview.setText(movieDetail.overview);
+            binding.tvReleaseDate.setText(movieDetail.releaseDate);
+            binding.tvRateCount.setText(String.valueOf(movieDetail.voteCount));
+            binding.tvPopularity.setText(String.valueOf(movieDetail.popularity));
             Glide.with(context)
                     .load(String.format(Constants.IMAGE_URL + movieDetail.backdropPath))
                     .transition(DrawableTransitionOptions.withCrossFade())
@@ -70,13 +79,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                     .load(String.format(Constants.IMAGE_URL + movieDetail.posterPath))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .into(binding.ivPoster);
-            binding.tvName.setText(movieDetail.title);
-            binding.tvRuntime.setText(String.format(movieDetail.runtime + " min"));
-            binding.tvRating.setText(String.valueOf(movieDetail.voteAverage));
-            binding.tvOverview.setText(movieDetail.overview);
-            binding.tvReleaseDate.setText(movieDetail.releaseDate);
-            binding.tvRateCount.setText(String.valueOf(movieDetail.voteCount));
-            binding.tvPopularity.setText(String.valueOf(movieDetail.popularity));
             if (movieDetail.budget == 0){
                 binding.tvBudget.setText(R.string.undefined);
             } else {
@@ -101,7 +103,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void apiError(String key, int code, Object data) {
-
+        if(code == 999) {
+            Log.d(TAG, "apiError: "+ data.toString());
+            Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

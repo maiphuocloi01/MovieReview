@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface Api {
 
@@ -33,5 +34,9 @@ public interface Api {
     @GET("movie/{id}?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Call<MovieDetail> getMovieDetail(@Path("id") int id);
+
+    @GET("search/movie?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Movie> searchMovie(@Query("query") String keyword);
 
 }

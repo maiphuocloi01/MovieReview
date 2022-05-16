@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -53,7 +54,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     @Override
     protected void initViews() {
 
-        if(MyApplication.getInstance().getStorage().moviePopular == null){
+        if (MyApplication.getInstance().getStorage().moviePopular == null) {
             viewModel.getPopularMovie();
             ViewUtils.show(binding.progressCircular);
             ViewUtils.gone(binding.layoutHome);
@@ -62,21 +63,21 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             initPopularView();
         }
 
-        if(MyApplication.getInstance().getStorage().movieNowPlaying == null){
+        if (MyApplication.getInstance().getStorage().movieNowPlaying == null) {
             viewModel.getNowPlayingMovie();
         } else {
             movieNowPlaying = MyApplication.getInstance().getStorage().movieNowPlaying;
             initNowPlayingView();
         }
 
-        if(MyApplication.getInstance().getStorage().movieTopRated == null){
+        if (MyApplication.getInstance().getStorage().movieTopRated == null) {
             viewModel.getTopRatedMovie();
         } else {
             movieTopRated = MyApplication.getInstance().getStorage().movieTopRated;
             initTopRatedView();
         }
 
-        if(MyApplication.getInstance().getStorage().movieUpcoming == null){
+        if (MyApplication.getInstance().getStorage().movieUpcoming == null) {
             viewModel.getUpcomingMovie();
         } else {
             movieUpcoming = MyApplication.getInstance().getStorage().movieUpcoming;
@@ -135,7 +136,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         }
     }
 
-    private void initPopularView(){
+    private void initPopularView() {
         PopularAdapter popularAdapter = new PopularAdapter(context, moviePopular, this);
         binding.vpPopular.setAdapter(popularAdapter);
         //binding.indicatorHome.setViewPager(binding.vpPopular);
@@ -150,24 +151,27 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         });
     }
 
-    private void initNowPlayingView(){
+    private void initNowPlayingView() {
         MovieAdapter adapter = new MovieAdapter(context, movieNowPlaying, this);
         binding.rvPlaying.setAdapter(adapter);
     }
 
-    private void initTopRatedView(){
+    private void initTopRatedView() {
         MovieAdapter adapter = new MovieAdapter(context, movieTopRated, this);
         binding.rvTopRated.setAdapter(adapter);
     }
 
-    private void initUpcomingView(){
+    private void initUpcomingView() {
         MovieAdapter adapter = new MovieAdapter(context, movieUpcoming, this);
         binding.rvUpcoming.setAdapter(adapter);
     }
 
     @Override
     public void apiError(String key, int code, Object data) {
-        Log.d(TAG, "apiError: ");
+        if (code == 999) {
+            Log.d(TAG, "apiError: " + data.toString());
+            Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override

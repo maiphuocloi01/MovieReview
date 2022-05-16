@@ -26,4 +26,8 @@ public class CommonViewModel extends BaseViewModel {
     public void getMovieDetail(int id){
         getApi().getMovieDetail(id).enqueue(initHandleResponse(Constants.KEY_GET_MOVIE_DETAIL));
     }
+
+    public void searchMovie(String keyword){
+        getApi().searchMovie(keyword).enqueue(initHandleResponse(Constants.KEY_SEARCH_MOVIE));
+    }
 }

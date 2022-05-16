@@ -7,4 +7,5 @@ public class Storage {
     public Movie movieNowPlaying;
     public Movie movieUpcoming;
     public Movie movieTopRated;
+    public Movie movieSearch;
 }
