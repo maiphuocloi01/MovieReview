@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.view.fragment;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -11,6 +12,8 @@ import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, CommonViewModel>{
 
+    public static final String TAG = AddReviewFragment.class.getName();
+
     @Override
     protected Class<CommonViewModel> getClassVM() {
         return CommonViewModel.class;
@@ -18,7 +21,12 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
 
     @Override
     protected void initViews() {
-
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.backToPrev();
+            }
+        });
     }
 
     @Override

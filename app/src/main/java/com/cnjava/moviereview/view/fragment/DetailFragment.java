@@ -50,6 +50,20 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 callBack.backToPrev();
             }
         });
+
+        binding.tvAddReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(AddReviewFragment.TAG, null, true);
+            }
+        });
+
+        binding.tvReview.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(ReviewFragment.TAG, null, false);
+            }
+        });
     }
 
     @Override

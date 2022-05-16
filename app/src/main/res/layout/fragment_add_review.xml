@@ -82,7 +82,7 @@
 
     <RatingBar
         android:id="@+id/ratingBar"
-        android:stepSize="1"
+        android:stepSize="0.5"
         android:numStars="5"
         android:rating="5"
         android:isIndicator="false"
@@ -100,11 +100,12 @@
         android:layout_marginTop="20dp"
         android:background="@drawable/bg_light_dark_corner_20"
         android:fontFamily="@font/roboto_regular"
-        android:hint="Write your movie about this movie."
+        android:hint="Write your review about this movie."
         android:inputType="textMultiLine"
         android:gravity="top|left"
         android:padding="15dp"
-        android:textColorHint="@color/light_white"
+        android:textColor="@color/light_white"
+        android:textColorHint="@color/mid_white"
         android:textSize="18sp" />
 
     <View
