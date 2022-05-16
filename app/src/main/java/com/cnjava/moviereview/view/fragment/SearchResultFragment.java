@@ -39,18 +39,17 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
     @Override
     protected void initViews() {
 
-        if(MyApplication.getInstance().getStorage().movieSearch == null) {
-            Bundle newData = (Bundle) mData;
-            String strSearch = newData.getString("search");
-            binding.etSearch.setText(strSearch);
-            Log.d(TAG, "initViews: " + strSearch);
-            viewModel.searchMovie(strSearch);
-        } else {
-            movie = MyApplication.getInstance().getStorage().movieSearch;
-            ResultAdapter resultAdapter = new ResultAdapter(context, movie, this);
-            binding.rvResult.setAdapter(resultAdapter);
-        }
-
+        //if(MyApplication.getInstance().getStorage().movieSearch == null) {
+        Bundle newData = (Bundle) mData;
+        String strSearch = newData.getString("search");
+        binding.etSearch.setText(strSearch);
+        Log.d(TAG, "initViews: " + strSearch);
+        viewModel.searchMovie(strSearch);
+//        } else {
+//            movie = MyApplication.getInstance().getStorage().movieSearch;
+//            ResultAdapter resultAdapter = new ResultAdapter(context, movie, this);
+//            binding.rvResult.setAdapter(resultAdapter);
+//        }
 
 
         binding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
@@ -74,18 +73,18 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if (key.equals(Constants.KEY_SEARCH_MOVIE)){
+        if (key.equals(Constants.KEY_SEARCH_MOVIE)) {
             movie = (Movie) data;
             ResultAdapter resultAdapter = new ResultAdapter(context, movie, this);
             binding.rvResult.setAdapter(resultAdapter);
-            MyApplication.getInstance().getStorage().movieSearch = movie;
+            //MyApplication.getInstance().getStorage().movieSearch = movie;
         }
     }
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if(code == 999) {
-            Log.d(TAG, "apiError: "+ data.toString());
+        if (code == 999) {
+            Log.d(TAG, "apiError: " + data.toString());
             Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
         }
     }
@@ -111,10 +110,10 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
         super.onResume();
         Log.d(TAG, "onResume: ");
     }
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        MyApplication.getInstance().getStorage().movieSearch = null;
-    }
+//
+//    @Override
+//    public void onDestroy() {
+//        super.onDestroy();
+//        MyApplication.getInstance().getStorage().movieSearch = null;
+//    }
 }

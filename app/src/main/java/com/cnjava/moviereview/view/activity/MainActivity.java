@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
                 trans.addToBackStack(null);
             }
             trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-            trans.replace(R.id.layout_main, frg, tag).commit();
+            trans.add(R.id.layout_main, frg, tag).commit();
 
         } catch (Exception e) {
             e.printStackTrace();

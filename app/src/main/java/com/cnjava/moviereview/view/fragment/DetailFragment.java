@@ -61,7 +61,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         binding.tvReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ReviewFragment.TAG, null, false);
+                callBack.showFragment(ReviewFragment.TAG, null, true);
             }
         });
     }
