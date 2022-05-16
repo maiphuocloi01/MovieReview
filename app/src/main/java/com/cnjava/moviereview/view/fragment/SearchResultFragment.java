@@ -107,4 +107,9 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
         Log.d(TAG, "onResume: ");
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        MyApplication.getInstance().getStorage().movieSearch = null;
+    }
 }

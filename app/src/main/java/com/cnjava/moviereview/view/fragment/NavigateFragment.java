@@ -26,7 +26,11 @@ public class NavigateFragment extends BaseFragment<FragmentNavigateBinding, Navi
     protected void initViews() {
 
 
-        loadFragment(new HomeFragment());
+        if (viewModel.getFragment() == null) {
+            loadFragment(new HomeFragment());
+        } else {
+            loadFragment(viewModel.getFragment());
+        }
 
         binding.bnvHome.setOnItemSelectedListener(item -> {
             Fragment frg;
