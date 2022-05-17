@@ -39,7 +39,7 @@
     </RelativeLayout>
 
 
-   <!-- <TextView
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -47,9 +47,9 @@
         android:layout_marginTop="15dp"
         android:fontFamily="@font/roboto_bold"
         android:maxLines="2"
-        android:text="Lọc theo"
-        android:textColor="@color/black_700"
-        android:textSize="20sp" />
+        android:text="Filter"
+        android:textColor="@color/light_white"
+        android:textSize="18sp" />
 
     <HorizontalScrollView
         android:layout_width="match_parent"
@@ -71,11 +71,11 @@
                 android:background="@drawable/radio_selector"
                 android:button="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="5dp"
-                android:text="Tất cả"
-                android:textColor="@color/background"
-                android:textSize="18sp" />
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="8dp"
+                android:text="All reviews"
+                android:textColor="@color/light_white"
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_five_star"
@@ -85,10 +85,10 @@
                 android:background="@drawable/radio_selector"
                 android:button="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="5dp"
-                android:text="5 sao"
-                android:textColor="@color/background"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="8dp"
+                android:text="5 ★"
+                android:textColor="@color/light_white"
                 android:textSize="18sp" />
 
             <RadioButton
@@ -99,10 +99,10 @@
                 android:background="@drawable/radio_selector"
                 android:button="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="5dp"
-                android:text="4 sao"
-                android:textColor="@color/background"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="8dp"
+                android:text="4 ★"
+                android:textColor="@color/light_white"
                 android:textSize="18sp" />
 
             <RadioButton
@@ -113,10 +113,10 @@
                 android:background="@drawable/radio_selector"
                 android:button="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="5dp"
-                android:text="3 sao"
-                android:textColor="@color/background"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="8dp"
+                android:text="3 ★"
+                android:textColor="@color/light_white"
                 android:textSize="18sp" />
 
             <RadioButton
@@ -127,10 +127,10 @@
                 android:background="@drawable/radio_selector"
                 android:button="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="5dp"
-                android:text="2 sao"
-                android:textColor="@color/background"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="8dp"
+                android:text="2 ★"
+                android:textColor="@color/light_white"
                 android:textSize="18sp" />
 
             <RadioButton
@@ -142,22 +142,22 @@
                 android:background="@drawable/radio_selector"
                 android:button="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="20dp"
-                android:paddingVertical="5dp"
-                android:text="1 sao"
-                android:textColor="@color/background"
+                android:paddingHorizontal="25dp"
+                android:paddingVertical="8dp"
+                android:text="1 ★"
+                android:textColor="@color/light_white"
                 android:textSize="18sp" />
         </RadioGroup>
 
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_review"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="10dp"
-        android:id="@+id/rv_review"
-        tools:listitem="@layout/layout_item_review" />-->
+        tools:listitem="@layout/item_review" />
 
 
 </LinearLayout>

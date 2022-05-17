@@ -54,6 +54,7 @@ dependencies {
 
     implementation 'me.relex:circleindicator:2.1.6'
 
+    implementation 'com.github.gifffert:ExpandableTextView:0.1.6'
 
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'

@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.core.widget.NestedScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:background="@color/dark"
     android:fillViewport="true"
+    android:scrollbars="none"
     android:layout_height="match_parent">
 
     <LinearLayout
@@ -266,7 +267,7 @@
                 <TableRow
                     android:layout_marginTop="16dp"
                     android:layout_width="match_parent"
-                    android:background="@color/light_black"
+                    android:background="@drawable/bg_light_dark_corner_10"
                     android:layout_height="wrap_content">
 
                     <LinearLayout
@@ -434,14 +435,17 @@
                         android:textColor="@color/white"
                         android:textSize="16sp" />
 
+                    <View android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"/>
+
                     <TextView
                         android:id="@+id/tv_add_review"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:fontFamily="@font/roboto_bold"
                         android:text="Add your review"
-
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary"
                         android:textSize="16sp" />
@@ -454,6 +458,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
                     tools:itemCount="2"
+                    android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_review" />
 
@@ -485,4 +490,4 @@
 
 
 
-</ScrollView>
+</androidx.core.widget.NestedScrollView>

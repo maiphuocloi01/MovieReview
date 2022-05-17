@@ -15,10 +15,12 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentDetailBinding;
 import com.cnjava.moviereview.model.MovieDetail;
+import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.GenresAdapter;
+import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
@@ -64,6 +66,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 callBack.showFragment(ReviewFragment.TAG, null, true);
             }
         });
+
+
     }
 
     @Override
@@ -112,6 +116,15 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             binding.rvGenres.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
             GenresAdapter adapterGenres = new GenresAdapter(context, listGenres);
             binding.rvGenres.setAdapter(adapterGenres);
+
+
+            List<Review> reviewList = new ArrayList<>();
+
+            reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7.5, "May 4, 2022", 123, "Hello", "https://www.gravatar.com/avatar/bf3b87ecb40599290d764e6d73c86319.jpg"));
+            reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 7.5, "May 4, 2022", 123, "Hello", "https://www.gravatar.com/avatar/bf3b87ecb40599290d764e6d73c86319.jpg"));
+
+            ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
+            binding.rvReview.setAdapter(reviewAdapter);
 
         }
     }
