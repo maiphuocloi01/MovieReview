@@ -14,19 +14,24 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentDetailBinding;
+import com.cnjava.moviereview.model.Actor;
+import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.adapter.CastAdapter;
 import com.cnjava.moviereview.view.adapter.GenresAdapter;
+import com.cnjava.moviereview.view.adapter.MovieAdapter;
+import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel>{
+public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel> implements PopularAdapter.MovieCallBack {
 
     public static final String TAG = DetailFragment.class.getName();
 
@@ -45,6 +50,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         ViewUtils.gone(binding.layoutMovieDetail);
         int id = (int) mData;
         viewModel.getMovieDetail(id);
+        viewModel.getCast(id);
+        viewModel.getRecommendation(id);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,6 +74,13 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         });
 
+        List<Review> reviewList = new ArrayList<>();
+
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 7.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+
+        ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
+        binding.rvReview.setAdapter(reviewAdapter);
 
     }
 
@@ -78,8 +92,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)){
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutMovieDetail);
             movieDetail = (MovieDetail) data;
             List<String> listGenres = new ArrayList<>();
             binding.tvName.setText(movieDetail.title);
@@ -117,15 +129,23 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             GenresAdapter adapterGenres = new GenresAdapter(context, listGenres);
             binding.rvGenres.setAdapter(adapterGenres);
 
+        } else if(key.equals(Constants.KEY_GET_CAST)){
+            Actor actor = (Actor) data;
+            binding.rvCast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            CastAdapter castAdapter = new CastAdapter(context, actor);
+            binding.rvCast.setAdapter(castAdapter);
 
-            List<Review> reviewList = new ArrayList<>();
-
-            reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7.5, "May 4, 2022", 123, "Hello", "https://www.gravatar.com/avatar/bf3b87ecb40599290d764e6d73c86319.jpg"));
-            reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 7.5, "May 4, 2022", 123, "Hello", "https://www.gravatar.com/avatar/bf3b87ecb40599290d764e6d73c86319.jpg"));
-
-            ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
-            binding.rvReview.setAdapter(reviewAdapter);
-
+        } else if(key.equals(Constants.KEY_GET_RECOMMENDATION)){
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutMovieDetail);
+            Movie movie = (Movie) data;
+            if(movie.results.size() == 0){
+                binding.tvNoRecommend.setText(String.format("We don't have enough data to suggest any movies based on %s. You can help by rating movies you've seen.", movieDetail.title));
+                binding.tvNoRecommend.setVisibility(View.VISIBLE);
+            } else {
+                MovieAdapter adapter = new MovieAdapter(context, movie, this);
+                binding.rvRecommend.setAdapter(adapter);
+            }
         }
     }
 
@@ -140,5 +160,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     public void setData(Object data) {
         this.mData = data;
+    }
+
+    @Override
+    public void gotoMovieDetail(int id) {
+        callBack.showFragment(DetailFragment.TAG, id, true);
     }
 }

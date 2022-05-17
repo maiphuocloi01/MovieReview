@@ -16,16 +16,21 @@ import androidx.annotation.Nullable;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentSearchBinding;
 import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.view.adapter.MovieAdapter;
+import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.TrendingAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonViewModel> implements TrendingAdapter.TrendingCallBack {
+public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonViewModel> implements TrendingAdapter.TrendingCallBack, PopularAdapter.MovieCallBack {
 
     public static final String TAG = SearchFragment.class.getName();
 
+    private static final int DEFAULT_ID = 675353;
+    private Movie movieRecommend;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -52,6 +57,16 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
             binding.rvTrending.setAdapter(trendingAdapter);
         }
 
+        if(MyApplication.getInstance().getStorage().movieRecommend == null) {
+            Log.d(TAG, "call api: ");
+            viewModel.getRecommendation(DEFAULT_ID);
+        } else {
+            Log.d(TAG, "storage: ");
+            movieRecommend = MyApplication.getInstance().getStorage().movieRecommend;
+            MovieAdapter adapter = new MovieAdapter(context, movieRecommend, this);
+            binding.rvRecommend.setAdapter(adapter);
+        }
+
         binding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
@@ -74,7 +89,12 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
 
     @Override
     public void apiSuccess(String key, Object data) {
-
+        if(key.equals(Constants.KEY_GET_RECOMMENDATION)){
+            movieRecommend = (Movie) data;
+            MyApplication.getInstance().getStorage().movieRecommend = movieRecommend;
+            MovieAdapter adapter = new MovieAdapter(context, movieRecommend, this);
+            binding.rvRecommend.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -95,5 +115,10 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
         Bundle bundle = new Bundle();
         bundle.putString("search", name);
         actionShowFragment(SearchResultFragment.TAG, bundle, true);
+    }
+
+    @Override
+    public void gotoMovieDetail(int id) {
+        actionShowFragment(DetailFragment.TAG, id, true);
     }
 }

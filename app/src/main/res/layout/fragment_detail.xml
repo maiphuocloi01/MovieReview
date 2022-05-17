@@ -43,7 +43,7 @@
 
             <TableRow
                 android:id="@+id/iv_poster_frame"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="@+id/iv_cover"
@@ -423,6 +423,26 @@
 
                 </TableRow>
 
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Cast"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_cast"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_cast" />
+
                 <TableRow android:layout_height="wrap_content"
                     android:layout_width="match_parent">
 
@@ -476,6 +496,37 @@
                     android:textAlignment="center"
                     android:textColor="@color/primary"
                     android:textSize="16sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Recommendation"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_movie" />
+
+                <TextView
+                    android:id="@+id/tv_no_recommend"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:textAlignment="center"
+                    android:visibility="gone"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="We don't have enough data to suggest any movies"
+                    android:textColor="@color/mid_white"
+                    android:textSize="14sp" />
 
                 <View
                     android:layout_width="wrap_content"
