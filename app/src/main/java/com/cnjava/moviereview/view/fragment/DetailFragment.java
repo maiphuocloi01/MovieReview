@@ -1,5 +1,7 @@
 package com.cnjava.moviereview.view.fragment;
 
+import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -70,7 +72,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         binding.tvReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ReviewFragment.TAG, null, true);
+                callBack.showFragment(ReviewFragment.TAG, movieDetail, true);
             }
         });
 
@@ -98,7 +100,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             binding.tvRuntime.setText(String.format(movieDetail.runtime + " min"));
             binding.tvRating.setText(String.valueOf(movieDetail.voteAverage));
             binding.tvOverview.setText(movieDetail.overview);
-            binding.tvReleaseDate.setText(movieDetail.releaseDate);
+            binding.tvReleaseDate.setText(convertDateType3(movieDetail.releaseDate));
             binding.tvRateCount.setText(String.valueOf(movieDetail.voteCount));
             binding.tvPopularity.setText(String.valueOf(movieDetail.popularity));
             Glide.with(context)

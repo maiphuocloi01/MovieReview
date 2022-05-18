@@ -13,6 +13,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.databinding.ItemMovieBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.util.NumberUtils;
 
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
@@ -37,7 +38,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movie.Result item = movie.results.get(position);
-        holder.binding.tvDate.setText(item.releaseDate);
+        holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
         holder.binding.tvName.setText(item.title);
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))

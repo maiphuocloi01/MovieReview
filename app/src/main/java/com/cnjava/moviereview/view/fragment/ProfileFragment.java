@@ -97,8 +97,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             //CommonUtils.getInstance().clearPref(Constants.USERNAME);
             dialog.dismiss();
         });
-
-
         dialog.show();
+
     }
 }

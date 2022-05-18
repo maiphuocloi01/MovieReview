@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="56dp"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="35dp"
         android:gravity="center">
 
         <ImageView
@@ -25,18 +25,57 @@
             android:src="@drawable/ic_back"
             app:tint="@color/light_white" />
 
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+        <TableRow
+            android:layout_marginStart="10dp"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="Review"
-            android:textAlignment="center"
-            android:textColor="@color/light_white"
-            android:textSize="20sp" />
+            android:layout_toRightOf="@+id/iv_back"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/iv_poster"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/img_poster" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Doctor Strange in the Multiverse of Madness"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/light_white"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/tv_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="Ratings and reviews"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginStart="10dp"
+                    android:textColor="@color/light_white"
+                    android:textSize="12sp" />
+
+            </LinearLayout>
+
+        </TableRow>
+
 
     </RelativeLayout>
+
 
 
     <TextView
@@ -89,7 +128,7 @@
                 android:paddingVertical="8dp"
                 android:text="5 ★"
                 android:textColor="@color/light_white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_four_star"
@@ -103,7 +142,7 @@
                 android:paddingVertical="8dp"
                 android:text="4 ★"
                 android:textColor="@color/light_white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_three_star"
@@ -117,7 +156,7 @@
                 android:paddingVertical="8dp"
                 android:text="3 ★"
                 android:textColor="@color/light_white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_two_star"
@@ -131,7 +170,7 @@
                 android:paddingVertical="8dp"
                 android:text="2 ★"
                 android:textColor="@color/light_white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
 
             <RadioButton
                 android:id="@+id/rb_one_star"
@@ -146,7 +185,7 @@
                 android:paddingVertical="8dp"
                 android:text="1 ★"
                 android:textColor="@color/light_white"
-                android:textSize="18sp" />
+                android:textSize="16sp" />
         </RadioGroup>
 
     </HorizontalScrollView>
@@ -156,6 +195,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_marginTop="10dp"
         tools:listitem="@layout/item_review" />
 
