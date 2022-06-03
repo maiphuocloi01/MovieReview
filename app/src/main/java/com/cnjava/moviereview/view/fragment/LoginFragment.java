@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.databinding.FragmentLoginBinding;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonViewModel>{
@@ -24,21 +25,21 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ForgotPasswordFragment.TAG, null, true);
+                callBack.showFragment(ForgotPasswordFragment.TAG, null, true, 0);
             }
         });
 
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(NavigateFragment.TAG, null, false);
+                callBack.showFragment(NavigateFragment.TAG, null, false, Constants.ANIM_SLIDE);
             }
         });
 
         binding.tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(RegisterFragment.TAG, null, true);
+                callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
     }

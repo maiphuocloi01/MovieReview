@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/iv_cast"
-                android:layout_width="128dp"
-                android:layout_height="190dp"
+                android:layout_width="@dimen/_101sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:scaleType="centerCrop"
                 android:layout_weight="1"
                 android:src="@drawable/img_cast"/>
@@ -36,7 +36,7 @@
             android:layout_marginTop="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="16sp"
+            android:textSize="@dimen/_10ssp"
             android:maxLines="1"
             android:ellipsize="end"
             android:layout_marginHorizontal="5dp"
@@ -48,7 +48,7 @@
             android:id="@+id/tv_character"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="14sp"
+            android:textSize="@dimen/_8ssp"
             android:layout_marginTop="2dp"
             android:maxLines="1"
             android:ellipsize="end"

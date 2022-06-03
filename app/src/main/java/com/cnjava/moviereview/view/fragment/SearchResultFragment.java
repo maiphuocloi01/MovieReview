@@ -96,7 +96,7 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
 
     @Override
     public void gotoMovieDetail(int id) {
-        callBack.showFragment(DetailFragment.TAG, id, true);
+        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
     @Override

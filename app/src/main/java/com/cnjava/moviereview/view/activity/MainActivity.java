@@ -30,6 +30,8 @@ import java.util.stream.Collectors;
 public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     public static final String TAG = MainActivity.class.getName();
+    public static final int ANIM_SLIDE = 0;
+    public static final int ANIM_FADE = 1;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -77,7 +79,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     @Override
-    public void showFragment(String tag, Object data, boolean isBack) {
+    public void showFragment(String tag, Object data, boolean isBack, int anim) {
         try {
 
             if (isActive(this)) {
@@ -93,7 +95,11 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             if (isBack) {
                 trans.addToBackStack(null);
             }
-            trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+            if(anim == ANIM_SLIDE) {
+                trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+            } else if(anim == ANIM_FADE){
+                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+            }
             trans.add(R.id.layout_main, frg, tag).commit();
 
         } catch (Exception e) {

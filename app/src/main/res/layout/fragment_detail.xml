@@ -33,7 +33,7 @@
             <ImageView
                 android:id="@+id/iv_cover"
                 android:layout_width="match_parent"
-                android:layout_height="240dp"
+                android:layout_height="@dimen/_200sdp"
                 android:scaleType="centerCrop"
                 android:src="@drawable/ic_image"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -53,15 +53,15 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="16dp"
-                    android:layout_marginTop="104dp"
+                    android:layout_marginTop="@dimen/_80sdp"
                     app:cardBackgroundColor="@color/transparent"
                     app:cardCornerRadius="4dp"
                     app:cardElevation="4dp">
 
                     <ImageView
                         android:id="@+id/iv_poster"
-                        android:layout_width="128dp"
-                        android:layout_height="190dp"
+                        android:layout_width="@dimen/_101sdp"
+                        android:layout_height="@dimen/_150sdp"
                         android:scaleType="centerCrop"
                         app:srcCompat="@drawable/img_poster" />
 
@@ -71,9 +71,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginHorizontal="10dp"
-                    android:layout_marginTop="10dp"
-                    android:layout_marginBottom="10dp"
+                    android:layout_marginHorizontal="@dimen/_6sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_marginBottom="@dimen/_2sdp"
                     android:orientation="vertical">
 
                     <TextView
@@ -85,7 +85,7 @@
                         android:maxLines="2"
                         android:text="Doctor Strange in the Multiverse of Madness"
                         android:textColor="@color/light_white"
-                        android:textSize="20sp" />
+                        android:textSize="@dimen/_14ssp" />
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_genres"
@@ -137,8 +137,8 @@
 
                     <ImageView
                         android:id="@+id/iv_all"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp"
                         android:padding="5dp"
                         android:src="@drawable/ic_time"
                         app:tint="@color/primary" />
@@ -150,7 +150,7 @@
                         android:text="126 min"
                         android:textAlignment="center"
                         android:textColor="@color/primary"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -164,8 +164,8 @@
 
                     <ImageView
                         android:id="@+id/iv_coffee"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp"
                         android:padding="5dp"
                         android:src="@drawable/ic_star"
                         app:tint="@color/primary" />
@@ -177,7 +177,7 @@
                         android:text="7.4"
                         android:textAlignment="center"
                         android:textColor="@color/primary"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -190,8 +190,8 @@
 
                     <ImageView
                         android:id="@+id/iv_tea"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp"
                         android:padding="5dp"
                         android:src="@drawable/ic_favorite"
                         app:tint="@color/light_white" />
@@ -202,7 +202,7 @@
                         android:text="Favorite"
                         android:textAlignment="center"
                         android:textColor="@color/light_white"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -215,8 +215,8 @@
 
                     <ImageView
                         android:id="@+id/iv_juice"
-                        android:layout_width="36dp"
-                        android:layout_height="36dp"
+                        android:layout_width="@dimen/_28sdp"
+                        android:layout_height="@dimen/_28sdp"
                         android:padding="5dp"
                         android:src="@drawable/ic_more"
                         app:tint="@color/light_white" />
@@ -227,7 +227,7 @@
                         android:text="More"
                         android:textAlignment="center"
                         android:textColor="@color/light_white"
-                        android:textSize="14sp" />
+                        android:textSize="@dimen/_10ssp" />
 
                 </LinearLayout>
 
@@ -252,7 +252,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="Overview"
                     android:textColor="@color/white"
-                    android:textSize="16sp"/>
+                    android:textSize="@dimen/_12ssp"/>
 
                 <TextView
                     android:id="@+id/tv_overview"
@@ -262,7 +262,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:text="Doctor Strange, with the help of mystical allies both old and new, traverses the mind-bending and dangerous alternate realities of the Multiverse to confront a mysterious new adversary."
                     android:textColor="@color/light_white"
-                    android:textSize="16sp"/>
+                    android:textSize="@dimen/_12ssp"/>
 
                 <TableRow
                     android:layout_marginTop="16dp"
@@ -285,7 +285,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="Release"
                             android:textColor="@color/white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:id="@+id/tv_release_date"
@@ -297,7 +297,7 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textColor="@color/light_white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -306,7 +306,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="Budget"
                             android:textColor="@color/white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:id="@+id/tv_budget"
@@ -360,7 +360,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="Status"
                             android:textColor="@color/white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:id="@+id/tv_status"
@@ -372,7 +372,7 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textColor="@color/light_white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -381,7 +381,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="Revenue"
                             android:textColor="@color/white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:id="@+id/tv_revenue"
@@ -393,7 +393,7 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textColor="@color/light_white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -402,7 +402,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="Popularity"
                             android:textColor="@color/white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:id="@+id/tv_popularity"
@@ -415,7 +415,7 @@
                             android:ellipsize="end"
                             android:layout_marginBottom="16dp"
                             android:textColor="@color/light_white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
 
                     </LinearLayout>
@@ -431,7 +431,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="Cast"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cast"
@@ -453,7 +453,7 @@
                         android:fontFamily="@font/roboto_bold"
                         android:text="Reviews"
                         android:textColor="@color/white"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_12ssp" />
 
                     <View android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -468,7 +468,7 @@
                         android:text="Add your review"
                         android:textAlignment="textEnd"
                         android:textColor="@color/primary"
-                        android:textSize="16sp" />
+                        android:textSize="@dimen/_12ssp" />
 
                 </TableRow>
 
@@ -495,7 +495,7 @@
                     android:text="Read all reviews"
                     android:textAlignment="center"
                     android:textColor="@color/primary"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -504,7 +504,7 @@
                     android:fontFamily="@font/roboto_bold"
                     android:text="Recommendation"
                     android:textColor="@color/white"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_recommend"
@@ -526,7 +526,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:text="We don't have enough data to suggest any movies"
                     android:textColor="@color/mid_white"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/_10ssp" />
 
                 <View
                     android:layout_width="wrap_content"

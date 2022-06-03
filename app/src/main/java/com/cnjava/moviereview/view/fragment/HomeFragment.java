@@ -3,9 +3,11 @@ package com.cnjava.moviereview.view.fragment;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -64,6 +66,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             moviePopular = MyApplication.getInstance().getStorage().moviePopular;
             initPopularView();
         }
+
+        binding.etSearch.setCursorVisible(false);
+        binding.etSearch.setShowSoftInputOnFocus(false);
+        binding.etSearch.setFocusableInTouchMode(false);
+        binding.etSearch.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                actionShowFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
+            }
+        });
+
 
 
         if (MyApplication.getInstance().getStorage().movieNowPlaying == null) {
@@ -191,13 +204,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
     @Override
     public void gotoMovieDetail(int id) {
-        actionShowFragment(DetailFragment.TAG, id, true);
+        actionShowFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
-    private void actionShowFragment(String tag, Object data, boolean isBack) {
+    private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
         NavigateFragment parentFrag = ((NavigateFragment) HomeFragment.this.getParentFragment());
         if (parentFrag != null) {
-            parentFrag.setActionShowFragment(tag, data, isBack);
+            parentFrag.setActionShowFragment(tag, data, isBack, anim);
         }
     }
 }

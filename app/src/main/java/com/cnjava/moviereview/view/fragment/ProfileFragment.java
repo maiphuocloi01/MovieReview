@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentProfileBinding;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, CommonViewModel>{
@@ -41,7 +42,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
     @Override
     protected void initViews() {
 
-        binding.btEditProfile.setOnClickListener(new View.OnClickListener() {
+        /*binding.btEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 actionShowFragment(EditProfileFragment.TAG, null, true);
@@ -54,7 +55,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
                 binding.btLogout.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 showAlertDialog();
             }
-        });
+        });*/
     }
 
     @Override
@@ -62,10 +63,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
         return FragmentProfileBinding.inflate(inflater, container, false);
     }
 
-    private void actionShowFragment(String tag, Object data, boolean isBack) {
+    private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
         NavigateFragment parentFrag = ((NavigateFragment) ProfileFragment.this.getParentFragment());
         if (parentFrag != null) {
-            parentFrag.setActionShowFragment(tag, data, isBack);
+            parentFrag.setActionShowFragment(tag, data, isBack, anim);
         }
     }
 
@@ -92,7 +93,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
         btnCancel.setOnClickListener(view -> dialog.dismiss());
 
         btnConfirm.setOnClickListener(view -> {
-            actionShowFragment(LoginFragment.TAG, null, false);
+            actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
             //CommonUtils.getInstance().clearPref(Constants.USERNAME);
             dialog.dismiss();

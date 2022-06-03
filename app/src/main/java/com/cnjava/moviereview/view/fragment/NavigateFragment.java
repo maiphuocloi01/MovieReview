@@ -10,6 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentNavigateBinding;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.cnjava.moviereview.viewmodel.NavigateViewModel;
 
@@ -75,8 +76,8 @@ public class NavigateFragment extends BaseFragment<FragmentNavigateBinding, Navi
     }
 
 
-    public void setActionShowFragment(String tag, Object data, boolean isBack) {
-        callBack.showFragment(tag, data, isBack);
+    public void setActionShowFragment(String tag, Object data, boolean isBack, int anim) {
+        callBack.showFragment(tag, data, isBack, anim);
     }
 
     @Override

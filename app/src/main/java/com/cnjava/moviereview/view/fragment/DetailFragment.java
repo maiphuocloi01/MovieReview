@@ -65,14 +65,14 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         binding.tvAddReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(AddReviewFragment.TAG, null, true);
+                callBack.showFragment(AddReviewFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
 
         binding.tvReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ReviewFragment.TAG, movieDetail, true);
+                callBack.showFragment(ReviewFragment.TAG, movieDetail, true, Constants.ANIM_SLIDE);
             }
         });
 
@@ -166,6 +166,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void gotoMovieDetail(int id) {
-        callBack.showFragment(DetailFragment.TAG, id, true);
+        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 }
