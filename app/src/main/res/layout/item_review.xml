@@ -4,8 +4,8 @@
     android:id="@+id/view_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="@dimen/_3sdp"
+    android:layout_marginVertical="@dimen/_8sdp"
     app:cardBackgroundColor="@color/light_black"
     app:cardCornerRadius="10dp"
     app:cardElevation="0dp">
@@ -13,9 +13,9 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginHorizontal="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
+        android:layout_marginHorizontal="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
         android:orientation="vertical">
 
 
@@ -25,16 +25,16 @@
             <com.google.android.material.imageview.ShapeableImageView
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                 android:id="@+id/iv_avt"
-                android:layout_marginStart="10dp"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_width="@dimen/_32sdp"
+                android:layout_height="@dimen/_32sdp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_cover" />
 
             <LinearLayout
                 android:layout_gravity="center"
-                android:layout_marginVertical="10dp"
+                android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_width="wrap_content"
                 android:orientation="vertical"
                 android:layout_height="wrap_content">
@@ -43,52 +43,52 @@
                     android:id="@+id/tv_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_bold"
                     android:maxLines="1"
                     android:text="Mai Phước Lợi"
                     android:textColor="@color/light_white"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_12ssp" />
 
                 <TextView
                     android:id="@+id/tv_date"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/_8sdp"
                     android:ellipsize="end"
                     android:fontFamily="@font/roboto_regular"
                     android:maxLines="1"
                     android:text="April 9, 2022"
                     android:textColor="@color/light_white"
-                    android:textSize="14sp" />
+                    android:textSize="@dimen/_10ssp" />
 
 
             </LinearLayout>
 
             <TableRow
-                android:layout_marginTop="15dp"
-                android:layout_marginStart="15dp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginStart="@dimen/_10sdp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <ImageView
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_star"
                     app:tint="@color/primary" />
 
                 <TextView
                     android:id="@+id/tv_rate"
-                    android:layout_marginStart="2dp"
+                    android:layout_marginStart="@dimen/_2sdp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_regular"
                     android:text="7.8"
                     android:textColor="@color/primary"
-                    android:textSize="16sp" />
+                    android:textSize="@dimen/_12ssp" />
 
 
             </TableRow>
@@ -98,14 +98,14 @@
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="10dp"
-            android:layout_marginTop="15dp"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             app:etv_animationTime="20"
             app:etv_expandLines="3"
             app:etv_showLine="true"
             android:text="Doctor Strange in the Multiverse of Madness is dark, silly, and fan pleasing. The film is at is most bewitching when Sam Raimi can let his horror roots be showcased. It will satisfy horror and superhero film fans alike, but would have and could have been even better if Raimi was allowed to dive even further into the horror genre. Be sure to stay after the credits, as well. There are two after credits sequences with the final one being so absurdly on the nose for Sam Raimi that it may be the most entertaining part of the film."
-            android:paddingBottom="10dp"
-            app:etv_textContentSize="16sp"
+            android:paddingBottom="@dimen/_8sdp"
+            app:etv_textContentSize="@dimen/_12ssp"
             app:etv_textExpand="Show more"
             app:etv_textShrink="Show less"
             android:fontFamily="@font/roboto_regular"

@@ -15,13 +15,17 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
+import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.LoginFragment;
 
 import java.lang.reflect.Constructor;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
@@ -57,6 +61,10 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         }
 
         initViews();
+        addGenres();
+
+        //List<Genres> genres = MyApplication.getInstance().getStorage().genresList;
+        //Genres genres1 = genres.stream().filter(a -> a.getId() == 12).collect(Collectors.toList()).get(0);
     }
 
     private void initViews() {
@@ -99,5 +107,27 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             hideSoftInput(MainActivity.this);
         }
         onBackPressed();
+    }
+
+    private void addGenres(){
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(28, "Action"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(12, "Adventure"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(16, "Animation"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(35, "Comedy"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(80, "Crime"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(99, "Documentary"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(18, "Drama"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(10751, "Family"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(14, "Fantasy"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(36, "History"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(27, "Horror"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(10402, "Music"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(9648, "Mystery"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(10749, "Romance"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(878, "Science Fiction"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(10770, "TV Movie"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(53, "Thriller"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(10752, "War"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(37, "37"));
     }
 }

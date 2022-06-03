@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/iv_poster"
-                android:layout_width="128dp"
-                android:layout_height="190dp"
+                android:layout_width="@dimen/_101sdp"
+                android:layout_height="@dimen/_150sdp"
                 android:scaleType="centerCrop"
                 android:layout_weight="1"
                 android:src="@drawable/img_poster"/>

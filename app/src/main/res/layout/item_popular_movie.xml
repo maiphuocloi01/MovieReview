@@ -22,7 +22,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="150dp"
             android:layout_alignBottom="@id/iv_cover"
             android:background="@drawable/bg_gradient" />
 
@@ -30,19 +30,31 @@
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/iv_cover"
-            android:layout_marginStart="16dp"
-            android:layout_marginTop="8dp"
-            android:layout_marginEnd="16dp"
-            android:layout_marginBottom="16dp"
-            android:drawablePadding="4dp"
+            android:layout_above="@+id/tv_keyword"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_4sdp"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center_vertical"
             android:maxLines="1"
             android:textColor="@color/light_white"
-            android:textSize="20sp"
+            android:textSize="@dimen/_16sdp"
             tools:text="Doctor Strange in the Multiverse of Madness" />
+
+        <TextView
+            android:id="@+id/tv_keyword"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/iv_cover"
+            android:layout_marginHorizontal="@dimen/_16sdp"
+            android:layout_marginBottom="@dimen/_8sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_regular"
+            android:gravity="center_vertical"
+            android:maxLines="1"
+            android:textColor="@color/light_white"
+            android:textSize="@dimen/_12sdp"
+            tools:text="Action, War" />
 
     </RelativeLayout>
 

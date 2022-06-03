@@ -32,6 +32,8 @@ public class Movie implements Serializable {
         public String releaseDate;
         @SerializedName("vote_average")
         public double voteAverage;
+        @SerializedName("genre_ids")
+        public List<Integer> genreIds;
     }
 
     @Override

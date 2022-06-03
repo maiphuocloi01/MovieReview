@@ -1,6 +1,10 @@
 package com.cnjava.moviereview;
 
+import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.model.Movie;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Storage {
     public Movie moviePopular;
@@ -8,4 +12,6 @@ public class Storage {
     public Movie movieUpcoming;
     public Movie movieTopRated;
     public Movie movieRecommend;
+    public List<Genres> genresList = new ArrayList<>();
+
 }
