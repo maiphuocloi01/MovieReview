@@ -32,7 +32,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(NavigateFragment.TAG, null, false, Constants.ANIM_SLIDE);
+                callBack.showFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
             }
         });
 

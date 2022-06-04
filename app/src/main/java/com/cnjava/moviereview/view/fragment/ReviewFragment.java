@@ -57,6 +57,10 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 8.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", "", 6.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
 

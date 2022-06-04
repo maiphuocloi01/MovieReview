@@ -2,14 +2,18 @@ package com.cnjava.moviereview.view.fragment;
 
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -17,6 +21,7 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentDetailBinding;
 import com.cnjava.moviereview.model.Actor;
+import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
@@ -24,6 +29,7 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.CastAdapter;
+import com.cnjava.moviereview.view.adapter.CollectionAdapter;
 import com.cnjava.moviereview.view.adapter.GenresAdapter;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
@@ -62,10 +68,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         });
 
-        binding.tvAddReview.setOnClickListener(new View.OnClickListener() {
+        binding.btAddReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(AddReviewFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.showFragment(AddReviewFragment.TAG, null, true, Constants.ANIM_FADE);
             }
         });
 
@@ -84,6 +90,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
         binding.rvReview.setAdapter(reviewAdapter);
 
+
+
     }
 
     @Override
@@ -95,6 +103,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)){
             movieDetail = (MovieDetail) data;
+            if(movieDetail.collection != null) {
+                viewModel.getCollection(movieDetail.collection.id);
+            }
             List<String> listGenres = new ArrayList<>();
             binding.tvName.setText(movieDetail.title);
             binding.tvRuntime.setText(String.format(movieDetail.runtime + " min"));
@@ -127,6 +138,29 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 listGenres.add(item.name);
             }
 
+            binding.ivMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    PopupMenu popup = new PopupMenu(context, binding.ivMore);
+                    //Inflating the Popup using xml file
+                    popup.getMenuInflater().inflate(R.menu.poupup_menu, popup.getMenu());
+
+                    //registering popup with OnMenuItemClickListener
+                    popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        public boolean onMenuItemClick(MenuItem item) {
+                            Toast.makeText(context,"You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
+                            if(item.getTitle().toString().equals("Homepage")){
+                                Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(movieDetail.homepage));
+                                startActivity(browserIntent);
+                            }
+                            return true;
+                        }
+                    });
+
+                    popup.show();
+                }
+            });
+
             binding.rvGenres.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
             GenresAdapter adapterGenres = new GenresAdapter(context, listGenres);
             binding.rvGenres.setAdapter(adapterGenres);
@@ -141,13 +175,23 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.layoutMovieDetail);
             Movie movie = (Movie) data;
-            if(movie.results.size() == 0){
-                binding.tvNoRecommend.setText(String.format("We don't have enough data to suggest any movies based on %s. You can help by rating movies you've seen.", movieDetail.title));
-                binding.tvNoRecommend.setVisibility(View.VISIBLE);
-            } else {
-                MovieAdapter adapter = new MovieAdapter(context, movie, this);
-                binding.rvRecommend.setAdapter(adapter);
+            if (movie.results != null) {
+                if (movie.results.size() == 0) {
+                    binding.tvNoRecommend.setText(String.format("We don't have enough data to suggest any movies based on %s. You can help by rating movies you've seen.", movieDetail.title));
+                    binding.tvNoRecommend.setVisibility(View.VISIBLE);
+                } else {
+                    MovieAdapter adapter = new MovieAdapter(context, movie, this);
+                    binding.rvRecommend.setAdapter(adapter);
+                }
             }
+        } else if(key.equals(Constants.KEY_GET_COLLECTION)){
+            Collection collection = (Collection) data;
+            ViewUtils.show(binding.tvCollection);
+            ViewUtils.show(binding.rvCollection);
+            binding.tvCollection.setText(collection.name);
+            binding.rvCollection.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+            CollectionAdapter adapter = new CollectionAdapter(context, collection, this);
+            binding.rvCollection.setAdapter(adapter);
         }
     }
 

@@ -16,5 +16,6 @@ public interface Constants {
     String KEY_SEARCH_MOVIE = "KEY_SEARCH_MOVIE";
     String KEY_GET_CAST = "KEY_GET_CAST";
     String KEY_GET_RECOMMENDATION = "KEY_GET_RECOMMENDATION";
+    String KEY_GET_COLLECTION = "KEY_GET_COLLECTION";
 
 }

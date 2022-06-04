@@ -38,4 +38,8 @@ public class CommonViewModel extends BaseViewModel {
     public void getRecommendation(int id){
         getApi().getRecommendation(id).enqueue(initHandleResponse(Constants.KEY_GET_RECOMMENDATION));
     }
+
+    public void getCollection(int id){
+        getApi().getCollection(id).enqueue(initHandleResponse(Constants.KEY_GET_COLLECTION));
+    }
 }

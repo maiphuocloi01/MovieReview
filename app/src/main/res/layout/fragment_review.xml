@@ -77,114 +77,138 @@
 
     </RelativeLayout>
 
-    <HorizontalScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/_8sdp"
-        android:scrollbars="none">
+        android:layout_height="match_parent">
 
-        <RadioGroup
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_20sdp"
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-            android:orientation="horizontal">
-
-            <RadioButton
-                android:id="@+id/rb_all"
-                android:layout_width="wrap_content"
+            <HorizontalScrollView
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/radio_selector"
-                android:button="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_6sdp"
-                android:text="All reviews"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
+                android:layout_marginTop="@dimen/_8sdp"
+                android:scrollbars="none">
 
-            <RadioButton
-                android:id="@+id/rb_five_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:background="@drawable/radio_selector"
-                android:button="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_6sdp"
-                android:text="5 ★"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
+                <RadioGroup
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_20sdp"
 
-            <RadioButton
-                android:id="@+id/rb_four_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:background="@drawable/radio_selector"
-                android:button="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_6sdp"
-                android:text="4 ★"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
+                    android:orientation="horizontal">
 
-            <RadioButton
-                android:id="@+id/rb_three_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:background="@drawable/radio_selector"
-                android:button="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_6sdp"
-                android:text="3 ★"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
+                    <RadioButton
+                        android:id="@+id/rb_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="All reviews"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
 
-            <RadioButton
-                android:id="@+id/rb_two_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:background="@drawable/radio_selector"
-                android:button="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_6sdp"
-                android:text="2 ★"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
+                    <RadioButton
+                        android:id="@+id/rb_five_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="5 ★"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
 
-            <RadioButton
-                android:id="@+id/rb_one_star"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/_15sdp"
-                android:layout_marginEnd="@dimen/_50sdp"
-                android:background="@drawable/radio_selector"
-                android:button="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
-                android:paddingHorizontal="@dimen/_20sdp"
-                android:paddingVertical="@dimen/_6sdp"
-                android:text="1 ★"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
-        </RadioGroup>
+                    <RadioButton
+                        android:id="@+id/rb_four_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="4 ★"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
 
-    </HorizontalScrollView>
+                    <RadioButton
+                        android:id="@+id/rb_three_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="3 ★"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_review"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_12sdp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_marginTop="@dimen/_10sdp"
-        tools:listitem="@layout/item_review" />
+                    <RadioButton
+                        android:id="@+id/rb_two_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="2 ★"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
+
+                    <RadioButton
+                        android:id="@+id/rb_one_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="@dimen/_15sdp"
+                        android:layout_marginEnd="@dimen/_50sdp"
+                        android:background="@drawable/radio_selector"
+                        android:button="@android:color/transparent"
+                        android:fontFamily="@font/roboto_bold"
+                        android:paddingHorizontal="@dimen/_20sdp"
+                        android:paddingVertical="@dimen/_6sdp"
+                        android:text="1 ★"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
+                </RadioGroup>
+
+            </HorizontalScrollView>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_review"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:nestedScrollingEnabled="false"
+                tools:listitem="@layout/item_review" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginBottom="@dimen/_13sdp"
+                android:background="@color/light_black" />
+
+        </LinearLayout>
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
 
 
 </LinearLayout>

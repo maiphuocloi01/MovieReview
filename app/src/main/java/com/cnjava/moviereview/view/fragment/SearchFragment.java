@@ -3,6 +3,8 @@ package com.cnjava.moviereview.view.fragment;
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
@@ -37,18 +39,62 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.core.Scheduler;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.schedulers.Schedulers;
-
 public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonViewModel> implements TrendingAdapter.TrendingCallBack, PopularAdapter.MovieCallBack, RecommendSearchAdapter.RecommendSearchCallBack {
 
     public static final String TAG = SearchFragment.class.getName();
 
     private static final int DEFAULT_ID = 675353;
+    private static final int MSG_START_SEARCH = 1;
+    private static final int MSG_ADD_SEARCH = 0;
+    private RecommendSearchAdapter searchAdapter;
+    private List<String> names = new ArrayList<>();
+    private final Handler mHandler = new Handler(message -> {
+        if(message.what == MSG_START_SEARCH){
+            searchAdapter.deleteAllItem();
+        }
+        if (message.what == MSG_ADD_SEARCH) {
+            Bundle newData = (Bundle) message.getData();
+            String name = newData.getString("name");
+            Log.d(TAG, "Name: " + name);
+            searchAdapter.addItem(name);
+        }
+        return false;
+    });
+
+    private List<String> movieNames = new ArrayList<>();
+    private String textSearch = "";
+    private final Runnable rb = new Runnable() {
+        @Override
+        public void run() {
+            int countName = 0;
+
+            Message msg1 = new Message();
+            msg1.what = MSG_START_SEARCH;
+            msg1.arg1 = 1;
+            msg1.setTarget(mHandler);
+            msg1.sendToTarget();
+
+            for (String name : movieNames) {
+                if (StringConvert.removeDiacriticalMarks(name).toLowerCase().contains(textSearch.toLowerCase())) {
+                    //names.add(name);
+                    Message msg = new Message();
+                    msg.what = MSG_ADD_SEARCH;
+                    Bundle bundle = new Bundle();
+                    bundle.putString("name", name);
+                    msg.setData(bundle);
+                    msg.setTarget(mHandler);
+                    msg.sendToTarget();
+                    countName++;
+                    if (countName == 4) {
+                        break;
+                    }
+                }
+            }
+
+
+        }
+    };
+    private Thread th;
     private Movie movieRecommend;
 
     @Override
@@ -59,12 +105,12 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
     @Override
     protected void initViews() {
 
-        if(MyApplication.getInstance().getStorage().moviePopular != null){
+        if (MyApplication.getInstance().getStorage().moviePopular != null) {
             int count = 0;
             Movie popularMovie = MyApplication.getInstance().getStorage().moviePopular;
             List<String> nameTrending = new ArrayList<>();
-            for (Movie.Result item: popularMovie.results){
-                if(count < 4) {
+            for (Movie.Result item : popularMovie.results) {
+                if (count < 4) {
                     nameTrending.add(item.title);
                     count++;
                 } else {
@@ -76,7 +122,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
             binding.rvTrending.setAdapter(trendingAdapter);
         }
 
-        if(MyApplication.getInstance().getStorage().movieRecommend == null) {
+        if (MyApplication.getInstance().getStorage().movieRecommend == null) {
             //Log.d(TAG, "call api: ");
             viewModel.getRecommendation(DEFAULT_ID);
         } else {
@@ -95,12 +141,11 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
         Type listMovieNameType = new TypeToken<List<MovieName>>() {
         }.getType();
         List<MovieName> listMovieName = gson.fromJson(jsonFileString, listMovieNameType);
-        List<String> movieNames = listMovieName.stream()
+        movieNames = listMovieName.stream()
                 .map(movieName -> movieName.name)
                 .collect(Collectors.toList());
         //Log.d(TAG, "initViews: " + movieNames.size() + " " + movieNames.get(0));
-
-        RecommendSearchAdapter searchAdapter = new RecommendSearchAdapter(context, this);
+        searchAdapter = new RecommendSearchAdapter(context, this);
         binding.rvRecommendSearch.setAdapter(searchAdapter);
         binding.etSearch.addTextChangedListener(new TextWatcher() {
             @Override
@@ -110,61 +155,62 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-//                Observable<CharSequence> textChanges = RxTextView.textChangeEvents(s);
-//                textChanges
-//                        .map(search -> search.toString().toLowerCase())
-//                        .switchMap(search ->
-//                                Observable.fromArray()
-//                                        .filter(item -> StringConvert.removeDiacriticalMarks(item).toLowerCase().contains(search.toLowerCase()))
-//                                        .toList()
-//                        )
-//                        .subscribeOn(Schedulers.io())
-//                        .observeOn(AndroidSchedulers.mainThread())
-//                        .subscribe(
-//                                new Observer<List<String>>() {
-//                                    @Override
-//                                    public void onError(Throwable e) {
-//                                    }
-//
-//                                    @Override
-//                                    public void onComplete() {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onNext(List<String> items) {
-//                                        //mItemListAdapter.notifyDataSetChanged(items);
-//                                        recyclerView.getLayoutManager().scrollToPosition(0);
-//                                    }
-//                                });
-                List<String> names = new ArrayList<>();
-                int countName = 0;
-                if(!s.toString().equals("")) {
+                /*if(!s.toString().equals("")) {
                     ViewUtils.gone(binding.layoutRecommend);
                     ViewUtils.show(binding.rvRecommendSearch);
-                    for (String name : movieNames) {
-                        if (StringConvert.removeDiacriticalMarks(name).toLowerCase().contains(s.toString().toLowerCase())) {
-                            names.add(name);
-                            countName++;
-                            if (countName == 4) {
-                                break;
-                            }
-                        }
+                    Observable.fromIterable(movieNames)
+                            .subscribeOn(Schedulers.computation())
+                            .observeOn(AndroidSchedulers.mainThread())
+                            .filter(item -> StringConvert.removeDiacriticalMarks(item).toLowerCase().contains(s.toString().toLowerCase()))
+                            .toList()
+                            .subscribe(new SingleObserver<List<String>>() {
+
+                                @Override
+                                public void onSubscribe(@io.reactivex.rxjava3.annotations.NonNull Disposable d) {
+
+                                }
+
+                                @Override
+                                public void onSuccess(@io.reactivex.rxjava3.annotations.NonNull List<String> strings) {
+                                    Log.d(TAG, "onSuccess: " + strings.size());
+                                    searchAdapter.renewItems(strings);
+                                }
+
+                                @Override
+                                public void onError(@io.reactivex.rxjava3.annotations.NonNull Throwable e) {
+
+                                }
+                            });
+                } else {
+                    ViewUtils.show(binding.layoutRecommend);
+                    ViewUtils.gone(binding.rvRecommendSearch);
+                }*/
+
+
+                int countName = 0;
+                if (!s.toString().equals("")) {
+                    ViewUtils.gone(binding.layoutRecommend);
+                    ViewUtils.show(binding.rvRecommendSearch);
+//                    for (String name : movieNames) {
+//                        if (StringConvert.removeDiacriticalMarks(name).toLowerCase().contains(s.toString().toLowerCase())) {
+//                            names.add(name);
+//                            countName++;
+//                            if (countName == 4) {
+//                                break;
+//                            }
+//                        }
+//                    }
+                    textSearch = s.toString();
+                    if (th == null || !th.isAlive()) {
+                        th = new Thread(rb);
+                        th.start();
                     }
-                    searchAdapter.renewItems(names);
+
+
                 } else {
                     ViewUtils.show(binding.layoutRecommend);
                     ViewUtils.gone(binding.rvRecommendSearch);
                 }
-//                List<String> result = names
-//                        .stream()
-//                        .filter(x -> StringConvert.removeDiacriticalMarks(x).toLowerCase().contains(s.toString().toLowerCase()))
-//                        .collect(Collectors.toList());
 
             }
 
@@ -181,14 +227,14 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
                     hideSoftInput(binding.etSearch);
                     Bundle bundle = new Bundle();
                     bundle.putString("search", binding.etSearch.getText().toString().trim());
-                    actionShowFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+                    callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+                    //actionShowFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
                     return true;
                 }
                 return false;
             }
         });
     }
-
 
 
     @Override
@@ -198,7 +244,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if(key.equals(Constants.KEY_GET_RECOMMENDATION)){
+        if (key.equals(Constants.KEY_GET_RECOMMENDATION)) {
             movieRecommend = (Movie) data;
             MyApplication.getInstance().getStorage().movieRecommend = movieRecommend;
             MovieAdapter adapter = new MovieAdapter(context, movieRecommend, this);
@@ -211,24 +257,26 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
 
     }
 
-    private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
+    /*private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
         NavigateFragment parentFrag = ((NavigateFragment) SearchFragment.this.getParentFragment());
         if (parentFrag != null) {
             parentFrag.setActionShowFragment(tag, data, isBack, anim);
         }
-    }
+    }*/
 
     @Override
     public void selectTrending(String name) {
         hideSoftInput(binding.etSearch);
         Bundle bundle = new Bundle();
         bundle.putString("search", name);
-        actionShowFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        //actionShowFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
     }
 
     @Override
     public void gotoMovieDetail(int id) {
-        actionShowFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+        //actionShowFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
     @Override
@@ -236,6 +284,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
         hideSoftInput(binding.etSearch);
         Bundle bundle = new Bundle();
         bundle.putString("search", name);
-        actionShowFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        //actionShowFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
     }
 }

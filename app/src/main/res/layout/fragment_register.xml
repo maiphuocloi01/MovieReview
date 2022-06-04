@@ -35,6 +35,7 @@
         android:textSize="@dimen/_22sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_28sdp"
+        android:fontFamily="@font/roboto_regular"
         android:textColor="@color/light_white"
         android:text="Join us"/>
 

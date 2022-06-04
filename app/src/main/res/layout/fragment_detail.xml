@@ -83,6 +83,7 @@
                         android:ellipsize="end"
                         android:fontFamily="@font/roboto_bold"
                         android:maxLines="2"
+                        android:layout_marginStart="@dimen/_8sdp"
                         android:text="Doctor Strange in the Multiverse of Madness"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_14ssp" />
@@ -91,7 +92,8 @@
                         android:id="@+id/rv_genres"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="15dp"
+                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginBottom="@dimen/_8sdp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:listitem="@layout/item_genres" />
@@ -214,7 +216,7 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/iv_juice"
+                        android:id="@+id/iv_more"
                         android:layout_width="@dimen/_28sdp"
                         android:layout_height="@dimen/_28sdp"
                         android:padding="5dp"
@@ -245,10 +247,95 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tableRow">
 
+                <Button
+                    android:id="@+id/bt_add_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/bg_primary_corner_10"
+                    android:fontFamily="@font/roboto_bold"
+                    android:paddingVertical="@dimen/_6sdp"
+                    android:stateListAnimator="@null"
+                    android:text="Add your review"
+                    android:textAllCaps="false"
+                    android:textColor="@color/dark"
+                    android:textSize="@dimen/_13ssp" />
+
+                <TableRow android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:layout_width="match_parent">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="Reviews"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/_13ssp" />
+
+                    <View android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:layout_width="0dp"/>
+
+                    <TableRow
+                        android:id="@+id/layout_add_review"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:layout_width="wrap_content">
+
+                        <!--<ImageView
+                            android:layout_height="@dimen/_14sdp"
+                            android:layout_width="@dimen/_14sdp"
+                            android:src="@drawable/ic_forward"
+                            android:layout_marginEnd="@dimen/_3sdp"
+                            app:tint="@color/primary" />-->
+
+                        <!--<TextView
+                            android:id="@+id/tv_add_review"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:fontFamily="@font/roboto_bold"
+                            android:text="Add your review"
+                            android:gravity="center"
+                            android:layout_marginEnd="@dimen/_2sdp"
+                            android:textColor="@color/primary"
+                            android:textSize="@dimen/_10ssp" />-->
+
+                    </TableRow>
+
+
+                </TableRow>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_review"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    tools:itemCount="2"
+                    android:nestedScrollingEnabled="false"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:listitem="@layout/item_review" />
+
+                <TextView
+                    android:id="@+id/tv_review"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="8dp"
+                    android:drawableRight="@drawable/ic_show_more"
+                    android:drawablePadding="10dp"
+                    android:drawableTint="@color/primary"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Read all reviews"
+                    android:textAlignment="center"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_12ssp" />
+
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
+                    android:layout_marginTop="@dimen/_10sdp"
                     android:fontFamily="@font/roboto_bold"
                     android:text="Overview"
                     android:textColor="@color/white"
@@ -443,59 +530,27 @@
                     tools:itemCount="3"
                     tools:listitem="@layout/item_cast" />
 
-                <TableRow android:layout_height="wrap_content"
-                    android:layout_width="match_parent">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Reviews"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <View android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:layout_width="0dp"/>
-
-                    <TextView
-                        android:id="@+id/tv_add_review"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="16dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Add your review"
-                        android:textAlignment="textEnd"
-                        android:textColor="@color/primary"
-                        android:textSize="@dimen/_12ssp" />
-
-                </TableRow>
+                <TextView
+                    android:id="@+id/tv_collection"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:visibility="gone"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Doctor Strange Collection"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/rv_review"
+                    android:id="@+id/rv_collection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="10dp"
-                    tools:itemCount="2"
-                    android:nestedScrollingEnabled="false"
+                    android:visibility="gone"
+                    android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_review" />
-
-                <TextView
-                    android:id="@+id/tv_review"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:layout_marginTop="8dp"
-                    android:drawableRight="@drawable/ic_show_more"
-                    android:drawablePadding="10dp"
-                    android:drawableTint="@color/primary"
-                    android:fontFamily="@font/roboto_bold"
-                    android:text="Read all reviews"
-                    android:textAlignment="center"
-                    android:textColor="@color/primary"
-                    android:textSize="@dimen/_12ssp" />
+                    tools:itemCount="3"
+                    tools:listitem="@layout/item_movie" />
 
                 <TextView
                     android:layout_width="wrap_content"

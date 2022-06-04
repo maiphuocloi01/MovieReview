@@ -34,6 +34,22 @@ public class RecommendSearchAdapter extends RecyclerView.Adapter<RecommendSearch
         notifyDataSetChanged();
     }
 
+    public void deleteItem(int position) {
+        this.listSearch.remove(position);
+        notifyDataSetChanged();
+    }
+
+    public void deleteAllItem() {
+        this.listSearch.clear();
+        this.listSearch = new ArrayList<>();
+        notifyDataSetChanged();
+    }
+
+    public void addItem(String name) {
+        this.listSearch.add(name);
+        notifyDataSetChanged();
+    }
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

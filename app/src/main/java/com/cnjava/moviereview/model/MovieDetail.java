@@ -39,6 +39,8 @@ public class MovieDetail implements Serializable {
     public List<Genres> genres;
     @SerializedName("runtime")
     public int runtime;
+    @SerializedName("belongs_to_collection")
+    public Collection collection;
 
     public static class Genres implements Serializable{
 

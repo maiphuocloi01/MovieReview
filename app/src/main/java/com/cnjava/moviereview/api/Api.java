@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.api;
 
 import com.cnjava.moviereview.model.Actor;
+import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
 
@@ -47,5 +48,9 @@ public interface Api {
     @GET("movie/{movie_id}/recommendations?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Call<Movie> getRecommendation(@Path("movie_id") int movie_id);
+
+    @GET("collection/{collection_id}?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Collection> getCollection(@Path("collection_id") int collection_id);
 
 }

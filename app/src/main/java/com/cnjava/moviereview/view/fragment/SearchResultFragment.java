@@ -75,6 +75,7 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_SEARCH_MOVIE)) {
             movie = (Movie) data;
+            binding.tvCountMovie.setText(String.format("Found %s results", movie.results.size()));
             ResultAdapter resultAdapter = new ResultAdapter(context, movie, this);
             binding.rvResult.setAdapter(resultAdapter);
             //MyApplication.getInstance().getStorage().movieSearch = movie;

@@ -11,7 +11,7 @@
         android:layout_width="wrap_content"
         android:layout_height="1dp"/>
 
-    <ScrollView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -70,6 +70,7 @@
                     android:layout_weight="1" />
 
                 <ImageView
+                    android:id="@+id/iv_setting"
                     android:layout_width="@dimen/_20sdp"
                     android:layout_height="@dimen/_20sdp"
                     android:src="@drawable/ic_setting"
@@ -137,6 +138,20 @@
                 android:layout_marginTop="@dimen/_3sdp"
                 android:background="@color/light_black" />
 
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                layout="@layout/item_my_review"/>
+
+            <include
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                layout="@layout/item_my_review"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_review"
                 android:layout_width="match_parent"
@@ -146,7 +161,7 @@
                 tools:listitem="@layout/item_my_review" />
         </LinearLayout>
 
-    </ScrollView>
+    </androidx.core.widget.NestedScrollView>
 
 
 </LinearLayout>

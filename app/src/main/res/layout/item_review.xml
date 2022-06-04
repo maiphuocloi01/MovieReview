@@ -4,7 +4,6 @@
     android:id="@+id/view_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/_3sdp"
     android:layout_marginVertical="@dimen/_8sdp"
     app:cardBackgroundColor="@color/light_black"
     app:cardCornerRadius="10dp"
@@ -20,7 +19,7 @@
 
 
         <TableRow android:layout_height="wrap_content"
-            android:layout_width="wrap_content">
+            android:layout_width="match_parent">
 
             <com.google.android.material.imageview.ShapeableImageView
                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
@@ -69,15 +68,8 @@
             <TableRow
                 android:layout_marginTop="@dimen/_10sdp"
                 android:layout_marginStart="@dimen/_10sdp"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
-
-                <ImageView
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
-                    android:layout_gravity="center"
-                    android:src="@drawable/ic_star"
-                    app:tint="@color/primary" />
 
                 <TextView
                     android:id="@+id/tv_rate"
@@ -86,12 +78,34 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="7.8"
+                    android:text="8"
                     android:textColor="@color/primary"
                     android:textSize="@dimen/_12ssp" />
 
+                <ImageView
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/ic_star"
+                    android:layout_marginTop="1dp"
+                    app:tint="@color/primary" />
+
+
+
 
             </TableRow>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="1dp"/>
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more"
+                android:layout_marginTop="@dimen/_8sdp"
+                app:tint="@color/light_white" />
+
         </TableRow>
 
         <ru.embersoft.expandabletextview.ExpandableTextView
@@ -129,6 +143,62 @@
 <!--            android:text="Doctor Strange in the Multiverse of Madness is dark, silly, and fan pleasing. The film is at is most bewitching when Sam Raimi can let his horror roots be showcased. It will satisfy horror and superhero film fans alike, but would have and could have been even better if Raimi was allowed to dive even further into the horror genre. Be sure to stay after the credits, as well. There are two after credits sequences with the final one being so absurdly on the nose for Sam Raimi that it may be the most entertaining part of the film."-->
 <!--            android:textColor="@color/light_white"-->
 <!--            android:textSize="16sp" />-->
+
+        <TableRow
+            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_choose_like"
+                    app:tint="@color/light_white" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="1.123"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/light_white"
+                    android:layout_marginStart="@dimen/_4sdp"/>
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="@dimen/_16sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:src="@drawable/ic_dislike"
+                    app:tint="@color/light_white" />
+
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:text="1.123"
+                    android:layout_gravity="center"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="@dimen/_12sdp"
+                    android:textColor="@color/light_white"
+                    android:layout_marginStart="@dimen/_4sdp"/>
+
+            </TableRow>
+
+        </TableRow>
 
 
     </LinearLayout>

@@ -73,7 +73,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         binding.etSearch.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                actionShowFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
+                callBack.showFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
+                //actionShowFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
             }
         });
 
@@ -115,6 +116,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         });
         binding.vpPopular.setPageTransformer(compositePageTransformer);
         //Log.d(TAG, "initViews: " + moviePopular);
+        binding.ivAvt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
     }
 
     @Override
@@ -204,13 +211,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
     @Override
     public void gotoMovieDetail(int id) {
-        actionShowFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+
+        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+        //actionShowFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
-    private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
+    /*private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
         NavigateFragment parentFrag = ((NavigateFragment) HomeFragment.this.getParentFragment());
         if (parentFrag != null) {
             parentFrag.setActionShowFragment(tag, data, isBack, anim);
         }
-    }
+    }*/
 }

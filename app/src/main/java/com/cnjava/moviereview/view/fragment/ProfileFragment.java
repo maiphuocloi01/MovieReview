@@ -9,7 +9,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -56,6 +55,13 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
                 showAlertDialog();
             }
         });*/
+
+        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(EditProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
     }
 
     @Override
@@ -63,12 +69,12 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
         return FragmentProfileBinding.inflate(inflater, container, false);
     }
 
-    private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
+    /*private void actionShowFragment(String tag, Object data, boolean isBack, int anim) {
         NavigateFragment parentFrag = ((NavigateFragment) ProfileFragment.this.getParentFragment());
         if (parentFrag != null) {
             parentFrag.setActionShowFragment(tag, data, isBack, anim);
         }
-    }
+    }*/
 
     private void showAlertDialog() {
         final Dialog dialog = new Dialog(context);
@@ -93,7 +99,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
         btnCancel.setOnClickListener(view -> dialog.dismiss());
 
         btnConfirm.setOnClickListener(view -> {
-            actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            callBack.showFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            //actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
             //CommonUtils.getInstance().clearPref(Constants.USERNAME);
             dialog.dismiss();
