@@ -15,14 +15,14 @@
         android:text="Date picker"
         android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textSize="24sp" />
+        android:textSize="@dimen/_16sdp" />
 
     <View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@color/mid_white"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="@dimen/_6sdp" />
 
     <TextView
         android:id="@+id/tv_date"
@@ -37,13 +37,15 @@
 
     <DatePicker
         android:id="@+id/datePicker"
-        style="@style/DatePicker"
+        style="@style/MyDatePicker"
+        android:theme="@style/Theme.Material3.Dark.Dialog.Alert"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginHorizontal="20dp"
-        android:datePickerMode="spinner"
-        android:calendarViewShown="false"/>
+        android:layout_marginTop="15dp"
+        android:calendarViewShown="false"
+        android:calendarTextColor="@color/light_white"
+        android:datePickerMode="spinner" />
 
     <TableRow
         android:layout_width="match_parent"
@@ -59,14 +61,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_light_dark_corner_20"
+            android:background="@color/light_black"
             android:enabled="true"
             android:fontFamily="@font/roboto_bold"
-            android:padding="15dp"
+            android:padding="@dimen/_10sdp"
             android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="@color/light_white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_14ssp" />
 
         <Button
             android:id="@+id/bt_confirm2"
@@ -74,14 +76,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_primary_corner_20"
+            android:background="@drawable/bg_primary_corner_10"
             android:fontFamily="@font/roboto_bold"
-            android:padding="15dp"
+            android:padding="@dimen/_10sdp"
             android:stateListAnimator="@null"
             android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/dark"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_14ssp" />
 
     </TableRow>
 

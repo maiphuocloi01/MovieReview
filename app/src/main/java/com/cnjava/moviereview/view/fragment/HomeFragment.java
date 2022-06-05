@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
@@ -120,6 +121,49 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             @Override
             public void onClick(View view) {
                 callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.tvViewAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.btCategory1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "28");
+                callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.btCategory2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "14");
+                callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.btCategory3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "18");
+                callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.btCategory4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Bundle bundle = new Bundle();
+                bundle.putString("category", "12");
+                callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
             }
         });
     }

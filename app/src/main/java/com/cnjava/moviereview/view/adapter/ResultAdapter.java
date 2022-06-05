@@ -11,6 +11,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemSearchResultBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
@@ -42,9 +43,13 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         holder.binding.tvName.setText(item.title);
         holder.binding.tvRate.setText(String.valueOf(item.voteAverage));
         holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        if(item.overview != null) {
+            holder.binding.tvOverview.setText(item.overview);
+        }
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.ic_movie)
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

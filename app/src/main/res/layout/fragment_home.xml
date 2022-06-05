@@ -52,7 +52,7 @@
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     android:textColor="@color/light_white"
-                    android:text="Movie Review"/>
+                    android:text="VieWie"/>
 
                 <View
                     android:layout_width="match_parent"
@@ -134,15 +134,53 @@
                 android:layout_marginTop="@dimen/_15sdp"
                 android:paddingHorizontal="@dimen/_20sdp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+
+
+            <TableRow android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 android:layout_marginTop="@dimen/_24sdp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Trending Category"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_12ssp"/>
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Trending Category"
+                    android:textColor="@color/light_white"
+                    android:textSize="@dimen/_12ssp"/>
+
+                <View android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:layout_width="0dp"/>
+
+                <TableRow
+                    android:id="@+id/layout_add_review"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_width="wrap_content">
+
+                    <!--<ImageView
+                        android:layout_height="@dimen/_14sdp"
+                        android:layout_width="@dimen/_14sdp"
+                        android:src="@drawable/ic_forward"
+                        android:layout_marginEnd="@dimen/_3sdp"
+                        app:tint="@color/primary" />-->
+
+                    <TextView
+                        android:id="@+id/tv_view_all"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_bold"
+                        android:text="View all"
+                        android:gravity="center"
+                        android:layout_marginEnd="@dimen/_4sdp"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_12ssp" />
+
+                </TableRow>
+
+
+            </TableRow>
 
             <TableRow
                 android:layout_height="wrap_content"
@@ -154,7 +192,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/_7sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/bg_mid_white_corner_10"
                     android:fontFamily="@font/roboto_bold"
@@ -171,7 +209,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_7sdp"
-                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginTop="@dimen/_15sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/bg_mid_white_corner_10"
                     android:fontFamily="@font/roboto_bold"

@@ -68,31 +68,41 @@
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_gravity="bottom"
-                    android:layout_marginHorizontal="@dimen/_6sdp"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:layout_marginBottom="@dimen/_2sdp"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_name"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:ellipsize="end"
-                        android:fontFamily="@font/roboto_bold"
-                        android:maxLines="2"
-                        android:layout_marginStart="@dimen/_8sdp"
-                        android:text="Doctor Strange in the Multiverse of Madness"
-                        android:textColor="@color/light_white"
-                        android:textSize="@dimen/_14ssp" />
+                    <FrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_36sdp">
+
+                        <TextView
+                            android:id="@+id/tv_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:ellipsize="end"
+                            android:layout_gravity="center_vertical"
+                            android:fontFamily="@font/roboto_bold"
+                            android:maxLines="2"
+                            android:layout_marginEnd="@dimen/_8sdp"
+                            android:layout_marginStart="@dimen/_12sdp"
+                            android:text="Doctor Strange in the Multiverse of Madness"
+                            android:textColor="@color/light_white"
+                            android:textSize="@dimen/_14ssp" />
+
+                    </FrameLayout>
+
+
 
                     <androidx.recyclerview.widget.RecyclerView
                         android:id="@+id/rv_genres"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_8sdp"
+                        android:layout_marginStart="@dimen/_8sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:orientation="horizontal"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -253,6 +263,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginHorizontal="@dimen/_8sdp"
                     android:background="@drawable/bg_primary_corner_10"
                     android:fontFamily="@font/roboto_bold"
                     android:paddingVertical="@dimen/_6sdp"
@@ -274,7 +285,7 @@
                         android:textColor="@color/white"
                         android:textSize="@dimen/_13ssp" />
 
-                    <View android:layout_height="wrap_content"
+                    <!--<View android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:layout_width="0dp"/>
 
@@ -284,14 +295,14 @@
                         android:gravity="center"
                         android:layout_width="wrap_content">
 
-                        <!--<ImageView
+                        <ImageView
                             android:layout_height="@dimen/_14sdp"
                             android:layout_width="@dimen/_14sdp"
                             android:src="@drawable/ic_forward"
                             android:layout_marginEnd="@dimen/_3sdp"
-                            app:tint="@color/primary" />-->
+                            app:tint="@color/primary" />
 
-                        <!--<TextView
+                        <TextView
                             android:id="@+id/tv_add_review"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -300,9 +311,9 @@
                             android:gravity="center"
                             android:layout_marginEnd="@dimen/_2sdp"
                             android:textColor="@color/primary"
-                            android:textSize="@dimen/_10ssp" />-->
+                            android:textSize="@dimen/_10ssp" />
 
-                    </TableRow>
+                    </TableRow>-->
 
 
                 </TableRow>
@@ -347,7 +358,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="Doctor Strange, with the help of mystical allies both old and new, traverses the mind-bending and dangerous alternate realities of the Multiverse to confront a mysterious new adversary."
+                    android:text="@string/overview"
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_12ssp"/>
 
@@ -405,7 +416,7 @@
                             android:maxLines="1"
                             android:ellipsize="end"
                             android:textColor="@color/light_white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -414,7 +425,7 @@
                             android:fontFamily="@font/roboto_bold"
                             android:text="Rate Count"
                             android:textColor="@color/white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
                         <TextView
                             android:id="@+id/tv_rate_count"
@@ -427,7 +438,7 @@
                             android:ellipsize="end"
                             android:layout_marginBottom="16dp"
                             android:textColor="@color/light_white"
-                            android:textSize="16sp"/>
+                            android:textSize="@dimen/_12ssp"/>
 
 
                     </LinearLayout>
@@ -529,6 +540,28 @@
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
                     tools:listitem="@layout/item_cast" />
+
+                <TextView
+                    android:id="@+id/tv_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/roboto_bold"
+                    android:text="Video"
+                    android:visibility="gone"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12ssp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rv_video"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="10dp"
+                    android:orientation="horizontal"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:itemCount="3"
+                    android:visibility="gone"
+                    tools:listitem="@layout/item_video" />
 
                 <TextView
                     android:id="@+id/tv_collection"

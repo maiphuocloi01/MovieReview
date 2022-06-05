@@ -134,6 +134,6 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         MyApplication.getInstance().getStorage().genresList.add(new Genres(10770, "TV Movie"));
         MyApplication.getInstance().getStorage().genresList.add(new Genres(53, "Thriller"));
         MyApplication.getInstance().getStorage().genresList.add(new Genres(10752, "War"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(37, "37"));
+        MyApplication.getInstance().getStorage().genresList.add(new Genres(37, "Western"));
     }
 }

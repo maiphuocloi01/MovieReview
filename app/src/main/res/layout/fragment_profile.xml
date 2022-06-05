@@ -37,47 +37,77 @@
                     app:srcCompat="@drawable/avt" />
 
                 <LinearLayout
-                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:layout_width="wrap_content"
+                    <TableRow
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginBottom="5dp"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Mai Phước Lợi"
-                        android:textColor="@color/light_white"
-                        android:textSize="@dimen/_15ssp" />
+                        android:layout_width="match_parent">
 
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:layout_marginTop="5dp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="maiphuocloi01@gmail.com"
-                        android:textColor="@color/light_white"
-                        android:textSize="@dimen/_10ssp" />
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_14sdp"
+                                android:layout_marginBottom="@dimen/_1sdp"
+                                android:fontFamily="@font/roboto_bold"
+                                android:text="Mai Phước Lợi"
+                                android:textColor="@color/light_white"
+                                android:textSize="@dimen/_15ssp" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="@dimen/_14sdp"
+                                android:layout_marginTop="@dimen/_2sdp"
+                                android:fontFamily="@font/roboto_regular"
+                                android:text="maiphuocloi01@gmail.com"
+                                android:textColor="@color/light_white"
+                                android:textSize="@dimen/_10ssp" />
+
+
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:layout_weight="1" />
+
+                        <ImageView
+                            android:id="@+id/iv_logout"
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:src="@drawable/ic_logout"
+                            app:tint="@color/light_white" />
+
+                    </TableRow>
 
 
                 </LinearLayout>
 
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_weight="1" />
-
-                <ImageView
-                    android:id="@+id/iv_setting"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
-                    android:src="@drawable/ic_setting"
-                    app:tint="@color/light_white" />
-
 
             </TableRow>
+
+            <TextView
+                android:id="@+id/tv_edit_profile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
+                android:background="@drawable/bg_light_dark_corner_10_border"
+                android:fontFamily="@font/roboto_regular"
+                android:stateListAnimator="@null"
+                android:text="Your profile"
+                android:textAlignment="center"
+                android:paddingVertical="@dimen/_8sdp"
+                android:textColor="@color/light_white"
+                android:textSize="@dimen/_10ssp"
+                android:textStyle="bold" />
 
             <!--<TableRow
                 android:layout_height="wrap_content"
@@ -158,6 +188,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_8sdp"
                 android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginBottom="@dimen/_8sdp"
                 tools:listitem="@layout/item_my_review" />
         </LinearLayout>
 

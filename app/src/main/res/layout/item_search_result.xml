@@ -32,7 +32,7 @@
             android:layout_marginTop="5dp"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_bold"
-            android:maxLines="1"
+            android:maxLines="2"
             android:text="Doctor Strange in the Multiverse of Madness"
             android:textColor="@color/light_white"
             android:textSize="@dimen/_12ssp" />
@@ -84,6 +84,17 @@
 
         </TableRow>
 
+        <TextView
+            android:id="@+id/tv_overview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:fontFamily="@font/roboto_regular"
+            android:maxLines="2"
+            android:ellipsize="end"
+            android:text="@string/overview"
+            android:textColor="@color/light_white"
+            android:textSize="@dimen/_10ssp" />
 
     </LinearLayout>
 

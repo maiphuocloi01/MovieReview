@@ -3,16 +3,18 @@
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:gravity="center"
+
     android:layout_height="match_parent">
 
     <androidx.cardview.widget.CardView
-        app:cardCornerRadius="20dp"
+        app:cardCornerRadius="@dimen/_16sdp"
         app:cardElevation="0dp"
+        app:cardBackgroundColor="@color/dark"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_margin="20dp"
+            android:layout_margin="@dimen/_16sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
@@ -26,10 +28,10 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="15dp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:text="Loading..."
-                android:textColor="@color/dark"
-                android:textSize="20sp" />
+                android:textColor="@color/light_white"
+                android:textSize="@dimen/_14ssp" />
 
         </LinearLayout>
 

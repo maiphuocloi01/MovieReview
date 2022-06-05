@@ -2,8 +2,10 @@ package com.cnjava.moviereview.api;
 
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.model.Collection;
+import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
+import com.cnjava.moviereview.model.Video;
 
 import java.util.List;
 
@@ -41,9 +43,17 @@ public interface Api {
     @Headers("Content-type: application/json")
     Call<Movie> searchMovie(@Query("query") String keyword);
 
+    @GET("search/keyword?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Keyword> searchKeyword(@Query("query") String keyword);
+
     @GET("movie/{movie_id}/credits?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Call<Actor> getCast(@Path("movie_id") int movie_id);
+
+    @GET("movie/{movie_id}/videos?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Video> getVideo(@Path("movie_id") int movie_id);
 
     @GET("movie/{movie_id}/recommendations?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
@@ -52,5 +62,13 @@ public interface Api {
     @GET("collection/{collection_id}?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Call<Collection> getCollection(@Path("collection_id") int collection_id);
+
+    @GET("keyword/{keyword_id}/movies?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Movie> getMovieByKeywordId(@Path("keyword_id") int keyword_id);
+
+    @GET("discover/movie?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Movie> getMovieByCategory(@Query("sort_by") String sort, @Query("with_genres") String category);
 
 }

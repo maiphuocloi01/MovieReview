@@ -15,7 +15,7 @@
         android:text="Confirm OTP code"
         android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textSize="24sp" />
+        android:textSize="@dimen/_16ssp" />
 
     <TextView
         android:layout_width="match_parent"
@@ -26,7 +26,7 @@
         android:text="Verification code sent to email"
         android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textSize="18sp" />
+        android:textSize="@dimen/_12ssp" />
 
     <TextView
         android:id="@+id/tv_email"
@@ -38,7 +38,7 @@
         android:text="maiphuocloi01@gmail.com"
         android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textSize="18sp" />
+        android:textSize="@dimen/_12ssp" />
 
     <EditText
         android:id="@+id/et_otp"
@@ -46,13 +46,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector"
         android:fontFamily="@font/roboto_regular"
         android:hint="OTP code"
         android:inputType="number"
         android:padding="15dp"
-        android:textColorHint="@color/light_black"
-        android:textSize="18sp" />
+        android:textColor="@color/light_white"
+        android:textColorHint="@color/mid_white"
+        android:textSize="@dimen/_14ssp" />
 
     <TableRow
         android:layout_marginHorizontal="20dp"
@@ -68,7 +69,7 @@
             android:text="Resend code in "
             android:layout_marginEnd="5dp"
             android:textColor="@color/light_white"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_12ssp" />
 
         <TextView
             android:id="@+id/tv_countdown"
@@ -78,7 +79,7 @@
             android:text="00:59"
             android:layout_marginEnd="15dp"
             android:textColor="@color/primary"
-            android:textSize="18sp" />
+            android:textSize="@dimen/_12ssp" />
 
         <TextView
             android:id="@+id/tv_resend"
@@ -109,14 +110,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_light_dark_corner_20"
+            android:background="@color/light_black"
             android:enabled="true"
             android:fontFamily="@font/roboto_bold"
-            android:padding="15dp"
+            android:padding="@dimen/_10sdp"
             android:text="Cancel"
             android:textAllCaps="false"
             android:textColor="@color/light_white"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_14ssp" />
 
         <Button
             android:id="@+id/bt_confirm"
@@ -124,14 +125,14 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp"
             android:layout_weight="1"
-            android:background="@drawable/bg_primary_corner_20"
+            android:background="@drawable/bg_primary_corner_10"
             android:fontFamily="@font/roboto_bold"
-            android:padding="15dp"
+            android:padding="@dimen/_10sdp"
             android:stateListAnimator="@null"
             android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/dark"
-            android:textSize="20sp" />
+            android:textSize="@dimen/_14ssp" />
 
     </TableRow>
 

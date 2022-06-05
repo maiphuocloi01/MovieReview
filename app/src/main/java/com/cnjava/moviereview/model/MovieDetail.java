@@ -1,5 +1,7 @@
 package com.cnjava.moviereview.model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -17,6 +19,7 @@ public class MovieDetail implements Serializable {
     public long budget;
     @SerializedName("homepage")
     public String homepage;
+    @Nullable
     @SerializedName("original_title")
     public String title;
     @SerializedName("overview")

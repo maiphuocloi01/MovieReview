@@ -37,6 +37,7 @@ import androidx.core.app.ActivityCompat;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentEditProfileBinding;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.io.File;
@@ -236,12 +237,12 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
         //Calendar calendar = Calendar.getInstance();
         //calendar.setTimeInMillis(System.currentTimeMillis());
 
-        tvDate.setText(convertDateType1(defaultDay, defaultMonth + 1, defaultYear));
+        tvDate.setText(NumberUtils.convertDateType4(convertDateType1(defaultDay, defaultMonth + 1, defaultYear)));
         picker.init(defaultYear, defaultMonth, defaultDay, new DatePicker.OnDateChangedListener() {
 
             @Override
             public void onDateChanged(DatePicker datePicker, int year, int month, int dayOfMonth) {
-                tvDate.setText(convertDateType1(dayOfMonth, month + 1, year));
+                tvDate.setText(NumberUtils.convertDateType4(convertDateType1(dayOfMonth, month + 1, year)));
                 defaultDay = dayOfMonth;
                 defaultMonth = month;
                 defaultYear = year;

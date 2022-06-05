@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 
 import androidx.annotation.NonNull;
@@ -56,10 +57,19 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             }
         });*/
 
-        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
+        binding.tvEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                binding.tvEditProfile.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(EditProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.ivLogout.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                binding.ivLogout.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+                showAlertDialog();
             }
         });
     }

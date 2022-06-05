@@ -6,6 +6,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.RatingBar;
 
 import androidx.annotation.NonNull;
@@ -30,6 +31,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                binding.ivBack.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.backToPrev();
             }
         });
