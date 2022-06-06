@@ -30,7 +30,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_dialog_confirm_otp.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_dialog_date_picker.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_progress_dialog.xml" value="0.184375" />
-        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_add_review.xml" value="0.12" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_add_review.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_detail.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_edit_profile.xml" value="0.14666666666666667" />
@@ -50,9 +50,9 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_genres.xml" value="0.8333333333333334" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_keyword.xml" value="0.22" />
-        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_movie.xml" value="0.14666666666666667" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_movie.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_my_review.xml" value="0.3333333333333333" />
-        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_popular_movie.xml" value="0.12" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_popular_movie.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_recommend_search.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_review.xml" value="0.3333333333333333" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_search_result.xml" value="0.16666666666666666" />
@@ -63,6 +63,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/mipmap-anydpi-v26/ic_launcher_round.xml" value="0.1" />
         <entry key="..\:/Users/maiph/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/ratingbar_indicator_material.xml" value="0.128" />
+        <entry key="..\:/Users/maiph/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/ratingbar_material.xml" value="0.128" />
         <entry key="..\:/Users/maiph/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/ratingbar_small_material.xml" value="0.128" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/bg_primary_corner_30.xml" value="0.1235" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/activity_main.xml" value="0.17255434782608695" />

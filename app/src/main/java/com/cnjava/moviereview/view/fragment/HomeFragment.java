@@ -8,6 +8,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -120,6 +121,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         binding.ivAvt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                binding.ivAvt.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
@@ -127,6 +129,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         binding.tvViewAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                binding.tvViewAll.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
@@ -136,6 +139,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", "28");
+                binding.btCategory1.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
             }
         });
@@ -145,6 +149,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", "14");
+                binding.btCategory2.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
             }
         });
@@ -154,6 +159,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", "18");
+                binding.btCategory3.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
             }
         });
@@ -163,6 +169,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             public void onClick(View view) {
                 Bundle bundle = new Bundle();
                 bundle.putString("category", "12");
+                binding.btCategory4.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
             }
         });

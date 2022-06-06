@@ -5,6 +5,7 @@ import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
+import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Video;
 
 import java.util.List;
@@ -70,5 +71,9 @@ public interface Api {
     @GET("discover/movie?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Call<Movie> getMovieByCategory(@Query("sort_by") String sort, @Query("with_genres") String category);
+
+    @GET("movie/{movie_id}/external_ids?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Call<Social> getSocial(@Path("movie_id") int movie_id);
 
 }

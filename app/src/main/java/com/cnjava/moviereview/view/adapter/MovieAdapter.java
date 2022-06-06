@@ -15,6 +15,8 @@ import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 
+import java.util.Locale;
+
 public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder> {
 
     private Context context;
@@ -40,6 +42,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         Movie.Result item = movie.results.get(position);
         holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
         holder.binding.tvName.setText(item.title);
+        holder.binding.tvStar.setText(String.format(Locale.US, "%.1f", item.voteAverage));
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .transition(DrawableTransitionOptions.withCrossFade())

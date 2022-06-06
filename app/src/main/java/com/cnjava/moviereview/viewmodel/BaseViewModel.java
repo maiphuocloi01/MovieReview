@@ -6,6 +6,7 @@ import androidx.annotation.NonNull;
 import androidx.lifecycle.ViewModel;
 
 import com.cnjava.moviereview.api.Api;
+import com.cnjava.moviereview.api.UserApi;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 
@@ -31,11 +32,20 @@ public abstract class BaseViewModel extends ViewModel {
 
     protected Api getApi() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(Constants.BASE_URL_GUEST)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder().callTimeout(30, TimeUnit.SECONDS).build())
                 .build();
         return retrofit.create(Api.class);
+    }
+
+    protected UserApi getUserApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL_USER)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(new OkHttpClient.Builder().callTimeout(30, TimeUnit.SECONDS).build())
+                .build();
+        return retrofit.create(UserApi.class);
     }
 
     protected <T> Callback<T> initHandleResponse(String key) {

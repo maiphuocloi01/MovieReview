@@ -12,58 +12,122 @@
         android:orientation="vertical"
         android:layout_height="wrap_content">
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
+        <TableRow
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_marginTop="@dimen/_30sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:background="@drawable/bg_light_dark_corner_20"
-            app:hintAnimationEnabled="false"
-            app:endIconMode="clear_text"
-            app:endIconTint="@color/light_black"
-            app:hintEnabled="false">
+            android:layout_width="match_parent">
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/et_search"
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentBottom="true"
+                android:src="@drawable/ic_back"
+                android:layout_gravity="center"
+                app:tint="@color/light_white" />
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/transparent"
-                android:drawableStart="@drawable/ic_search"
-                android:drawablePadding="@dimen/_10sdp"
-                android:drawableTint="@color/light_white"
-                android:hint="Search for movies..."
-                android:inputType="text"
-                android:singleLine="true"
-                android:imeOptions="actionSearch"
-                android:padding="@dimen/_10sdp"
-                android:textColor="@color/light_white"
-                android:textColorHint="@color/mid_white"
-                android:textSize="@dimen/_12ssp" />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/bg_light_dark_corner_20"
+                app:hintAnimationEnabled="false"
+                app:endIconMode="clear_text"
+                android:layout_marginStart="@dimen/_10sdp"
+                app:endIconTint="@color/light_white"
+                app:hintEnabled="false">
 
-        <TextView
-            android:id="@+id/tv_count_movie"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_4sdp"
-            android:layout_marginHorizontal="@dimen/_16sdp"
-            android:fontFamily="@font/roboto_regular"
-            android:text="Found 3 results"
-            android:maxLines="1"
-            android:ellipsize="end"
-            android:textColor="@color/mid_white"
-            android:textSize="@dimen/_12ssp" />
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/et_search"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:drawableStart="@drawable/ic_search"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:drawableTint="@color/light_white"
+                    android:hint="Search for movies..."
+                    android:inputType="text"
+                    android:singleLine="true"
+                    android:imeOptions="actionSearch"
+                    android:padding="@dimen/_10sdp"
+                    android:textColor="@color/light_white"
+                    android:textColorHint="@color/mid_white"
+                    android:textSize="@dimen/_12ssp" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </TableRow>
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/_10sdp"
+            android:layout_marginHorizontal="@dimen/_14sdp"
             android:layout_height="wrap_content"
-            tools:listitem="@layout/item_search_result"
-            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-            app:spanCount="2"
-            android:id="@+id/rv_result"
-            android:layout_marginTop="@dimen/_10sdp"/>
+            tools:listitem="@layout/item_recommend_search"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            android:id="@+id/rv_recommend_search"
+            tools:itemCount="4"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_2sdp"/>
+
+        <LinearLayout
+            android:id="@+id/layout_search_result"
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv_count_movie"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_4sdp"
+                android:layout_marginHorizontal="@dimen/_16sdp"
+                android:fontFamily="@font/roboto_regular"
+                android:text=""
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/mid_white"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_search_result"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:spanCount="2"
+                android:id="@+id/rv_result"
+                android:layout_marginTop="@dimen/_10sdp"/>
+
+            <TextView
+                android:id="@+id/tv_recommend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                android:layout_marginTop="15dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="Recommended for you"
+                android:visibility="gone"
+                android:textColor="@color/light_white"
+                android:textSize="@dimen/_12ssp" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                android:layout_height="wrap_content"
+                tools:listitem="@layout/item_movie"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                android:id="@+id/rv_recommend"
+                android:layout_marginTop="@dimen/_8sdp"/>
+
+        </LinearLayout>
+
+
 
     </LinearLayout>
 

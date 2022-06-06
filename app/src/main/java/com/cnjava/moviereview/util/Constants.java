@@ -2,7 +2,8 @@ package com.cnjava.moviereview.util;
 
 public interface Constants {
 
-    String BASE_URL = "https://api.themoviedb.org/3/";
+    String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
+    String BASE_URL_USER = "https://viewie-api.herokuapp.com/api/v1/";
     String IMAGE_URL = "https://image.tmdb.org/t/p/w1280/";
     String IMAGE_URL_YOUTUBE = "https://img.youtube.com/vi/";
 
@@ -22,5 +23,8 @@ public interface Constants {
     String KEY_GET_MOVIE_BY_KEYWORD_ID = "KEY_GET_MOVIE_BY_KEYWORD_ID";
     String KEY_GET_COLLECTION = "KEY_GET_COLLECTION";
     String KEY_GET_VIDEO = "KEY_GET_VIDEO";
+    String KEY_GET_SOCIAL = "KEY_GET_SOCIAL";
+
+    String KEY_REGISTER = "KEY_REGISTER";
 
 }

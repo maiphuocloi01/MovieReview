@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -40,6 +41,7 @@ public class KeywordAdapter extends RecyclerView.Adapter<KeywordAdapter.MyViewHo
         holder.binding.bgKeyword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                holder.binding.bgKeyword.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.gotoSearchByKeywordId(item.id);
             }
         });

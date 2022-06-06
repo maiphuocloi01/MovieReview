@@ -1,10 +1,15 @@
 package com.cnjava.moviereview.view.fragment;
 
+import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
+
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AnimationUtils;
+import android.view.inputmethod.EditorInfo;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,6 +45,20 @@ public class CategoryFragment extends BaseFragment<FragmentCategoryBinding, Comm
         List<Genres> listGenres = MyApplication.getInstance().getStorage().genresList;
         CategoryAdapter adapter = new CategoryAdapter(context, listGenres, this);
         binding.rvResult.setAdapter(adapter);
+
+        binding.etSearch.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+                if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                    hideSoftInput(binding.etSearch);
+                    //viewModel.searchKeyword(v.getText().toString().trim());
+                    callBack.showFragment(KeywordFragment.TAG, v.getText().toString().trim(), true, Constants.ANIM_SLIDE);
+                    return true;
+                }
+                return false;
+            }
+        });
+
     }
 
     @Override

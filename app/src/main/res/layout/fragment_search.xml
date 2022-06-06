@@ -25,7 +25,7 @@
                 android:background="@drawable/bg_light_dark_corner_20"
                 app:hintAnimationEnabled="false"
                 app:endIconMode="clear_text"
-                app:endIconTint="@color/light_black"
+                app:endIconTint="@color/light_white"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText

@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.viewmodel;
 
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 
 public class CommonViewModel extends BaseViewModel {
@@ -58,5 +59,15 @@ public class CommonViewModel extends BaseViewModel {
 
     public void getVideo(int id){
         getApi().getVideo(id).enqueue(initHandleResponse(Constants.KEY_GET_VIDEO));
+    }
+
+    public void getSocial(int id){
+        getApi().getSocial(id).enqueue(initHandleResponse(Constants.KEY_GET_SOCIAL));
+    }
+
+
+    //User API
+    public void registration(User user){
+        getUserApi().registration(user).enqueue(initHandleResponse(Constants.KEY_REGISTER));
     }
 }

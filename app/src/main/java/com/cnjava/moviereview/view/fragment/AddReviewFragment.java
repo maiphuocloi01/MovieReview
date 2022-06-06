@@ -39,7 +39,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
         binding.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
             public void onRatingChanged(RatingBar ratingBar, float v, boolean b) {
-                binding.tvStar.setText(String.valueOf(v));
+                binding.tvStar.setText(String.valueOf((int) v));
             }
         });
 
@@ -52,8 +52,8 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String s = charSequence.toString();
-                binding.tvCountCharacter.setText(s.length() + "/500");
-                if (s.length() >= 500){
+                binding.tvCountCharacter.setText(s.length() + "/1500");
+                if (s.length() >= 1500){
                     binding.tvCountCharacter.setTextColor(ContextCompat.getColor(context, R.color.primary));
                 } else {
                     binding.tvCountCharacter.setTextColor(ContextCompat.getColor(context, R.color.mid_white));

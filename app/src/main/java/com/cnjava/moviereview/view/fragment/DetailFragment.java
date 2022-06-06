@@ -26,6 +26,7 @@ import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
@@ -48,6 +49,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     private Object mData;
     private MovieDetail movieDetail;
+    private Social social;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -64,6 +66,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         viewModel.getCast(id);
         viewModel.getRecommendation(id);
         viewModel.getVideo(id);
+        viewModel.getSocial(id);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -92,7 +95,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         List<Review> reviewList = new ArrayList<>();
 
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 7.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
 
         ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
         binding.rvReview.setAdapter(reviewAdapter);
@@ -171,18 +173,31 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                 try {
                                     context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                                     String url = "";
-                                    String FACEBOOK_URL = "https://www.facebook.com/aseanfootball";
-                                    String FACEBOOK_PAGE_ID = "aseanfootball";
-                                    int versionCode = context.getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
-                                    if (versionCode >= 3002850) { //newer versions of fb app
-                                        url = "fb://facewebmodal/f?href=" + FACEBOOK_URL;
-                                    } else { //older versions of fb app
-                                        url = "fb://page/" + FACEBOOK_PAGE_ID;
+                                    if(social.facebookId != null) {
+                                        String fbId = social.facebookId;
+
+                                        String FACEBOOK_URL = "https://www.facebook.com/" + fbId;
+                                        String FACEBOOK_PAGE_ID = fbId;
+                                        int versionCode = context.getPackageManager().getPackageInfo("com.facebook.katana", 0).versionCode;
+                                        if (versionCode >= 3002850) { //newer versions of fb app
+                                            url = "fb://facewebmodal/f?href=" + FACEBOOK_URL;
+                                        } else { //older versions of fb app
+                                            url = "fb://page/" + FACEBOOK_PAGE_ID;
+                                        }
+                                        Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
+                                        startActivity(facebookIntent);
                                     }
-                                    Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
-                                    startActivity(facebookIntent);
                                 } catch (Exception e) {
-                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/aseanfootball"));
+                                    if(social.facebookId != null) {
+                                        String fbId = social.facebookId;
+                                        Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + fbId));
+                                        startActivity(browserIntent);
+                                    }
+                                }
+                            } else if (item.getTitle().toString().equals("Twitter")) {
+                                if(social.twitterId != null) {
+                                    String twId = social.twitterId;
+                                    Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twId));
                                     startActivity(browserIntent);
                                 }
                             }
@@ -200,13 +215,16 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
         } else if (key.equals(Constants.KEY_GET_CAST)) {
             Actor actor = (Actor) data;
-            binding.rvCast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            CastAdapter castAdapter = new CastAdapter(context, actor);
-            binding.rvCast.setAdapter(castAdapter);
+            if (actor.cast.size() > 0) {
+                binding.rvCast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
+                CastAdapter castAdapter = new CastAdapter(context, actor);
+                binding.rvCast.setAdapter(castAdapter);
+            } else {
+                ViewUtils.gone(binding.tvCast);
+            }
 
         } else if (key.equals(Constants.KEY_GET_RECOMMENDATION)) {
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutMovieDetail);
+
             Movie movie = (Movie) data;
             if (movie.results != null) {
                 if (movie.results.size() == 0) {
@@ -229,13 +247,20 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         } else if (key.equals(Constants.KEY_GET_VIDEO)) {
             Video video = (Video) data;
             Log.d(TAG, "KEY_GET_VIDEO: ");
-            if (video.results != null) {
+            if (video.results.size() > 0) {
                 ViewUtils.show(binding.tvVideo);
                 ViewUtils.show(binding.rvVideo);
                 binding.rvVideo.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
                 VideoAdapter adapter = new VideoAdapter(context, video, this);
                 binding.rvVideo.setAdapter(adapter);
+            } else {
+                ViewUtils.gone(binding.tvVideo);
             }
+        } else if(key.equals(Constants.KEY_GET_SOCIAL)){
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutMovieDetail);
+            social = (Social) data;
+            Log.d(TAG, "KEY_GET_SOCIAL: ");
         }
     }
 
