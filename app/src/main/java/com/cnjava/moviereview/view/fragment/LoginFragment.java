@@ -94,8 +94,14 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
     @Override
     public void apiError(String key, int code, Object data) {
         if (code == 403) {
-            Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, "Login failed", Toast.LENGTH_SHORT).show();
             DialogUtils.hideLoadingDialog();
+            ResponseBody res = (ResponseBody) data;
+            Gson gson = new Gson();
+            Type type = new TypeToken<Response>() {
+            }.getType();
+            Response errorResponse = gson.fromJson(res.charStream(), type);
+            Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_SHORT).show();
         }
     }
 }

@@ -21,6 +21,7 @@ import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.HomeFragment;
 import com.cnjava.moviereview.view.fragment.LoginFragment;
 
 import java.lang.reflect.Constructor;
@@ -70,11 +71,11 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     private void initViews() {
-        LoginFragment frg = new LoginFragment();
+        HomeFragment frg = new HomeFragment();
         frg.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.layout_main, frg, LoginFragment.class.getName())
+                .replace(R.id.layout_main, frg, HomeFragment.class.getName())
                 .commit();
     }
 

@@ -55,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bg_key1"
                 android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/light_black"
+                app:cardBackgroundColor="@color/light_black_50"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="0dp">
 
@@ -91,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bg_key2"
                 android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/light_black"
+                app:cardBackgroundColor="@color/light_black_50"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="0dp">
 
@@ -113,10 +113,7 @@
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_10ssp" />
 
-
                 </TableRow>
-
-
 
 
             </androidx.cardview.widget.CardView>
@@ -127,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bg_key3"
                 android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/light_black"
+                app:cardBackgroundColor="@color/light_black_50"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="0dp">
 

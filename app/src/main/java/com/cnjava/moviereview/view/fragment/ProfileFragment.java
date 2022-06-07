@@ -15,18 +15,27 @@ import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentProfileBinding;
+import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
-public class ProfileFragment extends BaseFragment<FragmentProfileBinding, CommonViewModel>{
+public class ProfileFragment extends BaseFragment<FragmentProfileBinding, CommonViewModel> {
 
     public static final String TAG = ProfileFragment.class.getName();
 
     @Override
     public void apiSuccess(String key, Object data) {
-
+        if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
+            User user = (User) data;
+            MyApplication.getInstance().getStorage().myUser = user;
+            initViewUser(user);
+        }
     }
 
     @Override
@@ -57,6 +66,15 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             }
         });*/
 
+        if (MyApplication.getInstance().getStorage().myUser == null) {
+            //DialogUtils.showLoadDataDialog(context);
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            }
+        } else {
+            initViewUser(MyApplication.getInstance().getStorage().myUser);
+        }
+
         binding.tvEditProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -72,6 +90,18 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
                 showAlertDialog();
             }
         });
+    }
+
+    private void initViewUser(User user) {
+        binding.tvName.setText(user.getName());
+        binding.tvEmail.setText(user.getEmail());
+        if (user.getAvatar() != null) {
+            Glide.with(context)
+                    .load(String.format(user.getAvatar()))
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(R.drawable.img_default_avt)
+                    .into(binding.ivAvatar);
+        }
     }
 
     @Override
@@ -110,6 +140,13 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
 
         btnConfirm.setOnClickListener(view -> {
             callBack.showFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
+            MyApplication.getInstance().getStorage().myUser = null;
+            MyApplication.getInstance().getStorage().moviePopular = null;
+            MyApplication.getInstance().getStorage().movieNowPlaying = null;
+            MyApplication.getInstance().getStorage().movieUpcoming = null;
+            MyApplication.getInstance().getStorage().movieTopRated = null;
+            MyApplication.getInstance().getStorage().movieRecommend = null;
             //actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
             //CommonUtils.getInstance().clearPref(Constants.USERNAME);

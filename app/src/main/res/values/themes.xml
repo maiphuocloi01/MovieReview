@@ -45,4 +45,27 @@
         <item name="android:textColorPrimary">@color/light_white</item>
     </style>
 
+    <style name="AppTheme.TextErrorAppearance" parent="@android:style/TextAppearance">
+        <!-- Error message appearance here -->
+        <item name="android:textColor">@color/colorRed</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AppTheme.PasswordGoodAppearance" parent="@android:style/TextAppearance">
+        <!-- Error message appearance here -->
+        <item name="android:textColor">@color/colorOrangeYellow</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+    <style name="AppTheme.PasswordStrongAppearance" parent="@android:style/TextAppearance">
+        <!-- Error message appearance here -->
+        <item name="android:textColor">@color/colorGreen</item>
+        <item name="android:fontFamily">@font/roboto_medium</item>
+        <item name="android:textSize">12sp</item>
+    </style>
+
+
+
 </resources>

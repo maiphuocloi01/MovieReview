@@ -45,7 +45,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_36sdp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
         app:hintEnabled="false">
@@ -70,7 +70,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
         app:hintEnabled="false">
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false">
 
@@ -105,23 +105,24 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:hint="Password"
             android:drawableStart="@drawable/ic_lock"
-            android:inputType="textPassword"
             android:drawablePadding="@dimen/_10sdp"
+            android:hint="Password"
+            android:background="@android:color/transparent"
+            android:inputType="textPassword"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/dark"
             android:textColorHint="@color/light_black"
             android:textSize="@dimen/_14ssp" />
     </com.google.android.material.textfield.TextInputLayout>
+
     <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:hintEnabled="false">
 
@@ -152,7 +153,7 @@
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@drawable/bg_primary_corner_20"
+        android:background="@drawable/bg_primary_corner_15"
         android:padding="@dimen/_8sdp"
         android:fontFamily="@font/roboto_bold"
         android:stateListAnimator="@null"

@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">MovieReview</string>
+    <string name="app_name">VieWie</string>
     <string name="undefined">Undefined</string>
+    <string name="password_hint">Password</string>
+    <string name="password_weak">Weak</string>
+    <string name="password_good">Good</string>
+    <string name="password_strong">Strong</string>
     <string name="content">Doctor Strange in the Multiverse of Madness is dark, silly, and fan pleasing. The film is at is most bewitching when Sam Raimi can let his horror roots be showcased. It will satisfy horror and superhero film fans alike, but would have and could have been even better if Raimi was allowed to dive even further into the horror genre. Be sure to stay after the credits, as well. There are two after credits sequences with the final one being so absurdly on the nose for Sam Raimi that it may be the most entertaining part of the film.</string>
     <string name="overview">Doctor Strange, with the help of mystical allies both old and new, traverses the mind-bending and dangerous alternate realities of the Multiverse to confront a mysterious new adversary.</string>
 </resources>

@@ -69,7 +69,7 @@
                     app:strokeColor="@color/light_white"
                     android:scaleType="centerCrop"
                     android:padding="@dimen/_1sdp"
-                    app:srcCompat="@drawable/avt" />
+                    app:srcCompat="@drawable/img_default_avt" />
             </TableRow>
 
 

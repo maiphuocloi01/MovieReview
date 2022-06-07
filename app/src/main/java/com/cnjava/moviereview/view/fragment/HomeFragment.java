@@ -18,9 +18,14 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentHomeBinding;
 import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
@@ -80,6 +85,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             }
         });
 
+        if (MyApplication.getInstance().getStorage().myUser == null) {
+            //DialogUtils.showLoadDataDialog(context);
+            viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+        }
+
 
 
         if (MyApplication.getInstance().getStorage().movieNowPlaying == null) {
@@ -122,7 +132,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             @Override
             public void onClick(View view) {
                 binding.ivAvt.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null){
+                    callBack.showFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                } else {
+                    callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                }
             }
         });
 
@@ -206,6 +220,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             movieUpcoming = (Movie) data;
             MyApplication.getInstance().getStorage().movieUpcoming = movieUpcoming;
             initUpcomingView();
+
+        } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
+            User user = (User) data;
+            MyApplication.getInstance().getStorage().myUser = user;
+            if(user.getAvatar() != null){
+                Glide.with(context)
+                        .load(String.format(user.getAvatar()))
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.drawable.img_default_avt)
+                        .into(binding.ivAvt);
+            }
 
         }
     }
