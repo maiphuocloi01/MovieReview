@@ -54,7 +54,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="Username"
+            android:hint="Email"
             android:drawableStart="@drawable/ic_profile"
             android:inputType="text"
             android:drawablePadding="@dimen/_10sdp"

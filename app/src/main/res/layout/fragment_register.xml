@@ -80,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="Username"
+            android:hint="Full name"
             android:drawableStart="@drawable/ic_profile"
             android:inputType="text"
             android:drawablePadding="@dimen/_10sdp"
@@ -146,7 +146,7 @@
         android:layout_weight="1" />
 
     <Button
-        android:id="@+id/bt_login"
+        android:id="@+id/bt_register"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"

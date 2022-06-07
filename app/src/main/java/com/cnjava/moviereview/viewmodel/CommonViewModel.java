@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.viewmodel;
 
+import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 
@@ -69,5 +70,30 @@ public class CommonViewModel extends BaseViewModel {
     //User API
     public void registration(User user){
         getUserApi().registration(user).enqueue(initHandleResponse(Constants.KEY_REGISTER));
+    }
+
+    public void sendOTP(String email){
+        getUserApi().sendOTP(new User(email)).enqueue(initHandleResponse(Constants.KEY_SEND_OTP));
+    }
+
+    public void confirmOTP(String email, String token){
+        Response response = new Response(email, token);
+        getUserApi().confirmOTP(response).enqueue(initHandleResponse(Constants.KEY_CONFIRM_OTP));
+    }
+
+    public void forgotPassword(User user){
+        getUserApi().forgotPassword(user).enqueue(initHandleResponse(Constants.KEY_FORGOT_PASSWORD));
+    }
+
+    public void getUserById(String userId){
+        getUserApi().getUserById(userId).enqueue(initHandleResponse(Constants.KEY_GET_USER_BY_ID));
+    }
+
+    public void getYourProfile(String token){
+        getUserApi().getYourProfile("Bearer " + token).enqueue(initHandleResponse(Constants.KEY_GET_YOUR_PROFILE));
+    }
+
+    public void login(String email, String password) {
+        getUserApi().login(email, password).enqueue(initHandleResponse(Constants.KEY_LOGIN));
     }
 }

@@ -94,11 +94,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
         List<Review> reviewList = new ArrayList<>();
 
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7.5, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
 
         ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
         binding.rvReview.setAdapter(reviewAdapter);
-
 
     }
 

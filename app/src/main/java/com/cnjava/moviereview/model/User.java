@@ -38,6 +38,10 @@ public class User implements Serializable {
         this.birthday = birthday;
     }
 
+    public User(String email) {
+        this.email = email;
+    }
+
     public User(String username, String password) {
         this.password = password;
         this.username = username;

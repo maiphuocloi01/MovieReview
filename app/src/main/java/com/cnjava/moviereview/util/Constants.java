@@ -7,6 +7,9 @@ public interface Constants {
     String IMAGE_URL = "https://image.tmdb.org/t/p/w1280/";
     String IMAGE_URL_YOUTUBE = "https://img.youtube.com/vi/";
 
+    //share pref
+    String ACCESS_TOKEN = "ACCESS_TOKEN";
+
     int ANIM_SLIDE = 0;
     int ANIM_FADE = 1;
 
@@ -26,5 +29,11 @@ public interface Constants {
     String KEY_GET_SOCIAL = "KEY_GET_SOCIAL";
 
     String KEY_REGISTER = "KEY_REGISTER";
+    String KEY_SEND_OTP = "KEY_SEND_OTP";
+    String KEY_CONFIRM_OTP = "KEY_CONFIRM_OTP";
+    String KEY_FORGOT_PASSWORD = "KEY_FORGOT_PASSWORD";
+    String KEY_GET_USER_BY_ID = "KEY_GET_USER_BY_ID";
+    String KEY_GET_YOUR_PROFILE = "KEY_GET_YOUR_PROFILE";
+    String KEY_LOGIN = "KEY_LOGIN";
 
 }
