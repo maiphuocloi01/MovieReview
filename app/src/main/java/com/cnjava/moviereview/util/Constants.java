@@ -10,9 +10,11 @@ public interface Constants {
 
     //share pref
     String ACCESS_TOKEN = "ACCESS_TOKEN";
+    String USERNAME = "USERNAME";
 
     int ANIM_SLIDE = 0;
     int ANIM_FADE = 1;
+    int ANIM_SCALE = 2;
 
     String KEY_GET_POPULAR_MOVIE = "KEY_GET_POPULAR_MOVIE";
     String KEY_GET_UPCOMING_MOVIE = "KEY_GET_UPCOMING_MOVIE";

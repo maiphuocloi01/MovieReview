@@ -67,8 +67,8 @@
                     android:ellipsize="end"
                     app:layout_anchor="@+id/iv_star_center"
                     app:layout_anchorGravity="center"
-                    android:textColor="@color/dark"
-                    android:textSize="@dimen/_8ssp" />
+                    android:textColor="@color/light_white"
+                    android:textSize="@dimen/_7ssp" />
 
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
@@ -81,7 +81,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_3sdp"
             android:ellipsize="end"
             android:maxLines="1"
             android:text="Doctor Strange in the Multiverse of Madness"

@@ -40,19 +40,19 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="@dimen/_20sdp"
+                    android:layout_width="@dimen/_80sdp"
                     app:tint="@color/primary"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_height="@dimen/_25sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
-                    app:srcCompat="@drawable/ic_logo_app" />
+                    app:srcCompat="@drawable/ic_logo" />
 
-                <TextView
+                <!--<TextView
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:textSize="@dimen/_14ssp"
                     android:textStyle="bold"
                     android:textColor="@color/light_white"
-                    android:text="VieWie"/>
+                    android:text="VieWie"/>-->
 
                 <View
                     android:layout_width="match_parent"
@@ -66,7 +66,7 @@
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
                     app:strokeWidth="@dimen/_1sdp"
-                    app:strokeColor="@color/light_white"
+                    app:strokeColor="@color/mid_white_50"
                     android:scaleType="centerCrop"
                     android:padding="@dimen/_1sdp"
                     app:srcCompat="@drawable/img_default_avt" />
@@ -131,14 +131,13 @@
                 android:id="@+id/vp_popular"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_180sdp"
-                android:layout_marginTop="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:paddingHorizontal="@dimen/_20sdp" />
-
 
 
             <TableRow android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 android:layout_width="match_parent">
 
                 <TextView
@@ -270,7 +269,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_8sdp"
                 android:fontFamily="@font/roboto_bold"
                 android:text="Upcoming Movies"
                 android:textColor="@color/light_white"
@@ -282,7 +281,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_6sdp"
-                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="horizontal"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:itemCount="3"

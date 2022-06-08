@@ -112,10 +112,12 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                                 if (data != null) {
                                     filePath = getRealPathFromURI(data.getData());
                                     bitmap = MediaStore.Images.Media.getBitmap(resolver, data.getData());
+                                    Log.d(TAG, "onActivityResult: " + filePath);
                                 }
                             } catch (IOException e) {
                                 e.printStackTrace();
                             }
+                            Log.d(TAG, "onAttach: " + bitmap);
                             displayImage(bitmap);
                         }
                     }
@@ -150,13 +152,20 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 binding.rbFemale.setChecked(true);
             }
         }
+        Log.d(TAG, "filePath: " + filePath);
+        if (filePath == null) {
 
-        if (user.getAvatar() != null) {
-            Glide.with(context)
-                    .load(String.format(user.getAvatar()))
-                    .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.img_default_avt)
-                    .into(binding.ivAvatar);
+            if (user.getAvatar() != null && !user.getAvatar().equals("")) {
+                Log.d(TAG, "getAvatar: ");
+                Glide.with(context)
+                        .load(String.format(user.getAvatar()))
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.drawable.img_default_avt)
+                        .into(binding.ivAvatar);
+            } else {
+                Log.d(TAG, "setImageResource: ");
+                binding.ivAvatar.setImageResource(R.drawable.img_default_avt);
+            }
         }
 
         binding.ivEdit.setOnClickListener(new View.OnClickListener() {
@@ -296,7 +305,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
 
 
                 } else {
-                    Toast.makeText(context, "Không có thông tin nào thay đổi", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context, "No information has changed", Toast.LENGTH_SHORT).show();
                 }
 
 
@@ -377,11 +386,12 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
             intent.setType("image/*");
             someActivityResultLauncher.launch(intent);
         } else {
-            Toast.makeText(context, "Bạn chưa có quyền truy cập", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "You do not have permission to access", Toast.LENGTH_SHORT).show();
         }
     }
 
     private void displayImage(Bitmap bitmap) {
+        Log.d(TAG, "displayImage: ");
         binding.ivAvatar.setImageBitmap(bitmap);
     }
 

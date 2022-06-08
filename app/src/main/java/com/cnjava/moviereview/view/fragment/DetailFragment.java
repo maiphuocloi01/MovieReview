@@ -43,6 +43,8 @@ import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
+import ru.embersoft.expandabletextview.ExpandableTextView;
+
 public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel> implements PopularAdapter.MovieCallBack, VideoAdapter.VideoCallBack {
 
     public static final String TAG = DetailFragment.class.getName();
@@ -80,14 +82,14 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             @Override
             public void onClick(View view) {
                 binding.btAddReview.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_popup_exit));
-                callBack.showFragment(AddReviewFragment.TAG, null, true, Constants.ANIM_FADE);
+                callBack.showFragment(AddReviewFragment.TAG, null, true, Constants.ANIM_SCALE);
             }
         });
 
         binding.tvReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                binding.tvReview.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+                binding.ivReview.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_choose));
                 callBack.showFragment(ReviewFragment.TAG, movieDetail, true, Constants.ANIM_SLIDE);
             }
         });
@@ -98,6 +100,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
         ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
         binding.rvReview.setAdapter(reviewAdapter);
+
 
     }
 
@@ -123,6 +126,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             binding.tvRating.setText(String.valueOf(movieDetail.voteAverage));
             if (movieDetail.overview != null) {
                 binding.tvOverview.setText(movieDetail.overview);
+            } else {
+                binding.tvTitleOverview.setVisibility(View.GONE);
             }
             binding.tvReleaseDate.setText(convertDateType3(movieDetail.releaseDate));
             binding.tvRateCount.setText(String.valueOf(movieDetail.voteCount));

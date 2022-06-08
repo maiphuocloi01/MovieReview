@@ -11,31 +11,31 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="@dimen/_18sdp"
         android:fontFamily="@font/roboto_bold"
         android:text="Logout"
         android:textAlignment="center"
         android:textColor="@color/light_white"
         android:textSize="@dimen/_16ssp" />
 
-    <View
+    <!--<View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@color/mid_white"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="10dp" />
+        android:layout_marginTop="10dp" />-->
 
     <TextView
         android:id="@+id/tv_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/_28sdp"
         android:textAlignment="center"
         android:fontFamily="@font/roboto_regular"
         android:text="Are you sure you want to logout?"
         android:textColor="@color/light_white"
-        android:textSize="@dimen/_14ssp" />
+        android:textSize="@dimen/_13ssp" />
 
 
 
@@ -53,14 +53,14 @@
             android:layout_height="wrap_content"
             android:layout_marginEnd="20dp"
             android:layout_weight="1"
-            android:background="@color/light_black"
+            android:background="@drawable/bg_transparent_corner_10_border_primary"
             android:enabled="true"
             android:fontFamily="@font/roboto_bold"
             android:padding="@dimen/_10sdp"
             android:text="Cancel"
             android:textAllCaps="false"
-            android:textColor="@color/light_white"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_13ssp" />
 
         <Button
             android:id="@+id/bt_confirm3"
@@ -75,7 +75,7 @@
             android:text="Confirm"
             android:textAllCaps="false"
             android:textColor="@color/dark"
-            android:textSize="@dimen/_14ssp" />
+            android:textSize="@dimen/_13ssp" />
 
     </TableRow>
 

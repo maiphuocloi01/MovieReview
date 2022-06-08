@@ -15,6 +15,7 @@ import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -34,6 +35,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
 
     @Override
     protected void initViews() {
+        if (CommonUtils.getInstance().getPref(Constants.USERNAME) != null) {
+            binding.etUsername.setText(CommonUtils.getInstance().getPref(Constants.USERNAME));
+        }
+
         binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,6 +59,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
                             binding.etPassword.getText().toString()
                     );
                     DialogUtils.showLoadingDialog(context);
+                    IMEUtils.hideSoftInput(binding.btLogin);
 
 //                new Handler().postDelayed(() -> {
 //                    progressDialog.dismiss();
@@ -83,10 +89,11 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             Response token = (Response) data;
             Log.d(TAG, "apiSuccess: " + token.getAccessToken());
             CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, token.getAccessToken());
+            CommonUtils.getInstance().savePref(Constants.USERNAME, token.getEmail());
             Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
             DialogUtils.hideLoadingDialog();
             //CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString());
-            callBack.showFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
         }
 
     }
@@ -101,7 +108,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             Type type = new TypeToken<Response>() {
             }.getType();
             Response errorResponse = gson.fromJson(res.charStream(), type);
-            Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_LONG).show();
         }
     }
 }

@@ -24,7 +24,7 @@
             <TableRow
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_50sdp"
+                android:layout_marginTop="@dimen/_40sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
                 android:gravity="center_vertical">
 
@@ -99,16 +99,16 @@
                 android:id="@+id/tv_edit_profile"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:background="@drawable/bg_light_dark_corner_10_border"
+                android:background="@drawable/bg_light_dark_corner_10"
                 android:fontFamily="@font/roboto_regular"
                 android:stateListAnimator="@null"
                 android:text="Your profile"
                 android:textAlignment="center"
                 android:paddingVertical="@dimen/_8sdp"
                 android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp"
+                android:textSize="@dimen/_11ssp"
                 android:textStyle="bold" />
 
             <!--<TableRow
@@ -156,12 +156,12 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/_12sdp"
-                android:layout_marginTop="@dimen/_14sdp"
+                android:layout_marginTop="@dimen/_24sdp"
                 android:layout_marginBottom="@dimen/_3sdp"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/roboto_regular"
                 android:text="Recently reviews"
                 android:textColor="@color/light_white"
-                android:textSize="@dimen/_12ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <View
                 android:layout_width="match_parent"
@@ -174,7 +174,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_14sdp"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_18sdp"
                 layout="@layout/item_my_review"/>
 
             <include

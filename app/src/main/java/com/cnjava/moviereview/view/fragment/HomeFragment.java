@@ -87,7 +87,20 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
         if (MyApplication.getInstance().getStorage().myUser == null) {
             //DialogUtils.showLoadDataDialog(context);
-            viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            Log.d(TAG, "myUser null");
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                Log.d(TAG, "getYourProfile: ");
+                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            }
+        } else {
+            Log.d(TAG, "myUser not null: ");
+            if(MyApplication.getInstance().getStorage().myUser.getAvatar() != null){
+                Glide.with(context)
+                        .load(String.format(MyApplication.getInstance().getStorage().myUser.getAvatar()))
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.drawable.img_default_avt)
+                        .into(binding.ivAvt);
+            }
         }
 
 
@@ -133,7 +146,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             public void onClick(View view) {
                 binding.ivAvt.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null){
-                    callBack.showFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                    callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
                 } else {
                     callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
                 }
@@ -267,9 +280,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if (code == 999) {
-            Log.d(TAG, "apiError: " + data.toString());
-            Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+        if (key.equals(Constants.KEY_GET_POPULAR_MOVIE)) {
+            if (code == 999) {
+                Log.d(TAG, "apiError: " + data.toString());
+                Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

@@ -55,8 +55,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
                 listReview.set(holder.getAdapterPosition(), contentItem);
             }
         });
-        holder.binding.tvContent.setText(item.content);
         holder.binding.tvContent.resetState(item.isShrink);
+        holder.binding.tvContent.setText(item.content);
 
     }
 

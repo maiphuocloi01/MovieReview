@@ -14,19 +14,19 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/_20sdp"
-            app:tint="@color/primary"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginEnd="@dimen/_3sdp"
-            app:srcCompat="@drawable/ic_logo_app" />
+            app:srcCompat="@drawable/ic_logo"
+            app:tint="@color/primary" />
 
-        <TextView
+        <!--<TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             android:textColor="@color/light_white"
-            android:text="VieWie"/>
+            android:text="VieWie"/>-->
     </TableRow>
 
     <TextView
@@ -35,9 +35,9 @@
         android:textSize="@dimen/_22sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_28sdp"
-        android:fontFamily="@font/roboto_regular"
+        android:fontFamily="@font/baloo_semibold"
         android:textColor="@color/light_white"
-        android:text="Join us"/>
+        android:text="Join Moviewie"/>
 
 
     <com.google.android.material.textfield.TextInputLayout
@@ -48,6 +48,7 @@
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        app:endIconTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -55,14 +56,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:hint="Email"
             android:drawableStart="@drawable/ic_email"
-            android:inputType="text"
             android:drawablePadding="@dimen/_10sdp"
+            android:hint="Email"
+            android:inputType="text"
             android:padding="@dimen/_12sdp"
-            android:textColor="@color/dark"
-            android:textColorHint="@color/light_black"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:drawableTint="@color/light_white"
+            android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -73,6 +75,7 @@
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        app:endIconTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -85,9 +88,10 @@
             android:inputType="text"
             android:drawablePadding="@dimen/_10sdp"
             android:padding="@dimen/_12sdp"
-            android:textColor="@color/dark"
-            android:textColorHint="@color/light_black"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:drawableTint="@color/light_white"
+            android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -99,6 +103,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
+        app:passwordToggleTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -111,9 +116,10 @@
             android:background="@android:color/transparent"
             android:inputType="textPassword"
             android:padding="@dimen/_12sdp"
-            android:textColor="@color/dark"
-            android:textColorHint="@color/light_black"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:drawableTint="@color/light_white"
+            android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <com.google.android.material.textfield.TextInputLayout
@@ -124,6 +130,7 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
+        app:passwordToggleTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -136,9 +143,10 @@
             android:inputType="textPassword"
             android:drawablePadding="@dimen/_10sdp"
             android:padding="@dimen/_12sdp"
-            android:textColor="@color/dark"
-            android:textColorHint="@color/light_black"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:drawableTint="@color/light_white"
+            android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <View
@@ -155,7 +163,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/bg_primary_corner_15"
         android:padding="@dimen/_8sdp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/baloo_semibold"
         android:stateListAnimator="@null"
         android:text="Register"
         android:textAllCaps="false"

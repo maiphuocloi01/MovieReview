@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     public static final String TAG = MainActivity.class.getName();
     public static final int ANIM_SLIDE = 0;
     public static final int ANIM_FADE = 1;
+    public static final int ANIM_SCALE = 2;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -100,6 +101,8 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
                 trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
             } else if(anim == ANIM_FADE){
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+            } else if(anim == ANIM_SCALE){
+                trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
             }
             trans.add(R.id.layout_main, frg, tag).commit();
 

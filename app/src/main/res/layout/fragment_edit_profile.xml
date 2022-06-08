@@ -79,6 +79,8 @@
                     android:layout_height="@dimen/_100sdp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
+                    app:strokeWidth="@dimen/_1sdp"
+                    app:strokeColor="@color/mid_white"
                     android:src="@drawable/img_default_avt"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded" />
 
@@ -116,18 +118,62 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Full name"
+                        android:text="Email"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="1dp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="*"
                         android:textColor="@color/primary"
+                        android:textSize="@dimen/_12ssp" />-->
+
+                </TableRow>
+
+                <EditText
+                    android:id="@+id/et_email"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/_15sdp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/bg_light_dark_corner_10"
+                    android:fontFamily="@font/roboto_regular"
+                    android:hint="Enter your email"
+                    android:inputType="textEmailAddress"
+                    android:padding="15dp"
+                    android:enabled="false"
+                    android:textColor="@color/light_white"
+                    android:textColorHint="@color/mid_white"
+                    android:textSize="@dimen/_14ssp" />
+
+
+
+                <TableRow
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_15sdp"
+                    android:layout_marginTop="20dp">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="Full name"
+                        android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
+
+
+                   <!-- <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="1dp"
+                        android:fontFamily="@font/roboto_regular"
+                        android:text="*"
+                        android:textColor="@color/primary"
+                        android:textSize="@dimen/_12ssp" />-->
 
                 </TableRow>
 
@@ -147,7 +193,6 @@
                     android:textColorHint="@color/mid_white"
                     android:textSize="@dimen/_14ssp" />
 
-
                 <TableRow
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -162,17 +207,16 @@
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="1dp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="*"
                         android:textColor="@color/primary"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_12ssp" />-->
 
                 </TableRow>
-
 
                 <EditText
                     android:id="@+id/et_phone"
@@ -200,61 +244,18 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_regular"
-                        android:text="Email"
-                        android:textColor="@color/light_white"
-                        android:textSize="@dimen/_12ssp" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="*"
-                        android:textColor="@color/primary"
-                        android:textSize="@dimen/_12ssp" />
-
-                </TableRow>
-
-
-                <EditText
-                    android:id="@+id/et_email"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_15sdp"
-                    android:layout_marginTop="10dp"
-                    android:background="@drawable/bg_light_dark_corner_10"
-                    android:fontFamily="@font/roboto_regular"
-                    android:hint="Enter your email"
-                    android:inputType="textEmailAddress"
-                    android:padding="15dp"
-
-                    android:enabled="false"
-                    android:textColor="@color/light_white"
-                    android:textColorHint="@color/mid_white"
-                    android:textSize="@dimen/_14ssp" />
-
-                <TableRow
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/_15sdp"
-                    android:layout_marginTop="20dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
                         android:text="Birthday"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="1dp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="*"
                         android:textColor="@color/primary"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_12ssp" />-->
 
                 </TableRow>
 
@@ -292,14 +293,14 @@
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
 
-                    <TextView
+                    <!--<TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="1dp"
                         android:fontFamily="@font/roboto_regular"
                         android:text="*"
                         android:textColor="@color/primary"
-                        android:textSize="@dimen/_12ssp" />
+                        android:textSize="@dimen/_12ssp" />-->
 
                 </TableRow>
 
@@ -346,7 +347,7 @@
                 android:layout_below="@+id/layout_fill_form"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginTop="@dimen/_25sdp"
-                android:layout_marginBottom="20dp"
+                android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_primary_corner_10"
                 android:visibility="gone"
                 android:fontFamily="@font/roboto_bold"

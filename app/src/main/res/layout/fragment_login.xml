@@ -14,19 +14,19 @@
 
         <ImageView
             android:id="@+id/imageView"
-            android:layout_width="@dimen/_20sdp"
-            app:tint="@color/primary"
-            android:layout_height="@dimen/_20sdp"
+            android:layout_width="@dimen/_100sdp"
+            android:layout_height="@dimen/_35sdp"
             android:layout_marginEnd="@dimen/_3sdp"
-            app:srcCompat="@drawable/ic_logo_app" />
+            app:srcCompat="@drawable/ic_logo"
+            app:tint="@color/primary" />
 
-        <TextView
+        <!--<TextView
             android:layout_height="wrap_content"
             android:layout_width="wrap_content"
             android:textSize="@dimen/_14ssp"
             android:textStyle="bold"
             android:textColor="@color/light_white"
-            android:text="VieWie"/>
+            android:text="VieWie"/>-->
     </TableRow>
 
     <TextView
@@ -35,6 +35,7 @@
         android:textSize="@dimen/_22ssp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_28sdp"
+        android:fontFamily="@font/baloo_semibold"
         android:textColor="@color/light_white"
         android:text="Welcome back"/>
 
@@ -44,9 +45,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_36sdp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        app:endIconTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -59,9 +61,10 @@
             android:inputType="text"
             android:drawablePadding="@dimen/_10sdp"
             android:padding="@dimen/_12sdp"
-            android:textColor="@color/dark"
-            android:textColorHint="@color/light_black"
-            android:textSize="@dimen/_14ssp" />
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:drawableTint="@color/light_white"
+            android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -71,8 +74,10 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_24sdp"
-        android:background="@drawable/bg_white_corner_20"
+        android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
+        app:endIconTint="@color/light_white"
+        app:passwordToggleTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText
@@ -85,9 +90,10 @@
             android:hint="Password"
             android:inputType="textPassword"
             android:padding="@dimen/_12sdp"
-            android:textColor="@color/dark"
-            android:textColorHint="@color/light_black"
-            android:textSize="@dimen/_14ssp" />
+            android:drawableTint="@color/light_white"
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
@@ -109,9 +115,9 @@
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_8sdp"
-        android:background="@drawable/bg_primary_corner_20"
+        android:background="@drawable/bg_primary_corner_15"
         android:padding="@dimen/_8sdp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/baloo_semibold"
         android:stateListAnimator="@null"
         android:text="Login"
         android:textAllCaps="false"
@@ -143,7 +149,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Sign up"
-            android:layout_marginStart="@dimen/_3sdp"
+            android:layout_marginStart="@dimen/_4sdp"
             android:textAlignment="center"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp" />
