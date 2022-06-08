@@ -162,11 +162,13 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                     //registering popup with OnMenuItemClickListener
                     popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                         public boolean onMenuItemClick(MenuItem item) {
-                            Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
+                            //Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
                             if (item.getTitle().toString().equals("Homepage")) {
                                 if (!movieDetail.homepage.equals("")) {
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(movieDetail.homepage));
                                     startActivity(browserIntent);
+                                } else {
+                                    Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                                 }
                             } else if (item.getTitle().toString().equals("Facebook")) {
                                 try {
@@ -185,12 +187,16 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                         }
                                         Intent facebookIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(url));
                                         startActivity(facebookIntent);
+                                    } else {
+                                        Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {
                                     if(social.facebookId != null) {
                                         String fbId = social.facebookId;
                                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + fbId));
                                         startActivity(browserIntent);
+                                    } else {
+                                        Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                                     }
                                 }
                             } else if (item.getTitle().toString().equals("Twitter")) {
@@ -198,6 +204,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                     String twId = social.twitterId;
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twId));
                                     startActivity(browserIntent);
+                                } else {
+                                    Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                                 }
                             }
                             return true;

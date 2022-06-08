@@ -11,6 +11,7 @@
     <color name="light_black">#3A3F47</color>
     <color name="light_black_50">#803A3F47</color>
     <color name="mid_white">#585F68</color>
+    <color name="mid_white_50">#80585F68</color>
     <color name="dark">#242A32</color>
     <color name="primary">#5799ef</color>
     <!--<color name="primary">#4fcca3</color>-->

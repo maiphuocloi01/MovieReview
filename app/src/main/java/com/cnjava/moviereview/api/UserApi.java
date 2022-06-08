@@ -4,6 +4,9 @@ import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -33,7 +36,7 @@ public interface UserApi {
 
     @PUT("auth/forgot-password ")
     @Headers("Content-type: application/json")
-    Call<String> forgotPassword(@Body User user);
+    Call<Void> forgotPassword(@Body User user);
 
     @GET("users/{user_id}")
     @Headers("Content-type: application/json")
@@ -46,4 +49,13 @@ public interface UserApi {
     @GET("users/me")
     @Headers("Content-type: application/json")
     Call<User> getYourProfile(@Header("Authorization") String auth);
+
+    @PUT("users/me")
+    @Headers("Content-type: application/json")
+    Call<Void> updateProfile(@Body User user, @Header("Authorization") String auth);
+
+    @Multipart
+    @POST("Api/AccountController/UploadImage")
+    Call<ResponseBody> uploadImage(@Part MultipartBody.Part part, @Part("somedata") RequestBody requestBody);
+
 }

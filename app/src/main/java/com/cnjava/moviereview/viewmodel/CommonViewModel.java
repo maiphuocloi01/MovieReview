@@ -4,6 +4,9 @@ import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+
 public class CommonViewModel extends BaseViewModel {
 
     private static final String TAG = CommonViewModel.class.getName();
@@ -93,7 +96,16 @@ public class CommonViewModel extends BaseViewModel {
         getUserApi().getYourProfile("Bearer " + token).enqueue(initHandleResponse(Constants.KEY_GET_YOUR_PROFILE));
     }
 
+    public void updateProfile(User user, String token){
+        getUserApi().updateProfile(user,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_UPDATE_YOUR_PROFILE));
+    }
+
     public void login(String email, String password) {
         getUserApi().login(email, password).enqueue(initHandleResponse(Constants.KEY_LOGIN));
     }
+
+    public void uploadImageAccount(MultipartBody.Part parts, RequestBody someData) {
+        uploadImageApi().uploadImage(parts, someData).enqueue(initHandleResponse(Constants.KEY_UPLOAD_IMAGE));
+    }
+
 }

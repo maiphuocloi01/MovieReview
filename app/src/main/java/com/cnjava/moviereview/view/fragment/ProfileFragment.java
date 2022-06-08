@@ -79,7 +79,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             @Override
             public void onClick(View view) {
                 binding.tvEditProfile.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                callBack.showFragment(EditProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.replaceFragment(EditProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
 

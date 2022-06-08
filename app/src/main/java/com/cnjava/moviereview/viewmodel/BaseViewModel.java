@@ -48,6 +48,15 @@ public abstract class BaseViewModel extends ViewModel {
         return retrofit.create(UserApi.class);
     }
 
+    protected UserApi uploadImageApi() {
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL_UPlOAD_IMAGE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .client(new OkHttpClient.Builder().callTimeout(30, TimeUnit.SECONDS).build())
+                .build();
+        return retrofit.create(UserApi.class);
+    }
+
     protected <T> Callback<T> initHandleResponse(String key) {
         return new Callback<T>() {
             @Override

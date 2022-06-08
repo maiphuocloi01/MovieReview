@@ -28,11 +28,16 @@ public class User implements Serializable {
     @SerializedName("enabled")
     private boolean enabled;
 
-    public User(String email, String password, String name, String avatar, String phone, String gender, String birthday) {
-        this.email = email;
-        this.password = password;
+    public User(String name, String avatar, String phone, String gender, String birthday) {
         this.name = name;
         this.avatar = avatar;
+        this.phone = phone;
+        this.gender = gender;
+        this.birthday = birthday;
+    }
+
+    public User(String name, String phone, String gender, String birthday) {
+        this.name = name;
         this.phone = phone;
         this.gender = gender;
         this.birthday = birthday;

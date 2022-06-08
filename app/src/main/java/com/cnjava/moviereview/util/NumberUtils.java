@@ -59,6 +59,34 @@ public class NumberUtils {
 
     }
 
+    public static String convertDateType5(String strDate){
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            Date date = format.parse(strDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strDate;
+
+    }
+
+    public static String convertDateType6(String strDate){
+
+        DateFormat format = new SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH);
+        try {
+            Date date = format.parse(strDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strDate;
+
+    }
+
     public static String getJsonFromAssets(Context context, String fileName) {
         String jsonString;
         try {
