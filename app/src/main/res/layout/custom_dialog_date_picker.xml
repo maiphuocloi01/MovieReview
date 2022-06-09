@@ -7,17 +7,18 @@
     android:orientation="vertical">
 
     <TextView
+        android:id="@+id/tv_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="Date picker"
+        android:text="January 01, 2001"
         android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textSize="@dimen/_16sdp" />
+        android:textSize="@dimen/_18sdp" />
 
-    <View
+    <!--<View
         android:layout_width="wrap_content"
         android:layout_height="1dp"
         android:background="@color/mid_white"
@@ -33,7 +34,7 @@
         android:fontFamily="@font/roboto_bold"
         android:text="12/04/2001"
         android:textColor="@color/light_white"
-        android:textSize="18sp" />
+        android:textSize="18sp" />-->
 
     <DatePicker
         android:id="@+id/datePicker"

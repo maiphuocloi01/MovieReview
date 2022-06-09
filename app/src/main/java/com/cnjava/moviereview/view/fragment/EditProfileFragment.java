@@ -37,6 +37,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -180,7 +181,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 binding.rbFemale.setEnabled(true);
                 binding.rbMale.setEnabled(true);
                 binding.btChangeImg.setVisibility(View.VISIBLE);
-
+                binding.etName.setTextColor(ContextCompat.getColor(context, R.color.light_white));
+                binding.etPhone.setTextColor(ContextCompat.getColor(context, R.color.light_white));
+                binding.etBirthday.setTextColor(ContextCompat.getColor(context, R.color.light_white));
             }
         });
         binding.btCancel.setOnClickListener(new View.OnClickListener() {
@@ -231,6 +234,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 } else {
                     binding.ivAvatar.setImageResource(R.drawable.img_default_avt);
                 }
+                binding.etName.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
+                binding.etPhone.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
+                binding.etBirthday.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
             }
         });
 

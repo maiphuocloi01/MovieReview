@@ -145,7 +145,7 @@
                     android:inputType="textEmailAddress"
                     android:padding="15dp"
                     android:enabled="false"
-                    android:textColor="@color/light_white"
+                    android:textColor="@color/mid_white"
                     android:textColorHint="@color/mid_white"
                     android:textSize="@dimen/_14ssp" />
 
@@ -189,7 +189,7 @@
                     android:inputType="text"
                     android:enabled="false"
                     android:padding="15dp"
-                    android:textColor="@color/light_white"
+                    android:textColor="@color/mid_white"
                     android:textColorHint="@color/mid_white"
                     android:textSize="@dimen/_14ssp" />
 
@@ -230,7 +230,7 @@
                     android:inputType="phone"
                     android:enabled="false"
                     android:padding="15dp"
-                    android:textColor="@color/light_white"
+                    android:textColor="@color/mid_white"
                     android:textColorHint="@color/mid_white"
                     android:textSize="@dimen/_14ssp" />
 
@@ -273,8 +273,8 @@
                     android:inputType="date"
                     android:enabled="false"
                     android:padding="15dp"
-                    android:drawableTint="@color/light_white"
-                    android:textColor="@color/light_white"
+                    android:drawableTint="@color/mid_white"
+                    android:textColor="@color/mid_white"
                     android:textColorHint="@color/mid_white"
                     android:textSize="@dimen/_14ssp" />
 
