@@ -353,9 +353,10 @@
             <View
                 android:layout_width="match_parent"
                 android:layout_height="1dp"
-                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_24sdp"
                 android:background="@color/light_black" />
+
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -365,21 +366,20 @@
                 <RadioGroup
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_20sdp"
-
                     android:orientation="horizontal">
 
                     <RadioButton
                         android:id="@+id/rb_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:background="@drawable/radio_selector"
+                        android:layout_marginStart="@dimen/_20sdp"
+                        android:background="@drawable/radio_selector2"
                         android:button="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
-                        android:text="Recently reviews"
-                        android:textColor="@color/light_white"
+                        android:text="Recently"
+                        android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
@@ -387,13 +387,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:background="@drawable/radio_selector"
+                        android:background="@drawable/radio_selector2"
                         android:button="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
-                        android:text="5 ★"
-                        android:textColor="@color/light_white"
+                        android:text="Positive"
+                        android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
@@ -401,41 +401,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:background="@drawable/radio_selector"
+                        android:background="@drawable/radio_selector2"
                         android:button="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
-                        android:text="4 ★"
-                        android:textColor="@color/light_white"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_three_star"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:background="@drawable/radio_selector"
-                        android:button="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
-                        android:paddingHorizontal="@dimen/_20sdp"
-                        android:paddingVertical="@dimen/_6sdp"
-                        android:text="3 ★"
-                        android:textColor="@color/light_white"
-                        android:textSize="@dimen/_10ssp" />
-
-                    <RadioButton
-                        android:id="@+id/rb_two_star"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="@dimen/_15sdp"
-                        android:background="@drawable/radio_selector"
-                        android:button="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
-                        android:paddingHorizontal="@dimen/_20sdp"
-                        android:paddingVertical="@dimen/_6sdp"
-                        android:text="2 ★"
-                        android:textColor="@color/light_white"
+                        android:text="Top score"
+                        android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
@@ -443,15 +415,16 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
-                        android:layout_marginEnd="@dimen/_50sdp"
-                        android:background="@drawable/radio_selector"
+                        android:layout_marginEnd="@dimen/_10sdp"
+                        android:background="@drawable/radio_selector2"
                         android:button="@android:color/transparent"
-                        android:fontFamily="@font/roboto_bold"
+                        android:fontFamily="@font/roboto_regular"
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
-                        android:text="1 ★"
-                        android:textColor="@color/light_white"
+                        android:text="Critical"
+                        android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
+
                 </RadioGroup>
 
             </HorizontalScrollView>
@@ -461,7 +434,7 @@
             <include
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_14sdp"
+                android:layout_marginHorizontal="@dimen/_20sdp"
                 android:layout_marginTop="@dimen/_18sdp"
                 layout="@layout/item_my_review"/>
 
