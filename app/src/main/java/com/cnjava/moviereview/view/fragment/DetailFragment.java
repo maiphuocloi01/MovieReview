@@ -28,6 +28,7 @@ import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Video;
+import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
@@ -43,9 +44,7 @@ import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import ru.embersoft.expandabletextview.ExpandableTextView;
-
-public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel> implements PopularAdapter.MovieCallBack, VideoAdapter.VideoCallBack {
+public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel> implements PopularAdapter.MovieCallBack, VideoAdapter.VideoCallBack, ReviewAdapter.ReviewCallBack {
 
     public static final String TAG = DetailFragment.class.getName();
 
@@ -69,6 +68,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         viewModel.getRecommendation(id);
         viewModel.getVideo(id);
         viewModel.getSocial(id);
+        viewModel.getReviewByMovieId(String.valueOf(id));
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -82,11 +82,15 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             @Override
             public void onClick(View view) {
                 binding.btAddReview.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_popup_exit));
-                callBack.showFragment(AddReviewFragment.TAG, null, true, Constants.ANIM_SCALE);
+                if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                    callBack.replaceFragment(AddReviewFragment.TAG, movieDetail, true, Constants.ANIM_SCALE);
+                } else {
+                    callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                }
             }
         });
 
-        binding.tvReview.setOnClickListener(new View.OnClickListener() {
+        binding.ivReview.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.ivReview.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_choose));
@@ -94,12 +98,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         });
 
-        List<Review> reviewList = new ArrayList<>();
+        //List<Review> reviewList = new ArrayList<>();
 
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-
-        ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
-        binding.rvReview.setAdapter(reviewAdapter);
+        //reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
 
 
     }
@@ -179,7 +180,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                 try {
                                     context.getPackageManager().getPackageInfo("com.facebook.katana", 0);
                                     String url = "";
-                                    if(social.facebookId != null) {
+                                    if (social.facebookId != null) {
                                         String fbId = social.facebookId;
 
                                         String FACEBOOK_URL = "https://www.facebook.com/" + fbId;
@@ -196,7 +197,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                         Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (Exception e) {
-                                    if(social.facebookId != null) {
+                                    if (social.facebookId != null) {
                                         String fbId = social.facebookId;
                                         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + fbId));
                                         startActivity(browserIntent);
@@ -205,7 +206,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                     }
                                 }
                             } else if (item.getTitle().toString().equals("Twitter")) {
-                                if(social.twitterId != null) {
+                                if (social.twitterId != null) {
                                     String twId = social.twitterId;
                                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twId));
                                     startActivity(browserIntent);
@@ -236,7 +237,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
 
         } else if (key.equals(Constants.KEY_GET_RECOMMENDATION)) {
-
             Movie movie = (Movie) data;
             if (movie.results != null) {
                 if (movie.results.size() == 0) {
@@ -268,11 +268,32 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             } else {
                 ViewUtils.gone(binding.tvVideo);
             }
-        } else if(key.equals(Constants.KEY_GET_SOCIAL)){
-            ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutMovieDetail);
+        } else if (key.equals(Constants.KEY_GET_SOCIAL)) {
             social = (Social) data;
             Log.d(TAG, "KEY_GET_SOCIAL: ");
+        } else if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
+            /*ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutMovieDetail);*/
+            Log.d(TAG, "KEY_REVIEW_BY_MOVIE_ID: ");
+            List<Review> reviews = (List<Review>) data;
+            if (reviews != null && reviews.size() > 0) {
+                if (reviews.size() > 3) {
+                    List<Review> threeFirstReview = reviews.subList(0, 2);
+                    ReviewAdapter reviewAdapter = new ReviewAdapter(context, threeFirstReview, this);
+                    binding.rvReview.setAdapter(reviewAdapter);
+                } else {
+                    ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviews, this);
+                    binding.rvReview.setAdapter(reviewAdapter);
+                }
+            } else {
+                Log.d(TAG, "no review: ");
+                binding.rvReview.setVisibility(View.GONE);
+                binding.tvNoReviews.setVisibility(View.VISIBLE);
+                binding.ivReview.setVisibility(View.GONE);
+            }
+
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutMovieDetail);
         }
     }
 
@@ -299,5 +320,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         String urlYoutube = "https://www.youtube.com/watch?v=";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlYoutube + key));
         startActivity(browserIntent);
+    }
+
+    @Override
+    public void gotoReviewDetail(Review review) {
     }
 }

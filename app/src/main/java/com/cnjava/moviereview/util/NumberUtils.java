@@ -87,6 +87,22 @@ public class NumberUtils {
 
     }
 
+    public static String convertDateType7(String strDate){
+
+        //DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS");
+
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH);
+        try {
+            Date date = format.parse(strDate);
+            SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy HH:mm", Locale.ENGLISH);
+            return sdf.format(date);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return strDate;
+
+    }
+
     public static String getJsonFromAssets(Context context, String fileName) {
         String jsonString;
         try {

@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.viewmodel;
 
 import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 
@@ -21,11 +22,11 @@ public class CommonViewModel extends BaseViewModel {
     }
 
     public void getTopRatedMovie(){
-        getApi().getTopRatedMovie().enqueue(initHandleResponse(Constants.KEY_GET_NOW_PLAYING_MOVIE));
+        getApi().getTopRatedMovie().enqueue(initHandleResponse(Constants.KEY_GET_TOP_RATED_MOVIE));
     }
 
     public void getNowPlayingMovie(){
-        getApi().getNowPlayingMovie().enqueue(initHandleResponse(Constants.KEY_GET_TOP_RATED_MOVIE));
+        getApi().getNowPlayingMovie().enqueue(initHandleResponse(Constants.KEY_GET_NOW_PLAYING_MOVIE));
     }
 
     public void getMovieDetail(int id){
@@ -106,6 +107,22 @@ public class CommonViewModel extends BaseViewModel {
 
     public void uploadImageAccount(MultipartBody.Part parts, RequestBody someData) {
         uploadImageApi().uploadImage(parts, someData).enqueue(initHandleResponse(Constants.KEY_UPLOAD_IMAGE));
+    }
+
+    public void getReviewByMovieId(String id) {
+        getUserApi().getReviewByMovieId(id).enqueue(initHandleResponse(Constants.KEY_REVIEW_BY_MOVIE_ID));
+    }
+
+    public void addReview(Review review, String token) {
+        getUserApi().addReview(review,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_ADD_REVIEW));
+    }
+
+    public void likeReview(String id, String token) {
+        getUserApi().likeReview(id,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_LIKE_REVIEW));
+    }
+
+    public void dislikeReview(String id, String token) {
+        getUserApi().dislikeReview(id,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_DISLIKE_REVIEW));
     }
 
 }

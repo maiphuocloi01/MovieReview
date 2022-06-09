@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.view.adapter;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,9 +11,11 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemReviewBinding;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.util.NumberUtils;
 
 import java.util.List;
 
@@ -22,10 +25,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
     private Context context;
     private List<Review> listReview;
+    private ReviewCallBack callBack;
 
-    public ReviewAdapter(Context context, List<Review> listReview) {
+    public interface ReviewCallBack{
+        void gotoReviewDetail(Review review);
+    }
+
+    public ReviewAdapter(Context context, List<Review> listReview, ReviewCallBack callBack) {
         this.context = context;
         this.listReview = listReview;
+        this.callBack = callBack;
     }
 
     @NonNull
@@ -38,25 +47,24 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Review item = listReview.get(position);
-
-        holder.binding.tvName.setText(item.author);
-        holder.binding.tvDate.setText(item.createdAt);
+        holder.binding.tvName.setText(item.user.getName());
+        holder.binding.tvDate.setText(NumberUtils.convertDateType7(item.createdAt));
         holder.binding.tvContent.setText(item.content);
-        holder.binding.tvRate.setText(String.valueOf(item.rating));
+        holder.binding.tvRate.setText(String.valueOf((int) item.rating));
         Glide.with(context)
-                .load(item.avatarPath)
+                .load(item.user.getAvatar())
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.img_default_avt)
                 .into(holder.binding.ivAvt);
-        holder.binding.tvContent.setOnStateChangeListener(new ExpandableTextView.OnStateChangeListener() {
-            @Override
-            public void onStateChange(boolean isShrink) {
-                Review contentItem = listReview.get(holder.getAdapterPosition());
-                contentItem.isShrink = isShrink;
-                listReview.set(holder.getAdapterPosition(), contentItem);
-            }
-        });
-        holder.binding.tvContent.resetState(item.isShrink);
-        holder.binding.tvContent.setText(item.content);
+        if(item.like != null) {
+            Log.d("TAG", "tvLike: ");
+            holder.binding.tvLike.setText(String.valueOf(item.like.size()));
+        }
+        if(item.dislike != null) {
+            Log.d("TAG", "tvDislike: ");
+            holder.binding.tvDislike.setText(String.valueOf(item.dislike.size()));
+        }
+        Log.d("TAG", "onBindViewHolder: " + item.like.size());
 
     }
 

@@ -35,14 +35,17 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
 
     @Override
     protected void initViews() {
+
+
         if (CommonUtils.getInstance().getPref(Constants.USERNAME) != null) {
+            Log.d(TAG, "USERNAME: ");
             binding.etUsername.setText(CommonUtils.getInstance().getPref(Constants.USERNAME));
         }
 
         binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ForgotPasswordFragment.TAG, null, true, 0);
+                callBack.replaceFragment(ForgotPasswordFragment.TAG, null, true, 0);
             }
         });
 
@@ -73,7 +76,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         binding.tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
     }
@@ -89,7 +92,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             Response token = (Response) data;
             Log.d(TAG, "apiSuccess: " + token.getAccessToken());
             CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, token.getAccessToken());
-            CommonUtils.getInstance().savePref(Constants.USERNAME, token.getEmail());
+            if(binding.etUsername.getText() != null) {
+                CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString().trim());
+            }
             Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
             DialogUtils.hideLoadingDialog();
             //CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString());

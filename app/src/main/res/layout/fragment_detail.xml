@@ -77,7 +77,7 @@
 
                     <FrameLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_36sdp">
+                        android:layout_height="@dimen/_38sdp">
 
                         <TextView
                             android:id="@+id/tv_name"
@@ -268,7 +268,7 @@
                     android:fontFamily="@font/roboto_medium"
                     android:paddingVertical="@dimen/_6sdp"
                     android:stateListAnimator="@null"
-                    android:text="Add your review"
+                    android:text="Write your review"
                     android:textAllCaps="false"
                     android:textColor="@color/dark"
                     android:textSize="@dimen/_13ssp" />
@@ -276,17 +276,17 @@
                 <TableRow
                     android:id="@+id/tv_review"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_18sdp"
                     android:layout_width="match_parent">
 
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_bold"
-                        android:text="Reviews"
+                        android:fontFamily="@font/baloo_medium"
+                        android:text="Ratings and reviews"
                         android:layout_gravity="center"
                         android:textColor="@color/white"
-                        android:textSize="@dimen/_13ssp" />
+                        android:textSize="@dimen/_14ssp" />
 
                     <View android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -326,11 +326,23 @@
                     android:id="@+id/rv_review"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     tools:itemCount="2"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:listitem="@layout/item_review" />
+
+                <TextView
+                    android:id="@+id/tv_no_reviews"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="No reviews yet"
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_8sdp"
+                    android:layout_marginBottom="@dimen/_16sdp"
+                    android:textColor="@color/mid_white"
+                    android:textSize="@dimen/_11ssp" />
 
                 <!--<TextView
                     android:id="@+id/tv_review"
@@ -352,10 +364,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/baloo_medium"
                     android:text="Overview"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp"/>
+                    android:textSize="@dimen/_14ssp"/>
 
                 <TextView
                     android:id="@+id/tv_overview"
@@ -549,11 +561,11 @@
                     android:id="@+id/tv_cast"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:fontFamily="@font/baloo_medium"
                     android:text="Cast"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cast"
@@ -569,12 +581,12 @@
                     android:id="@+id/tv_video"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:fontFamily="@font/baloo_medium"
                     android:text="Video"
                     android:visibility="gone"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_video"
@@ -591,12 +603,12 @@
                     android:id="@+id/tv_collection"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
+                    android:layout_marginTop="@dimen/_18sdp"
                     android:visibility="gone"
-                    android:fontFamily="@font/roboto_bold"
+                    android:fontFamily="@font/baloo_medium"
                     android:text="Doctor Strange Collection"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_collection"
@@ -612,11 +624,11 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="16dp"
-                    android:fontFamily="@font/roboto_bold"
+                    android:layout_marginTop="@dimen/_18sdp"
+                    android:fontFamily="@font/baloo_medium"
                     android:text="Recommendation"
                     android:textColor="@color/white"
-                    android:textSize="@dimen/_12ssp" />
+                    android:textSize="@dimen/_14ssp" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_recommend"
@@ -638,7 +650,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:text="We don't have enough data to suggest any movies"
                     android:textColor="@color/mid_white"
-                    android:textSize="@dimen/_10ssp" />
+                    android:textSize="@dimen/_11ssp" />
 
                 <View
                     android:layout_width="wrap_content"

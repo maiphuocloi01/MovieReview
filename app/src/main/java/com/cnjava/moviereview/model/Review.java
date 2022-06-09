@@ -1,29 +1,56 @@
 package com.cnjava.moviereview.model;
 
+import com.google.gson.annotations.SerializedName;
+
 import java.io.Serializable;
+import java.util.List;
 
 public class Review implements Serializable {
 
-    public int id;
-    public int userId;
-    public String author;
+    @SerializedName("id")
+    public String id;
+    @SerializedName("content")
     public String content;
+    @SerializedName("stars")
     public double rating;
+    @SerializedName("createdAt")
     public String createdAt;
-    public int movieId;
-    public String movieTitle;
-    public String avatarPath;
+    @SerializedName("updatedAt")
+    public String updatedAt;
+    @SerializedName("like")
+    public List<String> like;
+    @SerializedName("dislike")
+    public List<String> dislike;
     public boolean isShrink = true;
+    @SerializedName("author")
+    public User user;
+    @SerializedName("movie")
+    public MovieReview movie;
 
-    public Review(int id, int userId, String author, String content, double rating, String createdAt, int movieId, String movieTitle, String avatarPath) {
-        this.id = id;
-        this.userId = userId;
-        this.author = author;
+    public static class MovieReview implements Serializable{
+        @SerializedName("poster")
+        public String backdropPath;
+        @SerializedName("id")
+        public String id;
+        @SerializedName("name")
+        public String title;
+        @SerializedName("overview")
+        public String overview;
+        @SerializedName("releaseDate")
+        public String releaseDate;
+
+        public MovieReview(String backdropPath, String id, String title, String overview, String releaseDate) {
+            this.backdropPath = backdropPath;
+            this.id = id;
+            this.title = title;
+            this.overview = overview;
+            this.releaseDate = releaseDate;
+        }
+    }
+
+    public Review(String content, double rating, MovieReview movie) {
         this.content = content;
         this.rating = rating;
-        this.createdAt = createdAt;
-        this.movieId = movieId;
-        this.movieTitle = movieTitle;
-        this.avatarPath = avatarPath;
+        this.movie = movie;
     }
 }

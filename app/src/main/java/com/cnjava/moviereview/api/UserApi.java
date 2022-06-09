@@ -2,7 +2,10 @@ package com.cnjava.moviereview.api;
 
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -57,5 +60,26 @@ public interface UserApi {
     @Multipart
     @POST("Api/AccountController/UploadImage")
     Call<ResponseBody> uploadImage(@Part MultipartBody.Part part, @Part("somedata") RequestBody requestBody);
+
+    //Review
+    @GET("reviews/movies/{movie_id}")
+    @Headers("Content-type: application/json")
+    Call<List<Review>> getReviewByMovieId(@Path("movie_id") String movie_id);
+
+    @GET("reviews/{review_id}")
+    @Headers("Content-type: application/json")
+    Call<Review> getReviewById(@Path("review_id") String review_id);
+
+    @POST("reviews")
+    @Headers("Content-type: application/json")
+    Call<Review> addReview(@Body Review review, @Header("Authorization") String auth);
+
+    @PUT("reviews/{review_id}/like")
+    @Headers("Content-type: application/json")
+    Call<Void> likeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+
+    @PUT("reviews/{review_id}/dislike")
+    @Headers("Content-type: application/json")
+    Call<Void> dislikeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
 
 }

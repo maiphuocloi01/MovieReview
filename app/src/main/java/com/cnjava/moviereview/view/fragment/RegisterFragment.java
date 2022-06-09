@@ -28,6 +28,7 @@ import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -80,9 +81,9 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
                 } else if (!binding.etPassword.getText().toString().equals(binding.etPasswordConfirm.getText().toString())) {
                     binding.etPasswordConfirm.setError("Confirmation password does not match");
                 } else {
-                    User user = new User(binding.etEmail.getText().toString(),
+                    User user = new User(binding.etEmail.getText().toString().trim(),
                             binding.etPassword.getText().toString(),
-                            binding.etUsername.getText().toString()
+                            binding.etUsername.getText().toString().trim()
                     );
                     viewModel.registration(user);
                     DialogUtils.showLoadingDialog(context);
@@ -145,6 +146,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
                 etOtp.setError("Please fill OTP code");
             } else {
                 DialogUtils.showLoadingDialog(context);
+                IMEUtils.hideSoftInput(btnConfirm);
                 viewModel.confirmOTP(email, etOtp.getText().toString().trim());
                 //Toast.makeText(context, "Xác thực thành công", Toast.LENGTH_SHORT).show();
                 //callBack.showFragment(ResetPasswordFragment.TAG, email, false);

@@ -5,6 +5,7 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,24 +22,68 @@ import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentForgotPasswordBinding;
+import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.Locale;
 import java.util.concurrent.TimeUnit;
+
+import okhttp3.ResponseBody;
 
 public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordBinding, CommonViewModel>{
 
     public static final String TAG = ForgotPasswordFragment.class.getName();
     private String otp = "0";
+    private static Dialog dialog;
 
     @Override
     public void apiSuccess(String key, Object data) {
-
+        if (key.equals(Constants.KEY_SEND_OTP)) {
+            Response response = (Response) data;
+            Toast.makeText(context, response.getToken(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, otp, Toast.LENGTH_SHORT).show();
+        } else if (key.equals(Constants.KEY_CONFIRM_OTP)) {
+            Response response = (Response) data;
+            Log.d(TAG, "KEY_CONFIRM_OTP: ");
+            DialogUtils.hideLoadingDialog();
+            if (response.getError() == null) {
+                dialog.dismiss();
+                if (binding.etEmail.getText() != null) {
+                    callBack.replaceFragment(ResetPasswordFragment.TAG, binding.etEmail.getText().toString().trim(), false, Constants.ANIM_SLIDE);
+                }
+            }
+            //Toast.makeText(context, otp, Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
     public void apiError(String key, int code, Object data) {
+        if (key.equals(Constants.KEY_CONFIRM_OTP)) {
+            if (code == 400) {
+                DialogUtils.hideLoadingDialog();
+                Log.d(TAG, "KEY_CONFIRM_OTP: ");
+                //Toast.makeText(context, "invalid otp", Toast.LENGTH_SHORT).show();
+                ResponseBody res = (ResponseBody) data;
+                Gson gson = new Gson();
+                Type type = new TypeToken<Response>() {
+                }.getType();
+                Response errorResponse = gson.fromJson(res.charStream(), type);
+                Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_SHORT).show();
+                /*try {
+                    JSONObject jsonObj = new JSONObject(response.body().toString());
+                    Toast.makeText(context, jsonObj.getString("error"), Toast.LENGTH_SHORT).show();
+                } catch (JSONException e) {
+                    e.printStackTrace();
 
+                }*/
+            }
+        }
     }
 
     @Override
@@ -53,7 +98,9 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
             if (TextUtils.isEmpty(binding.etEmail.getText())) {
                 binding.etEmail.setError("Please enter email");
             } else {
+                sendOTP();
                 openSendOTPDialog();
+
                 //viewModel.checkEmailExist(binding.etEmail.getText().toString());
                 //DialogUtils.showLoadingDialog(context);
             }
@@ -66,8 +113,12 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
         return FragmentForgotPasswordBinding.inflate(inflater, container, false);
     }
 
+    private void sendOTP() {
+        viewModel.sendOTP(binding.etEmail.getText().toString());
+    }
+
     private void openSendOTPDialog() {
-        final Dialog dialog = new Dialog(context);
+        dialog = new Dialog(context);
         dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
         dialog.setContentView(R.layout.custom_dialog_confirm_otp);
         Window window = dialog.getWindow();
@@ -92,13 +143,13 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
         Button btnCancel = dialog.findViewById(R.id.bt_cancel);
         Button btnConfirm = dialog.findViewById(R.id.bt_confirm);
 
-        String email = binding.etEmail.getText().toString();
+        String email = binding.etEmail.getText().toString().trim();
         tvEmail.setText(email);
 
         countDownTimer(tvCountdown, tvCDTitle, tvResend);
 
         tvResend.setOnClickListener(view -> {
-            //sendOTP();
+            sendOTP();
             tvCountdown.setVisibility(View.VISIBLE);
             tvCDTitle.setVisibility(View.VISIBLE);
             tvResend.setVisibility(View.GONE);
@@ -109,13 +160,14 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
 
         btnConfirm.setOnClickListener(view -> {
             if (TextUtils.isEmpty(etOtp.getText())) {
-                etOtp.setError("Please enter OTP");
-            } else if (etOtp.getText().toString().equals(otp)) {
-                Toast.makeText(context, "Verified successfully", Toast.LENGTH_SHORT).show();
-                //callBack.showFragment(ResetPasswordFragment.TAG, email, false);
-                dialog.dismiss();
+                etOtp.setError("Please fill OTP code");
             } else {
-                Toast.makeText(context, "The verification code is not correct", Toast.LENGTH_SHORT).show();
+                DialogUtils.showLoadingDialog(context);
+                IMEUtils.hideSoftInput(btnConfirm);
+                viewModel.confirmOTP(email, etOtp.getText().toString().trim());
+                //Toast.makeText(context, "Xác thực thành công", Toast.LENGTH_SHORT).show();
+                //callBack.showFragment(ResetPasswordFragment.TAG, email, false);
+                //dialog.dismiss();
             }
 
         });

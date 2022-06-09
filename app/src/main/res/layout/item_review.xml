@@ -50,24 +50,36 @@
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_12ssp" />
 
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                <TableRow
+                    android:layout_marginTop="@dimen/_2sdp"
                     android:layout_marginStart="@dimen/_8sdp"
-                    android:ellipsize="end"
-                    android:fontFamily="@font/roboto_regular"
-                    android:maxLines="1"
-                    android:text="April 9, 2022"
-                    android:textColor="@color/light_white"
-                    android:textSize="@dimen/_10ssp" />
+                    android:gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+
+
+
+
+                    <TextView
+                        android:id="@+id/tv_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_regular"
+                        android:maxLines="1"
+                        android:text="April 9, 2022"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_10ssp" />
+
+                </TableRow>
 
 
             </LinearLayout>
 
             <TableRow
-                android:layout_marginTop="@dimen/_10sdp"
-                android:layout_marginStart="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginStart="@dimen/_8sdp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content">
 
@@ -87,9 +99,7 @@
                     android:layout_height="@dimen/_12sdp"
                     android:layout_gravity="center"
                     android:src="@drawable/ic_star"
-                    android:layout_marginTop="1dp"
                     app:tint="@color/primary" />
-
 
 
 
@@ -108,7 +118,35 @@
 
         </TableRow>
 
-        <ru.embersoft.expandabletextview.ExpandableTextView
+        <TextView
+            android:id="@+id/tv_content"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_regular"
+            android:maxLines="3"
+            android:layout_marginBottom="@dimen/_4sdp"
+            android:text="@string/overview"
+            android:textColor="@color/light_white"
+            android:textSize="@dimen/_12ssp" />
+
+        <TextView
+            android:id="@+id/tv_show_more"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_8sdp"
+            android:layout_marginTop="@dimen/_2sdp"
+            android:ellipsize="end"
+            android:fontFamily="@font/roboto_regular"
+            android:maxLines="1"
+            android:layout_marginBottom="@dimen/_14sdp"
+            android:text="@string/read_the_rest"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_12ssp" />
+
+        <!--<ru.embersoft.expandabletextview.ExpandableTextView
             android:id="@+id/tv_content"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -129,7 +167,7 @@
             app:layout_constraintEnd_toStartOf="@id/imageView"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/titleTextView"/>
-
+-->
 
 <!--        <TextView-->
 <!--            android:id="@+id/tv_content"-->
@@ -159,10 +197,11 @@
                 <ImageView
                     android:layout_width="@dimen/_16sdp"
                     android:layout_height="@dimen/_30sdp"
-                    android:src="@drawable/ic_choose_like"
+                    android:src="@drawable/ic_like"
                     app:tint="@color/light_white" />
 
                 <TextView
+                    android:id="@+id/tv_like"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="1.123"
@@ -187,6 +226,7 @@
                     app:tint="@color/light_white" />
 
                 <TextView
+                    android:id="@+id/tv_dislike"
                     android:layout_height="wrap_content"
                     android:layout_width="wrap_content"
                     android:text="1.123"

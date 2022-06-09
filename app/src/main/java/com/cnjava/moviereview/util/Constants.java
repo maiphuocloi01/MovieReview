@@ -41,4 +41,11 @@ public interface Constants {
     String KEY_LOGIN = "KEY_LOGIN";
     String KEY_UPLOAD_IMAGE = "KEY_UPLOAD_IMAGE";
 
+
+    //Review
+    String KEY_REVIEW_BY_MOVIE_ID = "KEY_REVIEW_BY_MOVIE_ID";
+    String KEY_ADD_REVIEW = "KEY_ADD_REVIEW";
+    String KEY_LIKE_REVIEW = "KEY_LIKE_REVIEW";
+    String KEY_DISLIKE_REVIEW = "KEY_DISLIKE_REVIEW";
+
 }

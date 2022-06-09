@@ -69,7 +69,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
             Manifest.permission.READ_EXTERNAL_STORAGE,
             Manifest.permission.WRITE_EXTERNAL_STORAGE
     };
-    // You can do the assignment inside onAttach or onCreate, i.e, before the activity is displayed
+
     ActivityResultLauncher<Intent> someActivityResultLauncher;
     private User user = MyApplication.getInstance().getStorage().myUser;
     private int defaultYear = 2001;
@@ -79,7 +79,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
     private String filePath = null;
 
     public static boolean verifyStoragePermissions(Activity activity) {
-        // Check if we have write permission
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
 
         if (permission != PackageManager.PERMISSION_GRANTED) {

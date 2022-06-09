@@ -47,9 +47,9 @@ public class User implements Serializable {
         this.email = email;
     }
 
-    public User(String username, String password) {
+    public User(String email, String password) {
         this.password = password;
-        this.username = username;
+        this.email = email;
     }
 
     public User(String email, String password, String name) {

@@ -22,7 +22,7 @@ import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonViewModel>{
+public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonViewModel> implements ReviewAdapter.ReviewCallBack {
 
     public static final String TAG = ReviewFragment.class.getName();
     private Object mData;
@@ -53,11 +53,12 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
             }
         });
 
+
         binding.rbAll.setChecked(true);
 
         List<Review> reviewList = new ArrayList<>();
 
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 8, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
+        /*reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 8, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
@@ -65,8 +66,8 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
         reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Abc", 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-
-        ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList);
+*/
+        ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList, this);
         binding.rvReview.setAdapter(reviewAdapter);
     }
 
@@ -74,6 +75,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     protected FragmentReviewBinding initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         return FragmentReviewBinding.inflate(inflater, container, false);
     }
+
     @Override
     public void apiSuccess(String key, Object data) {
 
@@ -87,5 +89,10 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     @Override
     public void setData(Object data) {
         this.mData = data;
+    }
+
+    @Override
+    public void gotoReviewDetail(Review review) {
+
     }
 }
