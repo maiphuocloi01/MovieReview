@@ -14,6 +14,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentReviewBinding;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
@@ -93,6 +94,31 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void gotoReviewDetail(Review review) {
+
+    }
+
+    @Override
+    public void likeReview(String id) {
+
+    }
+
+    @Override
+    public void dislikeReview(String id) {
+
+    }
+
+    @Override
+    public void deleteReview(String id) {
+
+    }
+
+    @Override
+    public void updateReview(String id) {
+
+    }
+
+    @Override
+    public void gotoUserReview(User userReview) {
 
     }
 }

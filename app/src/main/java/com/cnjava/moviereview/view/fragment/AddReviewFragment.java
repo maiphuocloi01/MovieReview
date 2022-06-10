@@ -17,6 +17,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentAddReviewBinding;
 import com.cnjava.moviereview.model.MovieDetail;
@@ -134,6 +135,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             Review review = (Review) data;
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
+                MyApplication.getInstance().getStorage().reviewList = null;
                 callBack.backToPrev();
             }
         }

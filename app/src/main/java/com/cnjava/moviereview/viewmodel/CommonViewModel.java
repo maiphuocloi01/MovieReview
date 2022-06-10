@@ -1,5 +1,7 @@
 package com.cnjava.moviereview.viewmodel;
 
+import android.util.Log;
+
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
@@ -12,6 +14,11 @@ public class CommonViewModel extends BaseViewModel {
 
     private static final String TAG = CommonViewModel.class.getName();
 
+    @Override
+    protected void onCleared() {
+        super.onCleared();
+        Log.d(TAG, "onCleared: ");
+    }
 
     public void getPopularMovie(){
         getApi().getPopularMovie().enqueue(initHandleResponse(Constants.KEY_GET_POPULAR_MOVIE));

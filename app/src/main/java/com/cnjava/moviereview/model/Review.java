@@ -27,6 +27,9 @@ public class Review implements Serializable {
     @SerializedName("movie")
     public MovieReview movie;
 
+    public boolean isLike = false;
+    public boolean isDislike = false;
+
     public static class MovieReview implements Serializable{
         @SerializedName("poster")
         public String backdropPath;

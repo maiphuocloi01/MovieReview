@@ -32,6 +32,7 @@
                 android:src="@drawable/img_cover" />
 
             <LinearLayout
+                android:id="@+id/layout_user_info"
                 android:layout_gravity="center"
                 android:layout_marginVertical="@dimen/_8sdp"
                 android:layout_width="wrap_content"
@@ -110,9 +111,11 @@
                 android:layout_weight="1"
                 android:layout_height="1dp"/>
             <ImageView
+                android:id="@+id/iv_more"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_more"
+                android:visibility="gone"
                 android:layout_marginTop="@dimen/_8sdp"
                 app:tint="@color/light_white" />
 
@@ -137,11 +140,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_8sdp"
-            android:layout_marginTop="@dimen/_2sdp"
             android:ellipsize="end"
             android:fontFamily="@font/roboto_regular"
             android:maxLines="1"
-            android:layout_marginBottom="@dimen/_14sdp"
+            android:visibility="visible"
+            android:layout_marginBottom="@dimen/_4sdp"
             android:text="@string/read_the_rest"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp" />
@@ -183,18 +186,20 @@
 <!--            android:textSize="16sp" />-->
 
         <TableRow
-            android:layout_marginTop="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_10sdp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             >
 
             <TableRow
+                android:id="@+id/layout_like"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/iv_like"
                     android:layout_width="@dimen/_16sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:src="@drawable/ic_like"
@@ -214,12 +219,14 @@
             </TableRow>
 
             <TableRow
+                android:id="@+id/layout_dislike"
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/iv_dislike"
                     android:layout_width="@dimen/_16sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:src="@drawable/ic_dislike"
