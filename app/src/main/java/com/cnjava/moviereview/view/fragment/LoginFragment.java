@@ -10,8 +10,10 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentLoginBinding;
 import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
@@ -95,10 +97,23 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             if(binding.etUsername.getText() != null) {
                 CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString().trim());
             }
-            Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
-            DialogUtils.hideLoadingDialog();
+            MyApplication.getInstance().getStorage().reviewList = null;
             //CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString());
-            callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            //callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            if (MyApplication.getInstance().getStorage().myUser == null) {
+                //DialogUtils.showLoadDataDialog(context);
+                Log.d(TAG, "myUser null");
+                if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                    Log.d(TAG, "getYourProfile: ");
+                    viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                }
+            }
+        } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
+            User user = (User) data;
+            DialogUtils.hideLoadingDialog();
+            MyApplication.getInstance().getStorage().myUser = user;
+            Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
+            callBack.backToPrev();
         }
 
     }

@@ -56,4 +56,5 @@ public class Review implements Serializable {
         this.rating = rating;
         this.movie = movie;
     }
+
 }

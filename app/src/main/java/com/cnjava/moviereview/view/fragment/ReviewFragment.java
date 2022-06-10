@@ -1,33 +1,46 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.app.Dialog;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentReviewBinding;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
-import com.cnjava.moviereview.util.NumberUtils;
+import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonViewModel> implements ReviewAdapter.ReviewCallBack {
 
     public static final String TAG = ReviewFragment.class.getName();
     private Object mData;
-
+    private List<Review> reviews = new ArrayList<>();
     @Override
     protected Class<CommonViewModel> getClassVM() {
         return CommonViewModel.class;
@@ -37,6 +50,14 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     protected void initViews() {
 
         MovieDetail movieDetail = (MovieDetail) mData;
+
+        if (MyApplication.getInstance().getStorage().reviewList != null) {
+            initReview(MyApplication.getInstance().getStorage().reviewList);
+            reviews = MyApplication.getInstance().getStorage().reviewList;
+        } else {
+            Log.d(TAG, "getReviewByMovieId: 3");
+            viewModel.getReviewByMovieId(String.valueOf(movieDetail.id));
+        }
 
         binding.tvName.setText(movieDetail.title);
         //binding.tvDate.setText(NumberUtils.convertDateType3(movieDetail.releaseDate));
@@ -54,22 +75,275 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
             }
         });
 
-
         binding.rbAll.setChecked(true);
 
-        List<Review> reviewList = new ArrayList<>();
+        binding.rbAll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(reviews.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(reviews);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
 
-        /*reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 8, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Great", 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-        reviewList.add(new Review(1, 1, "Mai Phước Lợi", "Abc", 6, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-*/
-        ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviewList, this);
-        binding.rvReview.setAdapter(reviewAdapter);
+            }
+        });
+
+        binding.rbPositive.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                List<Review> sortedReview = reviews.stream()
+                        .sorted(Comparator.comparing(review -> review.dislike.size()))
+                        .collect(Collectors.toList());
+
+                if(sortedReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(sortedReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbCritical.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                List<Review> sortedReview = reviews.stream()
+                        .sorted(Comparator.comparing(review -> review.like.size()))
+                        .collect(Collectors.toList());
+
+                if(reviews.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(sortedReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbTenStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 10.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbNineStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 9.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbEightStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 8.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbSevenStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 7.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbSixStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 6.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbFiveStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 5.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbFourStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 4.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbThreeStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 3.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbTwoStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 2.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+        binding.rbOneStar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                List<Review> filterReview = new ArrayList<>();
+                for(Review review: reviews){
+                    if(review.rating == 1.0){
+                        filterReview.add(review);
+                    }
+                }
+                if(filterReview.size() > 0) {
+                    ViewUtils.show(binding.rvReview);
+                    ViewUtils.gone(binding.layoutEmpty);
+                    initReview(filterReview);
+                } else {
+                    ViewUtils.gone(binding.rvReview);
+                    ViewUtils.show(binding.layoutEmpty);
+                }
+
+            }
+        });
+
+
+
     }
 
     @Override
@@ -79,12 +353,22 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void apiSuccess(String key, Object data) {
-
+        if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
+            Log.d(TAG, "KEY_REVIEW_BY_MOVIE_ID: ");
+            reviews = (List<Review>) data;
+            MyApplication.getInstance().getStorage().reviewList = reviews;
+            initReview(reviews);
+        }
     }
 
     @Override
     public void apiError(String key, int code, Object data) {
 
+    }
+
+    private void initReview(List<Review> listReview) {
+        ReviewAdapter reviewAdapter = new ReviewAdapter(context, listReview, this);
+        binding.rvReview.setAdapter(reviewAdapter);
     }
 
     @Override
@@ -94,16 +378,58 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void gotoReviewDetail(Review review) {
-
+        callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override
     public void likeReview(String id) {
-
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            viewModel.likeReview(id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+        } else {
+            showLoginDialog();
+        }
     }
 
     @Override
     public void dislikeReview(String id) {
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            viewModel.dislikeReview(id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+        } else {
+            showLoginDialog();
+        }
+    }
+
+    private void showLoginDialog() {
+        Log.d(TAG, "showAlertDialog: ");
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_login_dialog);
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(true);
+
+        TextView btnCancel = dialog.findViewById(R.id.bt_signup);
+        Button btnConfirm = dialog.findViewById(R.id.bt_signin);
+
+        btnCancel.setOnClickListener(view -> {
+            callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
+            dialog.dismiss();
+        });
+
+        btnConfirm.setOnClickListener(view -> {
+            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
+            dialog.dismiss();
+        });
+        dialog.show();
 
     }
 

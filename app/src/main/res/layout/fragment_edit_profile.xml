@@ -79,6 +79,7 @@
                     android:layout_height="@dimen/_100sdp"
                     android:layout_gravity="center"
                     android:scaleType="centerCrop"
+                    android:padding="@dimen/_2sdp"
                     android:src="@drawable/img_default_avt"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                     app:strokeColor="@color/mid_white"

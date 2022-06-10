@@ -132,4 +132,8 @@ public class CommonViewModel extends BaseViewModel {
         getUserApi().dislikeReview(id,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_DISLIKE_REVIEW));
     }
 
+    public void summarizationReview(String text) {
+        aiApi().summarizationReview(text).enqueue(initHandleResponse(Constants.KEY_SUMMARIZATION));
+    }
+
 }

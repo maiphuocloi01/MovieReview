@@ -26,6 +26,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentRegisterBinding;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
@@ -202,7 +203,8 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             DialogUtils.hideLoadingDialog();
             if (response.getError() == null) {
                 dialog.dismiss();
-                callBack.backToPrev();
+                CommonUtils.getInstance().clearPref(Constants.USERNAME);
+                callBack.replaceFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             }
             //Toast.makeText(context, otp, Toast.LENGTH_SHORT).show();
         }

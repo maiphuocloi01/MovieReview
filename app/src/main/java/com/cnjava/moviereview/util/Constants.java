@@ -4,6 +4,7 @@ public interface Constants {
 
     String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
     String BASE_URL_USER = "https://viewie-api.herokuapp.com/api/v1/";
+    String BASE_URL_AI = "https://viewie-ai.herokuapp.com/";
     String BASE_URL_UPlOAD_IMAGE = "https://nhom01nt118.azurewebsites.net/";
     String IMAGE_URL = "https://image.tmdb.org/t/p/w1280/";
     String IMAGE_URL_YOUTUBE = "https://img.youtube.com/vi/";
@@ -47,5 +48,8 @@ public interface Constants {
     String KEY_ADD_REVIEW = "KEY_ADD_REVIEW";
     String KEY_LIKE_REVIEW = "KEY_LIKE_REVIEW";
     String KEY_DISLIKE_REVIEW = "KEY_DISLIKE_REVIEW";
+
+
+    String KEY_SUMMARIZATION = "KEY_SUMMARIZATION";
 
 }

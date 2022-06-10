@@ -12,11 +12,11 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="@dimen/_18sdp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/baloo_semibold"
         android:text="Logout"
         android:textAlignment="center"
         android:textColor="@color/light_white"
-        android:textSize="@dimen/_16ssp" />
+        android:textSize="@dimen/_20ssp" />
 
     <!--<View
         android:layout_width="wrap_content"

@@ -2,14 +2,22 @@ package com.cnjava.moviereview.view.fragment;
 
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
 
+import android.app.Dialog;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -72,6 +80,15 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         viewModel.getVideo(id);
         viewModel.getSocial(id);
 
+        if (MyApplication.getInstance().getStorage().myUser == null) {
+            //DialogUtils.showLoadDataDialog(context);
+            Log.d(TAG, "myUser null");
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                Log.d(TAG, "getYourProfile: ");
+                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            }
+        }
+
         if (MyApplication.getInstance().getStorage().reviewList != null) {
             if (MyApplication.getInstance().getStorage().reviewList.size() > 0) {
                 if (MyApplication.getInstance().getStorage().reviewList.get(0).movie.id.equals(String.valueOf(id))) {
@@ -107,7 +124,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                     callBack.replaceFragment(AddReviewFragment.TAG, movieDetail, true, Constants.ANIM_SCALE);
                 } else {
-                    callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                    showLoginDialog();
                 }
             }
         });
@@ -298,9 +315,12 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             MyApplication.getInstance().getStorage().reviewList = reviews;
             initReview(reviews);
         } else if (key.equals(Constants.KEY_LIKE_REVIEW)) {
-
+            Log.d(TAG, "KEY_LIKE_REVIEW: ");
         } else if (key.equals(Constants.KEY_DISLIKE_REVIEW)) {
-
+            Log.d(TAG, "KEY_DISLIKE_REVIEW: ");
+        } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
+            User user = (User) data;
+            MyApplication.getInstance().getStorage().myUser = user;
         }
     }
 
@@ -351,6 +371,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void gotoReviewDetail(Review review) {
+        callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override
@@ -358,7 +379,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             viewModel.likeReview(id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
         } else {
-            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            showLoginDialog();
         }
     }
 
@@ -367,8 +388,42 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             viewModel.dislikeReview(id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
         } else {
-            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            showLoginDialog();
         }
+    }
+
+    private void showLoginDialog() {
+        Log.d(TAG, "showAlertDialog: ");
+        final Dialog dialog = new Dialog(context);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+        dialog.setContentView(R.layout.custom_login_dialog);
+        Window window = dialog.getWindow();
+        if (window == null) {
+            return;
+        }
+        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
+        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+
+        WindowManager.LayoutParams windowAttributes = window.getAttributes();
+        windowAttributes.gravity = Gravity.CENTER;
+        window.setAttributes(windowAttributes);
+
+        dialog.setCancelable(true);
+
+        TextView btnCancel = dialog.findViewById(R.id.bt_signup);
+        Button btnConfirm = dialog.findViewById(R.id.bt_signin);
+
+        btnCancel.setOnClickListener(view -> {
+            callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
+            dialog.dismiss();
+        });
+
+        btnConfirm.setOnClickListener(view -> {
+            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
+            dialog.dismiss();
+        });
+        dialog.show();
+
     }
 
     @Override

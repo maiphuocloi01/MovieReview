@@ -1,9 +1,11 @@
 package com.cnjava.moviereview.api;
 
+import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.view.adapter.Summary;
 
 import java.util.List;
 
@@ -22,6 +24,7 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Part;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface UserApi {
 
@@ -81,5 +84,9 @@ public interface UserApi {
     @PUT("reviews/{review_id}/dislike")
     @Headers("Content-type: application/json")
     Call<Void> dislikeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+
+    @GET("summarization")
+    @Headers("Content-type: application/json")
+    Call<Summary> summarizationReview(@Query("inputs") String inputs);
 
 }

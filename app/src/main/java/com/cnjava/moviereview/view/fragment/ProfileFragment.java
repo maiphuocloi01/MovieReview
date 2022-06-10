@@ -139,14 +139,15 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
         btnCancel.setOnClickListener(view -> dialog.dismiss());
 
         btnConfirm.setOnClickListener(view -> {
-            callBack.showFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
             MyApplication.getInstance().getStorage().myUser = null;
+            MyApplication.getInstance().getStorage().reviewList = null;
             MyApplication.getInstance().getStorage().moviePopular = null;
             MyApplication.getInstance().getStorage().movieNowPlaying = null;
             MyApplication.getInstance().getStorage().movieUpcoming = null;
             MyApplication.getInstance().getStorage().movieTopRated = null;
             MyApplication.getInstance().getStorage().movieRecommend = null;
+            callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
             //CommonUtils.getInstance().clearPref(Constants.USERNAME);

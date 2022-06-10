@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginTop="30dp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/baloo_semibold"
         android:text="Confirm OTP code"
         android:textAlignment="center"
         android:textColor="@color/light_white"
