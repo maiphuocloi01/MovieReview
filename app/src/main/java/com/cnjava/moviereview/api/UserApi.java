@@ -69,6 +69,10 @@ public interface UserApi {
     @Headers("Content-type: application/json")
     Call<List<Review>> getReviewByMovieId(@Path("movie_id") String movie_id);
 
+    @GET("reviews/users/{user_id} ")
+    @Headers("Content-type: application/json")
+    Call<List<Review>> getReviewByUserId(@Path("user_id") String user_id);
+
     @GET("reviews/{review_id}")
     @Headers("Content-type: application/json")
     Call<Review> getReviewById(@Path("review_id") String review_id);

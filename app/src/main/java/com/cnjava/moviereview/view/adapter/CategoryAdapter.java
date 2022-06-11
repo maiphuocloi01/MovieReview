@@ -40,8 +40,8 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Genres item = genresList.get(position);
-        holder.binding.btCategory1.setText(item.getName());
-        holder.binding.btCategory1.setOnClickListener(new View.OnClickListener() {
+        holder.binding.btCategoryItem.setText(item.getName());
+        holder.binding.btCategoryItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callBack.gotoSearchByCategory(String.valueOf(item.getId()));
