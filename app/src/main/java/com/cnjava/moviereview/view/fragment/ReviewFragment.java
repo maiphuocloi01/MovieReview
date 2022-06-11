@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -39,8 +41,11 @@ import java.util.stream.Collectors;
 public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonViewModel> implements ReviewAdapter.ReviewCallBack {
 
     public static final String TAG = ReviewFragment.class.getName();
+    private final String[] items = {"Newest", "Oldest"};
     private Object mData;
     private List<Review> reviews = new ArrayList<>();
+    private List<Review> sortedReview = new ArrayList<>();
+
     @Override
     protected Class<CommonViewModel> getClassVM() {
         return CommonViewModel.class;
@@ -52,8 +57,9 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         MovieDetail movieDetail = (MovieDetail) mData;
 
         if (MyApplication.getInstance().getStorage().reviewList != null) {
-            initReview(MyApplication.getInstance().getStorage().reviewList);
             reviews = MyApplication.getInstance().getStorage().reviewList;
+            sortedReview = MyApplication.getInstance().getStorage().reviewList;
+            initReview(sortedReview);
         } else {
             Log.d(TAG, "getReviewByMovieId: 3");
             viewModel.getReviewByMovieId(String.valueOf(movieDetail.id));
@@ -75,18 +81,42 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
             }
         });
 
+        ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(context, R.layout.item_dropdown, items);
+        binding.autoCompleteTxt.setAdapter(adapterItems);
+
+        binding.autoCompleteTxt.setCursorVisible(false);
+        binding.autoCompleteTxt.setShowSoftInputOnFocus(false);
+        binding.autoCompleteTxt.setDropDownBackgroundResource(R.drawable.bg_light_dark_corner_10);
+
+        binding.autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                sortReviewByDay(item);
+                //Toast.makeText(context,"Item: "+item,Toast.LENGTH_SHORT).show();
+            }
+        });
+
         binding.rbAll.setChecked(true);
 
         binding.rbAll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(reviews.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(reviews);
+                binding.tvSort.setText(binding.rbAll.getText());
+                sortedReview = reviews;
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -95,18 +125,25 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbPositive.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                List<Review> sortedReview = reviews.stream()
+                binding.tvSort.setText(binding.rbPositive.getText());
+                sortedReview = reviews.stream()
                         .sorted(Comparator.comparing(review -> review.dislike.size()))
                         .collect(Collectors.toList());
 
-                if(sortedReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(sortedReview);
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -115,18 +152,23 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbCritical.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-                List<Review> sortedReview = reviews.stream()
+                binding.tvSort.setText(binding.rbCritical.getText());
+                sortedReview = reviews.stream()
                         .sorted(Comparator.comparing(review -> review.like.size()))
                         .collect(Collectors.toList());
-
-                if(reviews.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(sortedReview);
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -135,19 +177,27 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbTenStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 10.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbTenStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 10.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -156,19 +206,27 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbNineStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 9.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbNineStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 9.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -177,103 +235,134 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbEightStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 8.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbEightStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 8.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
         });
 
-        binding.rbSevenStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 7.0){
-                        filterReview.add(review);
-                    }
+        binding.rbSevenStar.setOnClickListener(view -> {
+            binding.tvSort.setText(binding.rbSevenStar.getText());
+            sortedReview = new ArrayList<>();
+            for (Review review : reviews) {
+                if (review.rating == 7.0) {
+                    sortedReview.add(review);
                 }
-                if(filterReview.size() > 0) {
+            }
+
+            if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                sortReviewByDay("Newest");
+            } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                sortReviewByDay("Oldest");
+            } else {
+                if (sortedReview.size() > 0) {
                     ViewUtils.show(binding.rvReview);
                     ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+                    initReview(sortedReview);
                 } else {
                     ViewUtils.gone(binding.rvReview);
                     ViewUtils.show(binding.layoutEmpty);
                 }
-
             }
+
         });
 
-        binding.rbSixStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 6.0){
-                        filterReview.add(review);
-                    }
+        binding.rbSixStar.setOnClickListener(view -> {
+            binding.tvSort.setText(binding.rbSixStar.getText());
+            sortedReview = new ArrayList<>();
+            for (Review review : reviews) {
+                if (review.rating == 6.0) {
+                    sortedReview.add(review);
                 }
-                if(filterReview.size() > 0) {
+            }
+
+            if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                sortReviewByDay("Newest");
+            } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                sortReviewByDay("Oldest");
+            } else {
+                if (sortedReview.size() > 0) {
                     ViewUtils.show(binding.rvReview);
                     ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+                    initReview(sortedReview);
                 } else {
                     ViewUtils.gone(binding.rvReview);
                     ViewUtils.show(binding.layoutEmpty);
                 }
-
             }
+
         });
 
-        binding.rbFiveStar.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 5.0){
-                        filterReview.add(review);
-                    }
+        binding.rbFiveStar.setOnClickListener(view -> {
+            binding.tvSort.setText(binding.rbFiveStar.getText());
+            sortedReview = new ArrayList<>();
+            for (Review review : reviews) {
+                if (review.rating == 5.0) {
+                    sortedReview.add(review);
                 }
-                if(filterReview.size() > 0) {
+            }
+
+            if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                sortReviewByDay("Newest");
+            } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                sortReviewByDay("Oldest");
+            } else {
+                if (sortedReview.size() > 0) {
                     ViewUtils.show(binding.rvReview);
                     ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+                    initReview(sortedReview);
                 } else {
                     ViewUtils.gone(binding.rvReview);
                     ViewUtils.show(binding.layoutEmpty);
                 }
-
             }
+
         });
 
         binding.rbFourStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 4.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbFourStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 4.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -282,19 +371,27 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbThreeStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 3.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbThreeStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 3.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
                 }
 
             }
@@ -303,19 +400,28 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbTwoStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 2.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbTwoStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 2.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
+
                 }
 
             }
@@ -324,26 +430,64 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.rbOneStar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                List<Review> filterReview = new ArrayList<>();
-                for(Review review: reviews){
-                    if(review.rating == 1.0){
-                        filterReview.add(review);
+                binding.tvSort.setText(binding.rbOneStar.getText());
+                sortedReview = new ArrayList<>();
+                for (Review review : reviews) {
+                    if (review.rating == 1.0) {
+                        sortedReview.add(review);
                     }
                 }
-                if(filterReview.size() > 0) {
-                    ViewUtils.show(binding.rvReview);
-                    ViewUtils.gone(binding.layoutEmpty);
-                    initReview(filterReview);
+
+                if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
+                    sortReviewByDay("Newest");
+                } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
+                    sortReviewByDay("Oldest");
                 } else {
-                    ViewUtils.gone(binding.rvReview);
-                    ViewUtils.show(binding.layoutEmpty);
+                    if (sortedReview.size() > 0) {
+                        ViewUtils.show(binding.rvReview);
+                        ViewUtils.gone(binding.layoutEmpty);
+                        initReview(sortedReview);
+                    } else {
+                        ViewUtils.gone(binding.rvReview);
+                        ViewUtils.show(binding.layoutEmpty);
+                    }
+
                 }
 
             }
         });
 
 
+    }
 
+    private void sortReviewByDay(String item) {
+        if (item.equals("Newest")) {
+            sortedReview = sortedReview.stream()
+                    .sorted(Comparator.comparing(Review::getCreatedAt).reversed())
+                    .collect(Collectors.toList());
+
+            if (sortedReview.size() > 0) {
+                ViewUtils.show(binding.rvReview);
+                ViewUtils.gone(binding.layoutEmpty);
+                initReview(sortedReview);
+            } else {
+                ViewUtils.gone(binding.rvReview);
+                ViewUtils.show(binding.layoutEmpty);
+            }
+        } else if (item.equals("Oldest")) {
+            sortedReview = sortedReview.stream()
+                    .sorted(Comparator.comparing(Review::getCreatedAt))
+                    .collect(Collectors.toList());
+
+            if (sortedReview.size() > 0) {
+                ViewUtils.show(binding.rvReview);
+                ViewUtils.gone(binding.layoutEmpty);
+                initReview(sortedReview);
+            } else {
+                ViewUtils.gone(binding.rvReview);
+                ViewUtils.show(binding.layoutEmpty);
+            }
+        }
     }
 
     @Override
@@ -367,6 +511,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     }
 
     private void initReview(List<Review> listReview) {
+
         ReviewAdapter reviewAdapter = new ReviewAdapter(context, listReview, this);
         binding.rvReview.setAdapter(reviewAdapter);
     }

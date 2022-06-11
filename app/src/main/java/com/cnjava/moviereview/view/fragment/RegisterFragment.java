@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.view.fragment;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
@@ -21,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentRegisterBinding;
@@ -61,6 +63,42 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             public void onClick(View view) {
                 binding.tvLogin.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 callBack.backToPrev();
+            }
+        });
+
+        binding.etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutEmail.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutEmail.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+            }
+        });
+
+        binding.etUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutName.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutName.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+            }
+        });
+
+        binding.etPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutPassword.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutPassword.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+            }
+        });
+
+        binding.etPasswordConfirm.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutPasswordConfirm.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutPasswordConfirm.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
             }
         });
 

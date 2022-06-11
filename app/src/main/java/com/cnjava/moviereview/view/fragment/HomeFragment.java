@@ -68,23 +68,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     @Override
     protected void initViews() {
 
-        if (MyApplication.getInstance().getStorage().moviePopular == null) {
-            viewModel.getPopularMovie();
-            ViewUtils.show(binding.progressCircular);
-            ViewUtils.gone(binding.layoutHome);
-        } else {
-            moviePopular = MyApplication.getInstance().getStorage().moviePopular;
-            initPopularView();
-        }
-
-        binding.etSearch.setCursorVisible(false);
-        binding.etSearch.setShowSoftInputOnFocus(false);
-        binding.etSearch.setFocusableInTouchMode(false);
-        binding.etSearch.setOnClickListener(view -> {
-            callBack.showFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
-            //actionShowFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
-        });
-
         if (MyApplication.getInstance().getStorage().myUser == null) {
             //DialogUtils.showLoadDataDialog(context);
             Log.d(TAG, "myUser null");
@@ -102,6 +85,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
                         .into(binding.ivAvt);
             }
         }
+
+        if (MyApplication.getInstance().getStorage().moviePopular == null) {
+            ViewUtils.show(binding.progressCircular);
+            ViewUtils.gone(binding.layoutHome);
+            viewModel.getPopularMovie();
+        } else {
+            moviePopular = MyApplication.getInstance().getStorage().moviePopular;
+            initPopularView();
+        }
+
+        binding.etSearch.setCursorVisible(false);
+        binding.etSearch.setShowSoftInputOnFocus(false);
+        binding.etSearch.setFocusableInTouchMode(false);
+        binding.etSearch.setOnClickListener(view -> {
+            callBack.showFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
+            //actionShowFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
+        });
 
 
         if (MyApplication.getInstance().getStorage().movieNowPlaying == null) {
@@ -143,7 +143,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
                 Log.d(TAG, "ivAvt: ");
                 showAlertDialog();
             } else {
-                callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                if(MyApplication.getInstance().getStorage().myUser != null) {
+                    callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                }
             }
         });
 
@@ -189,13 +191,15 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     @Override
     public void apiSuccess(String key, Object data) {
 
-        ViewUtils.gone(binding.progressCircular);
-        ViewUtils.show(binding.layoutHome);
 
         if (key.equals(Constants.KEY_GET_POPULAR_MOVIE)) {
             moviePopular = (Movie) data;
             MyApplication.getInstance().getStorage().moviePopular = moviePopular;
             Log.d(TAG, "apiSuccess: " + moviePopular);
+            if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null){
+                ViewUtils.gone(binding.progressCircular);
+                ViewUtils.show(binding.layoutHome);
+            }
             initPopularView();
 
         } else if (key.equals(Constants.KEY_GET_NOW_PLAYING_MOVIE)) {
@@ -223,6 +227,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
                         .placeholder(R.drawable.img_default_avt)
                         .into(binding.ivAvt);
             }
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutHome);
 
         }
     }
@@ -262,11 +268,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         if (key.equals(Constants.KEY_GET_POPULAR_MOVIE)) {
             if (code == 999) {
                 Log.d(TAG, "apiError: " + data.toString());
-                Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "No internet", Toast.LENGTH_SHORT).show();
             }
         } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
             Log.d(TAG, "apiError: " + data.toString());
-            Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutHome);
+            Toast.makeText(context, "Unable connect to heroku", Toast.LENGTH_SHORT).show();
         }
     }
 

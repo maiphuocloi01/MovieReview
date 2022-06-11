@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.view.fragment;
 
 import android.app.Dialog;
+import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
@@ -19,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentForgotPasswordBinding;
@@ -103,6 +105,15 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
 
                 //viewModel.checkEmailExist(binding.etEmail.getText().toString());
                 //DialogUtils.showLoadingDialog(context);
+            }
+        });
+
+        binding.etEmail.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutEmail.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutEmail.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
             }
         });
 

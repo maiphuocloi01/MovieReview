@@ -347,8 +347,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     public void apiError(String key, int code, Object data) {
         if (code == 999) {
-            Log.d(TAG, "apiError: " + data.toString());
-            Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+            if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
+                Log.d(TAG, "apiError: " + data.toString());
+                Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+            }
         }
     }
 

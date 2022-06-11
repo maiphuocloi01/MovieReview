@@ -5,6 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/dark"
+    android:id="@+id/layout_setting"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <RelativeLayout
@@ -171,9 +172,37 @@
 
     </TableRow>
 
+    <com.google.android.material.textfield.TextInputLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:endIconTint="@color/light_white"
+        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+        android:background="@drawable/text_input_selector_ver2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+        <AutoCompleteTextView
+            android:id="@+id/auto_complete_txt"
+            android:padding="@dimen/_12sdp"
+            android:popupBackground="@color/transparent"
+            android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+            android:background="@android:color/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/select"
+            android:textColor="@color/light_white"
+            android:textColorHint="@color/mid_white"
+            android:drawableTint="@color/light_white"
+            android:inputType="none"/>
+    </com.google.android.material.textfield.TextInputLayout>
+
+
     <View
+        android:id="@+id/view1"
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:background="@color/dark"
         android:layout_weight="1">
 
     </View>

@@ -284,13 +284,65 @@
 
             </HorizontalScrollView>
 
+            <TableRow
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginHorizontal="@dimen/_12sdp"
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_sort"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_regular"
+                    android:text="All reviews"
+                    android:maxLines="1"
+                    android:ellipsize="end"
+                    android:layout_marginStart="@dimen/_8sdp"
+                    android:textColor="@color/light_white"
+                    android:textSize="@dimen/_10ssp" />
+
+                <View
+                    android:layout_height="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_weight="1"/>
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/layout_gender"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false"
+                    app:endIconTint="@color/mid_white"
+                    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_complete_txt"
+                        android:paddingStart="@dimen/_14sdp"
+                        android:popupBackground="@color/transparent"
+                        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+                        android:background="@android:color/transparent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/select2"
+                        android:enabled="false"
+                        android:textSize="@dimen/_10ssp"
+                        android:textColor="@color/light_white"
+                        android:textColorHint="@color/mid_white"
+                        android:inputType="none"/>
+                </com.google.android.material.textfield.TextInputLayout>
+
+            </TableRow>
+
+
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_review"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginHorizontal="@dimen/_12sdp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:layout_marginTop="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_2sdp"
                 android:visibility="visible"
                 android:nestedScrollingEnabled="false"
                 tools:listitem="@layout/item_review" />

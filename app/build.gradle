@@ -58,6 +58,7 @@ dependencies {
     implementation 'me.relex:circleindicator:2.1.6'
 
     implementation 'com.github.gifffert:ExpandableTextView:0.1.6'
+    implementation 'me.biubiubiu.justifytext:library:1.1'
 
     implementation 'com.intuit.sdp:sdp-android:1.0.6'
     implementation 'com.intuit.ssp:ssp-android:1.0.6'

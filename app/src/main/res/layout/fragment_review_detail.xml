@@ -259,14 +259,14 @@
                     android:id="@+id/tv_content"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginHorizontal="@dimen/_16sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:lineSpacingExtra="@dimen/_4ssp"
                     android:text="@string/overview"
                     android:layout_marginTop="@dimen/_14sdp"
-                    android:textAlignment="center"
+                    android:layout_marginHorizontal="@dimen/_14sdp"
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_14ssp"
+                    android:textAlignment="center"
                     app:layout_constraintTop_toBottomOf="@+id/tv_date" />
 
                 <ImageView

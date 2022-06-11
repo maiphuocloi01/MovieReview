@@ -48,6 +48,9 @@
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_email"
+        app:startIconTint="@color/light_white"
+        android:id="@+id/layout_email"
         app:endIconTint="@color/light_white"
         app:hintEnabled="false">
 
@@ -56,8 +59,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_email"
-            android:drawablePadding="@dimen/_10sdp"
             android:hint="Email"
             android:inputType="text"
             android:padding="@dimen/_12sdp"
@@ -75,6 +76,9 @@
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_profile"
+        app:startIconTint="@color/light_white"
+        android:id="@+id/layout_name"
         app:endIconTint="@color/light_white"
         app:hintEnabled="false">
 
@@ -84,9 +88,7 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:hint="Full name"
-            android:drawableStart="@drawable/ic_profile"
             android:inputType="text"
-            android:drawablePadding="@dimen/_10sdp"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
@@ -103,6 +105,9 @@
         android:layout_marginTop="@dimen/_16sdp"
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
+        android:id="@+id/layout_password"
+        app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/light_white"
         app:passwordToggleTint="@color/light_white"
         app:hintEnabled="false">
 
@@ -110,8 +115,6 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawablePadding="@dimen/_10sdp"
             android:hint="Password"
             android:background="@android:color/transparent"
             android:inputType="textPassword"
@@ -131,6 +134,9 @@
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:passwordToggleTint="@color/light_white"
+        android:id="@+id/layout_password_confirm"
+        app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/light_white"
         app:hintEnabled="false">
 
         <com.google.android.material.textfield.TextInputEditText

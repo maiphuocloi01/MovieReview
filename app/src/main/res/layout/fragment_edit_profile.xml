@@ -78,8 +78,8 @@
                     android:layout_width="@dimen/_100sdp"
                     android:layout_height="@dimen/_100sdp"
                     android:layout_gravity="center"
-                    android:scaleType="centerCrop"
                     android:padding="@dimen/_2sdp"
+                    android:scaleType="centerCrop"
                     android:src="@drawable/img_default_avt"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                     app:strokeColor="@color/mid_white"
@@ -306,7 +306,33 @@
                 </TableRow>
 
 
-                <RadioGroup
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="16dp"
+                    android:id="@+id/layout_gender"
+                    app:hintAnimationEnabled="false"
+                    app:hintEnabled="false"
+                    app:endIconTint="@color/mid_white"
+                    android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+                    android:background="@drawable/text_input_selector_ver3"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu">
+                    <AutoCompleteTextView
+                        android:id="@+id/auto_complete_txt"
+                        android:padding="@dimen/_12sdp"
+                        android:popupBackground="@color/transparent"
+                        android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
+                        android:background="@android:color/transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/select"
+                        android:enabled="false"
+                        android:textColor="@color/mid_white"
+                        android:textColorHint="@color/mid_white"
+                        android:drawableTint="@color/light_white"
+                        android:inputType="none"/>
+                </com.google.android.material.textfield.TextInputLayout>
+                <!--<RadioGroup
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
@@ -337,7 +363,7 @@
                         android:enabled="false"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_14ssp" />
-                </RadioGroup>
+                </RadioGroup>-->
 
             </LinearLayout>
 
@@ -351,7 +377,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_primary_corner_10"
                 android:visibility="gone"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/baloo_semibold"
                 android:padding="12dp"
                 android:stateListAnimator="@null"
                 android:text="Save"
@@ -370,7 +396,7 @@
                 android:layout_marginBottom="20dp"
                 android:background="@drawable/bg_transparent_corner_10_border_primary"
                 android:enabled="true"
-                android:fontFamily="@font/roboto_bold"
+                android:fontFamily="@font/baloo_semibold"
                 android:padding="12dp"
                 android:visibility="gone"
                 android:text="Cancel"

@@ -66,6 +66,20 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             }
         });*/
 
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.backToPrev();
+            }
+        });
+
+        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(SettingFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
+
         if (MyApplication.getInstance().getStorage().myUser == null) {
             //DialogUtils.showLoadDataDialog(context);
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
@@ -79,7 +93,9 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             @Override
             public void onClick(View view) {
                 binding.tvEditProfile.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                callBack.replaceFragment(EditProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                if (MyApplication.getInstance().getStorage().myUser != null) {
+                    callBack.replaceFragment(EditProfileFragment.TAG, MyApplication.getInstance().getStorage().myUser, true, Constants.ANIM_SLIDE);
+                }
             }
         });
 

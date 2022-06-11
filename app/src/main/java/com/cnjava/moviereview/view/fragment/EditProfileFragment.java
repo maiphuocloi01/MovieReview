@@ -12,6 +12,7 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -25,6 +26,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TextView;
@@ -71,12 +74,13 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
     };
 
     ActivityResultLauncher<Intent> someActivityResultLauncher;
-    private User user = MyApplication.getInstance().getStorage().myUser;
+    //private User user = MyApplication.getInstance().getStorage().myUser;
     private int defaultYear = 2001;
     private int defaultMonth = 0;
     private int defaultDay = 1;
     private Object mData;
     private String filePath = null;
+    private final String[] items = {"Male", "Female"};
 
     public static boolean verifyStoragePermissions(Activity activity) {
         int permission = ActivityCompat.checkSelfPermission(activity, Manifest.permission.WRITE_EXTERNAL_STORAGE);
@@ -132,6 +136,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
     @Override
     protected void initViews() {
 
+        User user = (User) mData;
+
+
         if (user.getName() != null) {
             binding.etName.setText(user.getName());
         }
@@ -147,9 +154,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
 
         if (user.getGender() != null) {
             if (user.getGender().equals("male")) {
-                binding.rbMale.setChecked(true);
+                binding.autoCompleteTxt.setText("Male");
             } else {
-                binding.rbFemale.setChecked(true);
+                binding.autoCompleteTxt.setText("Female");
             }
         }
         Log.d(TAG, "filePath: " + filePath);
@@ -168,21 +175,32 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
             }
         }
 
+        /*binding.autoCompleteTxt.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.light_white : R.color.mid_white;
+                binding.layoutGender.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+            }
+        });*/
+
         binding.ivEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 binding.btnConfirm.setVisibility(View.VISIBLE);
                 binding.btCancel.setVisibility(View.VISIBLE);
-                binding.ivEdit.setVisibility(View.GONE);
+                binding.ivEdit.setVisibility(View.INVISIBLE);
+                binding.ivEdit.setEnabled(false);
                 binding.etName.setEnabled(true);
                 binding.etPhone.setEnabled(true);
                 binding.etBirthday.setEnabled(true);
-                binding.rbFemale.setEnabled(true);
-                binding.rbMale.setEnabled(true);
+                //binding.rbFemale.setEnabled(true);
+                //binding.rbMale.setEnabled(true);
+                binding.autoCompleteTxt.setEnabled(true);
                 binding.btChangeImg.setVisibility(View.VISIBLE);
                 binding.etName.setTextColor(ContextCompat.getColor(context, R.color.light_white));
                 binding.etPhone.setTextColor(ContextCompat.getColor(context, R.color.light_white));
                 binding.etBirthday.setTextColor(ContextCompat.getColor(context, R.color.light_white));
+                binding.autoCompleteTxt.setTextColor(ContextCompat.getColor(context, R.color.light_white));
             }
         });
         binding.btCancel.setOnClickListener(new View.OnClickListener() {
@@ -192,12 +210,14 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 binding.btnConfirm.setVisibility(View.GONE);
                 binding.btCancel.setVisibility(View.GONE);
                 binding.ivEdit.setVisibility(View.VISIBLE);
+                binding.ivEdit.setEnabled(false);
                 binding.btChangeImg.setVisibility(View.GONE);
                 binding.etName.setEnabled(false);
                 binding.etPhone.setEnabled(false);
                 binding.etBirthday.setEnabled(false);
-                binding.rbFemale.setEnabled(false);
-                binding.rbMale.setEnabled(false);
+                //binding.rbFemale.setEnabled(false);
+                //binding.rbMale.setEnabled(false);
+                binding.autoCompleteTxt.setEnabled(false);
                 if (user.getName() != null) {
                     binding.etName.setText(user.getName());
                 } else {
@@ -216,13 +236,16 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
 
                 if (user.getGender() != null) {
                     if (user.getGender().equals("male")) {
-                        binding.rbMale.setChecked(true);
+                        //binding.rbMale.setChecked(true);
+                        binding.autoCompleteTxt.setText("Male");
                     } else {
-                        binding.rbFemale.setChecked(true);
+                        binding.autoCompleteTxt.setText("Female");
+                        //binding.rbFemale.setChecked(true);
                     }
                 } else {
-                    binding.rbMale.setChecked(false);
-                    binding.rbFemale.setChecked(false);
+                    //binding.rbMale.setChecked(false);
+                    //binding.rbFemale.setChecked(false);
+                    binding.autoCompleteTxt.setEnabled(false);
                 }
                 if (user.getAvatar() != null) {
                     Glide.with(context)
@@ -236,6 +259,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 binding.etName.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
                 binding.etPhone.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
                 binding.etBirthday.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
+                binding.autoCompleteTxt.setTextColor(ContextCompat.getColor(context, R.color.mid_white));
             }
         });
 
@@ -257,6 +281,21 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
             }
         });
 
+        ArrayAdapter<String> adapterItems = new ArrayAdapter<String>(context, R.layout.item_dropdown, items);
+        binding.autoCompleteTxt.setAdapter(adapterItems);
+
+        binding.autoCompleteTxt.setCursorVisible(false);
+        binding.autoCompleteTxt.setShowSoftInputOnFocus(false);
+        binding.autoCompleteTxt.setDropDownBackgroundResource(R.drawable.bg_light_dark_corner_10);
+
+        binding.autoCompleteTxt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String item = parent.getItemAtPosition(position).toString();
+                //Toast.makeText(context,"Item: "+item,Toast.LENGTH_SHORT).show();
+            }
+        });
+
         binding.btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -264,7 +303,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 String newPhone = binding.etPhone.getText().toString();
                 String newBirthday = binding.etBirthday.getText().toString();
                 String newGender = "male";
-                if (binding.rbFemale.isChecked()) {
+                if (binding.autoCompleteTxt.getText().toString().equals("Female")) {
                     newGender = "female";
                 }
                 String imageFileName = null;

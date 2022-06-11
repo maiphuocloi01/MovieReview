@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.content.res.ColorStateList;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -9,8 +10,10 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 
 import com.cnjava.moviereview.MyApplication;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentLoginBinding;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
@@ -48,6 +51,24 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             @Override
             public void onClick(View view) {
                 callBack.replaceFragment(ForgotPasswordFragment.TAG, null, true, 0);
+            }
+        });
+
+        binding.etUsername.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutEmail.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutEmail.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+            }
+        });
+
+        binding.etPassword.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                int color = hasFocus ? R.color.primary : R.color.light_white;
+                binding.layoutPassword.setStartIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
+                binding.layoutPassword.setEndIconTintList(ColorStateList.valueOf(ContextCompat.getColor(context, color)));
             }
         });
 

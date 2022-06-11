@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/iv_edit"
+            android:layout_toLeftOf="@+id/iv_setting"
             android:layout_toRightOf="@+id/iv_back"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
@@ -51,14 +51,14 @@
             app:tint="@color/primary" />-->
 
         <ImageButton
-            android:id="@+id/iv_edit"
+            android:id="@+id/iv_setting"
             android:layout_width="@dimen/_26sdp"
             android:layout_height="@dimen/_26sdp"
+            android:layout_alignParentEnd="true"
+            android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/bg_mid_light_circle"
             android:padding="@dimen/_8sdp"
-            android:layout_alignParentEnd="true"
-            android:layout_gravity="center_vertical"
             app:srcCompat="@drawable/ic_settings2"
             app:tint="@color/light_white" />
 
@@ -110,7 +110,7 @@
                                 android:layout_marginStart="@dimen/_14sdp"
                                 android:layout_marginBottom="@dimen/_1sdp"
                                 android:fontFamily="@font/roboto_bold"
-                                android:text="Mai Phước Lợi"
+                                android:text="Guess"
                                 android:maxLines="1"
                                 android:ellipsize="end"
                                 android:textColor="@color/light_white"

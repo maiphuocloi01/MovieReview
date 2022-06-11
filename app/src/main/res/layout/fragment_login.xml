@@ -48,6 +48,9 @@
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        app:startIconDrawable="@drawable/ic_email"
+        app:startIconTint="@color/light_white"
+        android:id="@+id/layout_email"
         app:endIconTint="@color/light_white"
         app:hintEnabled="false">
 
@@ -57,13 +60,10 @@
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
             android:hint="Email"
-            android:drawableStart="@drawable/ic_profile"
             android:inputType="text"
-            android:drawablePadding="@dimen/_10sdp"
-            android:padding="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
-            android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
     </com.google.android.material.textfield.TextInputLayout>
 
@@ -76,7 +76,9 @@
         android:layout_marginTop="@dimen/_24sdp"
         android:background="@drawable/text_input_selector_ver2"
         app:hintAnimationEnabled="false"
-        app:endIconTint="@color/light_white"
+        android:id="@+id/layout_password"
+        app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/light_white"
         app:passwordToggleTint="@color/light_white"
         app:hintEnabled="false">
 
@@ -85,11 +87,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_lock"
-            android:drawablePadding="@dimen/_10sdp"
             android:hint="Password"
             android:inputType="textPassword"
-            android:padding="@dimen/_12sdp"
+            android:paddingVertical="@dimen/_12sdp"
             android:drawableTint="@color/light_white"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
