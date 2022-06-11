@@ -2,10 +2,15 @@ package com.cnjava.moviereview.viewmodel;
 
 import android.util.Log;
 
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MutableLiveData;
+
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
+
+import java.util.List;
 
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -13,6 +18,13 @@ import okhttp3.RequestBody;
 public class CommonViewModel extends BaseViewModel {
 
     private static final String TAG = CommonViewModel.class.getName();
+
+    public MutableLiveData<List<Review>> listReview = new MutableLiveData<>();
+
+    public MutableLiveData<List<Review>> getListReview() {
+        return listReview;
+    }
+
 
     @Override
     protected void onCleared() {

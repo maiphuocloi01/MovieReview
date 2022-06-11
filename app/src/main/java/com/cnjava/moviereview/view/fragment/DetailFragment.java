@@ -3,6 +3,7 @@ package com.cnjava.moviereview.view.fragment;
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -23,6 +24,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -50,6 +53,7 @@ import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.view.adapter.VideoAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
+import com.cnjava.moviereview.viewmodel.ShareViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,10 +66,25 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private MovieDetail movieDetail;
     private Social social;
     private List<Review> reviews = MyApplication.getInstance().getStorage().reviewList;
+    private ShareViewModel sharedViewModel;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
         return CommonViewModel.class;
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "onAttach: ");
+        sharedViewModel = new ViewModelProvider(this).get(ShareViewModel.class);
+        sharedViewModel.getListReview().observe(this, new Observer<List<Review>>() {
+            @Override
+            public void onChanged(List<Review> list) {
+                Log.d(TAG, "onChanged: ");
+                initReview(list);
+            }
+        });
     }
 
     @Override
@@ -89,11 +108,19 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         }
 
-        if (MyApplication.getInstance().getStorage().reviewList != null) {
+        viewModel.getReviewByMovieId(String.valueOf(id));
+
+        /*if (MyApplication.getInstance().getStorage().reviewList != null) {
             if (MyApplication.getInstance().getStorage().reviewList.size() > 0) {
                 if (MyApplication.getInstance().getStorage().reviewList.get(0).movie.id.equals(String.valueOf(id))) {
                     Log.d(TAG, "initReview: 1");
-                    initReview(MyApplication.getInstance().getStorage().reviewList);
+                    viewModel.setListReviewLD(MyApplication.getInstance().getStorage().reviewList);
+                    viewModel.getListReviewLD().observe(this, new Observer<List<Review>>() {
+                        @Override
+                        public void onChanged(List<Review> list) {
+                            initReview(list);
+                        }
+                    });
                 } else {
                     Log.d(TAG, "getReviewByMovieId: 1");
                     viewModel.getReviewByMovieId(String.valueOf(id));
@@ -106,7 +133,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         } else {
             Log.d(TAG, "getReviewByMovieId: 3");
             viewModel.getReviewByMovieId(String.valueOf(id));
-        }
+        }*/
 
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -129,13 +156,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         });
 
-        binding.ivReview.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.ivReview.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_choose));
-                callBack.showFragment(ReviewFragment.TAG, movieDetail, true, Constants.ANIM_SLIDE);
-            }
-        });
+
+
 
         //List<Review> reviewList = new ArrayList<>();
 
@@ -153,6 +175,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)) {
             movieDetail = (MovieDetail) data;
+            MyApplication.getInstance().getStorage().movieDetail = movieDetail;
+
             if (movieDetail.collection != null) {
                 viewModel.getCollection(movieDetail.collection.id);
             }
@@ -312,8 +336,19 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             ViewUtils.show(binding.layoutMovieDetail);*/
             Log.d(TAG, "KEY_REVIEW_BY_MOVIE_ID: ");
             reviews = (List<Review>) data;
-            MyApplication.getInstance().getStorage().reviewList = reviews;
             initReview(reviews);
+            //initReview(reviews);
+            //viewModel.setListReviewLD(reviews);
+            //MyApplication.getInstance().getStorage().reviewList = reviews;
+
+            binding.ivReview.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    binding.ivReview.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_choose));
+                    callBack.showFragment(ReviewFragment.TAG, reviews, true, Constants.ANIM_SLIDE);
+                }
+            });
+
         } else if (key.equals(Constants.KEY_LIKE_REVIEW)) {
             Log.d(TAG, "KEY_LIKE_REVIEW: ");
         } else if (key.equals(Constants.KEY_DISLIKE_REVIEW)) {
@@ -482,4 +517,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         Log.d(TAG, "onDestroy: " + (int) mData);
         MyApplication.getInstance().getStorage().reviewList = null;
     }
+
+    /*@Override
+    public void updateReview(List<Review> reviewList) {
+        Log.d(TAG, "updateReview: ");
+        initReview(reviewList);
+    }*/
 }

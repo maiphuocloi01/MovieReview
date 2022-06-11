@@ -374,6 +374,7 @@
                     android:layout_marginHorizontal="@dimen/_14sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:justificationMode="inter_word"
+                    android:lineSpacingExtra="@dimen/_2sdp"
                     android:text="@string/overview"
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_12ssp" />
