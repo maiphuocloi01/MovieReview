@@ -154,10 +154,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE);
         });
 
-        binding.btCategory1.setOnClickListener(view -> {
+        binding.btCategory123.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "28");
-            binding.btCategory1.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+            binding.btCategory123.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 

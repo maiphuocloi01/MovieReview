@@ -60,17 +60,17 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
             Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
             //sb.append(genres1.getName()).append(", ");
             ViewUtils.show(holder.binding.bgKey1);
-            holder.binding.tvCategory1.setText(genres1.getName());
+            holder.binding.tvCategory11.setText(genres1.getName());
 
             int id2 = item.genreIds.get(1);
             Genres genres2 = genresStorage.stream().filter(a -> a.getId() == id2).collect(Collectors.toList()).get(0);
             ViewUtils.show(holder.binding.bgKey2);
-            holder.binding.tvCategory2.setText(genres2.getName());
+            holder.binding.tvCategory22.setText(genres2.getName());
 
             int id3 = item.genreIds.get(2);
             Genres genres3 = genresStorage.stream().filter(a -> a.getId() == id3).collect(Collectors.toList()).get(0);
             ViewUtils.show(holder.binding.bgKey3);
-            holder.binding.tvCategory3.setText(genres3.getName());
+            holder.binding.tvCategory33.setText(genres3.getName());
             //}
         } else if (item.genreIds.size() == 2){
             /*for (int i = 0; i < item.genreIds.size(); i++) {
@@ -82,19 +82,19 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
             Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
             //sb.append(genres1.getName()).append(", ");
             ViewUtils.show(holder.binding.bgKey1);
-            holder.binding.tvCategory1.setText(genres1.getName());
+            holder.binding.tvCategory11.setText(genres1.getName());
 
             int id2 = item.genreIds.get(1);
             Genres genres2 = genresStorage.stream().filter(a -> a.getId() == id2).collect(Collectors.toList()).get(0);
             ViewUtils.show(holder.binding.bgKey2);
-            holder.binding.tvCategory2.setText(genres2.getName());
+            holder.binding.tvCategory22.setText(genres2.getName());
 
         } else if(item.genreIds.size() == 1){
             int id1 = item.genreIds.get(0);
             Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
             //sb.append(genres1.getName()).append(", ");
             ViewUtils.show(holder.binding.bgKey1);
-            holder.binding.tvCategory1.setText(genres1.getName());
+            holder.binding.tvCategory11.setText(genres1.getName());
         }
         //holder.binding.tvKeyword.setText(sb.substring(0, sb.length() - 2));
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
