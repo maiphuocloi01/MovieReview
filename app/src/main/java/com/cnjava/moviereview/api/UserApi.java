@@ -4,6 +4,7 @@ import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.view.adapter.Summary;
 
@@ -14,6 +15,7 @@ import okhttp3.RequestBody;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -81,6 +83,14 @@ public interface UserApi {
     @Headers("Content-type: application/json")
     Call<Review> addReview(@Body Review review, @Header("Authorization") String auth);
 
+    @PUT("reviews/{review_id}")
+    @Headers("Content-type: application/json")
+    Call<Review> updateReview(@Path("review_id") String review_id, @Body Review review, @Header("Authorization") String auth);
+
+    @DELETE("reviews/{review_id}")
+    @Headers("Content-type: application/json")
+    Call<Void> deleteReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+
     @PUT("reviews/{review_id}/like")
     @Headers("Content-type: application/json")
     Call<Void> likeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
@@ -88,6 +98,14 @@ public interface UserApi {
     @PUT("reviews/{review_id}/dislike")
     @Headers("Content-type: application/json")
     Call<Void> dislikeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+
+    @GET("users/me/statistics")
+    @Headers("Content-type: application/json")
+    Call<Statistic> getMyStatistics(@Header("Authorization") String auth);
+
+    @GET("users/{user_id}/statistics")
+    @Headers("Content-type: application/json")
+    Call<Statistic> getStatisticsByUserId(@Path("user_id") String user_id);
 
     @GET("summarization")
     @Headers("Content-type: application/json")

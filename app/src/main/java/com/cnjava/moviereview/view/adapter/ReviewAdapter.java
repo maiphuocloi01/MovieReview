@@ -208,7 +208,6 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 callBack.gotoUserReview(review.user);
-                Toast.makeText(context, "user detail", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -216,29 +215,28 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 callBack.gotoUserReview(review.user);
-                Toast.makeText(context, "user detail", Toast.LENGTH_SHORT).show();
             }
         });
-
-        holder.binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.gotoReviewDetail(review);
-                Toast.makeText(context, "review detail", Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(review.content.length() > 150) {
+            holder.binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    callBack.gotoReviewDetail(review);
+                }
+            });
+        } else {
+            holder.binding.tvShowMore.setVisibility(View.GONE);
+        }
         holder.binding.tvContent.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callBack.gotoReviewDetail(review);
-                Toast.makeText(context, "review detail", Toast.LENGTH_SHORT).show();
             }
         });
         holder.binding.tvDate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 callBack.gotoReviewDetail(review);
-                Toast.makeText(context, "review detail", Toast.LENGTH_SHORT).show();
             }
         });
 

@@ -190,8 +190,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
     @Override
     public void apiSuccess(String key, Object data) {
-
-
         if (key.equals(Constants.KEY_GET_POPULAR_MOVIE)) {
             moviePopular = (Movie) data;
             MyApplication.getInstance().getStorage().moviePopular = moviePopular;

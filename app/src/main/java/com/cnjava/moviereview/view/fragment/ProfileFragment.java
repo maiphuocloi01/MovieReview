@@ -103,7 +103,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             @Override
             public void onClick(View view) {
                 binding.ivLogout.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                showAlertDialog();
+                //showAlertDialog();
+                callBack.showFragment(FavoriteFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
     }
@@ -132,44 +133,5 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
         }
     }*/
 
-    private void showAlertDialog() {
-        final Dialog dialog = new Dialog(context);
-        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-        dialog.setContentView(R.layout.custom_alert_dialog);
-        Window window = dialog.getWindow();
-        if (window == null) {
-            return;
-        }
-        window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
-        window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-        WindowManager.LayoutParams windowAttributes = window.getAttributes();
-        windowAttributes.gravity = Gravity.CENTER;
-        window.setAttributes(windowAttributes);
-
-        dialog.setCancelable(false);
-
-        Button btnCancel = dialog.findViewById(R.id.bt_cancel3);
-        Button btnConfirm = dialog.findViewById(R.id.bt_confirm3);
-
-        btnCancel.setOnClickListener(view -> dialog.dismiss());
-
-        btnConfirm.setOnClickListener(view -> {
-            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
-            MyApplication.getInstance().getStorage().myUser = null;
-            MyApplication.getInstance().getStorage().reviewList = null;
-            MyApplication.getInstance().getStorage().moviePopular = null;
-            MyApplication.getInstance().getStorage().movieNowPlaying = null;
-            MyApplication.getInstance().getStorage().movieUpcoming = null;
-            MyApplication.getInstance().getStorage().movieTopRated = null;
-            MyApplication.getInstance().getStorage().movieRecommend = null;
-            callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
-            //actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
-            //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
-            //CommonUtils.getInstance().clearPref(Constants.USERNAME);
-            dialog.dismiss();
-        });
-        dialog.show();
-
-    }
 }

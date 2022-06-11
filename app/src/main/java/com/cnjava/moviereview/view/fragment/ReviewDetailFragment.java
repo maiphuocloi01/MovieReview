@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,14 +60,28 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
         binding.btShorten.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (shorten == null) {
-                    ViewUtils.show(binding.progressCircular);
-                    ViewUtils.gone(binding.btShorten);
-                    viewModel.summarizationReview(review.content);
+                if (review.content.length() > 300) {
+                    if (shorten == null) {
+                        ViewUtils.show(binding.progressCircular);
+                        ViewUtils.gone(binding.btShorten);
+                        viewModel.summarizationReview(review.content);
+                    } else {
+                        binding.tvContent.setText(shorten);
+                        ViewUtils.gone(binding.btShorten);
+                        ViewUtils.show(binding.btOriginal);
+                    }
                 } else {
-                    binding.tvContent.setText(shorten);
+                    ViewUtils.show(binding.tvNeedMore);
                     ViewUtils.gone(binding.btShorten);
-                    ViewUtils.show(binding.btOriginal);
+                    ViewUtils.show(binding.progressCircular);
+                    Handler handler = new Handler();
+                    handler.postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            ViewUtils.show(binding.btShorten);
+                            ViewUtils.gone(binding.progressCircular);
+                        }
+                    }, 200);
                 }
             }
         });

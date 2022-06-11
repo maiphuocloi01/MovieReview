@@ -34,7 +34,7 @@
             android:layout_toRightOf="@+id/iv_back"
             android:fontFamily="@font/roboto_bold"
             android:gravity="center"
-            android:text="Personal"
+            android:text="Personal page"
             android:textAlignment="center"
             android:textColor="@color/light_white"
             android:textSize="@dimen/_14ssp" />
@@ -108,9 +108,9 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginStart="@dimen/_14sdp"
-                                android:layout_marginBottom="@dimen/_1sdp"
+                                android:layout_marginBottom="@dimen/_4sdp"
                                 android:fontFamily="@font/roboto_bold"
-                                android:text="Guess"
+                                android:text="Guest"
                                 android:maxLines="1"
                                 android:ellipsize="end"
                                 android:textColor="@color/light_white"
@@ -125,7 +125,7 @@
                                 android:layout_marginStart="@dimen/_14sdp"
                                 android:layout_marginTop="@dimen/_2sdp"
                                 android:fontFamily="@font/roboto_regular"
-                                android:text="maiphuocloi01@gmail.com"
+                                android:text="Login to continue"
                                 android:textColor="@color/light_white"
                                 android:textSize="@dimen/_10ssp" />
 
@@ -137,13 +137,6 @@
                             android:layout_height="1dp"
                             android:layout_weight="1" />
 
-                        <ImageView
-                            android:id="@+id/iv_logout"
-                            android:layout_width="@dimen/_20sdp"
-                            android:visibility="visible"
-                            android:layout_height="@dimen/_20sdp"
-                            android:src="@drawable/ic_logout"
-                            app:tint="@color/light_white" />
 
 
                     </TableRow>
@@ -154,21 +147,42 @@
 
             </TableRow>
 
-            <TextView
-                android:id="@+id/tv_edit_profile"
-                android:layout_width="match_parent"
+            <TableRow
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_17sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
-                android:background="@drawable/bg_light_dark_corner_10"
-                android:fontFamily="@font/roboto_regular"
-                android:stateListAnimator="@null"
-                android:text="Your profile"
-                android:textAlignment="center"
-                android:paddingVertical="@dimen/_8sdp"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_11ssp"
-                android:textStyle="bold" />
+                android:layout_width="match_parent">
+
+                <TextView
+                    android:id="@+id/tv_edit_profile"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_light_dark_corner_10"
+                    android:fontFamily="@font/roboto_medium"
+                    android:stateListAnimator="@null"
+                    android:text="Your profile"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="@dimen/_16sdp"
+                    android:textAlignment="center"
+                    android:paddingVertical="@dimen/_8sdp"
+                    android:textColor="@color/light_white"
+                    android:textSize="@dimen/_11ssp"
+                    android:textStyle="bold" />
+
+                <ImageButton
+                    android:id="@+id/iv_logout"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_light_dark_corner_10"
+                    android:padding="@dimen/_8sdp"
+                    android:layout_gravity="center"
+                    app:srcCompat="@drawable/ic_favorite"
+                    app:tint="@color/light_white" />
+
+
+            </TableRow>
+
+
 
             <TableRow
                 android:layout_marginTop="@dimen/_15sdp"
