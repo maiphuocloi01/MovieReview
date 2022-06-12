@@ -1,5 +1,6 @@
 package com.cnjava.moviereview;
 
+import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
@@ -17,6 +18,7 @@ public class Storage {
     public Movie movieRecommend;
     public User myUser;
     public List<Genres> genresList = new ArrayList<>();
+    public List<Favorite> favoriteList;
     public List<Review> reviewList;
     public MovieDetail movieDetail;
 

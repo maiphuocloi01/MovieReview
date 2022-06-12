@@ -88,11 +88,11 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
                     binding.etPassword.setError("Please fill your password");
                 } else {
                     viewModel.login(
-                            binding.etUsername.getText().toString(),
+                            binding.etUsername.getText().toString().trim(),
                             binding.etPassword.getText().toString()
                     );
                     DialogUtils.showLoadingDialog(context);
-                    IMEUtils.hideSoftInput(binding.btLogin);
+                    IMEUtils.hideSoftInput(view);
 
 //                new Handler().postDelayed(() -> {
 //                    progressDialog.dismiss();

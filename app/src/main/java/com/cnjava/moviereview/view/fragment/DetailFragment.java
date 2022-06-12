@@ -24,6 +24,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -35,6 +36,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentDetailBinding;
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.model.Collection;
+import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
@@ -68,6 +70,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private List<Review> reviews = MyApplication.getInstance().getStorage().reviewList;
     private ShareViewModel sharedViewModel;
     private ReviewAdapter reviewAdapter;
+    private int id;
+    private boolean isSelect = false;
+    private String favoriteId;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -93,12 +98,13 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
         ViewUtils.show(binding.progressCircular);
         ViewUtils.gone(binding.layoutMovieDetail);
-        int id = (int) mData;
+        id = (int) mData;
         viewModel.getMovieDetail(id);
         viewModel.getCast(id);
         viewModel.getRecommendation(id);
         viewModel.getVideo(id);
         viewModel.getSocial(id);
+
 
         if (MyApplication.getInstance().getStorage().myUser == null) {
             //DialogUtils.showLoadDataDialog(context);
@@ -110,6 +116,19 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         }
         Log.d(TAG, "initViews: ");
         viewModel.getReviewByMovieId(String.valueOf(id));
+
+        if (MyApplication.getInstance().getStorage().favoriteList == null) {
+            //DialogUtils.showLoadDataDialog(context);
+            Log.d(TAG, "myUser null");
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                Log.d(TAG, "getYourProfile: ");
+                viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            }
+        } else {
+            initFavorite(MyApplication.getInstance().getStorage().favoriteList, String.valueOf(id));
+        }
+
+
 
         /*if (MyApplication.getInstance().getStorage().reviewList != null) {
             if (MyApplication.getInstance().getStorage().reviewList.size() > 0) {
@@ -175,6 +194,29 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)) {
             movieDetail = (MovieDetail) data;
             MyApplication.getInstance().getStorage().movieDetail = movieDetail;
+
+            binding.layoutFavorite.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+                    if (!isSelect) {
+                        binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.primary));
+                        binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                        Favorite.MovieFavorite movieFavorite = new Favorite.MovieFavorite(movieDetail.posterPath,
+                                String.valueOf(movieDetail.id),
+                                movieDetail.title, movieDetail.overview,
+                                movieDetail.releaseDate);
+                        viewModel.addFavorite(movieFavorite, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        isSelect = true;
+                    } else {
+                        binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
+                        binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.light_white));
+                        viewModel.deleteFavorite(favoriteId, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        isSelect = false;
+                    }
+
+                }
+            });
 
             if (movieDetail.collection != null) {
                 viewModel.getCollection(movieDetail.collection.id);
@@ -359,6 +401,22 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             Log.d(TAG, "delete review: ");
         } else if (key.equals(Constants.KEY_UPDATE_REVIEW)) {
             Log.d(TAG, "delete review: ");
+        } else if (key.equals(Constants.KEY_GET_FAVORITE)) {
+            List<Favorite> listFavorite = (List<Favorite>) data;
+            MyApplication.getInstance().getStorage().favoriteList = listFavorite;
+            initFavorite(listFavorite, String.valueOf(id));
+        }
+    }
+
+    private void initFavorite(List<Favorite> favoriteList, String movieId) {
+        for (Favorite favorite : favoriteList) {
+            if (favorite.movie.id.equals(movieId)) {
+                favoriteId = favorite.id;
+                binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.primary));
+                binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                isSelect = true;
+                break;
+            }
         }
     }
 
@@ -396,7 +454,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                             newReviews.add(review);
                         }
                     }
-                    if(newReviews.size() > 0){
+                    if (newReviews.size() > 0) {
                         reviewAdapter = new ReviewAdapter(context, newReviews, this);
                     } else {
                         Log.d(TAG, "no review: ");

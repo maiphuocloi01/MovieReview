@@ -5,6 +5,7 @@ import android.util.Log;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
+import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
@@ -166,6 +167,18 @@ public class CommonViewModel extends BaseViewModel {
 
     public void getStatisticsByUserId(String userId){
         getUserApi().getStatisticsByUserId(userId).enqueue(initHandleResponse(Constants.KEY_GET_STATISTIC_BY_USER_ID));
+    }
+
+    public void getMyFavorite(String token){
+        getUserApi().getMyFavorite("Bearer " + token).enqueue(initHandleResponse(Constants.KEY_GET_FAVORITE));
+    }
+
+    public void addFavorite(Favorite.MovieFavorite movie, String token){
+        getUserApi().addFavorite(movie, "Bearer " + token).enqueue(initHandleResponse(Constants.KEY_ADD_FAVORITE));
+    }
+
+    public void deleteFavorite(String id, String token){
+        getUserApi().deleteFavorite(id, "Bearer " + token).enqueue(initHandleResponse(Constants.KEY_DELETE_FAVORITE));
     }
 
 }

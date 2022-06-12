@@ -7,7 +7,7 @@
     android:background="@color/transparent">
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:background="@color/dark"
         android:orientation="vertical">
@@ -34,13 +34,13 @@
 
             </androidx.cardview.widget.CardView>
 
-            <View
+            <!--<View
                 android:layout_width="1dp"
                 android:layout_marginTop="@dimen/_150sdp"
                 app:layout_anchorGravity="bottom"
-                android:layout_height="@dimen/_16sdp"/>
+                android:layout_height="@dimen/_16sdp"/>-->
 
-            <androidx.coordinatorlayout.widget.CoordinatorLayout
+            <!--<androidx.coordinatorlayout.widget.CoordinatorLayout
                 android:layout_width="wrap_content"
                 app:layout_anchor="@+id/card_poster"
                 android:layout_marginBottom="-20dp"
@@ -70,9 +70,10 @@
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_7ssp" />
 
+
             </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-
+-->
         </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
@@ -80,24 +81,69 @@
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_3sdp"
+            android:layout_marginHorizontal="@dimen/_1sdp"
             android:ellipsize="end"
             android:maxLines="1"
+            android:layout_marginTop="@dimen/_2sdp"
             android:text="Doctor Strange in the Multiverse of Madness"
             android:textColor="@color/light_white"
             android:textSize="@dimen/_12ssp"
             android:textStyle="bold" />
 
-        <TextView
-            android:id="@+id/tv_date"
-            android:layout_width="match_parent"
+        <TableRow
             android:layout_height="wrap_content"
-            android:layout_marginHorizontal="@dimen/_3sdp"
-            android:layout_marginTop="@dimen/_1sdp"
-            android:layout_marginBottom="@dimen/_6sdp"
-            android:text="May 06, 2022"
-            android:textColor="@color/light_white"
-            android:textSize="@dimen/_10ssp" />
+            android:layout_marginHorizontal="@dimen/_2sdp"
+            android:layout_marginTop="@dimen/_3sdp"
+            android:layout_marginBottom="@dimen/_3sdp"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/tv_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="May 06, 2022"
+                android:layout_gravity="center_vertical"
+                android:textColor="@color/light_white"
+                android:textSize="@dimen/_9ssp" />
+            <View
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"/>
+
+            <TableRow
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/_6sdp"
+                android:background="@drawable/bg_light_dark_90_corner_20"
+                android:gravity="end">
+
+                <TextView
+                    android:id="@+id/tv_star"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:fontFamily="@font/roboto_regular"
+                    android:paddingVertical="@dimen/_2sdp"
+                    android:text="7.8"
+                    android:textColor="@color/primary"
+                    android:textSize="@dimen/_10ssp" />
+
+                <ImageView
+                    android:layout_width="@dimen/_10sdp"
+                    android:layout_height="@dimen/_10sdp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/_2sdp"
+                    android:layout_marginEnd="@dimen/_3sdp"
+                    android:src="@drawable/ic_star"
+                    app:tint="@color/primary" />
+
+
+            </TableRow>
+
+
+        </TableRow>
+
+
 
     </LinearLayout>
 

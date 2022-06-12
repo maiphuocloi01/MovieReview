@@ -26,6 +26,7 @@ import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -117,6 +118,8 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
                     if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                         Log.d(TAG, "addReview: ");
                         viewModel.addReview(review, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        IMEUtils.hideSoftInput(view);
+
                     }
                 }
             }
