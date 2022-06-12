@@ -72,6 +72,13 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             }
         });
 
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.backToPrev();
+            }
+        });
+
         binding.btLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

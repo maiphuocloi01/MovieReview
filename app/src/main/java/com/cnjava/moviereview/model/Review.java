@@ -57,6 +57,11 @@ public class Review implements Serializable {
         this.movie = movie;
     }
 
+    public Review(String content, double rating) {
+        this.content = content;
+        this.rating = rating;
+    }
+
     public String getCreatedAt() {
         return createdAt;
     }

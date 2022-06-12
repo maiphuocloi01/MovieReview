@@ -32,9 +32,9 @@ public class OnboardFragment extends BaseFragment<FragmentOnboardingBinding, Com
     protected void initViews() {
 
         List<Genres> listOnboard = new ArrayList<>();
-        listOnboard.add(new Genres(R.raw.mobile, "Lorem ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."));
-        listOnboard.add(new Genres(R.raw.search, "Lorem ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."));
-        listOnboard.add(new Genres(R.raw.review, "Lorem ipsum", "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."));
+        listOnboard.add(new Genres(R.raw.mobile, "MovieWie: The Movie Guide", "This app allows to get lists of recent and popular or most popular of all time"));
+        listOnboard.add(new Genres(R.raw.search, "Easy to find", "The fastest, easiest way to find and discover movies, actors and shows on your device."));
+        listOnboard.add(new Genres(R.raw.review, "Rating & Review", "Rating & Review allow you to share your experience with a movie and give it an overall star rating."));
 
         OnboardAdapter onboardAdapter = new OnboardAdapter(context, listOnboard);
         binding.vpOnboard.setAdapter(onboardAdapter);

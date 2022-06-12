@@ -48,6 +48,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_detail.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_edit_profile.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_edit_review.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_favorite.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_forgot_password.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_home.xml" value="0.16666666666666666" />
@@ -55,7 +56,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_login.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_navigate.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_onboarding.xml" value="0.22" />
-        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_profile.xml" value="0.22" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_profile.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_register.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_reset_password.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_review.xml" value="0.22" />
@@ -68,6 +69,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_dropdown.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_dropdown_ver2.xml" value="0.184375" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_favorite.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_genres.xml" value="0.8333333333333334" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_keyword.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_movie.xml" value="0.6" />

@@ -75,7 +75,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="Trending"
+                        android:text="Top search"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
 
@@ -105,7 +105,7 @@
                     android:layout_marginHorizontal="@dimen/_14sdp"
                     android:layout_marginTop="15dp"
                     android:fontFamily="@font/roboto_bold"
-                    android:text="Recommendations"
+                    android:text="Trending today"
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_12ssp" />
 

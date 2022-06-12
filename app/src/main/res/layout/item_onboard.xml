@@ -24,7 +24,7 @@
         android:textSize="@dimen/_20ssp"
         android:layout_gravity="center"
         android:layout_marginHorizontal="@dimen/_18sdp"
-        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_28sdp"
         android:fontFamily="@font/baloo_semibold"
         android:textColor="@color/light_white"
         android:text="Write your review"/>

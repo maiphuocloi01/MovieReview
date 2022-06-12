@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/_10sdp"
         android:layout_marginHorizontal="@dimen/_8sdp"
-        android:background="@drawable/bg_mid_white_corner_10"
+        android:background="@drawable/bg_light_dark_corner_10"
         android:fontFamily="@font/roboto_bold"
         android:paddingVertical="@dimen/_6sdp"
         android:stateListAnimator="@null"

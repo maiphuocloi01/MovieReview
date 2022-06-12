@@ -40,7 +40,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         void likeReview(String id);
         void dislikeReview(String id);
         void deleteReview(String id);
-        void updateReview(String id);
+        void updateReview(Review review);
         void gotoUserReview(User userReview);
     }
 
@@ -133,7 +133,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
                                 //Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
                                 if (item.getTitle().toString().equals("Edit")) {
                                     Toast.makeText(context, "edit", Toast.LENGTH_SHORT).show();
-                                    callBack.updateReview(review.id);
+                                    callBack.updateReview(review);
                                 } else if (item.getTitle().toString().equals("Delete")) {
                                     Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
                                     callBack.deleteReview(review.id);

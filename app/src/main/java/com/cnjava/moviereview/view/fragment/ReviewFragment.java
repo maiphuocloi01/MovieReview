@@ -52,6 +52,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     private List<Review> reviews = new ArrayList<>();
     private User user = MyApplication.getInstance().getStorage().myUser;
     private ShareViewModel sharedViewModel;
+    private ReviewAdapter reviewAdapter;
     //private ReviewCallBack reviewCallBack;
 
     @Override
@@ -515,7 +516,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     private void initReview(List<Review> listReview) {
 
-        ReviewAdapter reviewAdapter = new ReviewAdapter(context, listReview, this);
+        reviewAdapter = new ReviewAdapter(context, listReview, this);
         binding.rvReview.setAdapter(reviewAdapter);
     }
 
@@ -611,12 +612,13 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void deleteReview(String id) {
-
+        reviewAdapter.deleteItem(id);
+        viewModel.deleteReview(id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
     }
 
     @Override
-    public void updateReview(String id) {
-
+    public void updateReview(Review id) {
+        callBack.replaceFragment(EditReviewFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
     @Override

@@ -365,8 +365,12 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private void initReview(List<Review> listReview) {
         if (listReview != null && listReview.size() > 0) {
             User user = MyApplication.getInstance().getStorage().myUser;
-            if (user != null) {
+            if (user != null && CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                 initYourReview(listReview, user);
+            } else {
+                ViewUtils.show(binding.btAddReview);
+                ViewUtils.gone(binding.layoutYourReview);
+                ViewUtils.gone(binding.tvTitleYourReview);
             }
             if (listReview.size() > 4) {
                 List<Review> threeFirstReview = new ArrayList<>();
@@ -476,6 +480,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                                     Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
                                     if (item.getTitle().toString().equals("Edit")) {
                                         //callBack.updateReview(review.id);
+                                        callBack.replaceFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
                                     } else if (item.getTitle().toString().equals("Delete")) {
                                         viewModel.deleteReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                                         ViewUtils.show(binding.btAddReview);
@@ -717,7 +722,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     }
 
     @Override
-    public void updateReview(String id) {
+    public void updateReview(Review id) {
 
     }
 
