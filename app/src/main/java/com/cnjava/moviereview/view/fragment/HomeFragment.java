@@ -150,35 +150,35 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         });
 
         binding.tvViewAll.setOnClickListener(view -> {
-            binding.tvViewAll.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory123.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "28");
-            binding.btCategory123.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory2.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "14");
-            binding.btCategory2.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory3.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "18");
-            binding.btCategory3.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory4.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "12");
-            binding.btCategory4.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
     }
