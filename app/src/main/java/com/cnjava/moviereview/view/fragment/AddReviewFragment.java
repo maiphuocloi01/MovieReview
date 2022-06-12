@@ -135,7 +135,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             Review review = (Review) data;
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
-                MyApplication.getInstance().getStorage().reviewList = null;
+                //MyApplication.getInstance().getStorage().reviewList = null;
                 callBack.backToPrev();
             }
         }

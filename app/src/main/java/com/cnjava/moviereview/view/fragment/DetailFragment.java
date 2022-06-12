@@ -67,6 +67,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private Social social;
     private List<Review> reviews = MyApplication.getInstance().getStorage().reviewList;
     private ShareViewModel sharedViewModel;
+    private ReviewAdapter reviewAdapter;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -107,7 +108,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
             }
         }
-
+        Log.d(TAG, "initViews: ");
         viewModel.getReviewByMovieId(String.valueOf(id));
 
         /*if (MyApplication.getInstance().getStorage().reviewList != null) {
@@ -155,8 +156,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 }
             }
         });
-
-
 
 
         //List<Review> reviewList = new ArrayList<>();
@@ -356,27 +355,271 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
             User user = (User) data;
             MyApplication.getInstance().getStorage().myUser = user;
+        } else if (key.equals(Constants.KEY_DELETE_REVIEW)) {
+            Log.d(TAG, "delete review: ");
+        } else if (key.equals(Constants.KEY_UPDATE_REVIEW)) {
+            Log.d(TAG, "delete review: ");
         }
     }
 
     private void initReview(List<Review> listReview) {
         if (listReview != null && listReview.size() > 0) {
-            if (listReview.size() > 3) {
-                List<Review> threeFirstReview = listReview.subList(0, 2);
-                ReviewAdapter reviewAdapter = new ReviewAdapter(context, threeFirstReview, this);
-                binding.rvReview.setAdapter(reviewAdapter);
-            } else {
-                ReviewAdapter reviewAdapter = new ReviewAdapter(context, reviews, this);
-                binding.rvReview.setAdapter(reviewAdapter);
+            User user = MyApplication.getInstance().getStorage().myUser;
+            if (user != null) {
+                initYourReview(listReview, user);
             }
+            if (listReview.size() > 4) {
+                List<Review> threeFirstReview = new ArrayList<>();
+                if (user != null) {
+                    for (int i = 0; i < 4; i++) {
+                        if (!listReview.get(i).user.getId().equals(user.getId())) {
+                            threeFirstReview.add(listReview.get(i));
+                            if (threeFirstReview.size() == 3) {
+                                break;
+                            }
+                        }
+                    }
+                } else {
+                    threeFirstReview = listReview.subList(0, 2);
+
+                }
+                reviewAdapter = new ReviewAdapter(context, threeFirstReview, this);
+            } else {
+                List<Review> newReviews = new ArrayList<>();
+                if (user != null) {
+                    for (Review review : listReview) {
+                        if (!review.user.getId().equals(user.getId())) {
+                            newReviews.add(review);
+                        }
+                    }
+                    if(newReviews.size() > 0){
+                        reviewAdapter = new ReviewAdapter(context, newReviews, this);
+                    } else {
+                        Log.d(TAG, "no review: ");
+                        binding.rvReview.setVisibility(View.GONE);
+                        binding.tvNoReviews.setVisibility(View.VISIBLE);
+                        binding.ivReview.setVisibility(View.GONE);
+                    }
+                } else {
+                    reviewAdapter = new ReviewAdapter(context, listReview, this);
+                }
+
+            }
+            binding.rvReview.setAdapter(reviewAdapter);
         } else {
             Log.d(TAG, "no review: ");
             binding.rvReview.setVisibility(View.GONE);
             binding.tvNoReviews.setVisibility(View.VISIBLE);
             binding.ivReview.setVisibility(View.GONE);
+            binding.tvTitleYourReview.setVisibility(View.GONE);
+            binding.layoutYourReview.setVisibility(View.GONE);
         }
         ViewUtils.gone(binding.progressCircular);
         ViewUtils.show(binding.layoutMovieDetail);
+    }
+
+
+    public void initYourReview(List<Review> listReview, User user) {
+        for (Review review : listReview) {
+            if (review.user.getId().equals(user.getId())) {
+                ViewUtils.gone(binding.btAddReview);
+                ViewUtils.show(binding.layoutYourReview);
+
+                Glide.with(context)
+                        .load(review.user.getAvatar())
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.drawable.img_default_avt)
+                        .into(binding.ivAvt);
+                binding.tvNameYourReview.setText(review.user.getName());
+                binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
+                binding.tvContent.setText(review.content);
+                binding.tvRate.setText(String.valueOf((int) review.rating));
+
+                if (!review.isDislike) {
+                    for (String yourLike : review.like) {
+                        if (yourLike.equals(user.getId())) {
+                            review.isLike = true;
+                            binding.ivLike.setImageResource(R.drawable.ic_choose_like);
+                            break;
+                        }
+                    }
+                }
+                if (!review.isLike) {
+                    for (String yourDislike : review.dislike) {
+                        if (yourDislike.equals(user.getId())) {
+                            review.isDislike = true;
+                            binding.ivDislike.setImageResource(R.drawable.ic_choose_dislike);
+                            break;
+                        }
+                    }
+                }
+
+                if (review.like != null) {
+                    Log.d("TAG", "tvLike: ");
+                    binding.tvLike.setText(String.valueOf(review.like.size()));
+                }
+                if (review.dislike != null) {
+                    Log.d("TAG", "tvDislike: ");
+                    binding.tvDislike.setText(String.valueOf(review.dislike.size()));
+                }
+
+
+                if (review.user.getId().equals(user.getId())) {
+                    binding.ivMoreAction.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Toast.makeText(context, "You Clicked : ", Toast.LENGTH_SHORT).show();
+                            PopupMenu popup = new PopupMenu(context, binding.ivMoreAction);
+                            popup.getMenuInflater().inflate(R.menu.review_menu, popup.getMenu());
+                            popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                                public boolean onMenuItemClick(MenuItem item) {
+                                    Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
+                                    if (item.getTitle().toString().equals("Edit")) {
+                                        //callBack.updateReview(review.id);
+                                    } else if (item.getTitle().toString().equals("Delete")) {
+                                        viewModel.deleteReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                                        ViewUtils.show(binding.btAddReview);
+                                        ViewUtils.gone(binding.layoutYourReview);
+                                        ViewUtils.gone(binding.tvTitleYourReview);
+                                    }
+                                    return true;
+                                }
+                            });
+                            popup.show();
+                        }
+                    });
+                }
+
+                binding.layoutLike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //callBack.likeReview(review.id);
+                        viewModel.likeReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        if (user != null) {
+                            if (review.isLike) {
+                                //unlike
+                                binding.ivLike.setImageResource(R.drawable.ic_like);
+                                review.isLike = false;
+                                if (review.like != null) {
+                                    Log.d("TAG", "tvLike: ");
+                                    binding.tvLike.setText(String.valueOf(review.like.size() - 1));
+                                    review.like.remove(user.getId());
+                                }
+                            } else {
+                                //like
+                                binding.ivLike.setImageResource(R.drawable.ic_choose_like);
+                                review.isLike = true;
+                                if (review.like != null) {
+                                    Log.d("TAG", "tvLike: ");
+                                    binding.tvLike.setText(String.valueOf(review.like.size() + 1));
+                                    review.like.add(user.getId());
+                                }
+                                if (review.isDislike) {
+                                    //undislike
+                                    //callBack.dislikeReview(review.id);
+                                    viewModel.dislikeReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                                    review.isDislike = false;
+                                    binding.ivDislike.setImageResource(R.drawable.ic_dislike);
+                                    if (review.dislike != null) {
+                                        Log.d("TAG", "tvDislike: ");
+                                        binding.tvDislike.setText(String.valueOf(review.dislike.size() - 1));
+                                        review.dislike.remove(user.getId());
+                                    }
+                                }
+                            }
+                        }
+
+                    }
+                });
+
+                binding.layoutDislike.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //callBack.dislikeReview(review.id);
+                        viewModel.dislikeReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        if (user != null) {
+                            if (review.isDislike) {
+                                //undislike
+                                review.isDislike = false;
+                                binding.ivDislike.setImageResource(R.drawable.ic_dislike);
+                                if (review.dislike != null) {
+                                    Log.d("TAG", "tvDislike: ");
+                                    binding.tvDislike.setText(String.valueOf(review.dislike.size() - 1));
+                                    review.dislike.remove(user.getId());
+                                }
+                            } else {
+                                //dislike
+                                review.isDislike = true;
+                                binding.ivDislike.setImageResource(R.drawable.ic_choose_dislike);
+                                if (review.dislike != null) {
+                                    Log.d("TAG", "tvDislike: ");
+                                    binding.tvDislike.setText(String.valueOf(review.dislike.size() + 1));
+                                    review.dislike.add(user.getId());
+                                }
+                                if (review.isLike) {
+                                    //unlike
+                                    //callBack.likeReview(review.id);
+                                    viewModel.likeReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                                    review.isLike = false;
+                                    binding.ivLike.setImageResource(R.drawable.ic_like);
+                                    if (review.like != null) {
+                                        Log.d("TAG", "tvLike: ");
+                                        binding.tvLike.setText(String.valueOf(review.like.size() - 1));
+                                        review.like.remove(user.getId());
+                                    }
+                                }
+                            }
+                        }
+                    }
+                });
+
+                binding.ivAvt.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //callBack.gotoUserReview(review.user);
+                    }
+                });
+
+                binding.tvName.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //callBack.gotoUserReview(review.user);
+                    }
+                });
+                if (review.content.length() > 150) {
+                    binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            //callBack.gotoReviewDetail(review);
+                            callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
+                        }
+                    });
+                } else {
+                    binding.tvShowMore.setVisibility(View.GONE);
+                }
+                binding.tvContent.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //callBack.gotoReviewDetail(review);
+                        callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
+                    }
+                });
+                binding.tvDate.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        //callBack.gotoReviewDetail(review);
+                        callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
+                    }
+                });
+
+                break;
+            } else {
+                ViewUtils.show(binding.btAddReview);
+                ViewUtils.gone(binding.layoutYourReview);
+                ViewUtils.gone(binding.tvTitleYourReview);
+            }
+        }
+
     }
 
     @Override
@@ -384,7 +627,11 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         if (code == 999) {
             if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
                 Log.d(TAG, "apiError: " + data.toString());
-                Toast.makeText(context, "Unable connect to server", Toast.LENGTH_SHORT).show();
+                ViewUtils.gone(binding.progressCircular);
+                ViewUtils.show(binding.layoutMovieDetail);
+                List<Review> listReview = new ArrayList<>();
+                initReview(listReview);
+                Toast.makeText(context, "Unable connect to heroku", Toast.LENGTH_SHORT).show();
             }
         }
     }
@@ -465,7 +712,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void deleteReview(String id) {
-
+        reviewAdapter.deleteItem(id);
+        viewModel.deleteReview(id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
     }
 
     @Override

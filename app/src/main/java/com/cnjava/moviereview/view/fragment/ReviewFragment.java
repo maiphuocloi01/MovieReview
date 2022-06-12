@@ -37,6 +37,7 @@ import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.cnjava.moviereview.viewmodel.ShareViewModel;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -137,9 +138,9 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
             binding.tvSort.setText(binding.rbPositive.getText());
             ViewUtils.gone(binding.layoutSort);
             sortedReview = reviews.stream()
-                    .sorted(Comparator.comparing(review -> review.dislike.size()))
+                    .sorted(Comparator.comparing(review -> review.like.size()))
                     .collect(Collectors.toList());
-
+            Collections.reverse(sortedReview);
             /*if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
                 sortReviewByDay("Newest");
             } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {
@@ -162,8 +163,12 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
             binding.tvSort.setText(binding.rbCritical.getText());
             ViewUtils.gone(binding.layoutSort);
             sortedReview = reviews.stream()
-                    .sorted(Comparator.comparing(review -> review.like.size()))
+                    .filter(review -> review.content.length() > 150)
                     .collect(Collectors.toList());
+            sortedReview = sortedReview.stream()
+                    .filter(review -> review.rating < 5.0)
+                    .collect(Collectors.toList());
+            Collections.reverse(sortedReview);
             /*if (binding.autoCompleteTxt.getText().toString().equals("Newest")) {
                 sortReviewByDay("Newest");
             } else if (binding.autoCompleteTxt.getText().toString().equals("Oldest")) {

@@ -24,6 +24,7 @@ import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.HomeFragment;
 import com.cnjava.moviereview.view.fragment.LoginFragment;
+import com.cnjava.moviereview.view.fragment.OnboardFragment;
 
 import java.lang.reflect.Constructor;
 import java.util.List;
@@ -75,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     private void initViews() {
-        HomeFragment frg = new HomeFragment();
+        OnboardFragment frg = new OnboardFragment();
         frg.setCallBack(this);
         getSupportFragmentManager()
                 .beginTransaction()
-                .replace(R.id.layout_main, frg, HomeFragment.class.getName())
+                .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
                 .commit();
     }
 

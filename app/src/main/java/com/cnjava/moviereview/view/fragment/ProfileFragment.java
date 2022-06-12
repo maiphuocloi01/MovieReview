@@ -1,16 +1,9 @@
 package com.cnjava.moviereview.view.fragment;
 
-import android.app.Dialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
-import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -20,10 +13,13 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentProfileBinding;
+import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
+
+import java.util.Locale;
 
 public class ProfileFragment extends BaseFragment<FragmentProfileBinding, CommonViewModel> {
 
@@ -35,6 +31,21 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             User user = (User) data;
             MyApplication.getInstance().getStorage().myUser = user;
             initViewUser(user);
+        } else if (key.equals(Constants.KEY_GET_MY_STATISTIC)) {
+            Statistic statistic = (Statistic) data;
+            if ((int) statistic.likes > 1) {
+                binding.tvCountLike.setText((int) statistic.likes + " likes");
+            } else {
+                binding.tvCountLike.setText((int) statistic.likes + " like");
+            }
+
+            if ((int) statistic.reviews > 1) {
+                binding.tvCountReview.setText((int) statistic.reviews + " reviews");
+            } else {
+                binding.tvCountReview.setText((int) statistic.reviews + " review");
+            }
+
+            binding.tvAverageRate.setText(String.format(Locale.US, "%.1f scores", statistic.avgStars));
         }
     }
 
@@ -65,6 +76,8 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
                 showAlertDialog();
             }
         });*/
+
+        viewModel.getMyStatistics(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

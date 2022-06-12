@@ -132,8 +132,20 @@ public class CommonViewModel extends BaseViewModel {
         getUserApi().getReviewByMovieId(id).enqueue(initHandleResponse(Constants.KEY_REVIEW_BY_MOVIE_ID));
     }
 
+    public void getReviewByUserId(String id) {
+        getUserApi().getReviewByUserId(id).enqueue(initHandleResponse(Constants.KEY_REVIEW_BY_USER_ID));
+    }
+
     public void addReview(Review review, String token) {
         getUserApi().addReview(review,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_ADD_REVIEW));
+    }
+
+    public void updateReview(String id, Review review, String token) {
+        getUserApi().updateReview(id, review,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_UPDATE_REVIEW));
+    }
+
+    public void deleteReview(String id, String token) {
+        getUserApi().deleteReview(id,"Bearer " + token).enqueue(initHandleResponse(Constants.KEY_DELETE_REVIEW));
     }
 
     public void likeReview(String id, String token) {
@@ -146,6 +158,14 @@ public class CommonViewModel extends BaseViewModel {
 
     public void summarizationReview(String text) {
         aiApi().summarizationReview(text).enqueue(initHandleResponse(Constants.KEY_SUMMARIZATION));
+    }
+
+    public void getMyStatistics(String token){
+        getUserApi().getMyStatistics("Bearer " + token).enqueue(initHandleResponse(Constants.KEY_GET_MY_STATISTIC));
+    }
+
+    public void getStatisticsByUserId(String userId){
+        getUserApi().getStatisticsByUserId(userId).enqueue(initHandleResponse(Constants.KEY_GET_STATISTIC_BY_USER_ID));
     }
 
 }

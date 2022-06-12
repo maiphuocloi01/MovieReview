@@ -216,7 +216,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="365 likes"
+                        android:text="0 likes"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_10ssp" />
@@ -249,7 +249,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="36 reviews"
+                        android:text="0 reviews"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_10ssp" />
@@ -282,7 +282,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_4sdp"
                         android:fontFamily="@font/roboto_bold"
-                        android:text="8.6 score"
+                        android:text="0 score"
                         android:layout_gravity="center_horizontal"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_10ssp" />

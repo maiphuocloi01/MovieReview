@@ -25,6 +25,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
     public static final String TAG = ReviewDetailFragment.class.getName();
     private Object mData;
     private String shorten = null;
+    private Review review;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -33,7 +34,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
 
     @Override
     protected void initViews() {
-        Review review = (Review) mData;
+        review = (Review) mData;
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -50,6 +51,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
         Glide.with(context)
                 .load(review.user.getAvatar())
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.img_default_avt)
                 .into(binding.ivAvatar);
         binding.tvName.setText(review.user.getName());
         binding.ratingBar.setRating((int) review.rating);
@@ -67,6 +69,8 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                         viewModel.summarizationReview(review.content);
                     } else {
                         binding.tvContent.setText(shorten);
+                        ViewUtils.show(binding.tvNeedMore);
+                        binding.tvNeedMore.setText("Text reduce to " + (int) (((float)shorten.length()/review.content.length())*100) + "%");
                         ViewUtils.gone(binding.btShorten);
                         ViewUtils.show(binding.btOriginal);
                     }
@@ -92,6 +96,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                 binding.tvContent.setText(review.content);
                 ViewUtils.gone(binding.btOriginal);
                 ViewUtils.show(binding.btShorten);
+                ViewUtils.gone(binding.tvNeedMore);
 
             }
         });
@@ -111,6 +116,8 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
             binding.tvContent.setText(summary.summaryText);
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.btOriginal);
+            ViewUtils.show(binding.tvNeedMore);
+            binding.tvNeedMore.setText("Text reduce to " + (int) (((float)shorten.length()/review.content.length())*100) + "%");
         }
     }
 

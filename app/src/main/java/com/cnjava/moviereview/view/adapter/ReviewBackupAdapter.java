@@ -1,8 +1,6 @@
 package com.cnjava.moviereview.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -21,14 +19,11 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemReviewBinding;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
-import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 
 import java.util.List;
 
-import ru.embersoft.expandabletextview.ExpandableTextView;
-
-public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHolder> {
+public class ReviewBackupAdapter extends RecyclerView.Adapter<ReviewBackupAdapter.MyViewHolder> {
 
     private Context context;
     private List<Review> listReview;
@@ -44,7 +39,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         void gotoUserReview(User userReview);
     }
 
-    public ReviewAdapter(Context context, List<Review> listReview, ReviewCallBack callBack) {
+    public ReviewBackupAdapter(Context context, List<Review> listReview, ReviewCallBack callBack) {
         this.context = context;
         this.listReview = listReview;
         this.callBack = callBack;
