@@ -18,7 +18,7 @@ public class Storage {
     public Movie movieRecommend;
     public User myUser;
     public List<Genres> genresList = new ArrayList<>();
-    public List<Favorite> favoriteList;
+    //public List<Favorite> favoriteList;
     public List<Review> reviewList;
     public MovieDetail movieDetail;
 

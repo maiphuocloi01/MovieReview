@@ -11,6 +11,7 @@ public interface Constants {
 
     //share pref
     String ACCESS_TOKEN = "ACCESS_TOKEN";
+    String ACCESS_TOKEN_2ND = "ACCESS_TOKEN_2ND";
     String USERNAME = "USERNAME";
 
     int ANIM_SLIDE = 0;

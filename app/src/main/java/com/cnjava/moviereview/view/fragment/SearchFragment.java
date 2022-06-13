@@ -10,6 +10,7 @@ import android.text.TextWatcher;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.TextView;
@@ -232,6 +233,13 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
                     return true;
                 }
                 return false;
+            }
+        });
+
+        binding.layoutSearch.setStartIconOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.backToPrev();
             }
         });
     }

@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.adapter;
+package com.cnjava.moviereview.model;
 
 import com.google.gson.annotations.SerializedName;
 

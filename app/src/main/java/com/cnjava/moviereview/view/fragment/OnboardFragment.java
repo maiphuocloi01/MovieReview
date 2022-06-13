@@ -43,7 +43,7 @@ public class OnboardFragment extends BaseFragment<FragmentOnboardingBinding, Com
             @Override
             public void onPageSelected(int position) {
                 super.onPageSelected(position);
-                int currentPosition = binding.vpOnboard.getCurrentItem();
+                int currentPosition = position;
                 if (currentPosition == listOnboard.size() - 1) {
                     binding.layoutNext.setVisibility(View.GONE);
                     binding.btStart.setVisibility(View.VISIBLE);

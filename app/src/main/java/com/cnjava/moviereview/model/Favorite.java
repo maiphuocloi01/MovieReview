@@ -25,13 +25,16 @@ public class Favorite implements Serializable {
         public String overview;
         @SerializedName("releaseDate")
         public String releaseDate;
+        @SerializedName("rating")
+        public double rating;
 
-        public MovieFavorite(String poster, String id, String title, String overview, String releaseDate) {
+        public MovieFavorite(String poster, String id, String title, String overview, String releaseDate, double rating) {
             this.poster = poster;
             this.id = id;
             this.title = title;
             this.overview = overview;
             this.releaseDate = releaseDate;
+            this.rating = rating;
         }
     }
 }

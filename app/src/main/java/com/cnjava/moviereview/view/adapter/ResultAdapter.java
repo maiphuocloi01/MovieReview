@@ -30,6 +30,8 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         this.movie = movie;
     }
 
+
+
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {

@@ -96,6 +96,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     protected void initViews() {
 
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            Log.d(TAG, "getYourProfile: ");
+            viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+        }
         ViewUtils.show(binding.progressCircular);
         ViewUtils.gone(binding.layoutMovieDetail);
         id = (int) mData;
@@ -117,16 +121,13 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         Log.d(TAG, "initViews: ");
         viewModel.getReviewByMovieId(String.valueOf(id));
 
-        if (MyApplication.getInstance().getStorage().favoriteList == null) {
+        /*if (MyApplication.getInstance().getStorage().favoriteList == null) {
             //DialogUtils.showLoadDataDialog(context);
             Log.d(TAG, "myUser null");
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                Log.d(TAG, "getYourProfile: ");
-                viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            }
+
         } else {
             initFavorite(MyApplication.getInstance().getStorage().favoriteList, String.valueOf(id));
-        }
+        }*/
 
 
 
@@ -205,13 +206,17 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                         Favorite.MovieFavorite movieFavorite = new Favorite.MovieFavorite(movieDetail.posterPath,
                                 String.valueOf(movieDetail.id),
                                 movieDetail.title, movieDetail.overview,
-                                movieDetail.releaseDate);
+                                movieDetail.releaseDate,
+                                movieDetail.voteAverage
+                                );
+                        Log.d(TAG, "onClick: addFavorite");
                         viewModel.addFavorite(movieFavorite, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                         isSelect = true;
                     } else {
+                        Log.d(TAG, "onClick: deleteFavorite");
                         binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
                         binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.light_white));
-                        viewModel.deleteFavorite(favoriteId, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        viewModel.deleteFavorite(String.valueOf(id), CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                         isSelect = false;
                     }
 
@@ -403,8 +408,12 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             Log.d(TAG, "delete review: ");
         } else if (key.equals(Constants.KEY_GET_FAVORITE)) {
             List<Favorite> listFavorite = (List<Favorite>) data;
-            MyApplication.getInstance().getStorage().favoriteList = listFavorite;
+            //MyApplication.getInstance().getStorage().favoriteList = listFavorite;
             initFavorite(listFavorite, String.valueOf(id));
+        } else if (key.equals(Constants.KEY_ADD_FAVORITE)) {
+            Log.d(TAG, "delete KEY_ADD_FAVORITE: ");
+        } else if (key.equals(Constants.KEY_DELETE_FAVORITE)) {
+            Log.d(TAG, "delete KEY_DELETE_FAVORITE: ");
         }
     }
 
@@ -486,6 +495,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             if (review.user.getId().equals(user.getId())) {
                 ViewUtils.gone(binding.btAddReview);
                 ViewUtils.show(binding.layoutYourReview);
+                ViewUtils.show(binding.tvTitleYourReview);
 
                 Glide.with(context)
                         .load(review.user.getAvatar())
@@ -530,12 +540,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                     binding.ivMoreAction.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Toast.makeText(context, "You Clicked : ", Toast.LENGTH_SHORT).show();
                             PopupMenu popup = new PopupMenu(context, binding.ivMoreAction);
                             popup.getMenuInflater().inflate(R.menu.review_menu, popup.getMenu());
                             popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                                 public boolean onMenuItemClick(MenuItem item) {
-                                    Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
                                     if (item.getTitle().toString().equals("Edit")) {
                                         //callBack.updateReview(review.id);
                                         callBack.replaceFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
@@ -696,6 +704,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 initReview(listReview);
                 Toast.makeText(context, "Unable connect to heroku", Toast.LENGTH_SHORT).show();
             }
+        } else if (key.equals(Constants.KEY_ADD_FAVORITE)) {
+            Log.d(TAG, data.toString() + "err KEY_ADD_FAVORITE: " + code);
+        } else if (key.equals(Constants.KEY_DELETE_FAVORITE)) {
+            Log.d(TAG, data.toString() + "err KEY_DELETE_FAVORITE: " + code);
         }
     }
 

@@ -62,13 +62,15 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             }
         });
 
+        binding.tvCountCharacter.setText(review.content.length() + "/1500");
+
         binding.ratingBar.setRating((float) review.rating);
         binding.etWriteReview.setText(review.content);
 
         binding.etWriteReview.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                binding.tvCountCharacter.setText(review.content.length() + "/1500");
+
             }
 
             @Override

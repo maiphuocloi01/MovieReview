@@ -185,14 +185,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
-        if (MyApplication.getInstance().getStorage().favoriteList == null) {
+        /*if (MyApplication.getInstance().getStorage().favoriteList == null) {
             //DialogUtils.showLoadDataDialog(context);
             Log.d(TAG, "myUser null");
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                 Log.d(TAG, "getYourProfile: ");
                 viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
             }
-        }
+        }*/
 
     }
 
@@ -241,10 +241,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.layoutHome);
 
-        } else if (key.equals(Constants.KEY_GET_FAVORITE)) {
+        } /*else if (key.equals(Constants.KEY_GET_FAVORITE)) {
             List<Favorite> listFavorite = (List<Favorite>) data;
             MyApplication.getInstance().getStorage().favoriteList = listFavorite;
-        }
+        }*/
     }
 
     private void initPopularView() {

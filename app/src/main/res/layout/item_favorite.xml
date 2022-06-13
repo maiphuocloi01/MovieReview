@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="@dimen/_8sdp"
-    android:layout_marginHorizontal="@dimen/_4sdp"
+    android:layout_marginBottom="@dimen/_16sdp"
+    android:layout_marginHorizontal="@dimen/_8sdp"
     android:layout_marginTop="@dimen/_4sdp"
     android:orientation="vertical">
 
@@ -31,26 +31,31 @@
         android:orientation="vertical">
 
         <TableRow
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/_5sdp">
 
             <TextView
                 android:id="@+id/tv_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_32sdp"
                 android:layout_marginTop="@dimen/_6sdp"
                 android:ellipsize="end"
                 android:fontFamily="@font/roboto_bold"
                 android:maxLines="2"
                 android:layout_weight="1"
-                android:text="Doctor Strange in the Multiverse of Madness"
+                android:text="Doctor"
                 android:textColor="@color/light_white"
                 android:textSize="@dimen/_12ssp" />
 
+            <View
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_width="wrap_content"/>
+
             <ImageButton
-                android:id="@+id/iv_logout"
-                android:layout_width="@dimen/_30sdp"
+                android:id="@+id/iv_un_favorite"
+                android:layout_width="@dimen/_36sdp"
                 android:layout_height="match_parent"
                 android:background="@drawable/bg_light_dark_corner_10"
                 android:padding="@dimen/_8sdp"
@@ -75,7 +80,7 @@
                 android:maxLines="1"
                 android:text="May 06, 2022"
                 android:textColor="@color/light_white"
-                android:textSize="@dimen/_10ssp" />
+                android:textSize="@dimen/_11ssp" />
 
             <!--<View
                 android:layout_width="match_parent"
@@ -123,7 +128,7 @@
             android:fontFamily="@font/roboto_regular"
             android:maxLines="5"
             android:text="@string/overview"
-            android:textColor="@color/light_white"
+            android:textColor="@color/mid_white"
             android:textSize="@dimen/_10ssp" />
 
     </LinearLayout>

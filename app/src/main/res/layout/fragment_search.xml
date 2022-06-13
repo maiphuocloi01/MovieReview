@@ -5,6 +5,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:background="@color/dark"
+    android:clickable="true"
+    android:focusable="true"
     android:layout_height="match_parent">
 
     <androidx.core.widget.NestedScrollView
@@ -20,12 +22,15 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/_14sdp"
-                android:layout_marginTop="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_38sdp"
                 android:layout_marginBottom="@dimen/_10sdp"
                 android:background="@drawable/bg_light_dark_corner_20"
                 app:hintAnimationEnabled="false"
                 app:endIconMode="clear_text"
+                android:id="@+id/layout_search"
                 app:endIconTint="@color/light_white"
+                app:startIconDrawable="@drawable/ic_back"
+                app:startIconTint="@color/light_white"
                 app:hintEnabled="false">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -33,9 +38,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableTint="@color/light_white"
                     android:hint="Search for movies..."
                     android:inputType="text"
                     android:singleLine="true"

@@ -3,6 +3,7 @@ package com.cnjava.moviereview.view.fragment;
 import android.app.Dialog;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,6 +14,7 @@ import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -61,6 +63,32 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
             }
         });
 
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            binding.switch1.setChecked(true);
+        } else {
+            binding.switch1.setChecked(false);
+        }
+
+        binding.switch1.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                if(b){
+                    String tokenBackup = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN_2ND);
+                    if (tokenBackup != null) {
+                        CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, tokenBackup);
+                        Log.d(TAG, "onCheckedChanged: " + b);
+                    }
+                } else {
+                    String tokenBackup = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN_2ND);
+                    if (tokenBackup != null) {
+                        CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
+                        Log.d(TAG, "onCheckedChanged: " + b);
+                    }
+                }
+                //Toast.makeText(context, "Click " + b, Toast.LENGTH_SHORT).show();
+            }
+        });
+
     }
 
     @Override
@@ -92,6 +120,7 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
 
         btnConfirm.setOnClickListener(view -> {
             CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
+            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN_2ND);
             MyApplication.getInstance().getStorage().myUser = null;
             MyApplication.getInstance().getStorage().reviewList = null;
             MyApplication.getInstance().getStorage().moviePopular = null;

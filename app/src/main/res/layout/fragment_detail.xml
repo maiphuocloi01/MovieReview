@@ -382,7 +382,7 @@
                                         android:fontFamily="@font/roboto_regular"
                                         android:maxLines="1"
                                         android:text="April 9, 2022 06:51"
-                                        android:textColor="@color/light_white"
+                                        android:textColor="@color/mid_white"
                                         android:textSize="@dimen/_10ssp" />
 
                                 </TableRow>
@@ -841,7 +841,7 @@
                     android:id="@+id/rv_video"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/_6sdp"
@@ -865,7 +865,7 @@
                     android:id="@+id/rv_collection"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:orientation="horizontal"
                     android:visibility="gone"
                     android:layout_marginStart="@dimen/_6sdp"
@@ -887,7 +887,7 @@
                     android:id="@+id/rv_recommend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginStart="@dimen/_6sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
@@ -898,7 +898,6 @@
                     android:id="@+id/tv_no_recommend"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
                     android:layout_marginHorizontal="@dimen/_16sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:text="We don't have enough data to suggest any movies"

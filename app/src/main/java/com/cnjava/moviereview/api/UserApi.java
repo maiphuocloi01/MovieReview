@@ -1,13 +1,11 @@
 package com.cnjava.moviereview.api;
 
 import com.cnjava.moviereview.model.Favorite;
-import com.cnjava.moviereview.model.Keyword;
-import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.User;
-import com.cnjava.moviereview.view.adapter.Summary;
+import com.cnjava.moviereview.model.Summary;
 
 import java.util.List;
 
@@ -116,13 +114,13 @@ public interface UserApi {
     @Headers("Content-type: application/json")
     Call<List<Favorite>> getMyFavorite(@Header("Authorization") String auth);
 
-    @PUT("favorites")
+    @POST("favorites")
     @Headers("Content-type: application/json")
     Call<Favorite> addFavorite(@Body Favorite.MovieFavorite movie, @Header("Authorization") String auth);
 
-    @PUT("favorites/{id}")
+    @DELETE("favorites/{id}")
     @Headers("Content-type: application/json")
-    Call<Favorite> deleteFavorite(@Path("id") String id, @Header("Authorization") String auth);
+    Call<Void> deleteFavorite(@Path("id") String id, @Header("Authorization") String auth);
 
 
 }

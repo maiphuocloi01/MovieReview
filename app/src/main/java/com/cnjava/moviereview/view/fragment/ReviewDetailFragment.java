@@ -17,7 +17,7 @@ import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
-import com.cnjava.moviereview.view.adapter.Summary;
+import com.cnjava.moviereview.model.Summary;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBinding, CommonViewModel>{

@@ -9,9 +9,9 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="15dp"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginHorizontal="@dimen/_14sdp"
+        android:layout_marginTop="@dimen/_25sdp"
         android:background="@color/dark"
         android:gravity="center">
 
@@ -27,12 +27,11 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_alignParentTop="true"
-            android:layout_marginTop="15dp"
+            android:gravity="center"
             android:fontFamily="@font/roboto_bold"
-            android:text="Category"
-            android:textAlignment="center"
+            android:text="Keyword"
             android:textColor="@color/light_white"
             android:textSize="@dimen/_14ssp" />
 
