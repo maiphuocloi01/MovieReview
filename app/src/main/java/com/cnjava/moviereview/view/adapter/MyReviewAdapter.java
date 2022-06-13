@@ -6,7 +6,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.PopupMenu;
@@ -16,30 +15,31 @@ import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
-import com.cnjava.moviereview.databinding.ItemReviewBinding;
+import com.cnjava.moviereview.databinding.ItemMyReviewBinding;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 
 import java.util.List;
 
-public class ReviewBackupAdapter extends RecyclerView.Adapter<ReviewBackupAdapter.MyViewHolder> {
+public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyViewHolder> {
 
     private Context context;
     private List<Review> listReview;
-    private ReviewCallBack callBack;
+    private MyReviewCallBack callBack;
     private User user = MyApplication.getInstance().getStorage().myUser;
 
-    public interface ReviewCallBack{
+    public interface MyReviewCallBack{
         void gotoReviewDetail(Review review);
         void likeReview(String id);
         void dislikeReview(String id);
         void deleteReview(String id);
-        void updateReview(String id);
-        void gotoUserReview(User userReview);
+        void updateReview(Review review);
+        void gotoMovieDetail(String id);
     }
 
-    public ReviewBackupAdapter(Context context, List<Review> listReview, ReviewCallBack callBack) {
+    public MyReviewAdapter(Context context, List<Review> listReview, MyReviewCallBack callBack) {
         this.context = context;
         this.listReview = listReview;
         this.callBack = callBack;
@@ -70,13 +70,22 @@ public class ReviewBackupAdapter extends RecyclerView.Adapter<ReviewBackupAdapte
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        ItemReviewBinding binding = ItemReviewBinding.inflate(LayoutInflater.from(context), parent, false);
+        ItemMyReviewBinding binding = ItemMyReviewBinding.inflate(LayoutInflater.from(context), parent, false);
         return new MyViewHolder(binding);
     }
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Review review = listReview.get(position);
+
+        holder.binding.tvMovieName.setText(review.movie.title);
+        holder.binding.tvOverview.setText(review.movie.overview);
+        Glide.with(context)
+                .load(Constants.IMAGE_URL + review.movie.backdropPath)
+                .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.ic_image)
+                .into(holder.binding.ivPoster);
+
         if(user != null) {
             if (!review.isDislike) {
                 for (String yourLike : review.like) {
@@ -127,10 +136,8 @@ public class ReviewBackupAdapter extends RecyclerView.Adapter<ReviewBackupAdapte
                             public boolean onMenuItemClick(MenuItem item) {
                                 //Toast.makeText(context, "You Clicked : " + item.getItemId(), Toast.LENGTH_SHORT).show();
                                 if (item.getTitle().toString().equals("Edit")) {
-                                    Toast.makeText(context, "edit", Toast.LENGTH_SHORT).show();
-                                    callBack.updateReview(review.id);
+                                    callBack.updateReview(review);
                                 } else if (item.getTitle().toString().equals("Delete")) {
-                                    Toast.makeText(context, "Delete", Toast.LENGTH_SHORT).show();
                                     callBack.deleteReview(review.id);
                                 }
                                 return true;
@@ -221,19 +228,13 @@ public class ReviewBackupAdapter extends RecyclerView.Adapter<ReviewBackupAdapte
             }
         });
 
-        holder.binding.ivAvt.setOnClickListener(new View.OnClickListener() {
+        holder.binding.layoutMovie.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.gotoUserReview(review.user);
+                callBack.gotoMovieDetail(review.movie.id);
             }
         });
 
-        holder.binding.tvName.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.gotoUserReview(review.user);
-            }
-        });
         if(review.content.length() > 150) {
             holder.binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -268,8 +269,8 @@ public class ReviewBackupAdapter extends RecyclerView.Adapter<ReviewBackupAdapte
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
-        private ItemReviewBinding binding;
-        public MyViewHolder(ItemReviewBinding binding) {
+        private ItemMyReviewBinding binding;
+        public MyViewHolder(ItemMyReviewBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }
