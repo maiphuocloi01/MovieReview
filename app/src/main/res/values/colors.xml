@@ -24,8 +24,8 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#4285F4</color>
-    <color name="colorWarning">#f4511e</color>
-    <color name="colorRed">#ff0000</color>
-    <color name="colorOrangeYellow">#fff2cc71</color>
-    <color name="colorGreen">#03AB65</color>
+    <color name="colorWarning">#DAFF9800</color>
+    <color name="colorRed">#D9F44336</color>
+    <color name="colorOrangeYellow">#DAFFC107</color>
+    <color name="colorGreen">#DA4CAF50</color>
 </resources>

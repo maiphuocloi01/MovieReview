@@ -83,9 +83,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             @Override
             public void onClick(View view) {
                 if (TextUtils.isEmpty(binding.etUsername.getText())) {
-                    binding.etUsername.setError("Please fill your email");
+                    binding.layoutEmail.setError("Please fill your email");
                 } else if (TextUtils.isEmpty(binding.etPassword.getText())) {
-                    binding.etPassword.setError("Please fill your password");
+                    binding.layoutPassword.setError("Please fill your password");
                 } else {
                     viewModel.login(
                             binding.etUsername.getText().toString().trim(),
@@ -159,6 +159,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             }.getType();
             Response errorResponse = gson.fromJson(res.charStream(), type);
             Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_LONG).show();
+        } else if (code == 999){
+            DialogUtils.hideLoadingDialog();
+            Toast.makeText(context, "Unable to connect Heroku, try again", Toast.LENGTH_SHORT).show();
         }
     }
 }

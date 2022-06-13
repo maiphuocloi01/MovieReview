@@ -70,7 +70,8 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                     } else {
                         binding.tvContent.setText(shorten);
                         ViewUtils.show(binding.tvNeedMore);
-                        binding.tvNeedMore.setText("Text reduce to " + (int) (((float)shorten.length()/review.content.length())*100) + "%");
+                        int percent = (int) (((float)shorten.length()/review.content.length())*100);
+                        binding.tvNeedMore.setText("Text reduce to " + percent + "% (" + countWord(shorten) + "/" + countWord(review.content) + " words)");
                         ViewUtils.gone(binding.btShorten);
                         ViewUtils.show(binding.btOriginal);
                     }
@@ -117,7 +118,8 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.btOriginal);
             ViewUtils.show(binding.tvNeedMore);
-            binding.tvNeedMore.setText("Text reduce to " + (int) (((float)shorten.length()/review.content.length())*100) + "%");
+            int percent = (int) (((float)shorten.length()/review.content.length())*100);
+            binding.tvNeedMore.setText("Text reduce to " + percent + "% (" + countWord(shorten) + "/" + countWord(review.content) + " words)");
         }
     }
 
@@ -131,5 +133,12 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
     @Override
     public void setData(Object data) {
         this.mData = data;
+    }
+
+    private int countWord(String s){
+        String trim = s.trim();
+        if (trim.isEmpty())
+            return 0;
+        return trim.split("\\s+").length;
     }
 }

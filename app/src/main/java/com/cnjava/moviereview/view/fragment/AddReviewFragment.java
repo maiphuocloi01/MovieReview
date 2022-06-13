@@ -82,8 +82,8 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String s = charSequence.toString();
-                binding.tvCountCharacter.setText(s.length() + "/1500");
-                if (s.length() >= 1500) {
+                binding.tvCountCharacter.setText(s.length() + "/3000");
+                if (s.length() >= 3000) {
                     binding.tvCountCharacter.setTextColor(ContextCompat.getColor(context, R.color.primary));
                 } else {
                     binding.tvCountCharacter.setTextColor(ContextCompat.getColor(context, R.color.mid_white));

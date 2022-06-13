@@ -7,6 +7,7 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.util.Log;
+import android.util.Patterns;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,11 +39,11 @@ import java.util.concurrent.TimeUnit;
 
 import okhttp3.ResponseBody;
 
-public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordBinding, CommonViewModel>{
+public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordBinding, CommonViewModel> {
 
     public static final String TAG = ForgotPasswordFragment.class.getName();
-    private String otp = "0";
     private static Dialog dialog;
+    private String otp = "0";
 
     @Override
     public void apiSuccess(String key, Object data) {
@@ -85,6 +86,9 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
 
                 }*/
             }
+        } else if (key.equals(Constants.KEY_SEND_OTP)) {
+            DialogUtils.hideLoadingDialog();
+            Toast.makeText(context, "Unable to connect Heroku", Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -98,7 +102,9 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
 
         binding.btSendOtp.setOnClickListener(view -> {
             if (TextUtils.isEmpty(binding.etEmail.getText())) {
-                binding.etEmail.setError("Please enter email");
+                binding.layoutEmail.setError("Please enter email");
+            } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.getText()).matches()) {
+                binding.layoutEmail.setError("Please enter the correct email format");
             } else {
                 sendOTP();
                 openSendOTPDialog();
@@ -198,6 +204,7 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
 
                 tvCountdown.setText(sDuration);
             }
+
             @Override
             public void onFinish() {
                 tvCountdown.setVisibility(View.GONE);

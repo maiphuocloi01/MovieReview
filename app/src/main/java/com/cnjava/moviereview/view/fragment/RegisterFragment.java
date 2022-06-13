@@ -5,7 +5,9 @@ import android.content.res.ColorStateList;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.CountDownTimer;
+import android.text.Editable;
 import android.text.TextUtils;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.util.Patterns;
 import android.view.Gravity;
@@ -32,12 +34,11 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
+import com.cnjava.moviereview.util.PasswordMeter;
+import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.util.Locale;
@@ -50,6 +51,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
     public static final String TAG = RegisterFragment.class.getName();
     private static Dialog dialog;
     private String otp;
+    private int rank = 0;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -58,6 +60,44 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
 
     @Override
     protected void initViews() {
+
+
+        binding.etPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                StringBuilder s = new StringBuilder(charSequence.toString());
+                rank = PasswordMeter.passwordRanking(s);
+                Log.d(TAG, "onTextChanged: " + s);
+                ViewUtils.show(binding.tvMeter);
+                if (rank < 4) {
+                    binding.tvMeter.setText("Weak");
+                    Log.d(TAG, "Weak: " + rank);
+                    binding.tvMeter.setTextColor(ContextCompat.getColor(context, R.color.colorRed));
+                    //binding.layoutPassword.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_light_black_corner_10_border_red));
+                } else if (rank >= 5) {
+                    binding.tvMeter.setText("Strong");
+                    Log.d(TAG, "Strong: " + rank);
+                    //binding.layoutPassword.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_light_black_corner_10_border_green));
+                    binding.tvMeter.setTextColor(ContextCompat.getColor(context, R.color.colorGreen));
+                } else {
+                    binding.tvMeter.setText("Medium");
+                    Log.d(TAG, "Medium: " + rank);
+                    //binding.layoutPassword.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_light_black_corner_10_border_yellow));
+                    binding.tvMeter.setTextColor(ContextCompat.getColor(context, R.color.colorWarning));
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+
         binding.tvLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -108,17 +148,21 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             public void onClick(View view) {
 
                 if (TextUtils.isEmpty(binding.etEmail.getText())) {
-                    binding.etEmail.setError("Please fill your email");
+                    binding.layoutEmail.setError("Please fill your email");
                 } else if (!Patterns.EMAIL_ADDRESS.matcher(binding.etEmail.getText()).matches()) {
-                    binding.etEmail.setError("Please enter the correct email format");
+                    binding.layoutEmail.setError("Please enter the correct email format");
                 } else if (TextUtils.isEmpty(binding.etUsername.getText())) {
-                    binding.etUsername.setError("Please fill your full name");
+                    binding.layoutName.setError("Please fill your full name");
                 } else if (TextUtils.isEmpty(binding.etPassword.getText())) {
-                    binding.etPassword.setError("Please fill your password");
+                    binding.layoutPassword.setError("Please fill your password");
+                    binding.tvMeter.setVisibility(View.GONE);
+                } else if (rank < 4) {
+                    binding.layoutPassword.setError("Password is too weak");
+                    binding.tvMeter.setVisibility(View.GONE);
                 } else if (TextUtils.isEmpty(binding.etPasswordConfirm.getText())) {
-                    binding.etPasswordConfirm.setError("Please confirm your password");
+                    binding.layoutPasswordConfirm.setError("Please confirm your password");
                 } else if (!binding.etPassword.getText().toString().equals(binding.etPasswordConfirm.getText().toString())) {
-                    binding.etPasswordConfirm.setError("Confirmation password does not match");
+                    binding.layoutPasswordConfirm.setError("Confirmation password does not match");
                 } else {
                     User user = new User(binding.etEmail.getText().toString().trim(),
                             binding.etPassword.getText().toString(),
@@ -257,8 +301,11 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
 //                if (response.getError() != null) {
 //                    Toast.makeText(context, "email already taken", Toast.LENGTH_SHORT).show();
 //                }
-                Toast.makeText(context, "email already taken", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "Email already taken", Toast.LENGTH_SHORT).show();
                 Log.d(TAG, "email already taken: ");
+            } else {
+                DialogUtils.hideLoadingDialog();
+                Toast.makeText(context, "Unable to connect Heroku", Toast.LENGTH_SHORT).show();
             }
         } else if (key.equals(Constants.KEY_CONFIRM_OTP)) {
             if (code == 400) {

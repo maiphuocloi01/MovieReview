@@ -62,7 +62,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             }
         });
 
-        binding.tvCountCharacter.setText(review.content.length() + "/1500");
+        binding.tvCountCharacter.setText(review.content.length() + "/3000");
 
         binding.ratingBar.setRating((float) review.rating);
         binding.etWriteReview.setText(review.content);
@@ -76,8 +76,8 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 String s = charSequence.toString();
-                binding.tvCountCharacter.setText(s.length() + "/1500");
-                if (s.length() >= 1500) {
+                binding.tvCountCharacter.setText(s.length() + "/3000");
+                if (s.length() >= 3000) {
                     binding.tvCountCharacter.setTextColor(ContextCompat.getColor(context, R.color.primary));
                 } else {
                     binding.tvCountCharacter.setTextColor(ContextCompat.getColor(context, R.color.mid_white));

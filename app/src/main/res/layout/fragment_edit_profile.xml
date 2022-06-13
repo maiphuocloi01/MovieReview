@@ -188,6 +188,7 @@
                     android:fontFamily="@font/roboto_regular"
                     android:hint="Enter your name"
                     android:inputType="text"
+                    android:maxLength="30"
                     android:enabled="false"
                     android:padding="15dp"
                     android:textColor="@color/mid_white"

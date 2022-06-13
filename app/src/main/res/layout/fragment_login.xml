@@ -66,12 +66,12 @@
         android:text="Welcome back"/>
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_36sdp"
-        android:background="@drawable/text_input_selector_ver2"
+        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
         app:startIconDrawable="@drawable/ic_email"
@@ -84,23 +84,23 @@
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/text_input_selector_ver2"
             android:hint="Email"
             android:inputType="text"
             android:paddingVertical="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_24sdp"
-        android:background="@drawable/text_input_selector_ver2"
+        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         android:id="@+id/layout_password"
         app:startIconDrawable="@drawable/ic_lock"
@@ -112,7 +112,7 @@
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/text_input_selector_ver2"
             android:hint="Password"
             android:inputType="textPassword"
             android:paddingVertical="@dimen/_12sdp"
@@ -120,7 +120,7 @@
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
 
     <TextView
         android:id="@+id/tv_forgot_password"

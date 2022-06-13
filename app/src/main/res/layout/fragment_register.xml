@@ -68,12 +68,12 @@
         android:text="Join Moviewie"/>
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_36sdp"
-        android:background="@drawable/text_input_selector_ver2"
+        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
         app:startIconDrawable="@drawable/ic_email"
@@ -86,22 +86,23 @@
             android:id="@+id/et_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/text_input_selector_ver2"
             android:hint="Email"
+            android:maxLength="35"
             android:inputType="text"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/text_input_selector_ver2"
+        android:layout_marginTop="@dimen/_17sdp"
+        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
         app:startIconDrawable="@drawable/ic_profile"
@@ -114,24 +115,25 @@
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/text_input_selector_ver2"
             android:hint="Full name"
             android:inputType="text"
+            android:maxLength="30"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
 
 
-    <com.google.android.material.textfield.TextInputLayout
+    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/text_input_selector_ver2"
+        android:layout_marginTop="@dimen/_17sdp"
+        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         android:id="@+id/layout_password"
         app:startIconDrawable="@drawable/ic_lock"
@@ -144,22 +146,34 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Password"
-            android:background="@android:color/transparent"
+            android:background="@drawable/text_input_selector_ver2"
             android:inputType="textPassword"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:id="@+id/tv_meter"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Weak"
+        android:visibility="invisible"
+        android:layout_marginTop="@dimen/_2sdp"
+        android:layout_marginHorizontal="@dimen/_35sdp"
+        android:textAlignment="viewEnd"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/_10ssp" />
+
+    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
-        android:layout_marginTop="@dimen/_16sdp"
-        android:background="@drawable/text_input_selector_ver2"
+        android:layout_marginTop="@dimen/_3sdp"
+        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         app:passwordToggleTint="@color/light_white"
         android:id="@+id/layout_password_confirm"
@@ -171,7 +185,7 @@
             android:id="@+id/et_password_confirm"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
+            android:background="@drawable/text_input_selector_ver2"
             android:hint="Confirm password"
             android:drawableStart="@drawable/ic_lock"
             android:inputType="textPassword"
@@ -181,7 +195,7 @@
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
 
     <View
         android:layout_width="match_parent"

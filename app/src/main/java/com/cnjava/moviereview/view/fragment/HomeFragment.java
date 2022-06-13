@@ -28,7 +28,6 @@ import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentHomeBinding;
-import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
@@ -37,8 +36,6 @@ import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
-
-import java.util.List;
 
 
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewModel> implements PopularAdapter.MovieCallBack {
@@ -72,7 +69,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     protected void initViews() {
 
         if (MyApplication.getInstance().getStorage().myUser == null) {
-            //DialogUtils.showLoadDataDialog(context);
             Log.d(TAG, "myUser null");
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                 Log.d(TAG, "getYourProfile: ");
@@ -146,8 +142,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
                 Log.d(TAG, "ivAvt: ");
                 showAlertDialog();
             } else {
-                if(MyApplication.getInstance().getStorage().myUser != null) {
+                if (MyApplication.getInstance().getStorage().myUser != null) {
                     callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                } else {
+                    if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                        Log.d(TAG, "getYourProfile: ");
+                        viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                    }
                 }
             }
         });
@@ -207,7 +208,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             moviePopular = (Movie) data;
             MyApplication.getInstance().getStorage().moviePopular = moviePopular;
             Log.d(TAG, "apiSuccess: " + moviePopular);
-            if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null){
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null) {
                 ViewUtils.gone(binding.progressCircular);
                 ViewUtils.show(binding.layoutHome);
             }

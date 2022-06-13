@@ -131,11 +131,11 @@ public class LTRTLPasswordTIL extends TextInputLayout {
             if (rank < RANK_WEAK) {
                 errorTextApp = R.style.AppTheme_TextErrorAppearance;
                 errorTextId = R.string.password_weak;
-                color = R.color.colorWarning;
+                color = R.color.transparent;
             } else if (rank >= RANK_STRONG) {
                 errorTextApp = R.style.AppTheme_PasswordStrongAppearance;
                 errorTextId = R.string.password_strong;
-                color = R.color.colorGreen;
+                color = R.color.transparent;
             }
 
             if (errorTextApp != -1 && errorTextId != -1) {
@@ -148,7 +148,7 @@ public class LTRTLPasswordTIL extends TextInputLayout {
                     Context context = indicatorView.getContext();
                     ((TextInputLayout) indicatorView).setErrorEnabled(true);
                     ((TextInputLayout) indicatorView).setError(context.getString(errorTextId));
-                    ((TextInputLayout) indicatorView).setErrorTextAppearance(errorTextApp);
+                    //((TextInputLayout) indicatorView).setErrorTextAppearance(errorTextApp);
                     ((TextInputLayout) indicatorView).getEditText().getBackground()
                             .setColorFilter(ResourcesCompat.getColor(
                                     context.getResources(), color, null), PorterDuff.Mode.SRC_ATOP);
@@ -160,9 +160,9 @@ public class LTRTLPasswordTIL extends TextInputLayout {
                     ((LTRTLPasswordTIL) indicatorView).setErrorEnabled(true);
                     ((LTRTLPasswordTIL) indicatorView).setError(context.getString(errorTextId));
                     ((LTRTLPasswordTIL) indicatorView).setErrorTextAppearance(errorTextApp);
-                    ((LTRTLPasswordTIL) indicatorView).getEditText().getBackground()
+                    /*((LTRTLPasswordTIL) indicatorView).getEditText().getBackground()
                             .setColorFilter(ResourcesCompat.getColor(
-                                    context.getResources(), color, null), PorterDuff.Mode.SRC_ATOP);
+                                    context.getResources(), color, null), PorterDuff.Mode.SRC_ATOP);*/
                 }
             }
             sourceText.replace(0, sourceText.length(), ""); // Clear the string builder
