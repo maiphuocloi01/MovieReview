@@ -54,7 +54,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_dialog_confirm_otp.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_dialog_date_picker.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_login_dialog.xml" value="0.184375" />
-        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_play_video_dialog.xml" value="0.1403091557669441" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_play_video_dialog.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/custom_progress_dialog.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_add_review.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_category.xml" value="0.184375" />
@@ -78,6 +78,7 @@
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_search_keyword.xml" value="0.1" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_search_result.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_setting.xml" value="0.22" />
+        <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/fragment_video.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_cast.xml" value="0.22" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/AndroidStudioProjects/MovieReview/app/src/main/res/layout/item_dropdown.xml" value="0.184375" />

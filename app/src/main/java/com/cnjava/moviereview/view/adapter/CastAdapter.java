@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemCastBinding;
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.util.Constants;
@@ -39,6 +40,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.profilePath))
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.ic_profile)
                 .into(holder.binding.ivCast);
     }
 

@@ -9,6 +9,8 @@ public interface Constants {
     String IMAGE_URL = "https://image.tmdb.org/t/p/w1280/";
     String IMAGE_URL_YOUTUBE = "https://img.youtube.com/vi/";
 
+    String API_KEY = "AIzaSyBiSqVB9NuQm4dCdH5XW_yLrXnQrqP-2qE";
+
     //share pref
     String ACCESS_TOKEN = "ACCESS_TOKEN";
     String ACCESS_TOKEN_2ND = "ACCESS_TOKEN_2ND";

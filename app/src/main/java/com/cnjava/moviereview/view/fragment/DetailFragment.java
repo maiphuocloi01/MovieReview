@@ -18,6 +18,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -73,6 +74,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private int id;
     private boolean isSelect = false;
     private String favoriteId;
+
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -725,9 +727,11 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void gotoVideoYoutube(String key) {
-        String urlYoutube = "https://www.youtube.com/watch?v=";
+        //showVideoDialog(key);
+        callBack.showFragment(VideoFragment.TAG, key, true, Constants.ANIM_FADE);
+        /*String urlYoutube = "https://www.youtube.com/watch?v=";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlYoutube + key));
-        startActivity(browserIntent);
+        startActivity(browserIntent);*/
     }
 
     @Override
@@ -842,7 +846,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy: " + (int) mData);
-        MyApplication.getInstance().getStorage().reviewList = null;
+        //MyApplication.getInstance().getStorage().reviewList = null;
     }
 
     /*@Override
