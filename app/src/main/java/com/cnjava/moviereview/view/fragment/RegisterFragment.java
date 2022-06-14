@@ -286,7 +286,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             DialogUtils.hideLoadingDialog();
         } else if (key.equals(Constants.KEY_SEND_OTP)) {
             Response response = (Response) data;
-            Toast.makeText(context, response.getToken(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(context, response.getToken(), Toast.LENGTH_SHORT).show();
             //Toast.makeText(context, otp, Toast.LENGTH_SHORT).show();
         } else if (key.equals(Constants.KEY_CONFIRM_OTP)) {
             Response response = (Response) data;
