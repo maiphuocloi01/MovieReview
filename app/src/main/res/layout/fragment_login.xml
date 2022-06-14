@@ -167,7 +167,7 @@
             android:layout_height="wrap_content"
             android:text="Don't have an account?"
             android:textAlignment="center"
-            android:textColor="@color/light_white"
+            android:textColor="@color/lighter_white"
             android:textSize="@dimen/_12ssp" />
 
         <TextView

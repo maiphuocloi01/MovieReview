@@ -64,6 +64,13 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
 
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.backToPrev();
+            }
+        });
+
         binding.etPassword.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {

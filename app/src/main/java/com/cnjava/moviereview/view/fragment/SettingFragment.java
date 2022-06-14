@@ -28,6 +28,7 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class SettingFragment extends BaseFragment<FragmentSettingBinding, CommonViewModel> {
+
     public static final String TAG = SettingFragment.class.getName();
 
 
@@ -89,6 +90,20 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
                     }
                 }
                 //Toast.makeText(context, "Click " + b, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        binding.row2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(ChangePasswordFragment.TAG, null, true, Constants.ANIM_SLIDE);
+            }
+        });
+
+        binding.row3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.showFragment(AboutFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
 

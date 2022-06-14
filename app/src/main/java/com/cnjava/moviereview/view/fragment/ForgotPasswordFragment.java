@@ -125,6 +125,13 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
             }
         });
 
+        binding.ivBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.backToPrev();
+            }
+        });
+
     }
 
     @Override
