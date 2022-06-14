@@ -41,6 +41,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         if (CommonUtils.getInstance().getPref(Constants.USERNAME) != null) {
             Log.d(TAG, "USERNAME: ");

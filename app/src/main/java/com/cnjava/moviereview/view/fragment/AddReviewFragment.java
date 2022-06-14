@@ -48,6 +48,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         MovieDetail movieDetail = (MovieDetail) mData;
 
         binding.tvName.setText(movieDetail.title);

@@ -109,6 +109,7 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         //if(MyApplication.getInstance().getStorage().movieSearch == null) {
         Bundle newData = (Bundle) mData;
         if(newData.getString("search") != null) {

@@ -64,6 +64,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     protected void initViews() {
 
         reviews = (List<Review>) mData;
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         sortedReview = reviews;
         initReview(sortedReview);
 
@@ -622,8 +623,10 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     }
 
     @Override
-    public void gotoUserReview(User userReview) {
-
+    public void gotoUserReview(String userId) {
+        if(userId != null) {
+            callBack.showFragment(PersonalFragment.TAG, userId, true, Constants.ANIM_SLIDE);
+        }
     }
 
     @Override

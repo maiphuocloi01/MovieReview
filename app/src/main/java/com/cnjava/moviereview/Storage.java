@@ -1,5 +1,7 @@
 package com.cnjava.moviereview;
 
+import androidx.fragment.app.Fragment;
+
 import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.model.Movie;
@@ -21,5 +23,6 @@ public class Storage {
     //public List<Favorite> favoriteList;
     public List<Review> reviewList;
     public MovieDetail movieDetail;
+    public String fragmentTag;
 
 }

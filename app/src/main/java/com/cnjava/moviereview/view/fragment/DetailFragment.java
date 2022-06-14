@@ -96,6 +96,8 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
+
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             Log.d(TAG, "getYourProfile: ");
             viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
@@ -797,8 +799,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     }
 
     @Override
-    public void gotoUserReview(User userReview) {
-
+    public void gotoUserReview(String userId) {
+        if(userId != null) {
+            callBack.showFragment(PersonalFragment.TAG, userId, true, Constants.ANIM_SLIDE);
+        }
     }
 
     @Override

@@ -33,7 +33,7 @@
             android:layout_alignParentStart="true"
             android:layout_alignParentTop="true"
             android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_back"
+            android:src="@drawable/ic_close"
             app:tint="@color/light_white" />
 
         <TextView
@@ -70,6 +70,8 @@
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/bg_mid_light_circle"
             android:padding="@dimen/_8sdp"
+            android:visibility="invisible"
+            android:clickable="false"
             app:srcCompat="@drawable/ic_settings2"
             app:tint="@color/light_white" />
 
@@ -126,9 +128,9 @@
                                 android:maxLines="1"
                                 android:ellipsize="end"
                                 android:textColor="@color/light_white"
-                                android:textSize="@dimen/_16ssp" />
+                                android:textSize="@dimen/_14ssp" />
 
-                            <TextView
+                            <!--<TextView
                                 android:id="@+id/tv_email"
                                 android:maxLines="1"
                                 android:ellipsize="end"
@@ -140,11 +142,11 @@
                                 android:fontFamily="@font/roboto_regular"
                                 android:text="Login to continue"
                                 android:textColor="@color/light_white"
-                                android:textSize="@dimen/_10ssp" />
+                                android:textSize="@dimen/_10ssp" />-->
 
                             <TableRow
                                 android:layout_marginTop="@dimen/_4sdp"
-                                android:layout_marginEnd="@dimen/_10sdp"
+                                android:layout_marginEnd="@dimen/_1sdp"
                                 android:layout_height="wrap_content"
                                 android:layout_width="match_parent">
 
@@ -262,7 +264,7 @@
 
             </TableRow>
 
-            <TableRow
+            <!--<TableRow
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_17sdp"
                 android:layout_marginHorizontal="@dimen/_20sdp"
@@ -295,7 +297,7 @@
                     app:tint="@color/light_white" />
 
 
-            </TableRow>
+            </TableRow>-->
 
             <View
                 android:layout_width="match_parent"
@@ -310,21 +312,21 @@
 
 
 
-           <!-- <TextView
-                android:id="@+id/tv_favorite"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_16sdp"
-                android:layout_marginHorizontal="@dimen/_20sdp"
-                android:background="@drawable/bg_light_dark_corner_10"
-                android:fontFamily="@font/roboto_regular"
-                android:stateListAnimator="@null"
-                android:text="Your favorie movie"
-                android:textAlignment="center"
-                android:paddingVertical="@dimen/_8sdp"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_11ssp"
-                android:textStyle="bold" />-->
+            <!-- <TextView
+                 android:id="@+id/tv_favorite"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_marginTop="@dimen/_16sdp"
+                 android:layout_marginHorizontal="@dimen/_20sdp"
+                 android:background="@drawable/bg_light_dark_corner_10"
+                 android:fontFamily="@font/roboto_regular"
+                 android:stateListAnimator="@null"
+                 android:text="Your favorie movie"
+                 android:textAlignment="center"
+                 android:paddingVertical="@dimen/_8sdp"
+                 android:textColor="@color/light_white"
+                 android:textSize="@dimen/_11ssp"
+                 android:textStyle="bold" />-->
 
             <!--<TableRow
                 android:layout_height="wrap_content"
@@ -391,7 +393,7 @@
             <HorizontalScrollView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:scrollbars="none">
 
                 <RadioGroup

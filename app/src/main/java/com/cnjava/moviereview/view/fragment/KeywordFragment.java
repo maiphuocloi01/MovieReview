@@ -11,6 +11,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentSearchKeywordBinding;
 import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.util.Constants;
@@ -31,6 +32,7 @@ public class KeywordFragment extends BaseFragment<FragmentSearchKeywordBinding, 
     protected void initViews() {
 
         String name = (String) mData;
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         Log.d(TAG, "initViews: " + name);
         binding.ivBack.setOnClickListener(new View.OnClickListener() {

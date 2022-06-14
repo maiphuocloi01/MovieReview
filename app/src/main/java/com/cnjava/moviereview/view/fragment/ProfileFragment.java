@@ -97,6 +97,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         ViewUtils.show(binding.progressCircularProfile);
         ViewUtils.gone(binding.layoutTitlePersonal);
         ViewUtils.gone(binding.layoutScroll);

@@ -48,6 +48,9 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
 
     @Override
     protected void initViews() {
+
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
+
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

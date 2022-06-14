@@ -77,15 +77,21 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Review review = listReview.get(position);
-
-        holder.binding.tvMovieName.setText(review.movie.title);
-        holder.binding.tvOverview.setText(review.movie.overview);
-        Glide.with(context)
-                .load(Constants.IMAGE_URL + review.movie.backdropPath)
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_image)
-                .into(holder.binding.ivPoster);
-
+        if (review.movie != null) {
+            if(review.movie.title != null) {
+                holder.binding.tvMovieName.setText(review.movie.title);
+            }
+            if(review.movie.overview != null) {
+                holder.binding.tvOverview.setText(review.movie.overview);
+            }
+            if(review.movie.backdropPath != null) {
+                Glide.with(context)
+                        .load(Constants.IMAGE_URL + review.movie.backdropPath)
+                        .transition(DrawableTransitionOptions.withCrossFade())
+                        .placeholder(R.drawable.ic_image)
+                        .into(holder.binding.ivPoster);
+            }
+        }
         if(user != null) {
             if (!review.isDislike) {
                 for (String yourLike : review.like) {
@@ -108,7 +114,9 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
         }
         holder.binding.tvName.setText(review.user.getName());
         holder.binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
-        holder.binding.tvContent.setText(review.content);
+        if(review.content != null) {
+            holder.binding.tvContent.setText(review.content);
+        }
         holder.binding.tvRate.setText(String.valueOf((int) review.rating));
         Glide.with(context)
                 .load(review.user.getAvatar())
@@ -147,6 +155,8 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
                         popup.show();
                     }
                 });
+            } else {
+                holder.binding.ivMore.setVisibility(View.GONE);
             }
         }
         holder.binding.layoutLike.setOnClickListener(new View.OnClickListener() {
@@ -234,16 +244,17 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
                 callBack.gotoMovieDetail(review.movie.id);
             }
         });
-
-        if(review.content.length() > 150) {
-            holder.binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    callBack.gotoReviewDetail(review);
-                }
-            });
-        } else {
-            holder.binding.tvShowMore.setVisibility(View.GONE);
+        if (review.content != null) {
+            if (review.content.length() > 150) {
+                holder.binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        callBack.gotoReviewDetail(review);
+                    }
+                });
+            } else {
+                holder.binding.tvShowMore.setVisibility(View.GONE);
+            }
         }
         holder.binding.tvContent.setOnClickListener(new View.OnClickListener() {
             @Override

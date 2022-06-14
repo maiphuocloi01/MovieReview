@@ -41,7 +41,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         void dislikeReview(String id);
         void deleteReview(String id);
         void updateReview(Review review);
-        void gotoUserReview(User userReview);
+        void gotoUserReview(String userId);
     }
 
     public ReviewAdapter(Context context, List<Review> listReview, ReviewCallBack callBack) {
@@ -229,14 +229,14 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         holder.binding.ivAvt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.gotoUserReview(review.user);
+                callBack.gotoUserReview(review.user.getId());
             }
         });
 
         holder.binding.tvName.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.gotoUserReview(review.user);
+                callBack.gotoUserReview(review.user.getId());
             }
         });
         if(review.content.length() > 150) {

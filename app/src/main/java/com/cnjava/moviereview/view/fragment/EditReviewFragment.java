@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentEditReviewBinding;
 import com.cnjava.moviereview.model.Review;
@@ -37,6 +38,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         Review review = (Review) mData;
 
         binding.tvName.setText(review.movie.title);

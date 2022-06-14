@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentResetPasswordBinding;
 import com.cnjava.moviereview.model.Response;
 import com.cnjava.moviereview.model.User;
@@ -37,7 +38,9 @@ public class ResetPasswordFragment extends BaseFragment<FragmentResetPasswordBin
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         String email = (String) mData;
+
         binding.btConfirmPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

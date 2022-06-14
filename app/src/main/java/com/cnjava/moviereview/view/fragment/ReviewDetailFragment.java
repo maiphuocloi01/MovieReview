@@ -11,6 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentReviewDetailBinding;
 import com.cnjava.moviereview.model.Review;
@@ -35,6 +36,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
     @Override
     protected void initViews() {
         review = (Review) mData;
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

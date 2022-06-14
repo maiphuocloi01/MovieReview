@@ -9,6 +9,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentFavoriteBinding;
 import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Review;
@@ -62,6 +63,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Comm
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         binding.progressCircular.setVisibility(View.VISIBLE);
         binding.layoutTitle.setVisibility(View.GONE);
 

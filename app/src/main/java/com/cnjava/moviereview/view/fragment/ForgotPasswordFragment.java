@@ -23,6 +23,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentForgotPasswordBinding;
 import com.cnjava.moviereview.model.Response;
@@ -100,6 +101,7 @@ public class ForgotPasswordFragment extends BaseFragment<FragmentForgotPasswordB
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
         binding.btSendOtp.setOnClickListener(view -> {
             if (TextUtils.isEmpty(binding.etEmail.getText())) {
                 binding.layoutEmail.setError("Please enter email");

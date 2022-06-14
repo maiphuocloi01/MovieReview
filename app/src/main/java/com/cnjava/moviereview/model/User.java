@@ -3,6 +3,7 @@ package com.cnjava.moviereview.model;
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
+import java.util.List;
 
 public class User implements Serializable {
     @SerializedName("id")
@@ -27,6 +28,8 @@ public class User implements Serializable {
     private boolean locked;
     @SerializedName("enabled")
     private boolean enabled;
+    @SerializedName("reviews")
+    private List<Review> reviews;
 
     public User(String name, String avatar, String phone, String gender, String birthday) {
         this.name = name;
@@ -144,5 +147,13 @@ public class User implements Serializable {
 
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public List<Review> getReviews() {
+        return reviews;
+    }
+
+    public void setReviews(List<Review> reviews) {
+        this.reviews = reviews;
     }
 }

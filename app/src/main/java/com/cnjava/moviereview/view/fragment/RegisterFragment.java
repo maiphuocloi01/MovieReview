@@ -26,6 +26,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
 
+import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentRegisterBinding;
 import com.cnjava.moviereview.model.Response;
@@ -61,6 +62,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         binding.etPassword.addTextChangedListener(new TextWatcher() {
             @Override

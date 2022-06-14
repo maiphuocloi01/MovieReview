@@ -106,6 +106,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, CommonVi
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
+
         if (MyApplication.getInstance().getStorage().moviePopular != null) {
             int count = 0;
             Movie popularMovie = MyApplication.getInstance().getStorage().moviePopular;

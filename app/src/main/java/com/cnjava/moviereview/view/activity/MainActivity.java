@@ -6,12 +6,15 @@ import static com.cnjava.moviereview.util.IMEUtils.isActive;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
+import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -68,9 +71,13 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             getWindow().setStatusBarColor(Color.TRANSPARENT);
         }
 
-        initViews();
+        Log.d(TAG, "onCreate: ");
+        if(MyApplication.getInstance().getStorage().fragmentTag == null) {
+            initViews();
+        } else {
+            loadFragment(MyApplication.getInstance().getStorage().fragmentTag);
+        }
         addGenres();
-
         //List<Genres> genres = MyApplication.getInstance().getStorage().genresList;
         //Genres genres1 = genres.stream().filter(a -> a.getId() == 12).collect(Collectors.toList()).get(0);
     }
@@ -82,6 +89,25 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
                 .beginTransaction()
                 .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
                 .commit();
+    }
+
+    private void loadFragment(String tag) {
+        try {
+
+            if (isActive(this)) {
+                hideSoftInput(MainActivity.this);
+            }
+            Class<?> clazz = Class.forName(tag);
+            Constructor<?> cons = clazz.getConstructor();
+            BaseFragment<?, ?> frg = (BaseFragment<?, ?>) cons.newInstance();
+            frg.setCallBack(this);
+            FragmentTransaction trans = getSupportFragmentManager()
+                    .beginTransaction();
+            trans.replace(R.id.layout_main, frg, tag).commit();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -153,6 +179,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         }
         onBackPressed();
     }
+
 
     private void addGenres(){
         MyApplication.getInstance().getStorage().genresList.add(new Genres(28, "Action"));

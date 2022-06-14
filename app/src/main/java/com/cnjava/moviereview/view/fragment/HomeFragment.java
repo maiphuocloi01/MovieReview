@@ -68,6 +68,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
     @Override
     protected void initViews() {
 
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
+
         if (MyApplication.getInstance().getStorage().myUser == null) {
             Log.d(TAG, "myUser null");
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {

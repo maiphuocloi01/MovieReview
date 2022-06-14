@@ -137,7 +137,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
     protected void initViews() {
 
         User user = (User) mData;
-
+        MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         if (user.getName() != null) {
             binding.etName.setText(user.getName());
