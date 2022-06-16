@@ -6,7 +6,7 @@ Tải về project:
 
 Import Project bằng Android Studio: vào File > Import Project...
 
-Chạy thử project bằng Android Studio Menu > Run > Run 'app'. Hoặc nhấn tổ hợp Shift + F10 để run project  
+Chạy thử project bằng Android Studio: Vào thanh menu chọn Run > Run 'app'. Hoặc nhấn tổ hợp Shift + F10 để run project  
 Nếu có lỗi xảy ra, thử "File > Sync Project with Gradle Files" hoặc "Build > Rebuild Project" trong Android Studio Menu
 
 ## Cài đặt ứng dụng bằng file APK
