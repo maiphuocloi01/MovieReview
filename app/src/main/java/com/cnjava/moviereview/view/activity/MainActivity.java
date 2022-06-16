@@ -22,6 +22,8 @@ import android.view.WindowManager;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.model.Genres;
+import com.cnjava.moviereview.util.CommonUtils;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
@@ -83,12 +85,21 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     private void initViews() {
-        OnboardFragment frg = new OnboardFragment();
-        frg.setCallBack(this);
-        getSupportFragmentManager()
-                .beginTransaction()
-                .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
-                .commit();
+        if(CommonUtils.getInstance().getPref(Constants.ONBOARD) == null){
+            OnboardFragment frg = new OnboardFragment();
+            frg.setCallBack(this);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
+                    .commit();
+        } else {
+            HomeFragment frg = new HomeFragment();
+            frg.setCallBack(this);
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.layout_main, frg, HomeFragment.class.getName())
+                    .commit();
+        }
     }
 
     private void loadFragment(String tag) {

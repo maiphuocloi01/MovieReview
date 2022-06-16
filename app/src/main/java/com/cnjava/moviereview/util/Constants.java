@@ -15,6 +15,7 @@ public interface Constants {
     String ACCESS_TOKEN = "ACCESS_TOKEN";
     String ACCESS_TOKEN_2ND = "ACCESS_TOKEN_2ND";
     String USERNAME = "USERNAME";
+    String ONBOARD = "ONBOARD";
 
     int ANIM_SLIDE = 0;
     int ANIM_FADE = 1;
