@@ -141,11 +141,12 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
             CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN_2ND);
             MyApplication.getInstance().getStorage().myUser = null;
             MyApplication.getInstance().getStorage().reviewList = null;
-            MyApplication.getInstance().getStorage().moviePopular = null;
-            MyApplication.getInstance().getStorage().movieNowPlaying = null;
-            MyApplication.getInstance().getStorage().movieUpcoming = null;
-            MyApplication.getInstance().getStorage().movieTopRated = null;
-            MyApplication.getInstance().getStorage().movieRecommend = null;
+            MyApplication.getInstance().getStorage().movieDetail = null;
+            //MyApplication.getInstance().getStorage().moviePopular = null;
+            //MyApplication.getInstance().getStorage().movieNowPlaying = null;
+            //MyApplication.getInstance().getStorage().movieUpcoming = null;
+            //MyApplication.getInstance().getStorage().movieTopRated = null;
+            //MyApplication.getInstance().getStorage().movieRecommend = null;
             callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);

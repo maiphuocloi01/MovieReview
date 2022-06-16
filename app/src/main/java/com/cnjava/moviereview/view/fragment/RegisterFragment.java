@@ -165,10 +165,10 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
                 } else if (TextUtils.isEmpty(binding.etPassword.getText())) {
                     binding.layoutPassword.setError("Please fill your password");
                     binding.tvMeter.setVisibility(View.GONE);
-                } else if (rank < 4) {
+                } /*else if (rank < 4) {
                     binding.layoutPassword.setError("Password is too weak");
                     binding.tvMeter.setVisibility(View.GONE);
-                } else if (TextUtils.isEmpty(binding.etPasswordConfirm.getText())) {
+                }*/ else if (TextUtils.isEmpty(binding.etPasswordConfirm.getText())) {
                     binding.layoutPasswordConfirm.setError("Please confirm your password");
                 } else if (!binding.etPassword.getText().toString().equals(binding.etPasswordConfirm.getText().toString())) {
                     binding.layoutPasswordConfirm.setError("Confirmation password does not match");
@@ -281,9 +281,12 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_REGISTER)) {
             Log.d(TAG, "KEY_REGISTER: ");
-            sendOTP();
-            openSendOTPDialog();
+            //sendOTP();
+            //openSendOTPDialog();
+            Toast.makeText(context, "Register success", Toast.LENGTH_SHORT).show();
             DialogUtils.hideLoadingDialog();
+            CommonUtils.getInstance().clearPref(Constants.USERNAME);
+            callBack.backToPrev();
         } else if (key.equals(Constants.KEY_SEND_OTP)) {
             Response response = (Response) data;
             //Toast.makeText(context, response.getToken(), Toast.LENGTH_SHORT).show();

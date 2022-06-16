@@ -18,6 +18,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemMyReviewBinding;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 
@@ -132,6 +133,9 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
             holder.binding.tvDislike.setText(String.valueOf(review.dislike.size()));
         }
         Log.d("TAG", "onBindViewHolder: " + review.like.size());
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null){
+            holder.binding.ivMore.setVisibility(View.GONE);
+        }
         if(user != null) {
             if (review.user.getId().equals(user.getId())) {
                 holder.binding.ivMore.setVisibility(View.VISIBLE);

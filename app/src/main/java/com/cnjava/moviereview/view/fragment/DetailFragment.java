@@ -200,32 +200,37 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             movieDetail = (MovieDetail) data;
             MyApplication.getInstance().getStorage().movieDetail = movieDetail;
 
-            binding.layoutFavorite.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                    if (!isSelect) {
-                        binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.primary));
-                        binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.primary));
-                        Favorite.MovieFavorite movieFavorite = new Favorite.MovieFavorite(movieDetail.posterPath,
-                                String.valueOf(movieDetail.id),
-                                movieDetail.title, movieDetail.overview,
-                                movieDetail.releaseDate,
-                                movieDetail.voteAverage
-                                );
-                        Log.d(TAG, "onClick: addFavorite");
-                        viewModel.addFavorite(movieFavorite, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                        isSelect = true;
-                    } else {
-                        Log.d(TAG, "onClick: deleteFavorite");
-                        binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
-                        binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.light_white));
-                        viewModel.deleteFavorite(String.valueOf(id), CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                        isSelect = false;
-                    }
 
-                }
-            });
+                binding.layoutFavorite.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
+                            if (!isSelect) {
+                                binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.primary));
+                                binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.primary));
+                                Favorite.MovieFavorite movieFavorite = new Favorite.MovieFavorite(movieDetail.posterPath,
+                                        String.valueOf(movieDetail.id),
+                                        movieDetail.title, movieDetail.overview,
+                                        movieDetail.releaseDate,
+                                        movieDetail.voteAverage
+                                );
+                                Log.d(TAG, "onClick: addFavorite");
+                                viewModel.addFavorite(movieFavorite, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                                isSelect = true;
+                            } else {
+                                Log.d(TAG, "onClick: deleteFavorite");
+                                binding.ivFavorite.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
+                                binding.tvFavorite.setTextColor(ContextCompat.getColor(context, R.color.light_white));
+                                viewModel.deleteFavorite(String.valueOf(id), CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                                isSelect = false;
+                            }
+                        } else {
+                            showLoginDialog();
+                        }
+
+                    }
+                });
 
             if (movieDetail.collection != null) {
                 viewModel.getCollection(movieDetail.collection.id);
