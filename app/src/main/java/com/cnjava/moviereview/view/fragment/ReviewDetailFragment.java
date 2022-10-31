@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.view.fragment;
 
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,6 +9,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -15,18 +17,25 @@ import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentReviewDetailBinding;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.model.Summary;
+import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailViewModel;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBinding, CommonViewModel>{
 
     public static final String TAG = ReviewDetailFragment.class.getName();
     private Object mData;
     private String shorten = null;
+    private String translateText = null;
     private Review review;
+    private ReviewDetailViewModel reviewDetailViewModel;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -35,6 +44,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
 
     @Override
     protected void initViews() {
+        reviewDetailViewModel = new ViewModelProvider(this).get(ReviewDetailViewModel.class);
         review = (Review) mData;
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -61,7 +71,10 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
         binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
         binding.tvContent.setText(review.content);
 
-        binding.btShorten.setOnClickListener(new View.OnClickListener() {
+
+
+
+        /*binding.btShorten.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (review.content.length() > 300) {
@@ -91,6 +104,16 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                     }, 200);
                 }
             }
+        });*/
+
+        binding.btShorten.setOnClickListener(view -> {
+
+            reviewDetailViewModel.translateText(review.content);
+            ReviewDetailViewModel.translateLiveData.observe(this, translate -> {
+                translateText = translate.getText().get(0);
+                Log.d(TAG, "translateText: " + translateText);
+            });
+            binding.tvContent.setText(translateText);
         });
 
         binding.btOriginal.setOnClickListener(new View.OnClickListener() {

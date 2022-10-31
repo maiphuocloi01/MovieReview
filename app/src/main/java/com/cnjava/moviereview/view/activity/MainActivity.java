@@ -35,6 +35,9 @@ import java.lang.reflect.Constructor;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     public static final String TAG = MainActivity.class.getName();

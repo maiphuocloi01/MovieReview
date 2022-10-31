@@ -3,13 +3,15 @@ package com.cnjava.moviereview.util;
 public interface Constants {
 
     String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
-    String BASE_URL_USER = "https://viewie-api.herokuapp.com/api/v1/";
+    String BASE_URL_USER = "http://apimovienew-env.eba-uagpfyjt.us-east-1.elasticbeanstalk.com/api/v1/";
     String BASE_URL_AI = "https://viewie-ai.herokuapp.com/";
+    String BASE_URL_TRANSLATE = "https://translate.yandex.net/api/v1.5/tr.json/";
     String BASE_URL_UPlOAD_IMAGE = "https://nhom01nt118.azurewebsites.net/";
     String IMAGE_URL = "https://image.tmdb.org/t/p/w1280/";
     String IMAGE_URL_YOUTUBE = "https://img.youtube.com/vi/";
 
     String API_KEY = "AIzaSyBiSqVB9NuQm4dCdH5XW_yLrXnQrqP-2qE";
+    String API_KEY_TRANSLATE = "trnsl.1.1.20221031T035646Z.677687ed96cdbd33.d7369050a15c711d554aa46bd8da1f2db4f237d4";
 
     //share pref
     String ACCESS_TOKEN = "ACCESS_TOKEN";

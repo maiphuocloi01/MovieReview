@@ -2,6 +2,9 @@ package com.cnjava.moviereview;
 
 import android.app.Application;
 
+import dagger.hilt.android.HiltAndroidApp;
+
+@HiltAndroidApp
 public class MyApplication extends Application {
     private static MyApplication instance;
     private Storage storage;
@@ -18,6 +21,9 @@ public class MyApplication extends Application {
     }
 
     public static MyApplication getInstance() {
+        if (instance == null){
+            instance = new MyApplication();
+        }
         return instance;
     }
 }
