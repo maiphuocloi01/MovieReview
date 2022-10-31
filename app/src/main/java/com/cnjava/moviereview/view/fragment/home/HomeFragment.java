@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.home;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -35,14 +36,25 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.CategoryFragment;
+import com.cnjava.moviereview.view.fragment.DetailFragment;
+import com.cnjava.moviereview.view.fragment.LoginFragment;
+import com.cnjava.moviereview.view.fragment.ProfileFragment;
+import com.cnjava.moviereview.view.fragment.RegisterFragment;
+import com.cnjava.moviereview.view.fragment.SearchFragment;
+import com.cnjava.moviereview.view.fragment.SearchResultFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
+import dagger.hilt.android.AndroidEntryPoint;
 
+@AndroidEntryPoint
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewModel> implements PopularAdapter.MovieCallBack {
 
     public static final String TAG = HomeFragment.class.getName();
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Movie moviePopular;
+    private static final int POPULAR = 3;
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -57,8 +69,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
         }
     };
     private Movie movieNowPlaying;
+    private static final int NOW_PLAYING = 0;
     private Movie movieUpcoming;
+    private static final int UP_COMING = 1;
     private Movie movieTopRated;
+    private static final int TOP_RATED = 2;
+
+    private HomeViewModel homeViewModel;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -67,6 +84,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
     @Override
     protected void initViews() {
+
+        homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
 
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
         if (CommonUtils.getInstance().getPref(Constants.ONBOARD) == null) {
@@ -90,13 +109,18 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             }
         }
 
+        homeViewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), this::setScreenLoading);
         if (MyApplication.getInstance().getStorage().moviePopular == null) {
-            ViewUtils.show(binding.progressCircular);
-            ViewUtils.gone(binding.layoutHome);
-            viewModel.getPopularMovie();
+            homeViewModel.getPopularMovie();
+            homeViewModel.popularMovieLD().observe(this, _popularMovie -> {
+                moviePopular = _popularMovie;
+                Log.d(TAG, "initViews: " + _popularMovie.results.size());
+                MyApplication.getInstance().getStorage().moviePopular = _popularMovie;
+                initMovieRecyclerView(_popularMovie, POPULAR);
+            });
         } else {
             moviePopular = MyApplication.getInstance().getStorage().moviePopular;
-            initPopularView();
+            initMovieRecyclerView(moviePopular, POPULAR);
         }
 
         binding.etSearch.setCursorVisible(false);
@@ -109,24 +133,39 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
 
         if (MyApplication.getInstance().getStorage().movieNowPlaying == null) {
-            viewModel.getNowPlayingMovie();
+            homeViewModel.getNowPlayingMovie();
+            homeViewModel.nowPlayingMovieLD().observe(this, _nowPlayingMovie -> {
+                movieNowPlaying = _nowPlayingMovie;
+                MyApplication.getInstance().getStorage().movieNowPlaying = _nowPlayingMovie;
+                initMovieRecyclerView(_nowPlayingMovie, NOW_PLAYING);
+            });
         } else {
             movieNowPlaying = MyApplication.getInstance().getStorage().movieNowPlaying;
-            initNowPlayingView();
+            initMovieRecyclerView(movieNowPlaying, NOW_PLAYING);
         }
 
         if (MyApplication.getInstance().getStorage().movieTopRated == null) {
-            viewModel.getTopRatedMovie();
+            homeViewModel.getTopRatedMovie();
+            homeViewModel.topRatedMovieLD().observe(this, _topRatedMovie -> {
+                movieTopRated = _topRatedMovie;
+                MyApplication.getInstance().getStorage().movieTopRated = _topRatedMovie;
+                initMovieRecyclerView(_topRatedMovie, TOP_RATED);
+            });
         } else {
             movieTopRated = MyApplication.getInstance().getStorage().movieTopRated;
-            initTopRatedView();
+            initMovieRecyclerView(movieTopRated, TOP_RATED);
         }
 
         if (MyApplication.getInstance().getStorage().movieUpcoming == null) {
-            viewModel.getUpcomingMovie();
+            homeViewModel.getUpComingMovie();
+            homeViewModel.upcomingMovieLD().observe(this, _upcomingMovie -> {
+                movieUpcoming = _upcomingMovie;
+                MyApplication.getInstance().getStorage().movieUpcoming = _upcomingMovie;
+                initMovieRecyclerView(_upcomingMovie, UP_COMING);
+            });
         } else {
             movieUpcoming = MyApplication.getInstance().getStorage().movieUpcoming;
-            initUpcomingView();
+            initMovieRecyclerView(movieUpcoming, UP_COMING);
         }
 
         binding.vpPopular.setOffscreenPageLimit(3);
@@ -140,7 +179,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             page.setScaleY(0.85f + r * 0.15f);
         });
         binding.vpPopular.setPageTransformer(compositePageTransformer);
-        //Log.d(TAG, "initViews: " + moviePopular);
+
         binding.ivAvt.setOnClickListener(view -> {
             binding.ivAvt.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null) {
@@ -191,15 +230,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
-        /*if (MyApplication.getInstance().getStorage().favoriteList == null) {
-            //DialogUtils.showLoadDataDialog(context);
-            Log.d(TAG, "myUser null");
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                Log.d(TAG, "getYourProfile: ");
-                viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            }
-        }*/
 
+    }
+
+    private void setScreenLoading(boolean isLoading) {
+        if (isLoading) {
+            ViewUtils.show(binding.progressCircular);
+            ViewUtils.gone(binding.layoutHome);
+        } else {
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.layoutHome);
+        }
     }
 
     @Override
@@ -209,32 +250,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if (key.equals(Constants.KEY_GET_POPULAR_MOVIE)) {
-            moviePopular = (Movie) data;
-            MyApplication.getInstance().getStorage().moviePopular = moviePopular;
-            Log.d(TAG, "apiSuccess: " + moviePopular);
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null) {
-                ViewUtils.gone(binding.progressCircular);
-                ViewUtils.show(binding.layoutHome);
-            }
-            initPopularView();
-
-        } else if (key.equals(Constants.KEY_GET_NOW_PLAYING_MOVIE)) {
-            movieNowPlaying = (Movie) data;
-            MyApplication.getInstance().getStorage().movieNowPlaying = movieNowPlaying;
-            initNowPlayingView();
-
-        } else if (key.equals(Constants.KEY_GET_TOP_RATED_MOVIE)) {
-            movieTopRated = (Movie) data;
-            MyApplication.getInstance().getStorage().movieTopRated = movieTopRated;
-            initTopRatedView();
-
-        } else if (key.equals(Constants.KEY_GET_UPCOMING_MOVIE)) {
-            movieUpcoming = (Movie) data;
-            MyApplication.getInstance().getStorage().movieUpcoming = movieUpcoming;
-            initUpcomingView();
-
-        } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
+        if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
             User user = (User) data;
             MyApplication.getInstance().getStorage().myUser = user;
             if (user.getAvatar() != null) {
@@ -247,40 +263,31 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, CommonViewMo
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.layoutHome);
 
-        } /*else if (key.equals(Constants.KEY_GET_FAVORITE)) {
-            List<Favorite> listFavorite = (List<Favorite>) data;
-            MyApplication.getInstance().getStorage().favoriteList = listFavorite;
-        }*/
+        }
     }
 
-    private void initPopularView() {
-        PopularAdapter popularAdapter = new PopularAdapter(context, moviePopular, this);
-        binding.vpPopular.setAdapter(popularAdapter);
-        //binding.indicatorHome.setViewPager(binding.vpPopular);
-
-        binding.vpPopular.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
-            @Override
-            public void onPageSelected(int position) {
-                super.onPageSelected(position);
-                handler.removeCallbacks(runnable);
-                handler.postDelayed(runnable, 3000);
-            }
-        });
-    }
-
-    private void initNowPlayingView() {
-        MovieAdapter adapter = new MovieAdapter(context, movieNowPlaying, this);
-        binding.rvPlaying.setAdapter(adapter);
-    }
-
-    private void initTopRatedView() {
-        MovieAdapter adapter = new MovieAdapter(context, movieTopRated, this);
-        binding.rvTopRated.setAdapter(adapter);
-    }
-
-    private void initUpcomingView() {
-        MovieAdapter adapter = new MovieAdapter(context, movieUpcoming, this);
-        binding.rvUpcoming.setAdapter(adapter);
+    private void initMovieRecyclerView(Movie movie, int type){
+        if(type == POPULAR){
+            PopularAdapter popularAdapter = new PopularAdapter(context, movie, this);
+            binding.vpPopular.setAdapter(popularAdapter);
+            binding.vpPopular.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
+                @Override
+                public void onPageSelected(int position) {
+                    super.onPageSelected(position);
+                    handler.removeCallbacks(runnable);
+                    handler.postDelayed(runnable, 3000);
+                }
+            });
+        } else if(type == NOW_PLAYING){
+            MovieAdapter adapter = new MovieAdapter(context, movie, this);
+            binding.rvPlaying.setAdapter(adapter);
+        } else if (type == UP_COMING){
+            MovieAdapter adapter = new MovieAdapter(context, movieUpcoming, this);
+            binding.rvUpcoming.setAdapter(adapter);
+        } else if (type == TOP_RATED){
+            MovieAdapter adapter = new MovieAdapter(context, movie, this);
+            binding.rvTopRated.setAdapter(adapter);
+        }
     }
 
     @Override

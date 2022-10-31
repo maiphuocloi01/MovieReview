@@ -13,7 +13,7 @@ import com.cnjava.moviereview.databinding.FragmentOnboardingBinding;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.adapter.OnboardAdapter;
-import com.cnjava.moviereview.view.adapter.PopularAdapter;
+import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;

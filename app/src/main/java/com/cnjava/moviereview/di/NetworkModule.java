@@ -1,8 +1,10 @@
 package com.cnjava.moviereview.di;
 
+import static com.cnjava.moviereview.util.Constants.BASE_URL_GUEST;
 import static com.cnjava.moviereview.util.Constants.BASE_URL_TRANSLATE;
 
-import com.cnjava.moviereview.api.TranslateApi;
+import com.cnjava.moviereview.data.MovieService;
+import com.cnjava.moviereview.data.TranslateApi;
 
 import java.util.concurrent.TimeUnit;
 
@@ -42,7 +44,8 @@ public class NetworkModule {
 
     @Singleton
     @Provides
-    Retrofit provideRetrofit(OkHttpClient.Builder client) {
+    @Named("TRANSLATE")
+    Retrofit provideRetrofit1(OkHttpClient.Builder client) {
         return new Retrofit.Builder()
                 .baseUrl(BASE_URL_TRANSLATE)
                 .client(client.build())
@@ -51,10 +54,28 @@ public class NetworkModule {
                 .build();
     }
 
+    @Singleton
+    @Provides
+    @Named("MOVIE")
+    Retrofit provideRetrofit2(OkHttpClient.Builder client) {
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL_GUEST)
+                .client(client.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build();
+    }
+
     @Provides
     @Singleton
-    TranslateApi provideTranslateApi(Retrofit retrofit){
+    TranslateApi provideTranslateApi(@Named("TRANSLATE") Retrofit retrofit) {
         return retrofit.create(TranslateApi.class);
+    }
+
+    @Provides
+    @Singleton
+    MovieService provideMovieService(@Named("MOVIE") Retrofit retrofit) {
+        return retrofit.create(MovieService.class);
     }
 
 }

@@ -10,8 +10,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentNavigateBinding;
-import com.cnjava.moviereview.util.Constants;
-import com.cnjava.moviereview.viewmodel.CommonViewModel;
+import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.viewmodel.NavigateViewModel;
 
 public class NavigateFragment extends BaseFragment<FragmentNavigateBinding, NavigateViewModel>{

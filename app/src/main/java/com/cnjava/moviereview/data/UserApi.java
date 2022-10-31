@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.api;
+package com.cnjava.moviereview.data;
 
 import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Response;

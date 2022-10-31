@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.api;
+package com.cnjava.moviereview.data;
 
 import static com.cnjava.moviereview.util.Constants.API_KEY_TRANSLATE;
 
