@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.about;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.databinding.FragmentAboutBinding;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
-public class AboutFragment extends BaseFragment<FragmentAboutBinding, CommonViewModel>{
+public class AboutFragment extends BaseFragment<FragmentAboutBinding, CommonViewModel> {
 
     public static final String TAG = AboutFragment.class.getName();
 

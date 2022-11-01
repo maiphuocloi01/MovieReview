@@ -6,8 +6,11 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cnjava.moviereview.model.Movie;
-import com.cnjava.moviereview.repository.Repository;
+import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.repository.AccountRepository;
+import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
+
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
@@ -18,17 +21,20 @@ public class HomeViewModel extends BaseViewModel {
 
     private static final String TAG = "HomeViewModel";
 
-    private final Repository repository;
+    private final MovieRepository movieRepository;
+    private final AccountRepository accountRepository;
 
     @Inject
-    public HomeViewModel(Repository repository) {
-        this.repository = repository;
+    public HomeViewModel(MovieRepository movieRepository, AccountRepository accountRepository) {
+        this.movieRepository = movieRepository;
+        this.accountRepository = accountRepository;
     }
 
     private static MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
     private static MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
     private static MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
     private static MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
+    private static MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
 
     public LiveData<Movie> popularMovieLD() {
         return popularMovieLD;
@@ -46,10 +52,14 @@ public class HomeViewModel extends BaseViewModel {
         return topRatedMovieLD;
     }
 
+    public LiveData<User> yourProfileLD() {
+        return yourProfileLD;
+    }
+
 
     public void getPopularMovie() {
         mLiveDataIsLoading.setValue(true);
-        repository.getPopularMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getPopularMovie().subscribe(new MovieObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 popularMovieLD.setValue(movie);
@@ -65,7 +75,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getNowPlayingMovie() {
-        repository.getNowPlayingMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getNowPlayingMovie().subscribe(new MovieObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 nowPlayingMovieLD.setValue(movie);
@@ -81,7 +91,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getUpComingMovie() {
-        repository.getUpComingMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getUpComingMovie().subscribe(new MovieObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 upcomingMovieLD.setValue(movie);
@@ -97,7 +107,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getTopRatedMovie() {
-        repository.getTopRatedMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getTopRatedMovie().subscribe(new MovieObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 topRatedMovieLD.setValue(movie);
@@ -112,5 +122,21 @@ public class HomeViewModel extends BaseViewModel {
         });
     }
 
+    public void getYourProfile(String token) {
+        mLiveDataIsLoading.setValue(true);
+        accountRepository.getYourProfile(token).subscribe(new UserObserver<User>() {
+            @Override
+            public void onSuccess(@NonNull User user) {
+                yourProfileLD.setValue(user);
+                mLiveDataIsLoading.setValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.setValue(false);
+            }
+        });
+    }
 
 }

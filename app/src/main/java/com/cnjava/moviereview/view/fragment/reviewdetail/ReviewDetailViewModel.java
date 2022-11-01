@@ -4,18 +4,15 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
 
 import com.cnjava.moviereview.model.Translate;
-import com.cnjava.moviereview.repository.Repository;
+import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.schedulers.Schedulers;
 
 
 @HiltViewModel
@@ -23,7 +20,7 @@ public class ReviewDetailViewModel extends BaseViewModel {
 
     private static final String TAG = "ReviewDetailViewModel";
 
-    private final Repository repository;
+    private final MovieRepository movieRepository;
 
     private static MutableLiveData<Translate> translateMutableLiveData = new MutableLiveData<>();
 
@@ -32,15 +29,17 @@ public class ReviewDetailViewModel extends BaseViewModel {
     }
 
     @Inject
-    public ReviewDetailViewModel(Repository repository) {
-        this.repository = repository;
+    public ReviewDetailViewModel(MovieRepository movieRepository) {
+        this.movieRepository = movieRepository;
     }
 
     public void translateText(String text) {
-        repository.translateText(text).subscribe(new TranslateObserver<Translate>() {
+        mLiveDataIsLoading.setValue(true);
+        movieRepository.translateText(text).subscribe(new TranslateObserver<Translate>() {
             @Override
             public void onSuccess(@NonNull Translate translate) {
                 translateMutableLiveData.setValue(translate);
+                mLiveDataIsLoading.setValue(false);
             }
 
             @Override
@@ -48,6 +47,7 @@ public class ReviewDetailViewModel extends BaseViewModel {
                 super.onError(e);
                 String message = e.getMessage();
                 Log.d(TAG, "onError: " + message);
+                mLiveDataIsLoading.setValue(false);
             }
         });
         /*repository.translateText(text)

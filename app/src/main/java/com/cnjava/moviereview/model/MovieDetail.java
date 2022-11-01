@@ -54,4 +54,26 @@ public class MovieDetail implements Serializable {
 
     }
 
+    @Override
+    public String toString() {
+        return "MovieDetail{" +
+                "id=" + id +
+                ", backdropPath='" + backdropPath + '\'' +
+                ", adult=" + adult +
+                ", budget=" + budget +
+                ", homepage='" + homepage + '\'' +
+                ", title='" + title + '\'' +
+                ", overview='" + overview + '\'' +
+                ", popularity=" + popularity +
+                ", posterPath='" + posterPath + '\'' +
+                ", releaseDate='" + releaseDate + '\'' +
+                ", revenue=" + revenue +
+                ", status='" + status + '\'' +
+                ", voteAverage=" + voteAverage +
+                ", voteCount=" + voteCount +
+                ", genres=" + genres +
+                ", runtime=" + runtime +
+                ", collection=" + collection +
+                '}';
+    }
 }

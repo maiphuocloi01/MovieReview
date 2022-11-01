@@ -1,7 +1,7 @@
 package com.cnjava.moviereview.repository;
 
 import com.cnjava.moviereview.data.MovieService;
-import com.cnjava.moviereview.data.TranslateApi;
+import com.cnjava.moviereview.data.TranslateService;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Translate;
 
@@ -11,13 +11,13 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class Repository {
+public class MovieRepository {
 
-    private final TranslateApi apiService;
+    private final TranslateService apiService;
     private final MovieService movieService;
 
     @Inject
-    public Repository(TranslateApi apiService, MovieService movieService) {
+    public MovieRepository(TranslateService apiService, MovieService movieService) {
         this.apiService = apiService;
         this.movieService = movieService;
     }

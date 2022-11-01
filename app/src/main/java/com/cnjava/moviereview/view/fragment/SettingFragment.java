@@ -22,6 +22,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentSettingBinding;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.view.fragment.about.AboutFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 

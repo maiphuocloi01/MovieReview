@@ -16,62 +16,48 @@ import retrofit2.http.Query;
 
 public interface Api {
 
-    String API_KEY = "5941024e8620246ad84260d2dfdac7ce";
+    //String API_KEY = "5941024e8620246ad84260d2dfdac7ce";
 
-    @GET("movie/popular?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/popular")
     Call<Movie> getPopularMovie();
 
-    @GET("movie/now_playing?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/now_playing")
     Call<Movie> getNowPlayingMovie();
 
-    @GET("movie/upcoming?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/upcoming")
     Call<Movie> getUpcomingMovie();
 
-    @GET("movie/top_rated?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/top_rated")
     Call<Movie> getTopRatedMovie();
 
-    @GET("movie/{id}?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/{id}")
     Call<MovieDetail> getMovieDetail(@Path("id") int id);
 
-    @GET("search/movie?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("search/movie")
     Call<Movie> searchMovie(@Query("query") String keyword);
 
-    @GET("search/keyword?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("search/keyword")
     Call<Keyword> searchKeyword(@Query("query") String keyword);
 
-    @GET("movie/{movie_id}/credits?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/{movie_id}/credits")
     Call<Actor> getCast(@Path("movie_id") int movie_id);
 
-    @GET("movie/{movie_id}/videos?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/{movie_id}/videos")
     Call<Video> getVideo(@Path("movie_id") int movie_id);
 
-    @GET("movie/{movie_id}/recommendations?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/{movie_id}/recommendations")
     Call<Movie> getRecommendation(@Path("movie_id") int movie_id);
 
-    @GET("collection/{collection_id}?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("collection/{collection_id}")
     Call<Collection> getCollection(@Path("collection_id") int collection_id);
 
-    @GET("keyword/{keyword_id}/movies?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("keyword/{keyword_id}/movies")
     Call<Movie> getMovieByKeywordId(@Path("keyword_id") int keyword_id);
 
-    @GET("discover/movie?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("discover/movie")
     Call<Movie> getMovieByCategory(@Query("sort_by") String sort, @Query("with_genres") String category);
 
-    @GET("movie/{movie_id}/external_ids?api_key=" + API_KEY)
-    @Headers("Content-type: application/json")
+    @GET("movie/{movie_id}/external_ids")
     Call<Social> getSocial(@Path("movie_id") int movie_id);
 
 }

@@ -1,6 +1,5 @@
 package com.cnjava.moviereview.viewmodel;
 
-import android.app.Application;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
@@ -9,10 +8,10 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.cnjava.moviereview.data.Api;
-import com.cnjava.moviereview.data.TranslateApi;
 import com.cnjava.moviereview.data.UserApi;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Translate;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 
@@ -74,13 +73,26 @@ public abstract class BaseViewModel extends ViewModel {
         }
     }
 
+    public abstract class UserObserver<T extends User> implements SingleObserver<T> {
+        @Override
+        public void onSubscribe(Disposable d) {
+            mMainCompDisposable.add(d);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mLiveDataOnError.setValue(e);
+            e.printStackTrace();
+        }
+    }
+
     public void setCallBack(OnAPICallBack callBack) {
         this.callBack = callBack;
     }
 
     protected Api getApi() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL_GUEST)
+                .baseUrl(Constants.BASE_URL_USER  )
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder().callTimeout(30, TimeUnit.SECONDS).build())
                 .build();

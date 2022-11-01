@@ -2,9 +2,11 @@ package com.cnjava.moviereview.di;
 
 import static com.cnjava.moviereview.util.Constants.BASE_URL_GUEST;
 import static com.cnjava.moviereview.util.Constants.BASE_URL_TRANSLATE;
+import static com.cnjava.moviereview.util.Constants.BASE_URL_USER;
 
+import com.cnjava.moviereview.data.AccountService;
 import com.cnjava.moviereview.data.MovieService;
-import com.cnjava.moviereview.data.TranslateApi;
+import com.cnjava.moviereview.data.TranslateService;
 
 import java.util.concurrent.TimeUnit;
 
@@ -59,7 +61,19 @@ public class NetworkModule {
     @Named("MOVIE")
     Retrofit provideRetrofit2(OkHttpClient.Builder client) {
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL_GUEST)
+                .baseUrl(BASE_URL_USER)
+                .client(client.build())
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
+                .build();
+    }
+
+    @Singleton
+    @Provides
+    @Named("ACCOUNT")
+    Retrofit provideRetrofit3(OkHttpClient.Builder client) {
+        return new Retrofit.Builder()
+                .baseUrl(BASE_URL_USER)
                 .client(client.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
@@ -68,14 +82,20 @@ public class NetworkModule {
 
     @Provides
     @Singleton
-    TranslateApi provideTranslateApi(@Named("TRANSLATE") Retrofit retrofit) {
-        return retrofit.create(TranslateApi.class);
+    TranslateService provideTranslateApi(@Named("TRANSLATE") Retrofit retrofit) {
+        return retrofit.create(TranslateService.class);
     }
 
     @Provides
     @Singleton
     MovieService provideMovieService(@Named("MOVIE") Retrofit retrofit) {
         return retrofit.create(MovieService.class);
+    }
+
+    @Provides
+    @Singleton
+    AccountService provideAccountService(@Named("ACCOUNT") Retrofit retrofit) {
+        return retrofit.create(AccountService.class);
     }
 
 }

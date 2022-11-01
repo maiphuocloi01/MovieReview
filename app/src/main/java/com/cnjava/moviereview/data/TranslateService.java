@@ -9,7 +9,7 @@ import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.POST;
 
-public interface TranslateApi {
+public interface TranslateService {
 
     @POST("translate?key=" + API_KEY_TRANSLATE + "&lang=en-vi")
     @FormUrlEncoded
