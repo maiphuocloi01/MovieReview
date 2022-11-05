@@ -18,7 +18,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -55,6 +54,7 @@ import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.view.adapter.VideoAdapter;
+import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.cnjava.moviereview.viewmodel.ShareViewModel;
 
@@ -115,7 +115,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
 
         if (MyApplication.getInstance().getStorage().myUser == null) {
-            //DialogUtils.showLoadDataDialog(context);
             Log.d(TAG, "myUser null");
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                 Log.d(TAG, "getYourProfile: ");
@@ -124,41 +123,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         }
         Log.d(TAG, "initViews: ");
         viewModel.getReviewByMovieId(String.valueOf(id));
-
-        /*if (MyApplication.getInstance().getStorage().favoriteList == null) {
-            //DialogUtils.showLoadDataDialog(context);
-            Log.d(TAG, "myUser null");
-
-        } else {
-            initFavorite(MyApplication.getInstance().getStorage().favoriteList, String.valueOf(id));
-        }*/
-
-
-
-        /*if (MyApplication.getInstance().getStorage().reviewList != null) {
-            if (MyApplication.getInstance().getStorage().reviewList.size() > 0) {
-                if (MyApplication.getInstance().getStorage().reviewList.get(0).movie.id.equals(String.valueOf(id))) {
-                    Log.d(TAG, "initReview: 1");
-                    viewModel.setListReviewLD(MyApplication.getInstance().getStorage().reviewList);
-                    viewModel.getListReviewLD().observe(this, new Observer<List<Review>>() {
-                        @Override
-                        public void onChanged(List<Review> list) {
-                            initReview(list);
-                        }
-                    });
-                } else {
-                    Log.d(TAG, "getReviewByMovieId: 1");
-                    viewModel.getReviewByMovieId(String.valueOf(id));
-                }
-            } else {
-                Log.d(TAG, "getReviewByMovieId: 2");
-                viewModel.getReviewByMovieId(String.valueOf(id));
-                //initReview(MyApplication.getInstance().getStorage().reviewList);
-            }
-        } else {
-            Log.d(TAG, "getReviewByMovieId: 3");
-            viewModel.getReviewByMovieId(String.valueOf(id));
-        }*/
 
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -181,12 +145,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         });
 
-
-        //List<Review> reviewList = new ArrayList<>();
-
-        //reviewList.add(new Review(1, 1, "Mai Phước Lợi", getResources().getString(R.string.content), 7, "May 4, 2022", 123, "Hello", "https://image.tmdb.org/t/p/w1280/fBEucxECxGLKVHBznO0qHtCGiMO.jpg"));
-
-
     }
 
     @Override
@@ -198,6 +156,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)) {
             movieDetail = (MovieDetail) data;
+            Log.d(TAG, "apiSuccess: " + movieDetail.toString());
             MyApplication.getInstance().getStorage().movieDetail = movieDetail;
 
 
@@ -704,6 +663,17 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void apiError(String key, int code, Object data) {
+        if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)) {
+            try {
+                Throwable data1 = (Throwable) data;
+                Log.d(TAG, "apiError: " + data1.getMessage());
+                Log.d(TAG, "apiError code: " + code);
+            } catch (Exception e){
+                Log.d(TAG, "apiError Exception: " + e.getMessage());
+                Log.d(TAG, "apiError code: " + code);
+            }
+
+        }
         if (code == 999) {
             if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
                 Log.d(TAG, "apiError: " + data.toString());
@@ -854,9 +824,4 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         //MyApplication.getInstance().getStorage().reviewList = null;
     }
 
-    /*@Override
-    public void updateReview(List<Review> reviewList) {
-        Log.d(TAG, "updateReview: ");
-        initReview(reviewList);
-    }*/
 }

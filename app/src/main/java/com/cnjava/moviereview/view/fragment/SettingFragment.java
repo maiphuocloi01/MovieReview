@@ -11,11 +11,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AnimationUtils;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CompoundButton;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -25,6 +22,8 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentSettingBinding;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.view.fragment.about.AboutFragment;
+import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class SettingFragment extends BaseFragment<FragmentSettingBinding, CommonViewModel> {

@@ -6,11 +6,9 @@ import static com.cnjava.moviereview.util.IMEUtils.isActive;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
 import android.app.Activity;
-import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -24,17 +22,16 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
-import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.HomeFragment;
-import com.cnjava.moviereview.view.fragment.LoginFragment;
+import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.OnboardFragment;
 
 import java.lang.reflect.Constructor;
-import java.util.List;
-import java.util.stream.Collectors;
 
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
 public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     public static final String TAG = MainActivity.class.getName();
