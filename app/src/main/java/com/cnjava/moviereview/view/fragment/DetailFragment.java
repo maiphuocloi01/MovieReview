@@ -664,9 +664,15 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     public void apiError(String key, int code, Object data) {
         if (key.equals(Constants.KEY_GET_MOVIE_DETAIL)) {
-            Throwable data1 = (Throwable) data;
-            Log.d(TAG, "apiError: " + data1.getMessage());
-            Log.d(TAG, "apiError code: " + code);
+            try {
+                Throwable data1 = (Throwable) data;
+                Log.d(TAG, "apiError: " + data1.getMessage());
+                Log.d(TAG, "apiError code: " + code);
+            } catch (Exception e){
+                Log.d(TAG, "apiError Exception: " + e.getMessage());
+                Log.d(TAG, "apiError code: " + code);
+            }
+
         }
         if (code == 999) {
             if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
