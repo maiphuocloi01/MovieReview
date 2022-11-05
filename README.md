@@ -11,4 +11,4 @@ Nếu có lỗi xảy ra, thử "File > Sync Project with Gradle Files" hoặc "
 
 ## Cài đặt ứng dụng bằng file APK
 
-    https://drive.google.com/file/d/1JdOpSO0k9bpgC8_KsIQGx08iI5spwDpi/view?usp=sharing
+    https://drive.google.com/file/d/1qeZQ_sv6gBMCQ7Gcby-2pgCjQ71blun9/view?usp=sharing
