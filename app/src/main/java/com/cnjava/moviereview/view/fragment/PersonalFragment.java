@@ -19,6 +19,7 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MyReviewAdapter;
+import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
@@ -149,15 +150,15 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Comm
         } else if (key.equals(Constants.KEY_GET_STATISTIC_BY_USER_ID)) {
             Statistic statistic = (Statistic) data;
             if ((int) statistic.likes > 1) {
-                binding.tvCountLike.setText((int) statistic.likes + " likes");
+                binding.tvCountLike.setText(getString(R.string.likes, (int) statistic.likes));
             } else {
-                binding.tvCountLike.setText((int) statistic.likes + " like");
+                binding.tvCountLike.setText(getString(R.string.like, (int) statistic.likes));
             }
 
             if ((int) statistic.reviews > 1) {
-                binding.tvCountReview.setText((int) statistic.reviews + " reviews");
+                binding.tvCountReview.setText(getString(R.string.reviews, (int) statistic.reviews));
             } else {
-                binding.tvCountReview.setText((int) statistic.reviews + " review");
+                binding.tvCountReview.setText(getString(R.string.review, (int) statistic.reviews));
             }
 
             binding.tvAverageRate.setText(String.format(Locale.US, "%.1f scores", statistic.avgStars));

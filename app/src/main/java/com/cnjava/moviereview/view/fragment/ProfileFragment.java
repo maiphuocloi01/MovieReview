@@ -20,6 +20,7 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MyReviewAdapter;
+import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 

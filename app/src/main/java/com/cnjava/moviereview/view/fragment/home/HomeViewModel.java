@@ -30,11 +30,11 @@ public class HomeViewModel extends BaseViewModel {
         this.accountRepository = accountRepository;
     }
 
-    private static MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
 
     public LiveData<Movie> popularMovieLD() {
         return popularMovieLD;
@@ -124,7 +124,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getYourProfile(String token) {
         mLiveDataIsLoading.setValue(true);
-        accountRepository.getYourProfile(token).subscribe(new UserObserver<User>() {
+        accountRepository.getMyProfile(token).subscribe(new UserObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
                 yourProfileLD.setValue(user);

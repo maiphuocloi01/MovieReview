@@ -4,10 +4,6 @@ package com.cnjava.moviereview.view.activity;
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 import static com.cnjava.moviereview.util.IMEUtils.isActive;
 
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDelegate;
-import androidx.fragment.app.FragmentTransaction;
-
 import android.app.Activity;
 import android.graphics.Color;
 import android.os.Build;
@@ -17,6 +13,10 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.FragmentTransaction;
+
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.model.Genres;
@@ -24,8 +24,8 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.OnboardFragment;
+import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 
 import java.lang.reflect.Constructor;
 
@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         }
 
         Log.d(TAG, "onCreate: ");
-        if(MyApplication.getInstance().getStorage().fragmentTag == null) {
+        if (MyApplication.getInstance().getStorage().fragmentTag == null) {
             initViews();
         } else {
             loadFragment(MyApplication.getInstance().getStorage().fragmentTag);
@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     private void initViews() {
-        if(CommonUtils.getInstance().getPref(Constants.ONBOARD) == null){
+        if (CommonUtils.getInstance().getPref(Constants.ONBOARD) == null) {
             OnboardFragment frg = new OnboardFragment();
             frg.setCallBack(this);
             getSupportFragmentManager()
@@ -121,9 +121,8 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     @Override
     public void showFragment(String tag, Object data, boolean isBack, int anim) {
         try {
-
             if (isActive(this)) {
-                hideSoftInput(MainActivity.this);
+                hideSoftInput(this);
             }
             Class<?> clazz = Class.forName(tag);
             Constructor<?> cons = clazz.getConstructor();
@@ -135,13 +134,14 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             if (isBack) {
                 trans.addToBackStack(null);
             }
-            if(anim == ANIM_SLIDE) {
+            if (anim == ANIM_SLIDE) {
                 trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-            } else if(anim == ANIM_FADE){
+            } else if (anim == ANIM_FADE) {
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-            } else if(anim == ANIM_SCALE){
+            } else if (anim == ANIM_SCALE) {
                 trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
             }
+            Log.d(TAG, "showFragment: " + frg);
             trans.add(R.id.layout_main, frg, tag).commit();
 
         } catch (Exception e) {
@@ -152,9 +152,8 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     @Override
     public void replaceFragment(String tag, Object data, boolean isBack, int anim) {
         try {
-
             if (isActive(this)) {
-                hideSoftInput(MainActivity.this);
+                hideSoftInput(this);
             }
             Class<?> clazz = Class.forName(tag);
             Constructor<?> cons = clazz.getConstructor();
@@ -166,13 +165,14 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             if (isBack) {
                 trans.addToBackStack(null);
             }
-            if(anim == ANIM_SLIDE) {
+            if (anim == ANIM_SLIDE) {
                 trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-            } else if(anim == ANIM_FADE){
+            } else if (anim == ANIM_FADE) {
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-            } else if(anim == ANIM_SCALE){
+            } else if (anim == ANIM_SCALE) {
                 trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
             }
+            Log.d(TAG, "replaceFragment: " + frg);
             trans.replace(R.id.layout_main, frg, tag).commit();
 
         } catch (Exception e) {
@@ -189,7 +189,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
 
-    private void addGenres(){
+    private void addGenres() {
         MyApplication.getInstance().getStorage().genresList.add(new Genres(28, "Action"));
         MyApplication.getInstance().getStorage().genresList.add(new Genres(12, "Adventure"));
         MyApplication.getInstance().getStorage().genresList.add(new Genres(16, "Animation"));

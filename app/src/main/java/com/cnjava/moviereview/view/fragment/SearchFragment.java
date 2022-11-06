@@ -31,6 +31,7 @@ import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.RecommendSearchAdapter;
 import com.cnjava.moviereview.view.adapter.TrendingAdapter;
+import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

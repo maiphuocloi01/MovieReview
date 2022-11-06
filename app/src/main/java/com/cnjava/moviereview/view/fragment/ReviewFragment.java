@@ -33,7 +33,6 @@ import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
-import com.cnjava.moviereview.viewmodel.ShareViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -50,9 +49,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     private List<Review> sortedReview = new ArrayList<>();
     private List<Review> reviews = new ArrayList<>();
     private User user = MyApplication.getInstance().getStorage().myUser;
-    private ShareViewModel sharedViewModel;
     private ReviewAdapter reviewAdapter;
-    //private ReviewCallBack reviewCallBack;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -503,9 +500,6 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         if (key.equals(Constants.KEY_REVIEW_BY_MOVIE_ID)) {
             Log.d(TAG, "KEY_REVIEW_BY_MOVIE_ID: ");
             List<Review> newreviews = (List<Review>) data;
-            //reviewCallBack.updateReview(newreviews);
-            Log.d(TAG, "likeReview: ");
-            sharedViewModel.getListReview().postValue(newreviews);
         }
     }
 
@@ -626,12 +620,6 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         if(userId != null) {
             callBack.showFragment(PersonalFragment.TAG, userId, true, Constants.ANIM_SLIDE);
         }
-    }
-
-    @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        sharedViewModel = new ViewModelProvider(this).get(ShareViewModel.class);
     }
 
     /*public interface ReviewCallBack{
