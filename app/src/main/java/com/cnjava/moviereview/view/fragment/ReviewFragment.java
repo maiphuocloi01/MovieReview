@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -611,8 +612,11 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     }
 
     @Override
-    public void updateReview(Review id) {
-        callBack.replaceFragment(EditReviewFragment.TAG, id, true, Constants.ANIM_SLIDE);
+    public void updateReview(Review review) {
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("review", review);
+        bundle.putString("tag", ReviewFragment.TAG);
+        callBack.showFragment(EditReviewFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
     }
 
     @Override

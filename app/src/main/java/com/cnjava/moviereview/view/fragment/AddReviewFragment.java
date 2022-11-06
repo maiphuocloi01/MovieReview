@@ -14,6 +14,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -27,11 +29,13 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
+import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
+import java.util.Objects;
 
 import okhttp3.ResponseBody;
 
@@ -97,6 +101,10 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             }
         });
 
+        binding.tvNotification.setOnClickListener(view -> {
+            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+            Log.d(TAG, "apiSuccess: " + currentFragment);
+        });
         binding.tvPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -140,6 +148,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
                 //MyApplication.getInstance().getStorage().reviewList = null;
+                callBack.reloadFragment(DetailFragment.TAG);
                 callBack.backToPrev();
             }
         }

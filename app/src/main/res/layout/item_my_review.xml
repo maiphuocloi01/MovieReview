@@ -101,6 +101,7 @@
                 android:layout_height="1dp"/>
             <ImageView
                 android:id="@+id/iv_more"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_width="@dimen/_14sdp"
                 android:layout_height="@dimen/_14sdp"
                 android:src="@drawable/ic_more"
@@ -164,6 +165,7 @@
             android:layout_marginTop="@dimen/_6sdp"
             app:cardCornerRadius="@dimen/_8sdp"
             android:id="@+id/layout_movie"
+            android:foreground="?android:attr/selectableItemBackground"
             app:cardBackgroundColor="@color/transparent"
             android:layout_marginHorizontal="@dimen/_10sdp"
             app:cardElevation="0dp">
@@ -240,6 +242,7 @@
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="wrap_content">
 
                 <ImageView
@@ -267,6 +270,7 @@
                 android:layout_width="match_parent"
                 android:gravity="center"
                 android:layout_weight="1"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:layout_height="wrap_content">
 
                 <ImageView

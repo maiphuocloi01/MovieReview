@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MovieWie</string>
+    <string name="app_name">Viewie</string>
     <string name="undefined">Undefined</string>
     <string name="password_hint">Password</string>
     <string name="password_weak">Weak</string>

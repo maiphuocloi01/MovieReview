@@ -171,7 +171,6 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.vpPopular.setPageTransformer(compositePageTransformer);
 
         binding.ivAvt.setOnClickListener(view -> {
-            binding.ivAvt.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null) {
                 showAlertDialog();
             } else {
@@ -184,35 +183,30 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         });
 
         binding.tvViewAll.setOnClickListener(view -> {
-            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory123.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "28");
-            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory2.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "14");
-            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory3.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "18");
-            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory4.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "12");
-            view.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
             callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 

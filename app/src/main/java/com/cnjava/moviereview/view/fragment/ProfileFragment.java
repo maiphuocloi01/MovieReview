@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -141,7 +142,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             public void onClick(View view) {
                 binding.tvEditProfile.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
                 if (MyApplication.getInstance().getStorage().myUser != null) {
-                    callBack.replaceFragment(EditProfileFragment.TAG, MyApplication.getInstance().getStorage().myUser, true, Constants.ANIM_SLIDE);
+                    callBack.showFragment(EditProfileFragment.TAG, MyApplication.getInstance().getStorage().myUser, true, Constants.ANIM_SLIDE);
                 }
             }
         });
@@ -241,7 +242,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
 
     @Override
     public void updateReview(Review review) {
-        callBack.replaceFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("review", review);
+        bundle.putString("tag", ProfileFragment.TAG);
+        callBack.showFragment(EditReviewFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
     }
 
     @Override

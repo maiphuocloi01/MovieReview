@@ -3,6 +3,7 @@ package com.cnjava.moviereview.view.fragment.movie;
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -24,6 +25,8 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -58,6 +61,7 @@ import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.EditReviewFragment;
 import com.cnjava.moviereview.view.fragment.LoginFragment;
 import com.cnjava.moviereview.view.fragment.PersonalFragment;
+import com.cnjava.moviereview.view.fragment.ProfileFragment;
 import com.cnjava.moviereview.view.fragment.RegisterFragment;
 import com.cnjava.moviereview.view.fragment.ReviewFragment;
 import com.cnjava.moviereview.view.fragment.VideoFragment;
@@ -214,7 +218,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
         binding.btAddReview.setOnClickListener(view -> {
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                callBack.replaceFragment(AddReviewFragment.TAG, detail, true, Constants.ANIM_FADE);
+                callBack.showFragment(AddReviewFragment.TAG, detail, true, Constants.ANIM_FADE);
             } else {
                 showLoginDialog();
             }
@@ -413,7 +417,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 popup.getMenuInflater().inflate(R.menu.review_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
                     if (item.getTitle().toString().equals("Edit")) {
-                        callBack.replaceFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
+                        Bundle bundle = new Bundle();
+                        bundle.putSerializable("review", review);
+                        bundle.putString("tag", DetailFragment.TAG);
+                        callBack.showFragment(EditReviewFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
                     } else if (item.getTitle().toString().equals("Delete")) {
                         viewModel.deleteReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                         ViewUtils.show(binding.btAddReview);
@@ -591,13 +598,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         }
         window.setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.WRAP_CONTENT);
         window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-
         WindowManager.LayoutParams windowAttributes = window.getAttributes();
         windowAttributes.gravity = Gravity.CENTER;
         window.setAttributes(windowAttributes);
-
         dialog.setCancelable(true);
-
         TextView btnCancel = dialog.findViewById(R.id.bt_signup);
         Button btnConfirm = dialog.findViewById(R.id.bt_signin);
 
@@ -631,4 +635,27 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         }
     }
 
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        Log.d(TAG, "onAttach: ");
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
 }

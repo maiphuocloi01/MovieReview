@@ -40,11 +40,10 @@
 
                 <ImageView
                     android:id="@+id/imageView"
-                    android:layout_width="@dimen/_80sdp"
-                    app:tint="@color/primary"
-                    android:layout_height="@dimen/_25sdp"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
                     android:layout_marginEnd="@dimen/_3sdp"
-                    app:srcCompat="@drawable/ic_logo" />
+                    app:srcCompat="@drawable/ic_logo_splash" />
 
                 <!--<TextView
                     android:layout_height="wrap_content"
@@ -62,6 +61,7 @@
                 <com.google.android.material.imageview.ShapeableImageView
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                     android:id="@+id/iv_avt"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_marginStart="25dp"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="@dimen/_30sdp"
@@ -90,6 +90,7 @@
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:background="@drawable/bg_light_dark_corner_20"
                     app:hintAnimationEnabled="false"
                     app:endIconMode="clear_text"
@@ -98,6 +99,7 @@
 
                     <com.google.android.material.textfield.TextInputEditText
                         android:id="@+id/et_search"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:focusableInTouchMode="false"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -170,6 +172,7 @@
                         app:tint="@color/primary" />-->
 
                     <TextView
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/tv_view_all"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -191,6 +194,7 @@
                 android:layout_width="match_parent">
 
                 <Button
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:id="@+id/bt_category123"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -208,6 +212,7 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <Button
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:id="@+id/bt_category2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -233,6 +238,7 @@
                 android:layout_width="match_parent">
 
                 <Button
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:id="@+id/bt_category3"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -250,6 +256,7 @@
                     android:textSize="@dimen/_12ssp" />
 
                 <Button
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:id="@+id/bt_category4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

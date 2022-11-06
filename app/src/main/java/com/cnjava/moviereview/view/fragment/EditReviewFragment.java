@@ -1,5 +1,6 @@
 package com.cnjava.moviereview.view.fragment;
 
+import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -29,6 +30,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
 
     public static final String TAG = EditReviewFragment.class.getName();
     private Object mData;
+    private String tag;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -39,7 +41,9 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
     protected void initViews() {
 
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
-        Review review = (Review) mData;
+        Bundle newData = (Bundle) mData;
+        tag = newData.getString("tag");
+        Review review = (Review) newData.getSerializable("review");
 
         binding.tvName.setText(review.movie.title);
         //binding.tvDate.setText(NumberUtils.convertDateType3(movieDetail.releaseDate));
@@ -126,6 +130,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
                 //MyApplication.getInstance().getStorage().reviewList = null;
+                callBack.reloadFragment(tag);
                 callBack.backToPrev();
             }
         }

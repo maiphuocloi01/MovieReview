@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/dark"
     android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
     android:focusable="true"
     android:orientation="vertical">
 
@@ -277,6 +278,7 @@
                     android:stateListAnimator="@null"
                     android:text="Your profile"
                     android:layout_weight="1"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_marginEnd="@dimen/_16sdp"
                     android:textAlignment="center"
                     android:paddingVertical="@dimen/_8sdp"
@@ -290,6 +292,7 @@
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_light_dark_corner_10"
                     android:padding="@dimen/_8sdp"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_gravity="center"
                     app:srcCompat="@drawable/ic_favorite"
                     app:tint="@color/light_white" />
@@ -410,6 +413,7 @@
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
                         android:text="All reviews"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
 
@@ -424,6 +428,7 @@
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
                         android:text="Top like"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
 
@@ -438,11 +443,13 @@
                         android:paddingHorizontal="@dimen/_20sdp"
                         android:paddingVertical="@dimen/_6sdp"
                         android:text="Top score"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:textColor="@drawable/text_selector"
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
                         android:id="@+id/rb_critical"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"

@@ -465,6 +465,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
             Toast.makeText(context, "Update profile success", Toast.LENGTH_SHORT).show();
             User user = (User) data;
             MyApplication.getInstance().getStorage().myUser = user;
+            callBack.reloadFragment(ProfileFragment.TAG);
             callBack.backToPrev();
         }
     }

@@ -6,8 +6,8 @@ import static com.cnjava.moviereview.util.IMEUtils.isActive;
 
 import android.app.Activity;
 import android.graphics.Color;
-import android.os.Build;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -15,13 +15,17 @@ import android.view.WindowManager;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
+import com.cnjava.moviereview.databinding.ActivityMainBinding;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.OnboardFragment;
@@ -38,6 +42,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     public static final int ANIM_SLIDE = 0;
     public static final int ANIM_FADE = 1;
     public static final int ANIM_SCALE = 2;
+    private ActivityMainBinding binding;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -54,29 +59,30 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTheme(R.style.Theme_MovieReview);
-        setContentView(R.layout.activity_main);
+        binding = ActivityMainBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-
-        if (Build.VERSION.SDK_INT >= 19 && Build.VERSION.SDK_INT < 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, true);
-        }
-        if (Build.VERSION.SDK_INT >= 19) {
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
-        }
-
-        if (Build.VERSION.SDK_INT >= 21) {
-            setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
-            getWindow().setStatusBarColor(Color.TRANSPARENT);
-        }
-
-        Log.d(TAG, "onCreate: ");
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
+        setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
+        getWindow().setStatusBarColor(Color.TRANSPARENT);
         if (MyApplication.getInstance().getStorage().fragmentTag == null) {
             initViews();
         } else {
             loadFragment(MyApplication.getInstance().getStorage().fragmentTag);
         }
         addGenres();
+        new CountDownTimer(3000, 100) {
+            public void onFinish() {
+                binding.animationView.clearAnimation();
+                ViewUtils.gone(binding.animationView);
+                ViewUtils.show(binding.layoutMain);
+            }
+
+            public void onTick(long millisUntilFinished) {
+                // millisUntilFinished    The amount of time until finished.
+            }
+        }.start();
         //List<Genres> genres = MyApplication.getInstance().getStorage().genresList;
         //Genres genres1 = genres.stream().filter(a -> a.getId() == 12).collect(Collectors.toList()).get(0);
     }
@@ -135,11 +141,13 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
                 trans.addToBackStack(null);
             }
             if (anim == ANIM_SLIDE) {
-                trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+                //trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
             } else if (anim == ANIM_FADE) {
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
             } else if (anim == ANIM_SCALE) {
-                trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
+                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+                //trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
             }
             Log.d(TAG, "showFragment: " + frg);
             trans.add(R.id.layout_main, frg, tag).commit();
@@ -166,11 +174,13 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
                 trans.addToBackStack(null);
             }
             if (anim == ANIM_SLIDE) {
-                trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
+                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+                //trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
             } else if (anim == ANIM_FADE) {
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
             } else if (anim == ANIM_SCALE) {
-                trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
+                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
+                //trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
             }
             Log.d(TAG, "replaceFragment: " + frg);
             trans.replace(R.id.layout_main, frg, tag).commit();
@@ -186,6 +196,29 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             hideSoftInput(MainActivity.this);
         }
         onBackPressed();
+    }
+
+    @Override
+    public void reloadFragment(String tag) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (currentFragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .detach(currentFragment)
+                    .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .attach(currentFragment)
+                    .commit();
+        }
+    }
+
+    @Override
+    public void clearBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            fm.popBackStack();
+        }
     }
 
 

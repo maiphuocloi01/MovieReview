@@ -69,9 +69,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/bg_mid_light_circle"
+            android:clickable="false"
+            android:foreground="?android:attr/selectableItemBackground"
             android:padding="@dimen/_8sdp"
             android:visibility="invisible"
-            android:clickable="false"
             app:srcCompat="@drawable/ic_settings2"
             app:tint="@color/light_white" />
 
@@ -403,6 +404,7 @@
 
                     <RadioButton
                         android:id="@+id/rb_all"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
@@ -417,6 +419,7 @@
 
                     <RadioButton
                         android:id="@+id/rb_top_like"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -430,6 +433,7 @@
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/rb_top_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -444,6 +448,7 @@
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/rb_critical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
