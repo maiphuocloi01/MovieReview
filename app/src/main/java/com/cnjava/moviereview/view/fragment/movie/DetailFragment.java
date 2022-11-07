@@ -8,7 +8,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -25,13 +24,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.Storage;
@@ -56,15 +52,14 @@ import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.view.adapter.VideoAdapter;
-import com.cnjava.moviereview.view.fragment.AddReviewFragment;
+import com.cnjava.moviereview.view.fragment.addreview.AddReviewFragment;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.EditReviewFragment;
-import com.cnjava.moviereview.view.fragment.LoginFragment;
-import com.cnjava.moviereview.view.fragment.PersonalFragment;
-import com.cnjava.moviereview.view.fragment.ProfileFragment;
-import com.cnjava.moviereview.view.fragment.RegisterFragment;
-import com.cnjava.moviereview.view.fragment.ReviewFragment;
-import com.cnjava.moviereview.view.fragment.VideoFragment;
+import com.cnjava.moviereview.view.fragment.editreview.EditReviewFragment;
+import com.cnjava.moviereview.view.fragment.login.LoginFragment;
+import com.cnjava.moviereview.view.fragment.personal.PersonalFragment;
+import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
+import com.cnjava.moviereview.view.fragment.review.ReviewFragment;
+import com.cnjava.moviereview.view.fragment.trailer.VideoFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
@@ -95,10 +90,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         return CommonViewModel.class;
     }
 
-    public static DetailFragment newInstance() {
-        return new DetailFragment();
-    }
-
     @Override
     protected void initViews() {
         movieId = (int) mData;
@@ -119,6 +110,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                     initCollectionMovie(_collection);
                 });
             }
+            binding.ivReview.setOnClickListener(view -> {
+                callBack.showFragment(ReviewFragment.TAG, _movieDetail, true, Constants.ANIM_SLIDE);
+            });
         });
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             movieDetailViewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
@@ -156,10 +150,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             }
         }
         initReview(reviews, myReview, user);
-        binding.ivReview.setOnClickListener(view -> {
-            binding.ivReview.startAnimation(AnimationUtils.loadAnimation(context, R.anim.abc_choose));
-            callBack.showFragment(ReviewFragment.TAG, reviews, true, Constants.ANIM_SLIDE);
-        });
     }
 
     private void initCollectionMovie(Collection collection) {
@@ -252,7 +242,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
         });
 
-        binding.ivMore.setOnClickListener(view -> popupMenuMore(detail, social));
+        binding.layoutMore.setOnClickListener(view -> popupMenuMore(detail, social));
     }
 
     private void initMovieDetail(MovieDetail detail) {
@@ -275,13 +265,11 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         binding.tvPopularity.setText(String.valueOf(detail.popularity));
         Glide.with(context)
                 .load(Constants.IMAGE_URL + detail.backdropPath)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .centerCrop()
                 .error(R.drawable.ic_movie)
                 .into(binding.ivCover);
         Glide.with(context)
                 .load(Constants.IMAGE_URL + detail.posterPath)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.progress_animation)
                 .centerCrop()
                 .error(R.drawable.ic_movie)
@@ -302,7 +290,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     }
 
     private void popupMenuMore(MovieDetail detail, Social social) {
-        PopupMenu popup = new PopupMenu(context, binding.ivMore);
+        PopupMenu popup = new PopupMenu(context, binding.layoutMore);
         popup.getMenuInflater().inflate(R.menu.poupup_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
             if (item.getTitle().toString().equals(HOMEPAGE)) {
@@ -384,8 +372,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         ViewUtils.show(binding.tvTitleYourReview);
         Glide.with(context)
                 .load(review.user.getAvatar())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.img_default_avt)
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
+                .error(R.drawable.img_default_avt)
                 .into(binding.ivAvt);
         binding.tvNameYourReview.setText(review.user.getName());
         binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));

@@ -1,6 +1,5 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.addreview;
 
-import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -14,21 +13,26 @@ import android.widget.RatingBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
-import com.cnjava.moviereview.databinding.FragmentEditReviewBinding;
+import com.cnjava.moviereview.databinding.FragmentAddReviewBinding;
+import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.util.IMEUtils;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
-public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, CommonViewModel> {
+public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, CommonViewModel> {
 
-    public static final String TAG = EditReviewFragment.class.getName();
+    public static final String TAG = AddReviewFragment.class.getName();
     private Object mData;
 
     @Override
@@ -40,14 +44,14 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
     protected void initViews() {
 
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
-        Review review = (Review) mData;
+        MovieDetail movieDetail = (MovieDetail) mData;
 
-        binding.tvName.setText(review.movie.title);
+        binding.tvName.setText(movieDetail.title);
         //binding.tvDate.setText(NumberUtils.convertDateType3(movieDetail.releaseDate));
         Glide.with(context)
-                .load(String.format(Constants.IMAGE_URL + review.movie.backdropPath))
+                .load(String.format(Constants.IMAGE_URL + movieDetail.posterPath))
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_image)
+                .placeholder(R.drawable.progress_animation)
                 .into(binding.ivPoster);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -64,11 +68,6 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
                 binding.tvStar.setText(String.valueOf((int) v));
             }
         });
-
-        binding.tvCountCharacter.setText(review.content.length() + "/3000");
-
-        binding.ratingBar.setRating((float) review.rating);
-        binding.etWriteReview.setText(review.content);
 
         binding.etWriteReview.addTextChangedListener(new TextWatcher() {
             @Override
@@ -93,7 +92,11 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             }
         });
 
-        binding.tvEdit.setOnClickListener(new View.OnClickListener() {
+        binding.tvNotification.setOnClickListener(view -> {
+            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
+            Log.d(TAG, "apiSuccess: " + currentFragment);
+        });
+        binding.tvPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -102,12 +105,21 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
                 } else {
                     String content = binding.etWriteReview.getText().toString().trim();
                     double star = (double) binding.ratingBar.getRating();
+                    Review.MovieReview movieReview = new Review.MovieReview(
+                            movieDetail.backdropPath,
+                            String.valueOf(movieDetail.id),
+                            movieDetail.title,
+                            movieDetail.overview,
+                            movieDetail.releaseDate
+                    );
 
-                    Review newReview = new Review(content, star);
+                    Review review = new Review(content, star, movieReview);
                     DialogUtils.showLoadingDialog(context);
-                    if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                    if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                         Log.d(TAG, "addReview: ");
-                        viewModel.updateReview(review.id, newReview, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        viewModel.addReview(review, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        IMEUtils.hideSoftInput(view);
+
                     }
                 }
             }
@@ -116,13 +128,13 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
     }
 
     @Override
-    protected FragmentEditReviewBinding initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
-        return FragmentEditReviewBinding.inflate(inflater, container, false);
+    protected FragmentAddReviewBinding initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
+        return FragmentAddReviewBinding.inflate(inflater, container, false);
     }
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if(key.equals(Constants.KEY_UPDATE_REVIEW)){
+        if(key.equals(Constants.KEY_ADD_REVIEW)){
             Review review = (Review) data;
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
@@ -135,7 +147,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if(key.equals(Constants.KEY_UPDATE_REVIEW)){
+        if(key.equals(Constants.KEY_ADD_REVIEW)){
             DialogUtils.hideLoadingDialog();
             Log.d(TAG, "apiError: " + code + data.toString());
         }

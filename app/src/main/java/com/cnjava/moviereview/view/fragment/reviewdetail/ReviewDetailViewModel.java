@@ -22,7 +22,7 @@ public class ReviewDetailViewModel extends BaseViewModel {
 
     private final MovieRepository movieRepository;
 
-    private static MutableLiveData<Translate> translateMutableLiveData = new MutableLiveData<>();
+    private final MutableLiveData<Translate> translateMutableLiveData = new MutableLiveData<>();
 
     public LiveData<Translate> translateLiveData() {
         return translateMutableLiveData;

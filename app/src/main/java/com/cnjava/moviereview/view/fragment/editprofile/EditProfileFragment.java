@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.editprofile;
 
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType1;
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType2;
@@ -12,7 +12,6 @@ import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.content.res.ColorStateList;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.Color;
@@ -52,6 +51,7 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.NumberUtils;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.io.File;
@@ -252,7 +252,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 if (user.getAvatar() != null) {
                     Glide.with(context)
                             .load(String.format(user.getAvatar()))
-                            .transition(DrawableTransitionOptions.withCrossFade())
                             .placeholder(R.drawable.progress_animation)
                             .centerCrop()
                             .error(R.drawable.img_default_avt)

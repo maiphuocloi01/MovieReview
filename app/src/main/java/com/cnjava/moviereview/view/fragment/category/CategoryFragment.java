@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.category;
 
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
@@ -19,7 +19,9 @@ import com.cnjava.moviereview.databinding.FragmentCategoryBinding;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.adapter.CategoryAdapter;
-import com.cnjava.moviereview.view.adapter.MovieAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.keyword.KeywordFragment;
+import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;

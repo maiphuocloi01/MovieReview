@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.setting;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -22,7 +22,9 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentSettingBinding;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.about.AboutFragment;
+import com.cnjava.moviereview.view.fragment.changepassword.ChangePasswordFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 

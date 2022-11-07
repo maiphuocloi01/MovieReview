@@ -33,6 +33,10 @@ public interface MovieService {
     @Headers("Content-type: application/json")
     Single<Movie> getTopRatedMovie();
 
+    @GET("trending/movie/{time_window}")
+    @Headers("Content-type: application/json")
+    Single<Movie> getTrending(@Path("time_window") String timeWindow);
+
     @GET("movie/{id}")
     @Headers("Content-type: application/json")
     Single<MovieDetail> getMovieDetail(@Path("id") int id);

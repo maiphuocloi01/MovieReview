@@ -50,10 +50,8 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
         Log.d("adapter", "onBindViewHolder: " + item.title + item.backdropPath);
         Glide.with(context)
                 .load(Constants.IMAGE_URL + item.backdropPath)
-                .placeholder(R.drawable.progress_animation)
                 .centerCrop()
                 .error(R.drawable.ic_movie)
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .into(holder.binding.ivCover);
         holder.binding.tvName.setText(item.title);
         List<String> listGenres = new ArrayList<>();

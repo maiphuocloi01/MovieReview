@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.keyword;
 
 import android.os.Bundle;
 import android.util.Log;
@@ -16,6 +16,8 @@ import com.cnjava.moviereview.databinding.FragmentSearchKeywordBinding;
 import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.adapter.KeywordAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class KeywordFragment extends BaseFragment<FragmentSearchKeywordBinding, CommonViewModel> implements KeywordAdapter.KeywordCallBack {

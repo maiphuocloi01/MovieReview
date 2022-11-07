@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.register;
 
 import android.app.Dialog;
 import android.content.res.ColorStateList;
@@ -37,6 +37,8 @@ import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.util.PasswordMeter;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.login.LoginFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

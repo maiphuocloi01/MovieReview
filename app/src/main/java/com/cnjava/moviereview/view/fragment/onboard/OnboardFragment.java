@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.onboard;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,13 +13,14 @@ import com.cnjava.moviereview.databinding.FragmentOnboardingBinding;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.adapter.OnboardAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class OnboardFragment extends BaseFragment<FragmentOnboardingBinding, CommonViewModel>{
+public class OnboardFragment extends BaseFragment<FragmentOnboardingBinding, CommonViewModel> {
 
     public static final String TAG = OnboardFragment.class.getName();
 
@@ -32,7 +33,7 @@ public class OnboardFragment extends BaseFragment<FragmentOnboardingBinding, Com
     protected void initViews() {
 
         List<Genres> listOnboard = new ArrayList<>();
-        listOnboard.add(new Genres(R.raw.mobile, "MovieWie: The Movie Guide", "This app allows to get lists of recent and popular or most popular of all time"));
+        listOnboard.add(new Genres(R.raw.mobile, "VieWie: Movie Review App", "This app allows to get lists of recent and popular or most popular of all time"));
         listOnboard.add(new Genres(R.raw.search, "Easy to find", "The fastest, easiest way to find and discover movies, actors and shows on your device."));
         listOnboard.add(new Genres(R.raw.review, "Rating & Review", "Rating & Review allow you to share your experience with a movie and give it an overall star rating."));
 

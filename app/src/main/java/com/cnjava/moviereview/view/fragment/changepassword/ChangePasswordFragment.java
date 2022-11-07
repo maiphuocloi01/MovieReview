@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.changepassword;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,9 +8,10 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.databinding.FragmentChangePasswordBinding;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
-public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordBinding, CommonViewModel>{
+public class ChangePasswordFragment extends BaseFragment<FragmentChangePasswordBinding, CommonViewModel> {
 
 
     public static final String TAG = ChangePasswordFragment.class.getName();

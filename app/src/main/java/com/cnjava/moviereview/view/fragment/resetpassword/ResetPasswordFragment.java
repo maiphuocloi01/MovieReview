@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.resetpassword;
 
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -16,6 +16,7 @@ import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,7 +25,7 @@ import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
 
-public class ResetPasswordFragment extends BaseFragment<FragmentResetPasswordBinding, CommonViewModel>{
+public class ResetPasswordFragment extends BaseFragment<FragmentResetPasswordBinding, CommonViewModel> {
 
     public static final String TAG = ResetPasswordFragment.class.getName();
 

@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.searchresult;
 
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
@@ -32,6 +32,7 @@ import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.RecommendSearchAdapter;
 import com.cnjava.moviereview.view.adapter.ResultAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;

@@ -1,6 +1,5 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.profile;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -21,8 +20,13 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MyReviewAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.editprofile.EditProfileFragment;
+import com.cnjava.moviereview.view.fragment.editreview.EditReviewFragment;
+import com.cnjava.moviereview.view.fragment.favorite.FavoriteFragment;
 import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
+import com.cnjava.moviereview.view.fragment.setting.SettingFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;

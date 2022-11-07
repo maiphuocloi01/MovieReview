@@ -12,7 +12,6 @@ import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -35,13 +34,13 @@ import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.CategoryFragment;
+import com.cnjava.moviereview.view.fragment.category.CategoryFragment;
+import com.cnjava.moviereview.view.fragment.login.LoginFragment;
+import com.cnjava.moviereview.view.fragment.profile.ProfileFragment;
+import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
+import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
 import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
-import com.cnjava.moviereview.view.fragment.LoginFragment;
-import com.cnjava.moviereview.view.fragment.ProfileFragment;
-import com.cnjava.moviereview.view.fragment.RegisterFragment;
-import com.cnjava.moviereview.view.fragment.SearchFragment;
-import com.cnjava.moviereview.view.fragment.SearchResultFragment;
+import com.cnjava.moviereview.view.fragment.search.SearchFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
 

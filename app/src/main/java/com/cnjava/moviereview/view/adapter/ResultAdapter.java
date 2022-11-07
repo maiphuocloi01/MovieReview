@@ -44,13 +44,13 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         Movie.Result item = movie.results.get(position);
         holder.binding.tvName.setText(item.title);
         holder.binding.tvRate.setText(String.valueOf(item.voteAverage));
-        holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        if(item.releaseDate != null && !item.releaseDate.equals(""))
+            holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
         if(item.overview != null) {
             holder.binding.tvOverview.setText(item.overview);
         }
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.progress_animation)
                 .centerCrop()
                 .error(R.drawable.ic_movie)

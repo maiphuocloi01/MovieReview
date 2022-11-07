@@ -29,7 +29,7 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.OnboardFragment;
+import com.cnjava.moviereview.view.fragment.onboard.OnboardFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 
 import java.lang.reflect.Constructor;

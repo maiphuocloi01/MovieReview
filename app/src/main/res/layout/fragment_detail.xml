@@ -215,6 +215,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:id="@+id/layout_more"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:gravity="center"
                     android:orientation="vertical">
@@ -543,7 +544,7 @@
                             android:layout_height="@dimen/_20sdp"
                             android:layout_marginEnd="@dimen/_3sdp"
                             android:src="@drawable/ic_forward"
-                            app:tint="@color/primary" />
+                            app:tint="@color/white" />
 
                         <!--<TextView
                             android:id="@+id/tv_add_review"

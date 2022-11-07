@@ -59,7 +59,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getPopularMovie() {
         mLiveDataIsLoading.setValue(true);
-        movieRepository.getPopularMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getPopularMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 popularMovieLD.setValue(movie);
@@ -75,7 +75,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getNowPlayingMovie() {
-        movieRepository.getNowPlayingMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getNowPlayingMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 nowPlayingMovieLD.setValue(movie);
@@ -91,7 +91,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getUpComingMovie() {
-        movieRepository.getUpComingMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getUpComingMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 upcomingMovieLD.setValue(movie);
@@ -107,7 +107,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getTopRatedMovie() {
-        movieRepository.getTopRatedMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getTopRatedMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 topRatedMovieLD.setValue(movie);
@@ -124,7 +124,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getYourProfile(String token) {
         mLiveDataIsLoading.setValue(true);
-        accountRepository.getMyProfile(token).subscribe(new UserObserver<User>() {
+        accountRepository.getMyProfile(token).subscribe(new CustomObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
                 yourProfileLD.setValue(user);

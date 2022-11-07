@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.login;
 
 import android.content.res.ColorStateList;
 import android.text.TextUtils;
@@ -21,6 +21,9 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.forgotpassword.ForgotPasswordFragment;
+import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -29,7 +32,7 @@ import java.lang.reflect.Type;
 
 import okhttp3.ResponseBody;
 
-public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonViewModel>{
+public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonViewModel> {
 
     public static final String TAG = LoginFragment.class.getName();
 

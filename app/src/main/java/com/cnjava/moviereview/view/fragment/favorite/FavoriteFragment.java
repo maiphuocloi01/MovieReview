@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment;
+package com.cnjava.moviereview.view.fragment.favorite;
 
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -15,6 +15,7 @@ import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.adapter.FavoriteAdapter;
+import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 

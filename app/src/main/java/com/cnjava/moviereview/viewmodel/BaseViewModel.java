@@ -60,20 +60,7 @@ public abstract class BaseViewModel extends ViewModel {
         }
     }
 
-    public abstract class MovieObserver<T extends Movie> implements SingleObserver<T> {
-        @Override
-        public void onSubscribe(Disposable d) {
-            mMainCompDisposable.add(d);
-        }
-
-        @Override
-        public void onError(Throwable e) {
-            mLiveDataOnError.setValue(e);
-            e.printStackTrace();
-        }
-    }
-
-    public abstract class UserObserver<T extends User> implements SingleObserver<T> {
+    public abstract class CustomObserver<T> implements SingleObserver<T> {
         @Override
         public void onSubscribe(Disposable d) {
             mMainCompDisposable.add(d);

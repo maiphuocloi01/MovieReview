@@ -328,6 +328,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/auto_complete_txt"
                         android:paddingStart="@dimen/_20sdp"
+                        android:cursorVisible="false"
                         android:popupBackground="@color/transparent"
                         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
                         android:background="@android:color/transparent"

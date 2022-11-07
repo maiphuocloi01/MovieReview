@@ -23,8 +23,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 @HiltViewModel
 public class MovieDetailViewModel extends BaseViewModel {
@@ -82,12 +80,7 @@ public class MovieDetailViewModel extends BaseViewModel {
 
     public void getMovieDetail(int id) {
         mLiveDataIsLoading.setValue(true);
-        movieRepository.getMovieDetail(id).subscribe(new SingleObserver<MovieDetail>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        movieRepository.getMovieDetail(id).subscribe(new CustomObserver<MovieDetail>() {
             @Override
             public void onSuccess(@NonNull MovieDetail movie) {
                 movieDetailLD.setValue(movie);
@@ -103,12 +96,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getCast(int id) {
-        movieRepository.getCast(id).subscribe(new SingleObserver<Actor>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        movieRepository.getCast(id).subscribe(new CustomObserver<Actor>() {
             @Override
             public void onSuccess(@NonNull Actor actor) {
                 actorLD.setValue(actor);
@@ -124,12 +112,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getRecommendation(int id) {
-        movieRepository.getRecommendation(id).subscribe(new SingleObserver<Movie>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        movieRepository.getRecommendation(id).subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 recommendationLD.setValue(movie);
@@ -145,12 +128,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getVideo(int id) {
-        movieRepository.getVideo(id).subscribe(new SingleObserver<Video>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        movieRepository.getVideo(id).subscribe(new CustomObserver<Video>() {
             @Override
             public void onSuccess(@NonNull Video video) {
                 videoLD.setValue(video);
@@ -166,12 +144,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getSocial(int id) {
-        movieRepository.getSocial(id).subscribe(new SingleObserver<Social>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        movieRepository.getSocial(id).subscribe(new CustomObserver<Social>() {
             @Override
             public void onSuccess(@NonNull Social social) {
                 socialLD.setValue(social);
@@ -187,12 +160,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getCollection(int collectionId) {
-        movieRepository.getCollection(collectionId).subscribe(new SingleObserver<Collection>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        movieRepository.getCollection(collectionId).subscribe(new CustomObserver<Collection>() {
             @Override
             public void onSuccess(@NonNull Collection collection) {
                 collectionLD.setValue(collection);
@@ -208,12 +176,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getMyFavorite(String token) {
-        accountRepository.getMyFavorite(token).subscribe(new SingleObserver<List<Favorite>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        accountRepository.getMyFavorite(token).subscribe(new CustomObserver<List<Favorite>>() {
             @Override
             public void onSuccess(@NonNull List<Favorite> favorites) {
                 myFavoriteLD.setValue(favorites);
@@ -229,12 +192,7 @@ public class MovieDetailViewModel extends BaseViewModel {
     }
 
     public void getReviewByMovieId(String movieId) {
-        accountRepository.getReviewByMovieId(movieId).subscribe(new SingleObserver<List<Review>>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                mMainCompDisposable.add(d);
-            }
-
+        accountRepository.getReviewByMovieId(movieId).subscribe(new CustomObserver<List<Review>>() {
             @Override
             public void onSuccess(@NonNull List<Review> reviews) {
                 movieReviewLD.setValue(reviews);

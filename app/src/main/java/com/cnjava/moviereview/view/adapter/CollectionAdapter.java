@@ -44,7 +44,6 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
         holder.binding.tvName.setText(item.title);
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
-                .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.progress_animation)
                 .centerCrop()
                 .error(R.drawable.ic_movie)

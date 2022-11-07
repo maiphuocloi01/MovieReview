@@ -71,6 +71,10 @@ public class MovieRepository {
         return subscribe(movieService.getCollection(collectionId));
     }
 
+    public Single<Movie> getTrending(String timeWindow){
+        return subscribe(movieService.getTrending(timeWindow));
+    }
+
     private <T> Single<T> subscribe(Single<T> single) {
         return single.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
