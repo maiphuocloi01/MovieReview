@@ -16,10 +16,10 @@ import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentReviewDetailBinding;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.Summary;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
-import com.cnjava.moviereview.model.Summary;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
@@ -55,8 +55,6 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                 .load(Constants.IMAGE_URL + review.movie.backdropPath)
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .into(binding.view);
-        //binding.tvNameMovie.setText(review.movie.title);
-        //binding.tvReleaseDate.setText(NumberUtils.convertDateType3(review.movie.releaseDate));
 
         Glide.with(context)
                 .load(review.user.getAvatar())
@@ -65,53 +63,17 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                 .into(binding.ivAvatar);
         binding.tvName.setText(review.user.getName());
         binding.ratingBar.setRating((int) review.rating);
-        binding.tvInfo.setText(String.format((int) review.rating + " star  |  " + review.like.size() + " likes  |  " + review.dislike.size() + " dislikes"));
+        binding.tvInfo.setText(String.format((int) review.rating + " ★  |  " + review.like.size() + " \uD83D\uDC4D  |  " + review.dislike.size() + " \uD83D\uDC4E"));
         binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
         binding.tvContent.setText(review.content);
 
-
-
-
-        /*binding.btShorten.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (review.content.length() > 300) {
-                    if (shorten == null) {
-                        ViewUtils.show(binding.progressCircular);
-                        ViewUtils.gone(binding.btShorten);
-                        viewModel.summarizationReview(review.content);
-                    } else {
-                        binding.tvContent.setText(shorten);
-                        ViewUtils.show(binding.tvNeedMore);
-                        int percent = (int) (((float)shorten.length()/review.content.length())*100);
-                        binding.tvNeedMore.setText("Text reduce to " + percent + "% (" + countWord(shorten) + "/" + countWord(review.content) + " words)");
-                        ViewUtils.gone(binding.btShorten);
-                        ViewUtils.show(binding.btOriginal);
-                    }
-                } else {
-                    ViewUtils.show(binding.tvNeedMore);
-                    ViewUtils.gone(binding.btShorten);
-                    ViewUtils.show(binding.progressCircular);
-                    Handler handler = new Handler();
-                    handler.postDelayed(new Runnable() {
-                        @Override
-                        public void run() {
-                            ViewUtils.show(binding.btShorten);
-                            ViewUtils.gone(binding.progressCircular);
-                        }
-                    }, 200);
-                }
-            }
-        });*/
-
         binding.btShorten.setOnClickListener(view -> {
-
+            reviewDetailViewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), this::setScreenLoading);
             reviewDetailViewModel.translateText(review.content);
             reviewDetailViewModel.translateLiveData().observe(this, translate -> {
-                translateText = translate.getText().get(0);
-                Log.d(TAG, "translateText: " + translateText);
+                binding.tvContent.setText(translate.getText().get(0));
             });
-            binding.tvContent.setText(translateText);
+
         });
 
         binding.btOriginal.setOnClickListener(new View.OnClickListener() {
@@ -120,11 +82,20 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
                 binding.tvContent.setText(review.content);
                 ViewUtils.gone(binding.btOriginal);
                 ViewUtils.show(binding.btShorten);
-                ViewUtils.gone(binding.tvNeedMore);
-
             }
         });
 
+    }
+
+    private void setScreenLoading(boolean isLoading) {
+        if (isLoading) {
+            ViewUtils.show(binding.progressCircular);
+            ViewUtils.gone(binding.btOriginal);
+        } else {
+            ViewUtils.gone(binding.progressCircular);
+            ViewUtils.show(binding.btOriginal);
+        }
+        ViewUtils.gone(binding.btShorten);
     }
 
     @Override
@@ -134,14 +105,14 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if(key.equals(Constants.KEY_SUMMARIZATION)){
+        if (key.equals(Constants.KEY_SUMMARIZATION)) {
             Summary summary = (Summary) data;
             shorten = summary.summaryText;
             binding.tvContent.setText(summary.summaryText);
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.btOriginal);
             ViewUtils.show(binding.tvNeedMore);
-            int percent = (int) (((float)shorten.length()/review.content.length())*100);
+            int percent = (int) (((float) shorten.length() / review.content.length()) * 100);
             binding.tvNeedMore.setText("Text reduce to " + percent + "% (" + countWord(shorten) + "/" + countWord(review.content) + " words)");
         }
     }
@@ -158,7 +129,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
         this.mData = data;
     }
 
-    private int countWord(String s){
+    private int countWord(String s) {
         String trim = s.trim();
         if (trim.isEmpty())
             return 0;

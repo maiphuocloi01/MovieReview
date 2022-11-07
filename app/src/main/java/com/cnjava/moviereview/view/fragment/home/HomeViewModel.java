@@ -30,11 +30,11 @@ public class HomeViewModel extends BaseViewModel {
         this.accountRepository = accountRepository;
     }
 
-    private static MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
-    private static MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
+    private final MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
 
     public LiveData<Movie> popularMovieLD() {
         return popularMovieLD;
@@ -59,7 +59,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getPopularMovie() {
         mLiveDataIsLoading.setValue(true);
-        movieRepository.getPopularMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getPopularMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 popularMovieLD.setValue(movie);
@@ -75,7 +75,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getNowPlayingMovie() {
-        movieRepository.getNowPlayingMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getNowPlayingMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 nowPlayingMovieLD.setValue(movie);
@@ -91,7 +91,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getUpComingMovie() {
-        movieRepository.getUpComingMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getUpComingMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 upcomingMovieLD.setValue(movie);
@@ -107,7 +107,7 @@ public class HomeViewModel extends BaseViewModel {
     }
 
     public void getTopRatedMovie() {
-        movieRepository.getTopRatedMovie().subscribe(new MovieObserver<Movie>() {
+        movieRepository.getTopRatedMovie().subscribe(new CustomObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 topRatedMovieLD.setValue(movie);
@@ -124,7 +124,7 @@ public class HomeViewModel extends BaseViewModel {
 
     public void getYourProfile(String token) {
         mLiveDataIsLoading.setValue(true);
-        accountRepository.getYourProfile(token).subscribe(new UserObserver<User>() {
+        accountRepository.getMyProfile(token).subscribe(new CustomObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
                 yourProfileLD.setValue(user);

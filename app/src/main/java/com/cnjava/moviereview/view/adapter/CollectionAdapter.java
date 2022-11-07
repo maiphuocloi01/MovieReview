@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemMovieBinding;
 import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Movie;
@@ -43,7 +44,9 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
         holder.binding.tvName.setText(item.title);
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
+                .error(R.drawable.ic_movie)
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

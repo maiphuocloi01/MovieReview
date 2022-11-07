@@ -5,8 +5,9 @@ import java.text.Normalizer;
 public class StringConvert {
 
     public static String removeDiacriticalMarks(String string) {
-        return Normalizer.normalize(string, Normalizer.Form.NFD)
+        String result = Normalizer.normalize(string, Normalizer.Form.NFD)
                 .replaceAll("\\p{InCombiningDiacriticalMarks}+", "");
+        return result.replaceAll("[^A-Za-z0-9]","");
     }
 
     public static String CreateMD5(String md5) {

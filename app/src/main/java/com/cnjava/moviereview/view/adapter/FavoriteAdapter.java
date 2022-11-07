@@ -55,8 +55,9 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
         holder.binding.tvOverview.setText(favorite.movie.overview);
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + favorite.movie.poster))
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_movie)
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
+                .error(R.drawable.ic_movie)
                 .into(holder.binding.ivPoster);
         holder.binding.ivUnFavorite.setOnClickListener(new View.OnClickListener() {
             @Override

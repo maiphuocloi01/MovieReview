@@ -108,8 +108,8 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
         holder.binding.tvRate.setText(String.valueOf((int) review.rating));
         Glide.with(context)
                 .load(review.user.getAvatar())
-                .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.img_default_avt)
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.img_default_avt)
                 .into(holder.binding.ivAvt);
         if(review.like != null) {
             Log.d("TAG", "tvLike: ");

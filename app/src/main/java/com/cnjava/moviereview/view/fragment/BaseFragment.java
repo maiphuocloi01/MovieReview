@@ -35,12 +35,16 @@ public abstract class BaseFragment<B extends ViewBinding, V extends BaseViewMode
     @Override
     public final View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         binding = initViewBinding(inflater, container);
-        viewModel = new ViewModelProvider(this).get(getClassVM());
-        viewModel.setCallBack(this);
-        initViews();
         return binding.getRoot();
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        viewModel = new ViewModelProvider(this).get(getClassVM());
+        viewModel.setCallBack(this);
+        initViews();
+    }
 
     public final void setCallBack(OnMainCallBack callBack) {
         this.callBack = callBack;

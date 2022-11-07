@@ -183,11 +183,12 @@
 
                 <com.google.android.material.imageview.ShapeableImageView
                     android:id="@+id/iv_avatar"
-                    android:layout_width="@dimen/_100sdp"
-                    android:layout_height="@dimen/_100sdp"
+                    android:layout_width="@dimen/_90sdp"
+                    android:layout_height="@dimen/_90sdp"
                     android:layout_gravity="center"
                     android:layout_marginTop="@dimen/_75sdp"
                     android:padding="@dimen/_5sdp"
+                    android:background="@color/dark"
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_default_avt"
                     app:layout_constraintEnd_toEndOf="@+id/view"
@@ -208,7 +209,7 @@
                     android:text="Mai Phước Lợi"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:textColor="@color/light_white"
-                    android:textSize="@dimen/_18ssp"
+                    android:textSize="@dimen/_14ssp"
                     app:layout_constraintEnd_toEndOf="@+id/iv_avatar"
                     app:layout_constraintStart_toStartOf="@+id/iv_avatar"
                     app:layout_constraintTop_toBottomOf="@+id/iv_avatar" />
@@ -239,7 +240,7 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:text="10 stars  |  65 likes  |  5 dislikes"
                     android:textColor="@color/light_white"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_9ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/ratingBar" />
@@ -254,7 +255,7 @@
                     android:layout_marginTop="@dimen/_6sdp"
                     android:text="April 9, 2022"
                     android:textColor="@color/mid_white"
-                    android:textSize="@dimen/_10ssp"
+                    android:textSize="@dimen/_9ssp"
                     app:layout_constraintEnd_toEndOf="parent"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toBottomOf="@+id/tv_info" />
@@ -270,7 +271,7 @@
                     android:layout_marginTop="@dimen/_14sdp"
                     android:layout_marginHorizontal="@dimen/_14sdp"
                     android:textColor="@color/light_white"
-                    android:textSize="@dimen/_14ssp"
+                    android:textSize="@dimen/_12ssp"
                     app:layout_constraintTop_toBottomOf="@+id/tv_date" />
 
                 <ImageView
@@ -364,7 +365,7 @@
             android:fontFamily="@font/baloo_semibold"
             android:padding="12dp"
             android:visibility="visible"
-            android:text="Shorten the review"
+            android:text="Translate the review"
             android:textAllCaps="false"
             android:textColor="@color/primary"
             android:textSize="@dimen/_14ssp" />

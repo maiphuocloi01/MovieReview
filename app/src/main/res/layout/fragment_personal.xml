@@ -69,9 +69,10 @@
             android:layout_gravity="center_vertical"
             android:layout_marginTop="@dimen/_10sdp"
             android:background="@drawable/bg_mid_light_circle"
+            android:clickable="false"
+            android:foreground="?android:attr/selectableItemBackground"
             android:padding="@dimen/_8sdp"
             android:visibility="invisible"
-            android:clickable="false"
             app:srcCompat="@drawable/ic_settings2"
             app:tint="@color/light_white" />
 
@@ -100,6 +101,9 @@
                     android:layout_width="@dimen/_70sdp"
                     android:layout_height="@dimen/_70sdp"
                     android:scaleType="centerCrop"
+                    app:strokeWidth="@dimen/_1sdp"
+                    android:padding="@dimen/_1sdp"
+                    app:strokeColor="@color/mid_black"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                     app:srcCompat="@drawable/img_default_avt" />
 
@@ -403,6 +407,7 @@
 
                     <RadioButton
                         android:id="@+id/rb_all"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_20sdp"
@@ -417,6 +422,7 @@
 
                     <RadioButton
                         android:id="@+id/rb_top_like"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_15sdp"
@@ -430,6 +436,7 @@
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/rb_top_score"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
@@ -444,6 +451,7 @@
                         android:textSize="@dimen/_10ssp" />
 
                     <RadioButton
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:id="@+id/rb_critical"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

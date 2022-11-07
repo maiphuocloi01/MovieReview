@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemPopularMovieBinding;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.model.Movie;
@@ -48,8 +49,9 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
         Movie.Result item = movie.results.get(position);
         Log.d("adapter", "onBindViewHolder: " + item.title + item.backdropPath);
         Glide.with(context)
-                .load(String.format(Constants.IMAGE_URL + item.backdropPath))
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .load(Constants.IMAGE_URL + item.backdropPath)
+                .centerCrop()
+                .error(R.drawable.ic_movie)
                 .into(holder.binding.ivCover);
         holder.binding.tvName.setText(item.title);
         List<String> listGenres = new ArrayList<>();

@@ -27,13 +27,14 @@
             android:layout_width="wrap_content"
             android:layout_weight="1"/>
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginEnd="@dimen/_3sdp"
-            app:srcCompat="@drawable/ic_logo"
-            app:tint="@color/primary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_semibold"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_24ssp" />
 
         <View
             android:layout_height="1dp"
@@ -65,17 +66,17 @@
         android:layout_marginTop="@dimen/_28sdp"
         android:fontFamily="@font/baloo_semibold"
         android:textColor="@color/light_white"
-        android:text="Join Moviewie"/>
+        android:text="Join Viewie"/>
 
 
     <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginHorizontal="@dimen/_22sdp"
         android:layout_marginTop="@dimen/_36sdp"
-        android:background="@color/transparent"
         app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
+        android:background="@color/transparent"
         app:startIconDrawable="@drawable/ic_email"
         app:startIconTint="@color/light_white"
         android:id="@+id/layout_email"
@@ -88,8 +89,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/text_input_selector_ver2"
             android:hint="Email"
-            android:maxLength="35"
-            android:inputType="text"
+            android:inputType="textEmailAddress"
             android:padding="@dimen/_12sdp"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
@@ -211,6 +211,7 @@
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/bg_primary_corner_15"
         android:padding="@dimen/_8sdp"
+        android:foreground="?android:attr/selectableItemBackground"
         android:fontFamily="@font/baloo_semibold"
         android:stateListAnimator="@null"
         android:text="Register"

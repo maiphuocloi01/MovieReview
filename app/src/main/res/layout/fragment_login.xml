@@ -1,49 +1,52 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/dark"
-    android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
-    <TableRow android:layout_height="wrap_content"
-        android:gravity="center"
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/_30sdp"
-        android:layout_width="match_parent">
+        android:gravity="center">
 
         <ImageView
             android:id="@+id/iv_back"
-            android:layout_marginStart="@dimen/_25sdp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/_25sdp"
+            android:foreground="?android:attr/selectableItemBackground"
             android:src="@drawable/ic_back"
             app:tint="@color/primary" />
 
         <View
-            android:layout_height="1dp"
             android:layout_width="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="@dimen/_100sdp"
-            android:layout_height="@dimen/_35sdp"
-            android:layout_marginEnd="@dimen/_3sdp"
-            app:srcCompat="@drawable/ic_logo"
-            app:tint="@color/primary" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/baloo_semibold"
+            android:gravity="center"
+            android:text="@string/app_name"
+            android:id="@+id/tv_viewvie"
+            android:textColor="@color/primary"
+            android:textSize="@dimen/_24ssp" />
 
         <View
-            android:layout_height="1dp"
             android:layout_width="wrap_content"
-            android:layout_weight="1"/>
+            android:layout_height="1dp"
+            android:layout_weight="1" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_25sdp"
             android:src="@drawable/ic_back"
             android:visibility="invisible"
-            android:layout_marginEnd="@dimen/_25sdp"
             app:tint="@color/light_white" />
 
         <!--<TextView
@@ -56,35 +59,36 @@
     </TableRow>
 
     <TextView
-        android:layout_height="wrap_content"
         android:layout_width="wrap_content"
-        android:textSize="@dimen/_22ssp"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_28sdp"
         android:fontFamily="@font/baloo_semibold"
+        android:text="@string/welcome_back"
         android:textColor="@color/light_white"
-        android:text="Welcome back"/>
+        android:textSize="@dimen/_22ssp" />
 
 
     <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+        android:id="@+id/layout_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_36sdp"
         android:background="@color/transparent"
-        app:hintAnimationEnabled="false"
         app:endIconMode="clear_text"
-        app:startIconDrawable="@drawable/ic_email"
-        app:startIconTint="@color/light_white"
-        android:id="@+id/layout_email"
         app:endIconTint="@color/light_white"
-        app:hintEnabled="false">
+        app:hintAnimationEnabled="false"
+        app:hintEnabled="false"
+        app:startIconDrawable="@drawable/ic_email"
+        app:startIconTint="@color/light_white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_username"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/text_input_selector_ver2"
+            android:foreground="?android:attr/selectableItemBackground"
             android:hint="Email"
             android:inputType="text"
             android:paddingVertical="@dimen/_12sdp"
@@ -95,28 +99,29 @@
 
 
     <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+        android:id="@+id/layout_password"
         android:layout_width="match_parent"
-        app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
         android:layout_marginTop="@dimen/_24sdp"
         android:background="@color/transparent"
         app:hintAnimationEnabled="false"
-        android:id="@+id/layout_password"
-        app:startIconDrawable="@drawable/ic_lock"
-        app:startIconTint="@color/light_white"
+        app:hintEnabled="false"
+        app:passwordToggleEnabled="true"
         app:passwordToggleTint="@color/light_white"
-        app:hintEnabled="false">
+        app:startIconDrawable="@drawable/ic_lock"
+        app:startIconTint="@color/light_white">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/text_input_selector_ver2"
+            android:drawableTint="@color/light_white"
+            android:foreground="?android:attr/selectableItemBackground"
             android:hint="Password"
             android:inputType="textPassword"
             android:paddingVertical="@dimen/_12sdp"
-            android:drawableTint="@color/light_white"
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:textSize="@dimen/_12ssp" />
@@ -130,6 +135,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginEnd="@dimen/_25sdp"
+        android:foreground="?android:attr/selectableItemBackground"
         android:text="Forgot password?"
         android:textColor="@color/primary"
         android:textSize="@dimen/_12ssp" />
@@ -142,8 +148,9 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/bg_primary_corner_15"
-        android:padding="@dimen/_8sdp"
         android:fontFamily="@font/baloo_semibold"
+        android:foreground="?android:attr/selectableItemBackground"
+        android:padding="@dimen/_8sdp"
         android:stateListAnimator="@null"
         android:text="Login"
         android:textAllCaps="false"
@@ -157,10 +164,10 @@
 
 
     <TableRow
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/_12sdp"
-        android:gravity="center"
-        android:layout_width="match_parent">
+        android:gravity="center">
 
         <TextView
             android:layout_width="wrap_content"
@@ -174,8 +181,8 @@
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Sign up"
             android:layout_marginStart="@dimen/_4sdp"
+            android:text="Sign up"
             android:textAlignment="center"
             android:textColor="@color/primary"
             android:textSize="@dimen/_12ssp" />

@@ -3,7 +3,6 @@ package com.cnjava.moviereview.util;
 public interface Constants {
 
     String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
-    //String BASE_URL_USER = "http://apimovienew-env.eba-uagpfyjt.us-east-1.elasticbeanstalk.com/api/v1/";
     String BASE_URL_USER = "http://viewieapi-env.eba-jprxedaw.ap-southeast-1.elasticbeanstalk.com/api/v1/";
     String BASE_URL_AI = "https://viewie-ai.herokuapp.com/";
     String BASE_URL_TRANSLATE = "https://translate.yandex.net/api/v1.5/tr.json/";
@@ -70,4 +69,5 @@ public interface Constants {
     String KEY_ADD_FAVORITE = "KEY_ADD_FAVORITE";
     String KEY_DELETE_FAVORITE = "KEY_DELETE_FAVORITE";
 
+    String EMPTY_STRING = "";
 }

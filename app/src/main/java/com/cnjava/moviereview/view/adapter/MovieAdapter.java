@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemMovieBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
@@ -45,7 +46,8 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.binding.tvStar.setText(String.format(Locale.US, "%.1f", item.voteAverage));
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
-                .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

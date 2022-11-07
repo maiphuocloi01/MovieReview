@@ -89,7 +89,8 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
                 Glide.with(context)
                         .load(Constants.IMAGE_URL + review.movie.backdropPath)
                         .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.ic_image)
+                        .placeholder(R.drawable.progress_animation)
+                        .centerCrop()
                         .into(holder.binding.ivPoster);
             }
         }
@@ -122,7 +123,8 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
         Glide.with(context)
                 .load(review.user.getAvatar())
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.img_default_avt)
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.img_default_avt)
                 .into(holder.binding.ivAvt);
         if(review.like != null) {
             Log.d("TAG", "tvLike: ");

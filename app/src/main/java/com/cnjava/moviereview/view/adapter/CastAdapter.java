@@ -40,7 +40,9 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.profilePath))
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_profile)
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
+                .error(R.drawable.img_default_avt)
                 .into(holder.binding.ivCast);
     }
 

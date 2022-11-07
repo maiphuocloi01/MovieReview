@@ -16,6 +16,7 @@
 
         <ImageView
             android:id="@+id/iv_back"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
@@ -40,6 +41,7 @@
 
         <ImageView
             android:id="@+id/iv_edit"
+            android:foreground="?android:attr/selectableItemBackground"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
@@ -82,7 +84,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_default_avt"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                    app:strokeColor="@color/mid_white"
+                    app:strokeColor="@color/mid_black"
                     app:strokeWidth="@dimen/_1sdp" />
 
                 <ImageButton
@@ -94,6 +96,7 @@
                     android:padding="@dimen/_8sdp"
                     android:translationX="-18dp"
                     android:visibility="gone"
+                    android:foreground="?android:attr/selectableItemBackground"
                     app:layout_anchor="@id/iv_avatar"
                     app:layout_anchorGravity="right|bottom"
                     app:srcCompat="@drawable/ic_photo"
@@ -136,6 +139,7 @@
 
                 <EditText
                     android:id="@+id/et_email"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
@@ -180,6 +184,7 @@
 
                 <EditText
                     android:id="@+id/et_name"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
@@ -222,6 +227,7 @@
 
                 <EditText
                     android:id="@+id/et_phone"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
@@ -264,6 +270,7 @@
 
                 <EditText
                     android:id="@+id/et_birthday"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginHorizontal="@dimen/_15sdp"
@@ -321,6 +328,7 @@
                     <AutoCompleteTextView
                         android:id="@+id/auto_complete_txt"
                         android:padding="@dimen/_12sdp"
+                        android:foreground="?android:attr/selectableItemBackground"
                         android:popupBackground="@color/transparent"
                         android:theme="@style/Theme.MaterialComponents.DayNight.NoActionBar"
                         android:background="@android:color/transparent"
@@ -382,6 +390,7 @@
                 android:padding="12dp"
                 android:stateListAnimator="@null"
                 android:text="Save"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:textAllCaps="false"
                 android:textColor="@color/dark"
                 android:textSize="@dimen/_14ssp"
@@ -395,6 +404,7 @@
                 android:layout_alignParentBottom="true"
                 android:layout_marginHorizontal="@dimen/_15sdp"
                 android:layout_marginBottom="20dp"
+                android:foreground="?android:attr/selectableItemBackground"
                 android:background="@drawable/bg_transparent_corner_10_border_primary"
                 android:enabled="true"
                 android:fontFamily="@font/baloo_semibold"

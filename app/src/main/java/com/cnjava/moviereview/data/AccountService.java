@@ -55,7 +55,7 @@ public interface AccountService {
 
     @GET("users/me")
     @Headers("Content-type: application/json")
-    Single<User> getYourProfile(@Header("Authorization") String auth);
+    Single<User> getMyProfile(@Header("Authorization") String auth);
 
     @PUT("users/me")
     @Headers("Content-type: application/json")

@@ -2,8 +2,13 @@ package com.cnjava.moviereview.repository;
 
 import com.cnjava.moviereview.data.MovieService;
 import com.cnjava.moviereview.data.TranslateService;
+import com.cnjava.moviereview.model.Actor;
+import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.model.MovieDetail;
+import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Translate;
+import com.cnjava.moviereview.model.Video;
 
 import javax.inject.Inject;
 
@@ -40,6 +45,34 @@ public class MovieRepository {
 
     public Single<Movie> getTopRatedMovie(){
         return subscribe(movieService.getTopRatedMovie());
+    }
+
+    public Single<MovieDetail> getMovieDetail(int id){
+        return subscribe(movieService.getMovieDetail(id));
+    }
+
+    public Single<Actor> getCast(int id){
+        return subscribe(movieService.getCast(id));
+    }
+
+    public Single<Movie> getRecommendation(int id){
+        return subscribe(movieService.getRecommendation(id));
+    }
+
+    public Single<Video> getVideo(int id){
+        return subscribe(movieService.getVideo(id));
+    }
+
+    public Single<Social> getSocial(int id){
+        return subscribe(movieService.getSocial(id));
+    }
+
+    public Single<Collection> getCollection(int collectionId){
+        return subscribe(movieService.getCollection(collectionId));
+    }
+
+    public Single<Movie> getTrending(String timeWindow){
+        return subscribe(movieService.getTrending(timeWindow));
     }
 
     private <T> Single<T> subscribe(Single<T> single) {
