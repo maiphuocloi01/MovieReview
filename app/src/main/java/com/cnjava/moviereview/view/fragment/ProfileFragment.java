@@ -205,7 +205,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
             Glide.with(context)
                     .load(String.format(user.getAvatar()))
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.img_default_avt)
+                    .placeholder(R.drawable.progress_animation)
                     .into(binding.ivAvatar);
         }
     }
@@ -242,10 +242,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
 
     @Override
     public void updateReview(Review review) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("review", review);
-        bundle.putString("tag", ProfileFragment.TAG);
-        callBack.showFragment(EditReviewFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        callBack.showFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override

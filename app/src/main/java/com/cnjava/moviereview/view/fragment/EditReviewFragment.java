@@ -30,7 +30,6 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
 
     public static final String TAG = EditReviewFragment.class.getName();
     private Object mData;
-    private String tag;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -41,9 +40,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
     protected void initViews() {
 
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
-        Bundle newData = (Bundle) mData;
-        tag = newData.getString("tag");
-        Review review = (Review) newData.getSerializable("review");
+        Review review = (Review) mData;
 
         binding.tvName.setText(review.movie.title);
         //binding.tvDate.setText(NumberUtils.convertDateType3(movieDetail.releaseDate));
@@ -130,7 +127,7 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
                 //MyApplication.getInstance().getStorage().reviewList = null;
-                callBack.reloadFragment(tag);
+                callBack.reloadFragment(callBack.getBackStack());
                 callBack.backToPrev();
             }
         }

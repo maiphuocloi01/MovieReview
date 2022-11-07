@@ -314,12 +314,12 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         Button btnConfirm = dialog.findViewById(R.id.bt_signin);
 
         btnCancel.setOnClickListener(view -> {
-            callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
 
         btnConfirm.setOnClickListener(view -> {
-            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.showFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
         dialog.show();

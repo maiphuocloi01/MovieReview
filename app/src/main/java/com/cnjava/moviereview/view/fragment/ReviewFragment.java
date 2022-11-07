@@ -90,7 +90,9 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         Glide.with(context)
                 .load(Constants.IMAGE_URL + movieDetail.posterPath)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_image)
+                .error(R.drawable.ic_image)
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
                 .into(binding.ivPoster);
 
         binding.ivBack.setOnClickListener(view -> {
@@ -613,10 +615,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void updateReview(Review review) {
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("review", review);
-        bundle.putString("tag", ReviewFragment.TAG);
-        callBack.showFragment(EditReviewFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        callBack.showFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override

@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
@@ -72,15 +73,21 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             loadFragment(MyApplication.getInstance().getStorage().fragmentTag);
         }
         addGenres();
-        new CountDownTimer(3000, 100) {
+        new CountDownTimer(3100, 2000) {
             public void onFinish() {
-                binding.animationView.clearAnimation();
-                ViewUtils.gone(binding.animationView);
-                ViewUtils.show(binding.layoutMain);
+                if(!CommonUtils.isInternetOn(MainActivity.this)) {
+                    System.exit(0);
+                }  else {
+                    binding.animationView.clearAnimation();
+                    ViewUtils.gone(binding.animationView);
+                    ViewUtils.show(binding.layoutMain);
+                }
             }
 
             public void onTick(long millisUntilFinished) {
-                // millisUntilFinished    The amount of time until finished.
+                if(!CommonUtils.isInternetOn(MainActivity.this)){
+                    Toast.makeText(MainActivity.this, "No connection", Toast.LENGTH_SHORT).show();
+                }
             }
         }.start();
         //List<Genres> genres = MyApplication.getInstance().getStorage().genresList;
@@ -93,6 +100,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             frg.setCallBack(this);
             getSupportFragmentManager()
                     .beginTransaction()
+                    .addToBackStack(OnboardFragment.TAG)
                     .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
                     .commit();
         } else {
@@ -100,6 +108,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             frg.setCallBack(this);
             getSupportFragmentManager()
                     .beginTransaction()
+                    .addToBackStack(HomeFragment.TAG)
                     .replace(R.id.layout_main, frg, HomeFragment.class.getName())
                     .commit();
         }
@@ -138,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             FragmentTransaction trans = getSupportFragmentManager()
                     .beginTransaction();
             if (isBack) {
-                trans.addToBackStack(null);
+                trans.addToBackStack(tag);
             }
             if (anim == ANIM_SLIDE) {
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
@@ -171,7 +180,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             FragmentTransaction trans = getSupportFragmentManager()
                     .beginTransaction();
             if (isBack) {
-                trans.addToBackStack(null);
+                trans.addToBackStack(tag);
             }
             if (anim == ANIM_SLIDE) {
                 trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
@@ -199,8 +208,8 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     @Override
-    public void reloadFragment(String tag) {
-        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(tag);
+    public void reloadFragment(Fragment currentFragment) {
+        //Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (currentFragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -219,6 +228,15 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
         }
+    }
+
+    @Override
+    public Fragment getBackStack() {
+        if (getSupportFragmentManager().getBackStackEntryCount() < 2) {
+            return null;
+        }
+        String fragmentTag = getSupportFragmentManager().getBackStackEntryAt(getSupportFragmentManager().getBackStackEntryCount() - 2).getName();
+        return getSupportFragmentManager().findFragmentByTag(fragmentTag);
     }
 
 

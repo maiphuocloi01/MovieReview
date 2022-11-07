@@ -86,6 +86,9 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private int movieId;
     private boolean isSelect = false;
     private MovieDetailViewModel movieDetailViewModel;
+    private static final String FACEBOOK = "Facebook";
+    private static final String TWITTER = "Twitter";
+    private static final String HOMEPAGE = "Homepage";
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -99,7 +102,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     @Override
     protected void initViews() {
         movieId = (int) mData;
-        //setScreenLoading(true);
         movieDetailViewModel = new ViewModelProvider(this).get(MovieDetailViewModel.class);
         movieDetailViewModel.getLiveDataIsLoading().observe(this, this::setScreenLoading);
         storage.fragmentTag = TAG;
@@ -259,6 +261,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         for (MovieDetail.Genres item : detail.genres) {
             listGenres.add(item.name);
         }
+        binding.tvStatus.setText(detail.status);
         binding.tvName.setText(Objects.requireNonNull(detail.title));
         binding.tvRuntime.setText(detail.runtime + " min");
         binding.tvRating.setText(new DecimalFormat("##.##").format(detail.voteAverage));
@@ -273,12 +276,15 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         Glide.with(context)
                 .load(Constants.IMAGE_URL + detail.backdropPath)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_image)
+                .centerCrop()
+                .error(R.drawable.ic_movie)
                 .into(binding.ivCover);
         Glide.with(context)
                 .load(Constants.IMAGE_URL + detail.posterPath)
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_movie)
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
+                .error(R.drawable.ic_movie)
                 .into(binding.ivPoster);
         if (detail.budget == 0) {
             binding.tvBudget.setText(R.string.undefined);
@@ -299,14 +305,14 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         PopupMenu popup = new PopupMenu(context, binding.ivMore);
         popup.getMenuInflater().inflate(R.menu.poupup_menu, popup.getMenu());
         popup.setOnMenuItemClickListener(item -> {
-            if (item.getTitle().toString().equals("Homepage")) {
+            if (item.getTitle().toString().equals(HOMEPAGE)) {
                 if (!detail.homepage.equals("")) {
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(detail.homepage));
                     startActivity(browserIntent);
                 } else {
                     Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                 }
-            } else if (item.getTitle().toString().equals("Facebook")) {
+            } else if (item.getTitle().toString().equals(FACEBOOK)) {
                 if (social.facebookId != null) {
                     String fbId = social.facebookId;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://www.facebook.com/" + fbId));
@@ -314,7 +320,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 } else {
                     Toast.makeText(context, "No information", Toast.LENGTH_SHORT).show();
                 }
-            } else if (item.getTitle().toString().equals("Twitter")) {
+            } else if (item.getTitle().toString().equals(TWITTER)) {
                 if (social.twitterId != null) {
                     String twId = social.twitterId;
                     Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse("https://twitter.com/" + twId));
@@ -417,10 +423,10 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 popup.getMenuInflater().inflate(R.menu.review_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
                     if (item.getTitle().toString().equals("Edit")) {
-                        Bundle bundle = new Bundle();
+                        /*Bundle bundle = new Bundle();
                         bundle.putSerializable("review", review);
-                        bundle.putString("tag", DetailFragment.TAG);
-                        callBack.showFragment(EditReviewFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+                        bundle.putString("tag", DetailFragment.TAG);*/
+                        callBack.showFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
                     } else if (item.getTitle().toString().equals("Delete")) {
                         viewModel.deleteReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                         ViewUtils.show(binding.btAddReview);
@@ -606,12 +612,12 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         Button btnConfirm = dialog.findViewById(R.id.bt_signin);
 
         btnCancel.setOnClickListener(view -> {
-            callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
 
         btnConfirm.setOnClickListener(view -> {
-            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.showFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
         dialog.show();
@@ -657,5 +663,17 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     public void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        Log.d(TAG, "onDestroyView: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
     }
 }

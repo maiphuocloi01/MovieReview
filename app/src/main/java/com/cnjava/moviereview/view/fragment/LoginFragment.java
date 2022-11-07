@@ -41,6 +41,14 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
     @Override
     protected void initViews() {
 
+        binding.tvViewvie.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "onClick: " + callBack.getBackStack());
+
+            }
+        });
+
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         if (CommonUtils.getInstance().getPref(Constants.USERNAME) != null) {
@@ -107,7 +115,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         binding.tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
     }

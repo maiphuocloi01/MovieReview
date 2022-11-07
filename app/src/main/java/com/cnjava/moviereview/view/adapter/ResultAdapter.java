@@ -51,7 +51,9 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_movie)
+                .placeholder(R.drawable.progress_animation)
+                .centerCrop()
+                .error(R.drawable.ic_movie)
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

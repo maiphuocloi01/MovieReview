@@ -60,7 +60,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + movieDetail.posterPath))
                 .transition(DrawableTransitionOptions.withCrossFade())
-                .placeholder(R.drawable.ic_image)
+                .placeholder(R.drawable.progress_animation)
                 .into(binding.ivPoster);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -148,7 +148,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
                 //MyApplication.getInstance().getStorage().reviewList = null;
-                callBack.reloadFragment(DetailFragment.TAG);
+                callBack.reloadFragment(callBack.getBackStack());
                 callBack.backToPrev();
             }
         }

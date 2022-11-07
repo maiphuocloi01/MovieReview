@@ -34,7 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_200sdp"
                 android:scaleType="centerCrop"
-                android:src="@drawable/ic_image"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -60,8 +59,7 @@
                         android:id="@+id/iv_poster"
                         android:layout_width="@dimen/_101sdp"
                         android:layout_height="@dimen/_150sdp"
-                        android:scaleType="centerCrop"
-                        android:src="@drawable/ic_image" />
+                        android:scaleType="centerCrop" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -102,8 +100,7 @@
                         android:layout_marginTop="@dimen/_4sdp"
                         android:layout_marginBottom="@dimen/_8sdp"
                         android:orientation="horizontal"
-                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                        tools:listitem="@layout/item_genres" />
+                        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
                 </LinearLayout>
 
@@ -154,7 +151,6 @@
                         android:id="@+id/tv_runtime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="126 min"
                         android:textAlignment="center"
                         android:textColor="@color/primary"
                         android:textSize="@dimen/_10ssp" />
@@ -181,7 +177,6 @@
                         android:id="@+id/tv_rating"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="7.4"
                         android:textAlignment="center"
                         android:textColor="@color/primary"
                         android:textSize="@dimen/_10ssp" />
@@ -209,7 +204,7 @@
                         android:id="@+id/tv_favorite"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Favorite"
+                        android:text="@string/favorite"
                         android:textAlignment="center"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_10ssp" />
@@ -235,7 +230,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="More"
+                        android:text="@string/more"
                         android:textAlignment="center"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_10ssp" />
@@ -266,7 +261,7 @@
                     android:fontFamily="@font/baloo_semibold"
                     android:paddingVertical="@dimen/_6sdp"
                     android:stateListAnimator="@null"
-                    android:text="Write your review"
+                    android:text="@string/write_your_review"
                     android:textAllCaps="false"
                     android:visibility="visible"
                     android:textColor="@color/dark"
@@ -287,7 +282,7 @@
                 <androidx.cardview.widget.CardView
                     android:id="@+id/layout_your_review"
                     android:layout_width="match_parent"
-                    android:visibility="visible"
+                    android:visibility="gone"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_6sdp"
                     android:layout_marginHorizontal="@dimen/_16sdp"
@@ -309,11 +304,11 @@
                             <com.google.android.material.imageview.ShapeableImageView
                                 app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                                 android:id="@+id/iv_avt"
+                                app:strokeColor="@null"
                                 android:layout_width="@dimen/_32sdp"
                                 android:layout_height="@dimen/_32sdp"
                                 android:layout_gravity="center"
-                                android:scaleType="centerCrop"
-                                android:src="@drawable/img_cover" />
+                                android:scaleType="centerCrop" />
 
                             <LinearLayout
                                 android:id="@+id/layout_user_info"
@@ -335,7 +330,6 @@
                                         android:fontFamily="@font/roboto_bold"
                                         android:maxLines="1"
                                         android:maxLength="27"
-                                        android:text="You"
                                         android:textColor="@color/light_white"
                                         android:textSize="@dimen/_12ssp" />
 
@@ -351,7 +345,6 @@
                                             android:layout_height="wrap_content"
                                             android:layout_gravity="center"
                                             android:fontFamily="@font/roboto_regular"
-                                            android:text="8"
                                             android:textColor="@color/primary"
                                             android:textSize="@dimen/_12ssp" />
 
@@ -380,13 +373,12 @@
 
                                     <TextView
                                         android:id="@+id/tv_date"
-                                        android:layout_width="match_parent"
+                                        android:layout_width="wrap_content"
                                         android:layout_height="wrap_content"
                                         android:ellipsize="end"
                                         android:fontFamily="@font/roboto_regular"
                                         android:maxLines="1"
                                         android:foreground="?android:attr/selectableItemBackground"
-                                        android:text="April 9, 2022 06:51"
                                         android:textColor="@color/mid_white"
                                         android:textSize="@dimen/_10ssp" />
 
@@ -421,7 +413,6 @@
                             android:maxLines="3"
                             android:foreground="?android:attr/selectableItemBackground"
                             android:layout_marginBottom="@dimen/_4sdp"
-                            android:text="@string/overview"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -470,7 +461,6 @@
                                         android:id="@+id/tv_like"
                                         android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:text="1.123"
                                         android:layout_gravity="center"
                                         android:fontFamily="@font/roboto_regular"
                                         android:textSize="@dimen/_10sdp"
@@ -498,7 +488,6 @@
                                         android:id="@+id/tv_dislike"
                                         android:layout_height="wrap_content"
                                         android:layout_width="wrap_content"
-                                        android:text="1.123"
                                         android:layout_gravity="center"
                                         android:fontFamily="@font/roboto_regular"
                                         android:textSize="@dimen/_10sdp"
@@ -580,8 +569,7 @@
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:nestedScrollingEnabled="false"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="2"
-                    tools:listitem="@layout/item_review" />
+                    tools:itemCount="2" />
 
                 <TextView
                     android:id="@+id/tv_no_reviews"
@@ -630,7 +618,6 @@
                     android:layout_marginHorizontal="@dimen/_14sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:lineSpacingExtra="@dimen/_2sdp"
-                    android:text="@string/overview"
                     android:textColor="@color/light_white"
                     android:textSize="@dimen/_12ssp" />
 
@@ -684,7 +671,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:text="2022-03-10"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -705,7 +691,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:text="200.000.000 $"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -727,7 +712,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:text="1229"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -759,7 +743,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:text="Released"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -780,7 +763,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:text="507.702.190 $"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -802,7 +784,6 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:text="5007.839"
                             android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
@@ -832,8 +813,7 @@
                     android:layout_marginStart="@dimen/_6sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_cast" />
+                    tools:itemCount="3" />
 
                 <TextView
                     android:id="@+id/tv_video"
@@ -901,8 +881,7 @@
                     android:layout_marginStart="@dimen/_6sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                    tools:itemCount="3"
-                    tools:listitem="@layout/item_movie" />
+                    tools:itemCount="3" />
 
                 <TextView
                     android:id="@+id/tv_no_recommend"

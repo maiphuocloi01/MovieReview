@@ -84,7 +84,7 @@
                     android:scaleType="centerCrop"
                     android:src="@drawable/img_default_avt"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
-                    app:strokeColor="@color/mid_white"
+                    app:strokeColor="@color/mid_black"
                     app:strokeWidth="@dimen/_1sdp" />
 
                 <ImageButton

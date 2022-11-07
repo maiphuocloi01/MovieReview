@@ -31,6 +31,7 @@
                 android:layout_height="@dimen/_32sdp"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
+                app:strokeColor="@null"
                 android:src="@drawable/img_cover" />
 
             <LinearLayout

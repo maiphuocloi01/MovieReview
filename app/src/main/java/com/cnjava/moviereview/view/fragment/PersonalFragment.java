@@ -113,7 +113,8 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Comm
             Glide.with(context)
                     .load(String.format(user.getAvatar()))
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.img_default_avt)
+                    .placeholder(R.drawable.progress_animation)
+                    .error(R.drawable.img_default_avt)
                     .into(binding.ivAvatar);
         }
     }

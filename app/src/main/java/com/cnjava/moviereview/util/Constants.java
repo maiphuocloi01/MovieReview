@@ -69,4 +69,5 @@ public interface Constants {
     String KEY_ADD_FAVORITE = "KEY_ADD_FAVORITE";
     String KEY_DELETE_FAVORITE = "KEY_DELETE_FAVORITE";
 
+    String EMPTY_STRING = "";
 }

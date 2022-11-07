@@ -30,7 +30,7 @@
                 android:layout_height="@dimen/_36ssp"
                 app:strokeWidth="@dimen/_1sdp"
                 android:padding="@dimen/_1sdp"
-                app:strokeColor="@color/mid_white"
+                app:strokeColor="@color/mid_black"
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 android:src="@drawable/img_default_avt" />

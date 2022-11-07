@@ -167,7 +167,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 Glide.with(context)
                         .load(String.format(user.getAvatar()))
                         .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.img_default_avt)
+                        .placeholder(R.drawable.progress_animation)
+                        .centerCrop()
+                        .error(R.drawable.img_default_avt)
                         .into(binding.ivAvatar);
             } else {
                 Log.d(TAG, "setImageResource: ");
@@ -251,7 +253,9 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                     Glide.with(context)
                             .load(String.format(user.getAvatar()))
                             .transition(DrawableTransitionOptions.withCrossFade())
-                            .placeholder(R.drawable.img_default_avt)
+                            .placeholder(R.drawable.progress_animation)
+                            .centerCrop()
+                            .error(R.drawable.img_default_avt)
                             .into(binding.ivAvatar);
                 } else {
                     binding.ivAvatar.setImageResource(R.drawable.img_default_avt);
@@ -465,7 +469,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
             Toast.makeText(context, "Update profile success", Toast.LENGTH_SHORT).show();
             User user = (User) data;
             MyApplication.getInstance().getStorage().myUser = user;
-            callBack.reloadFragment(ProfileFragment.TAG);
+            callBack.reloadFragment(callBack.getBackStack());
             callBack.backToPrev();
         }
     }
