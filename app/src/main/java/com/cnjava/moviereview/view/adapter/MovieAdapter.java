@@ -9,7 +9,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemMovieBinding;
 import com.cnjava.moviereview.model.Movie;
@@ -47,7 +46,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .placeholder(R.drawable.progress_animation)
-                .centerCrop()
+                .error(R.drawable.ic_movie2)
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,7 +58,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     @Override
     public int getItemCount() {
-        if (movie != null){
+        if (movie != null) {
             return movie.results.size();
         }
         return 0;
@@ -67,6 +66,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ItemMovieBinding binding;
+
         public MyViewHolder(ItemMovieBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

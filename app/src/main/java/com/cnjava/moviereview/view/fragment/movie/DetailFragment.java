@@ -3,7 +3,6 @@ package com.cnjava.moviereview.view.fragment.movie;
 import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -52,15 +51,16 @@ import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.view.adapter.VideoAdapter;
-import com.cnjava.moviereview.view.fragment.addreview.AddReviewFragment;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
+import com.cnjava.moviereview.view.fragment.addreview.AddReviewFragment;
+import com.cnjava.moviereview.view.fragment.cast.CastFragment;
 import com.cnjava.moviereview.view.fragment.editreview.EditReviewFragment;
 import com.cnjava.moviereview.view.fragment.login.LoginFragment;
 import com.cnjava.moviereview.view.fragment.personal.PersonalFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.view.fragment.review.ReviewFragment;
-import com.cnjava.moviereview.view.fragment.trailer.VideoFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
+import com.cnjava.moviereview.view.fragment.trailer.VideoFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.text.DecimalFormat;
@@ -73,7 +73,7 @@ import java.util.stream.Collectors;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel> implements PopularAdapter.MovieCallBack, VideoAdapter.VideoCallBack, ReviewAdapter.ReviewCallBack {
+public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonViewModel> implements PopularAdapter.MovieCallBack, VideoAdapter.VideoCallBack, ReviewAdapter.ReviewCallBack, CastAdapter.CastCallBack {
 
     public static final String TAG = DetailFragment.class.getName();
     private final Storage storage = MyApplication.getInstance().getStorage();
@@ -106,32 +106,20 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
             });
             if (_movieDetail.collection != null) {
                 movieDetailViewModel.getCollection(_movieDetail.collection.id);
-                movieDetailViewModel.collectionLD().observe(this, _collection -> {
-                    initCollectionMovie(_collection);
-                });
+                movieDetailViewModel.collectionLD().observe(this, this::initCollectionMovie);
             }
-            binding.ivReview.setOnClickListener(view -> {
-                callBack.showFragment(ReviewFragment.TAG, _movieDetail, true, Constants.ANIM_SLIDE);
-            });
+            binding.textRatingReview.setOnClickListener(view -> callBack.showFragment(ReviewFragment.TAG, _movieDetail, true, Constants.ANIM_SLIDE));
         });
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             movieDetailViewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            movieDetailViewModel.myFavoriteLD().observe(this, _favorites -> {
-                initFavorite(_favorites, String.valueOf(movieId));
-            });
+            movieDetailViewModel.myFavoriteLD().observe(this, _favorites -> initFavorite(_favorites, String.valueOf(movieId)));
         }
         movieDetailViewModel.getCast(movieId);
-        movieDetailViewModel.actorLD().observe(this, _actor -> {
-            initActorList(_actor);
-        });
+        movieDetailViewModel.actorLD().observe(this, this::initActorList);
         movieDetailViewModel.getRecommendation(movieId);
-        movieDetailViewModel.recommendationLD().observe(this, _recommendation -> {
-            initRecommendMovie(_recommendation);
-        });
+        movieDetailViewModel.recommendationLD().observe(this, this::initRecommendMovie);
         movieDetailViewModel.getVideo(movieId);
-        movieDetailViewModel.videoLD().observe(this, _video -> {
-            initVideoTrailer(_video);
-        });
+        movieDetailViewModel.videoLD().observe(this, this::initVideoTrailer);
         movieDetailViewModel.getReviewByMovieId(String.valueOf(movieId));
         movieDetailViewModel.movieReviewLD().observe(this, _reviews -> {
             storage.reviewList = _reviews;
@@ -189,7 +177,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     private void initActorList(Actor actor) {
         if (actor.cast.size() > 0) {
             binding.rvCast.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            CastAdapter castAdapter = new CastAdapter(context, actor);
+            CastAdapter castAdapter = new CastAdapter(context, actor, this);
             binding.rvCast.setAdapter(castAdapter);
         } else {
             ViewUtils.gone(binding.tvCast);
@@ -265,14 +253,11 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         binding.tvPopularity.setText(String.valueOf(detail.popularity));
         Glide.with(context)
                 .load(Constants.IMAGE_URL + detail.backdropPath)
-                .centerCrop()
-                .error(R.drawable.ic_movie)
                 .into(binding.ivCover);
         Glide.with(context)
                 .load(Constants.IMAGE_URL + detail.posterPath)
                 .placeholder(R.drawable.progress_animation)
-                .centerCrop()
-                .error(R.drawable.ic_movie)
+                .error(R.drawable.ic_movie2)
                 .into(binding.ivPoster);
         if (detail.budget == 0) {
             binding.tvBudget.setText(R.string.undefined);
@@ -359,7 +344,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         } else {
             binding.rvReview.setVisibility(View.GONE);
             binding.tvNoReviews.setVisibility(View.VISIBLE);
-            binding.ivReview.setVisibility(View.GONE);
+            binding.textRatingReview.setVisibility(View.GONE);
             binding.tvTitleYourReview.setVisibility(View.GONE);
             binding.layoutYourReview.setVisibility(View.GONE);
         }
@@ -373,7 +358,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
         Glide.with(context)
                 .load(review.user.getAvatar())
                 .placeholder(R.drawable.progress_animation)
-                .centerCrop()
                 .error(R.drawable.img_default_avt)
                 .into(binding.ivAvt);
         binding.tvNameYourReview.setText(review.user.getName());
@@ -412,9 +396,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
                 popup.getMenuInflater().inflate(R.menu.review_menu, popup.getMenu());
                 popup.setOnMenuItemClickListener(item -> {
                     if (item.getTitle().toString().equals("Edit")) {
-                        /*Bundle bundle = new Bundle();
-                        bundle.putSerializable("review", review);
-                        bundle.putString("tag", DetailFragment.TAG);*/
                         callBack.showFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
                     } else if (item.getTitle().toString().equals("Delete")) {
                         viewModel.deleteReview(review.id, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
@@ -543,7 +524,6 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
 
     @Override
     public void gotoVideoYoutube(String key) {
-        //showVideoDialog(key);
         callBack.showFragment(VideoFragment.TAG, key, true, Constants.ANIM_FADE);
         /*String urlYoutube = "https://www.youtube.com/watch?v=";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlYoutube + key));
@@ -631,38 +611,7 @@ public class DetailFragment extends BaseFragment<FragmentDetailBinding, CommonVi
     }
 
     @Override
-    public void onAttach(@NonNull Context context) {
-        super.onAttach(context);
-        Log.d(TAG, "onAttach: ");
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        Log.d(TAG, "onResume: ");
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-        Log.d(TAG, "onPause: ");
-    }
-
-    @Override
-    public void onStop() {
-        super.onStop();
-        Log.d(TAG, "onStop: ");
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        Log.d(TAG, "onDestroyView: ");
-    }
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(TAG, "onStart: ");
+    public void gotoCastDetail(String id) {
+        callBack.showFragment(CastFragment.TAG, id, true, Constants.ANIM_FADE);
     }
 }

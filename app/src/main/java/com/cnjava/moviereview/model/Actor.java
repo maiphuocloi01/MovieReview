@@ -15,6 +15,8 @@ public class Actor implements Serializable {
     public static class Cast implements Serializable {
         @SerializedName("id")
         public int id;
+        @SerializedName("credit_id")
+        public String creditId;
         @SerializedName("gender")
         public int gender;
         @SerializedName("name")

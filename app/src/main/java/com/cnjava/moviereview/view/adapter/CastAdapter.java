@@ -19,10 +19,16 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
 
     private Context context;
     private Actor actor;
+    private CastCallBack callBack;
 
-    public CastAdapter(Context context, Actor actor) {
+    public interface CastCallBack{
+        void gotoCastDetail(String id);
+    }
+
+    public CastAdapter(Context context, Actor actor, CastCallBack callBack) {
         this.context = context;
         this.actor = actor;
+        this.callBack = callBack;
     }
 
     @NonNull
@@ -41,9 +47,14 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
                 .load(String.format(Constants.IMAGE_URL + item.profilePath))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.progress_animation)
-                .centerCrop()
-                .error(R.drawable.img_default_avt)
+                .error(R.drawable.ic_profile2)
                 .into(holder.binding.ivCast);
+        holder.binding.ivCast.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                callBack.gotoCastDetail(item.creditId);
+            }
+        });
     }
 
     @Override

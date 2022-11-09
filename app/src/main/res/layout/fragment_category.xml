@@ -31,8 +31,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_alignParentTop="true"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
-            android:fontFamily="@font/roboto_bold"
             android:text="Category"
             android:textColor="@color/light_white"
             android:textSize="@dimen/_14ssp" />

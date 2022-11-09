@@ -90,7 +90,8 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
                         .load(Constants.IMAGE_URL + review.movie.backdropPath)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .placeholder(R.drawable.progress_animation)
-                        .centerCrop()
+                        .centerInside()
+                        .error(R.drawable.ic_movie2)
                         .into(holder.binding.ivPoster);
             }
         }

@@ -20,4 +20,15 @@
     <string name="favorite">Favorite</string>
     <string name="more">More</string>
     <string name="write_your_review">Write your review</string>
+    <string name="trending_category">Trending Category</string>
+    <string name="upcoming_movies">Upcoming Movies</string>
+    <string name="now_playing">Now Playing Movies</string>
+    <string name="top_rated">Top Rated Movies</string>
+    <string name="ratings_and_reviews">Ratings and reviews</string>
+    <string name="your_review">Your review</string>
+    <string name="cast">Cast</string>
+    <string name="recommendation">Recommendation</string>
+    <string name="collection">Collection</string>
+    <string name="video">Video</string>
+    <string name="no_reviews_yet">No reviews yet</string>
 </resources>

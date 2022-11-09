@@ -179,12 +179,13 @@
                     android:id="@+id/iv_poster"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_150sdp"
+                    android:src="@drawable/ic_movie2"
                     android:scaleType="centerCrop"
-                    android:src="@drawable/img_poster"/>
+                    android:background="@color/mid_black_20"/>
 
                 <FrameLayout
                     android:layout_width="match_parent"
-                    android:background="@color/mid_black"
+                    android:background="@color/mid_black_40"
                     android:layout_height="wrap_content">
 
                     <LinearLayout

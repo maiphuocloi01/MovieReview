@@ -4,7 +4,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    app:cardCornerRadius="12dp"
     app:cardElevation="0dp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/transparent"
@@ -18,12 +17,12 @@
             android:id="@+id/iv_cover"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:scaleType="centerCrop"
-            android:src="@drawable/img_cover" />
+            android:background="@color/mid_black_20"
+            android:scaleType="centerCrop" />
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="150dp"
+            android:layout_height="@dimen/_240sdp"
             android:layout_alignBottom="@id/iv_cover"
             android:background="@drawable/bg_gradient" />
 
@@ -56,7 +55,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bg_key1"
                 android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/light_black_50"
+                app:cardBackgroundColor="@color/mid_white_50"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="0dp">
 
@@ -92,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bg_key2"
                 android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/light_black_50"
+                app:cardBackgroundColor="@color/mid_white_50"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="0dp">
 
@@ -125,7 +124,7 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/bg_key3"
                 android:layout_marginEnd="8dp"
-                app:cardBackgroundColor="@color/light_black_50"
+                app:cardBackgroundColor="@color/mid_white_50"
                 app:cardCornerRadius="@dimen/_8sdp"
                 app:cardElevation="0dp">
 

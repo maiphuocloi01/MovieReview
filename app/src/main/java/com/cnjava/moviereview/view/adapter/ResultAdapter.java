@@ -1,7 +1,6 @@
 package com.cnjava.moviereview.view.adapter;
 
 import android.content.Context;
-import android.view.ContentInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,12 +9,13 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemSearchResultBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
+
+import java.util.ArrayList;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHolder> {
 
@@ -31,7 +31,6 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
     }
 
 
-
     @NonNull
     @Override
     public MyViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -44,16 +43,15 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         Movie.Result item = movie.results.get(position);
         holder.binding.tvName.setText(item.title);
         holder.binding.tvRate.setText(String.valueOf(item.voteAverage));
-        if(item.releaseDate != null && !item.releaseDate.equals(""))
+        if (item.releaseDate != null && !item.releaseDate.equals(""))
             holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
-        if(item.overview != null) {
+        if (item.overview != null) {
             holder.binding.tvOverview.setText(item.overview);
         }
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .placeholder(R.drawable.progress_animation)
-                .centerCrop()
-                .error(R.drawable.ic_movie)
+                .error(R.drawable.ic_movie2)
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
@@ -65,7 +63,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        if(movie != null){
+        if (movie != null && movie.results != null) {
             return movie.results.size();
         }
         return 0;
@@ -73,6 +71,7 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ItemSearchResultBinding binding;
+
         public MyViewHolder(ItemSearchResultBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

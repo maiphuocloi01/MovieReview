@@ -4,8 +4,8 @@
     android:id="@+id/view_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="5dp"
-    android:layout_marginVertical="10dp"
+    android:layout_marginHorizontal="@dimen/_4sdp"
+    android:layout_marginVertical="@dimen/_5sdp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/light_black"
     app:cardCornerRadius="@dimen/_8sdp"
@@ -29,8 +29,10 @@
             android:id="@+id/iv_poster"
             android:layout_width="match_parent"
             android:layout_height="@dimen/_150sdp"
+            android:src="@drawable/ic_movie2"
+            android:background="@color/mid_black_10"
             android:scaleType="centerCrop"
-            android:src="@drawable/img_cover" />
+             />
         </androidx.cardview.widget.CardView>
 
         <TextView

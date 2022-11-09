@@ -63,7 +63,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_28sdp"
-        android:fontFamily="@font/baloo_semibold"
+        android:fontFamily="@font/montserrat_bold"
         android:text="@string/welcome_back"
         android:textColor="@color/light_white"
         android:textSize="@dimen/_22ssp" />
@@ -148,7 +148,7 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginBottom="@dimen/_8sdp"
         android:background="@drawable/bg_primary_corner_15"
-        android:fontFamily="@font/baloo_semibold"
+        android:fontFamily="@font/montserrat_bold"
         android:foreground="?android:attr/selectableItemBackground"
         android:padding="@dimen/_8sdp"
         android:stateListAnimator="@null"
