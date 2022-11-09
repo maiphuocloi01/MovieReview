@@ -47,6 +47,7 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.ic_movie2)
+                .centerInside()
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

@@ -39,8 +39,6 @@ public class CategoryFragment extends BaseFragment<FragmentCategoryBinding, Comm
     @Override
     protected void initViews() {
 
-        MyApplication.getInstance().getStorage().fragmentTag = TAG;
-
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -58,7 +56,7 @@ public class CategoryFragment extends BaseFragment<FragmentCategoryBinding, Comm
                 if (actionId == EditorInfo.IME_ACTION_SEARCH) {
                     hideSoftInput(binding.etSearch);
                     //viewModel.searchKeyword(v.getText().toString().trim());
-                    callBack.showFragment(KeywordFragment.TAG, v.getText().toString().trim(), true, Constants.ANIM_SLIDE);
+                    callBack.replaceFragment(KeywordFragment.TAG, v.getText().toString().trim(), true, Constants.ANIM_SLIDE);
                     return true;
                 }
                 return false;
@@ -86,7 +84,7 @@ public class CategoryFragment extends BaseFragment<FragmentCategoryBinding, Comm
     public void gotoSearchByCategory(String name) {
         Bundle bundle = new Bundle();
         bundle.putString("category", name);
-        callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
     }
 
     private List<Genres> addGenres(){

@@ -2,6 +2,7 @@ package com.cnjava.moviereview.view.fragment;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,8 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.viewbinding.ViewBinding;
 
+import com.cnjava.moviereview.util.CommonUtils;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
@@ -59,4 +62,15 @@ public abstract class BaseFragment<B extends ViewBinding, V extends BaseViewMode
     protected abstract void initViews();
 
     protected abstract B initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container);
+
+    @Override
+    public void onDestroy() {
+        binding = null;
+        String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
+        Log.d(TAG, "onDestroyView: Frg" + token);
+        String token2 = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
+        Log.d(TAG, "initViews onDestroyView: " + token2);
+        Log.d(TAG, "onDestroy: " + binding);
+        super.onDestroy();
+    }
 }

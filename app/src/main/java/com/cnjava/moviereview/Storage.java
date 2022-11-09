@@ -25,4 +25,7 @@ public class Storage {
     public MovieDetail movieDetail;
     public String fragmentTag;
 
+    public float WIDTH_SCREEN = 0f;
+    public float HEIGHT_SCREEN = 0f;
+
 }

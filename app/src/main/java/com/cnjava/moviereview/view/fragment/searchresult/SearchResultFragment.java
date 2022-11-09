@@ -25,7 +25,8 @@ import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.RecommendSearchAdapter;
 import com.cnjava.moviereview.view.adapter.ResultAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
+import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
+import com.cnjava.moviereview.view.fragment.movie.MovieDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class SearchResultFragment extends BaseFragment<FragmentSearchResultBinding, CommonViewModel> implements PopularAdapter.MovieCallBack, RecommendSearchAdapter.RecommendSearchCallBack {
@@ -127,7 +128,7 @@ public class SearchResultFragment extends BaseFragment<FragmentSearchResultBindi
 
     @Override
     public void gotoMovieDetail(int id) {
-        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(DetailMovieFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
     @Override

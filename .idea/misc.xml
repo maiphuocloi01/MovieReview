@@ -106,8 +106,10 @@
         <entry key="..\:/Users/maiph/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/ratingbar_material.xml" value="0.128" />
         <entry key="..\:/Users/maiph/AppData/Local/Android/Sdk/platforms/android-32/data/res/drawable/ratingbar_small_material.xml" value="0.128" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable-v24/background_splash.xml" value="0.1335" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable-v24/ic_loading3.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/backdrop_background_gradient_appbar.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/background_splash.xml" value="0.1335" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/background_splash_loading.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/bg_corner_top.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/bg_gradient.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/bg_gradient2.xml" value="0.1335" />
@@ -120,6 +122,7 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_choose_dislike.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_choose_like.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_close.xml" value="0.1335" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_discovery.xml" value="0.1" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_dislike.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_email.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_empty_review.xml" value="0.1335" />
@@ -134,6 +137,7 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_like.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_loading.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_loading2.xml" value="0.1335" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_loading_vip.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_lock.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_logo.xml" value="0.1335" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/drawable/ic_logo2.xml" value="0.1335" />
@@ -168,6 +172,7 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_change_password.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_detail.xml" value="0.22" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_detail_movie.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_edit_profile.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_edit_review.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_favorite.xml" value="0.209375" />
@@ -176,14 +181,16 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_keyword.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_login.xml" value="0.12" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_menu_person.xml" value="0.184375" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_movie_detail.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_navigate.xml" value="0.17255434782608695" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_notification.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_onboarding.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_person.xml" value="0.7375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_personal.xml" value="0.16039873130946986" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_profile.xml" value="0.14855224506924045" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_register.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_reset_password.xml" value="0.16666666666666666" />
-        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_result.xml" value="0.18333333333333332" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_result.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_review.xml" value="0.25" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_review_detail.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_search.xml" value="0.22" />
@@ -191,7 +198,7 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_setting.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/fragment_video.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/header.xml" value="0.12" />
-        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_cast.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_cast.xml" value="0.22" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_category.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_dropdown.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_dropdown_ver2.xml" value="0.4466666666666667" />
@@ -200,6 +207,7 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_keyword.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_list.xml" value="0.6266447368421053" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_movie.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_movie_layout1.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_my_review.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_onboard.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_popular_movie.xml" value="0.184375" />
@@ -208,7 +216,9 @@
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_search_result.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_trending_search.xml" value="0.209375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/item_video.xml" value="0.3333333333333333" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/view_detail_header_movie.xml" value="0.16666666666666666" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/view_detail_header_person.xml" value="0.16666666666666666" />
+        <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/view_detail_movie.xml" value="0.184375" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/view_example.xml" value="0.14666666666666667" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/layout/view_expandable_text.xml" value="0.13333333333333333" />
         <entry key="..\:/Users/maiph/Desktop/MovieReview/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml" value="0.1335" />

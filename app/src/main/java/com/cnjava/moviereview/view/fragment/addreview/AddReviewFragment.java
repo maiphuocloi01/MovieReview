@@ -13,7 +13,6 @@ import android.widget.RatingBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
-import androidx.fragment.app.Fragment;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -27,7 +26,6 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, CommonViewModel> {
@@ -93,10 +91,6 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             }
         });
 
-        binding.tvNotification.setOnClickListener(view -> {
-            Fragment currentFragment = requireActivity().getSupportFragmentManager().findFragmentByTag(DetailFragment.TAG);
-            Log.d(TAG, "apiSuccess: " + currentFragment);
-        });
         binding.tvPost.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -138,7 +132,6 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
             Review review = (Review) data;
             if (review.id != null) {
                 DialogUtils.hideLoadingDialog();
-                callBack.reloadFragment(callBack.getBackStack());
                 callBack.backToPrev();
             }
         }

@@ -25,6 +25,7 @@
                 android:layout_height="@dimen/_150sdp"
                 android:src="@drawable/ic_profile2"
                 android:layout_weight="1"
+                android:scaleType="centerCrop"
                 android:background="@color/mid_black_20" />
 
         </androidx.cardview.widget.CardView>

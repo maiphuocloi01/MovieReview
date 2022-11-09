@@ -2,7 +2,6 @@ package com.cnjava.moviereview.view.fragment.search;
 
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
-import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,8 +23,7 @@ import com.cnjava.moviereview.view.adapter.RecommendSearchAdapter;
 import com.cnjava.moviereview.view.adapter.ResultAdapter;
 import com.cnjava.moviereview.view.adapter.TrendingAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
-import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
+import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -70,9 +68,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
             public boolean onQueryTextSubmit(String text) {
                 if (text != null) {
                     searchMovie(text);
-                    /*Bundle bundle = new Bundle();
-                    bundle.putString("search", text.trim());
-                    callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);*/
                 }
                 return true;
             }
@@ -85,9 +80,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
                     ViewUtils.show(binding.rvRecommendSearch);
                     ViewUtils.gone(binding.layoutSearchResult);
                     viewModel.autoCompleteSearch(s);
-                    viewModel.movieNameLD().observe(getViewLifecycleOwner(), _names -> {
-                        searchAdapter.renewItems(_names);
-                    });
+                    viewModel.movieNameLD().observe(getViewLifecycleOwner(), _names -> searchAdapter.renewItems(_names));
                 } else {
                     ViewUtils.show(binding.layoutRecommendName);
                     ViewUtils.show(binding.layoutRecommendMovie);
@@ -132,7 +125,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
 
     @Override
     public void gotoMovieDetail(int id) {
-        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(DetailMovieFragment.TAG, id, true, Constants.ANIM_SLIDE);
     }
 
     @Override
@@ -140,7 +133,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         searchMovie(name);
     }
 
-    private void searchMovie(String text){
+    private void searchMovie(String text) {
         hideSoftInput(binding.etSearch);
         viewModel.searchMovie(text);
         viewModel.movieResultLD().observe(getViewLifecycleOwner(), _result -> {

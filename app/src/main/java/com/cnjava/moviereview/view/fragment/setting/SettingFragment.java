@@ -68,7 +68,7 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
             }
         });
 
-        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+        if (CommonUtils.getInstance().getPref(Constants.SAVE_SESSION) != null) {
             binding.switch1.setChecked(true);
         } else {
             binding.switch1.setChecked(false);
@@ -78,15 +78,15 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
                 if(b){
-                    String tokenBackup = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN_2ND);
+                    String tokenBackup = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
                     if (tokenBackup != null) {
-                        CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, tokenBackup);
+                        CommonUtils.getInstance().savePref(Constants.SAVE_SESSION, tokenBackup);
                         Log.d(TAG, "onCheckedChanged: " + b);
                     }
                 } else {
-                    String tokenBackup = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN_2ND);
+                    String tokenBackup = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
                     if (tokenBackup != null) {
-                        CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
+                        CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
                         Log.d(TAG, "onCheckedChanged: " + b);
                     }
                 }
@@ -97,14 +97,14 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
         binding.row2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ChangePasswordFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.replaceFragment(ChangePasswordFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
 
         binding.row3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(AboutFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.replaceFragment(AboutFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
 
@@ -139,7 +139,7 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
 
         btnConfirm.setOnClickListener(view -> {
             CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
-            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN_2ND);
+            CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
             MyApplication.getInstance().getStorage().myUser = null;
             MyApplication.getInstance().getStorage().reviewList = null;
             MyApplication.getInstance().getStorage().movieDetail = null;
@@ -149,7 +149,7 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
             //MyApplication.getInstance().getStorage().movieTopRated = null;
             //MyApplication.getInstance().getStorage().movieRecommend = null;
             callBack.clearBackStack();
-            callBack.showFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //actionShowFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             //CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
             //CommonUtils.getInstance().clearPref(Constants.USERNAME);

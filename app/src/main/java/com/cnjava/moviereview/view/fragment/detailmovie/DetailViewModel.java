@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment.movie;
+package com.cnjava.moviereview.view.fragment.detailmovie;
 
 import android.util.Log;
 
@@ -25,15 +25,16 @@ import javax.inject.Inject;
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
 
+
 @HiltViewModel
-public class MovieDetailViewModel extends BaseViewModel {
-    private static final String TAG = "MovieDetailViewModel";
+public class DetailViewModel extends BaseViewModel {
+    private static final String TAG = "DetailViewModel";
 
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;
 
     @Inject
-    public MovieDetailViewModel(MovieRepository movieRepository, AccountRepository accountRepository) {
+    public DetailViewModel(MovieRepository movieRepository, AccountRepository accountRepository) {
         this.movieRepository = movieRepository;
         this.accountRepository = accountRepository;
     }
@@ -242,6 +243,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onComplete() {
                 mLiveDataIsLoading.setValue(false);
             }
+
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
@@ -256,6 +258,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onComplete() {
                 mLiveDataIsLoading.setValue(false);
             }
+
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
@@ -270,6 +273,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onComplete() {
                 mLiveDataIsLoading.setValue(false);
             }
+
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
@@ -284,6 +288,7 @@ public class MovieDetailViewModel extends BaseViewModel {
             public void onComplete() {
                 mLiveDataIsLoading.setValue(false);
             }
+
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
@@ -309,3 +314,4 @@ public class MovieDetailViewModel extends BaseViewModel {
         });
     }
 }
+

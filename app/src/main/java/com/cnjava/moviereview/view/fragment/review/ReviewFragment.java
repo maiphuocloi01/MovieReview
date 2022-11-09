@@ -264,7 +264,7 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void gotoReviewDetail(Review review) {
-        callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override
@@ -307,12 +307,12 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         Button btnConfirm = dialog.findViewById(R.id.bt_signin);
 
         btnCancel.setOnClickListener(view -> {
-            callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
 
         btnConfirm.setOnClickListener(view -> {
-            callBack.showFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
         dialog.show();
@@ -327,13 +327,13 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
 
     @Override
     public void updateReview(Review review) {
-        callBack.showFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(EditReviewFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override
     public void gotoUserReview(String userId) {
         if (userId != null) {
-            callBack.showFragment(PersonalFragment.TAG, userId, true, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(PersonalFragment.TAG, userId, true, Constants.ANIM_SLIDE);
         }
     }
 }

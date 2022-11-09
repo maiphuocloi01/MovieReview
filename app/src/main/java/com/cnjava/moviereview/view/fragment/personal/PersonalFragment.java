@@ -20,7 +20,7 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MyReviewAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
+import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
@@ -169,7 +169,7 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Comm
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if(code == 999){
+        if (code == 999) {
             ViewUtils.gone(binding.progressCircularProfile);
             ViewUtils.show(binding.layoutTitlePersonal);
             ViewUtils.show(binding.layoutScroll);
@@ -183,7 +183,7 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Comm
 
     @Override
     public void gotoReviewDetail(Review review) {
-        callBack.showFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(ReviewDetailFragment.TAG, review, true, Constants.ANIM_SLIDE);
     }
 
     @Override
@@ -212,6 +212,6 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Comm
 
     @Override
     public void gotoMovieDetail(String id) {
-        callBack.showFragment(DetailFragment.TAG, Integer.valueOf(id), true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(DetailMovieFragment.TAG, Integer.valueOf(id), true, Constants.ANIM_SLIDE);
     }
 }

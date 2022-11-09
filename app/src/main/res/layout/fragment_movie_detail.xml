@@ -4,9 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark"
-    android:fillViewport="true"
-    android:scrollbars="none">
+    android:background="@color/dark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,6 +55,7 @@
 
                     <ImageView
                         android:id="@+id/iv_poster"
+                        android:scaleType="centerCrop"
                         android:src="@drawable/ic_movie2"
                         android:layout_width="@dimen/_101sdp"
                         android:layout_height="@dimen/_150sdp" />

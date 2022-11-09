@@ -4,6 +4,8 @@ import static com.cnjava.moviereview.util.NumberUtils.convertDateType3;
 
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -54,6 +56,13 @@ public class CastFragment extends BaseFragment<FragmentCastBinding, CastViewMode
 
         binding.collapsingToolbarLayout.setTitleEnabled(false);
 
+        binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                callBack.backToPrev();
+            }
+        });
+
         viewModel.getCastDetail(creditId);
         viewModel.castDetailLD().observe(this, credit -> {
             binding.appBarLayout.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
@@ -90,6 +99,15 @@ public class CastFragment extends BaseFragment<FragmentCastBinding, CastViewMode
     @Override
     protected FragmentCastBinding initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         return FragmentCastBinding.inflate(inflater, container, false);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        if (item.getItemId() == android.R.id.home) {
+            callBack.backToPrev();
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -16,7 +16,7 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.adapter.FavoriteAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
+import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.List;
@@ -86,7 +86,7 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Comm
 
     @Override
     public void gotoMovieDetail(Favorite favorite) {
-        callBack.showFragment(DetailFragment.TAG, Integer.parseInt(favorite.movie.id), true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(DetailMovieFragment.TAG, Integer.parseInt(favorite.movie.id), true, Constants.ANIM_SLIDE);
     }
 
     @Override

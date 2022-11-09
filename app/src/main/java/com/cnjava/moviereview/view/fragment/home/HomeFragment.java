@@ -10,15 +10,14 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -37,13 +36,14 @@ import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.category.CategoryFragment;
+import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
 import com.cnjava.moviereview.view.fragment.login.LoginFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
+import com.cnjava.moviereview.view.fragment.movie.MovieDetailFragment;
+import com.cnjava.moviereview.view.fragment.notification.NotificationFragment;
 import com.cnjava.moviereview.view.fragment.profile.ProfileFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.view.fragment.search.SearchFragment;
 import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
-import com.google.android.material.appbar.AppBarLayout;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -51,8 +51,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewModel> implements PopularAdapter.MovieCallBack {
 
     public static final String TAG = HomeFragment.class.getName();
-
+    private static final int POPULAR = 3;
+    private static final int NOW_PLAYING = 0;
+    private static final int UP_COMING = 1;
+    private static final int TOP_RATED = 2;
     private final Handler handler = new Handler(Looper.getMainLooper());
+    private Movie moviePopular;
     private final Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -66,17 +70,10 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         }
     };
-
-    private Movie moviePopular;
-    private static final int POPULAR = 3;
     private Movie movieNowPlaying;
-    private static final int NOW_PLAYING = 0;
     private Movie movieUpcoming;
-    private static final int UP_COMING = 1;
     private Movie movieTopRated;
-    private static final int TOP_RATED = 2;
-
-    private Storage storage = MyApplication.getInstance().getStorage();
+    private final Storage storage = MyApplication.getInstance().getStorage();
 
     @Override
     protected Class<HomeViewModel> getClassVM() {
@@ -86,11 +83,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     protected void initViews() {
 
-        //homeViewModel = new ViewModelProvider(this).get(HomeViewModel.class);
-
         viewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), this::setScreenLoading);
-
+        String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
+        Log.d(TAG, "initViews: " + token);
         storage.fragmentTag = TAG;
+        LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        params.height = (int) storage.HEIGHT_SCREEN;
+        binding.vpPopular.setLayoutParams(params);
         if (CommonUtils.getInstance().getPref(Constants.ONBOARD) == null) {
             CommonUtils.getInstance().savePref(Constants.ONBOARD, "1");
         }
@@ -109,10 +108,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         }
 
-        //binding.ivSearch.setShowSoftInputOnFocus(false);
-        binding.ivSearch.setOnClickListener(view -> {
-            callBack.showFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
-        });
+        binding.ivSearch.setOnClickListener(view -> callBack.addFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE));
 
 
         if (storage.moviePopular == null) {
@@ -179,40 +175,37 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null) {
                 showAlertDialog();
             } else {
-                if (storage.myUser != null) {
-                    callBack.showFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
-                } else {
-                    getYourProfileAndSaveToStorage();
-                }
+                callBack.replaceFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
 
-        binding.textTrending.setOnClickListener(view -> callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE));
+        binding.textTrending.setOnClickListener(view -> callBack.replaceFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE));
 
         binding.btCategory123.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "28");
-            callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory2.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "14");
-            callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory3.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "18");
-            callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
         binding.btCategory4.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
             bundle.putString("category", "12");
-            callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
         });
 
+        binding.ivNotification.setOnClickListener(view -> callBack.replaceFragment(NotificationFragment.TAG, null, true, Constants.ANIM_FADE));
 
     }
 
@@ -280,18 +273,44 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     public void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause: ");
         handler.removeCallbacks(runnable);
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: ");
         handler.postDelayed(runnable, 3000);
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Log.d(TAG, "onCreate: ");
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        Log.d(TAG, "onStart: ");
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
+
+    @Override
     public void gotoMovieDetail(int id) {
-        callBack.showFragment(DetailFragment.TAG, id, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(DetailMovieFragment.TAG, id, true, Constants.ANIM_SLIDE);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        Log.d(TAG, "onSaveInstanceState: " + outState);
+        super.onSaveInstanceState(outState);
     }
 
 
@@ -317,15 +336,22 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         Button btnConfirm = dialog.findViewById(R.id.bt_signin);
 
         btnCancel.setOnClickListener(view -> {
-            callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
 
         btnConfirm.setOnClickListener(view -> {
-            callBack.showFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
+            callBack.replaceFragment(LoginFragment.TAG, null, true, Constants.ANIM_SCALE);
             dialog.dismiss();
         });
         dialog.show();
 
+    }
+
+
+    @Override
+    public void onDestroyView() {
+        Log.d(TAG, "onDestroyView: ");
+        super.onDestroyView();
     }
 }

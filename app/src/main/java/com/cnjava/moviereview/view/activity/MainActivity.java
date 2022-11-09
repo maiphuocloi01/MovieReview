@@ -1,6 +1,9 @@
 package com.cnjava.moviereview.view.activity;
 
 
+import static com.cnjava.moviereview.util.Constants.ANIM_FADE;
+import static com.cnjava.moviereview.util.Constants.ANIM_SCALE;
+import static com.cnjava.moviereview.util.Constants.ANIM_SLIDE;
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 import static com.cnjava.moviereview.util.IMEUtils.isActive;
 
@@ -8,6 +11,7 @@ import android.app.Activity;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.Window;
@@ -22,6 +26,7 @@ import androidx.fragment.app.FragmentTransaction;
 
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
+import com.cnjava.moviereview.Storage;
 import com.cnjava.moviereview.databinding.ActivityMainBinding;
 import com.cnjava.moviereview.model.Genres;
 import com.cnjava.moviereview.util.CommonUtils;
@@ -29,8 +34,8 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.onboard.OnboardFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
+import com.cnjava.moviereview.view.fragment.onboard.OnboardFragment;
 
 import java.lang.reflect.Constructor;
 
@@ -40,10 +45,8 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     public static final String TAG = MainActivity.class.getName();
-    public static final int ANIM_SLIDE = 0;
-    public static final int ANIM_FADE = 1;
-    public static final int ANIM_SCALE = 2;
     private ActivityMainBinding binding;
+    private final Storage storage = MyApplication.getInstance().getStorage();
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -62,111 +65,83 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         setTheme(R.style.Theme_MovieReview);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        DisplayMetrics displaymetrics = getResources().getDisplayMetrics();
+        storage.WIDTH_SCREEN = displaymetrics.widthPixels / displaymetrics.density;
+        storage.HEIGHT_SCREEN = displaymetrics.heightPixels / displaymetrics.density;
+
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
-        if (MyApplication.getInstance().getStorage().fragmentTag == null) {
-            initViews();
-        } else {
-            loadFragment(MyApplication.getInstance().getStorage().fragmentTag);
-        }
+        initViews();
         addGenres();
         new CountDownTimer(3100, 2000) {
             public void onFinish() {
-                if(!CommonUtils.isInternetOn(MainActivity.this)) {
+                if (!CommonUtils.isInternetOn(MainActivity.this)) {
                     System.exit(0);
-                }  else {
-                    binding.animationView.clearAnimation();
+                } else {
                     ViewUtils.gone(binding.animationView);
                     ViewUtils.show(binding.layoutMain);
                 }
             }
-
             public void onTick(long millisUntilFinished) {
-                if(!CommonUtils.isInternetOn(MainActivity.this)){
+                if (!CommonUtils.isInternetOn(MainActivity.this)) {
                     Toast.makeText(MainActivity.this, "No connection", Toast.LENGTH_SHORT).show();
                 }
             }
         }.start();
-        //List<Genres> genres = MyApplication.getInstance().getStorage().genresList;
-        //Genres genres1 = genres.stream().filter(a -> a.getId() == 12).collect(Collectors.toList()).get(0);
     }
 
     private void initViews() {
         if (CommonUtils.getInstance().getPref(Constants.ONBOARD) == null) {
             OnboardFragment frg = new OnboardFragment();
             frg.setCallBack(this);
+            frg.setData(this);
             getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(OnboardFragment.TAG)
-                    .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
+                    .add(R.id.layout_main, frg, OnboardFragment.class.getName())
                     .commit();
         } else {
             HomeFragment frg = new HomeFragment();
             frg.setCallBack(this);
+            frg.setData(this);
             getSupportFragmentManager()
                     .beginTransaction()
                     .addToBackStack(HomeFragment.TAG)
-                    .replace(R.id.layout_main, frg, HomeFragment.class.getName())
+                    .add(R.id.layout_main, frg, HomeFragment.class.getName())
                     .commit();
         }
     }
 
-    private void loadFragment(String tag) {
-        try {
-
-            if (isActive(this)) {
-                hideSoftInput(MainActivity.this);
-            }
-            Class<?> clazz = Class.forName(tag);
-            Constructor<?> cons = clazz.getConstructor();
-            BaseFragment<?, ?> frg = (BaseFragment<?, ?>) cons.newInstance();
-            frg.setCallBack(this);
-            FragmentTransaction trans = getSupportFragmentManager()
-                    .beginTransaction();
-            trans.replace(R.id.layout_main, frg, tag).commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     @Override
-    public void showFragment(String tag, Object data, boolean isBack, int anim) {
-        try {
-            if (isActive(this)) {
-                hideSoftInput(this);
-            }
-            Class<?> clazz = Class.forName(tag);
-            Constructor<?> cons = clazz.getConstructor();
-            BaseFragment<?, ?> frg = (BaseFragment<?, ?>) cons.newInstance();
-            frg.setData(data);
-            frg.setCallBack(this);
-            FragmentTransaction trans = getSupportFragmentManager()
-                    .beginTransaction();
-            if (isBack) {
-                trans.addToBackStack(tag);
-            }
-            if (anim == ANIM_SLIDE) {
-                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-                //trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-            } else if (anim == ANIM_FADE) {
-                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-            } else if (anim == ANIM_SCALE) {
-                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-                //trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
-            }
-            Log.d(TAG, "showFragment: " + frg);
-            trans.add(R.id.layout_main, frg, tag).commit();
-
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void addFragment(String tag, Object data, boolean isBack, int anim) {
+        Fragment frg = showFragment(tag, data, isBack);
+        if (frg != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(tag)
+                    .setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
+                    .add(R.id.layout_main, frg, tag)
+                    .commit();
         }
     }
 
     @Override
     public void replaceFragment(String tag, Object data, boolean isBack, int anim) {
+        Fragment frg = showFragment(tag, data, isBack);
+        if (frg != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .addToBackStack(tag)
+                    .setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit)
+                    .replace(R.id.layout_main, frg, tag)
+                    .commit();
+        }
+    }
+
+    private Fragment showFragment(String tag, Object data, boolean isBack) {
         try {
             if (isActive(this)) {
                 hideSoftInput(this);
@@ -176,25 +151,10 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             BaseFragment<?, ?> frg = (BaseFragment<?, ?>) cons.newInstance();
             frg.setData(data);
             frg.setCallBack(this);
-            FragmentTransaction trans = getSupportFragmentManager()
-                    .beginTransaction();
-            if (isBack) {
-                trans.addToBackStack(tag);
-            }
-            if (anim == ANIM_SLIDE) {
-                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-                //trans.setCustomAnimations(R.anim.slide_in_right, R.anim.slide_out_left, R.anim.slide_in_left, R.anim.slide_out_right);
-            } else if (anim == ANIM_FADE) {
-                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-            } else if (anim == ANIM_SCALE) {
-                trans.setCustomAnimations(R.anim.fragment_fade_enter, R.anim.fragment_fade_exit);
-                //trans.setCustomAnimations(R.anim.fab_scale_up, R.anim.fab_scale_down);
-            }
-            Log.d(TAG, "replaceFragment: " + frg);
-            trans.replace(R.id.layout_main, frg, tag).commit();
-
+            return frg;
         } catch (Exception e) {
             e.printStackTrace();
+            return null;
         }
     }
 
@@ -203,12 +163,31 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         if (isActive(this)) {
             hideSoftInput(MainActivity.this);
         }
-        onBackPressed();
+        getSupportFragmentManager().popBackStack();
+    }
+
+    @Override
+    public void onBackPressed() {
+        getSupportFragmentManager().popBackStack();
     }
 
     @Override
     public void reloadFragment(Fragment currentFragment) {
-        //Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(tag);
+        if (currentFragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .detach(currentFragment)
+                    .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .attach(currentFragment)
+                    .commit();
+        }
+    }
+
+    @Override
+    public void reloadFragmentByTag(String tag) {
+        Fragment currentFragment = getSupportFragmentManager().findFragmentByTag(tag);
         if (currentFragment != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -224,8 +203,30 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     @Override
     public void clearBackStack() {
         FragmentManager fm = getSupportFragmentManager();
-        for(int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
             fm.popBackStack();
+        }
+    }
+
+    @Override
+    public void reloadAllBackStack() {
+        FragmentManager fm = getSupportFragmentManager();
+        for (int i = 0; i < fm.getBackStackEntryCount(); ++i) {
+            String fragmentTag = fm.getBackStackEntryAt(i).getName();
+            refreshFragment(fm.findFragmentByTag(fragmentTag));
+        }
+    }
+
+    public void refreshFragment(Fragment currentFragment) {
+        if (currentFragment != null) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .detach(currentFragment)
+                    .commit();
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .attach(currentFragment)
+                    .commit();
         }
     }
 
@@ -238,26 +239,57 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         return getSupportFragmentManager().findFragmentByTag(fragmentTag);
     }
 
+    @Override
+    protected void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        Log.d(TAG, "onStop: ");
+    }
+
+    @Override
+    protected void onDestroy() {
+        storage.genresList = null;
+        String saveSession = CommonUtils.getInstance().getPref(Constants.SAVE_SESSION);
+        Log.d(TAG, "onDestroy: " + saveSession);
+        if (saveSession == null) {
+            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
+            CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
+            storage.myUser = null;
+            storage.reviewList = null;
+            storage.movieDetail = null;
+            String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
+            Log.d(TAG, "onSaveSession null \n" + token);
+        } else {
+            String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
+            Log.d(TAG, "onDestroy: no clear \n" + token);
+        }
+        super.onDestroy();
+    }
 
     private void addGenres() {
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(28, "Action"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(12, "Adventure"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(16, "Animation"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(35, "Comedy"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(80, "Crime"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(99, "Documentary"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(18, "Drama"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(10751, "Family"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(14, "Fantasy"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(36, "History"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(27, "Horror"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(10402, "Music"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(9648, "Mystery"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(10749, "Romance"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(878, "Science Fiction"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(10770, "TV Movie"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(53, "Thriller"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(10752, "War"));
-        MyApplication.getInstance().getStorage().genresList.add(new Genres(37, "Western"));
+        storage.genresList.add(new Genres(28, "Action"));
+        storage.genresList.add(new Genres(12, "Adventure"));
+        storage.genresList.add(new Genres(16, "Animation"));
+        storage.genresList.add(new Genres(35, "Comedy"));
+        storage.genresList.add(new Genres(80, "Crime"));
+        storage.genresList.add(new Genres(99, "Documentary"));
+        storage.genresList.add(new Genres(18, "Drama"));
+        storage.genresList.add(new Genres(10751, "Family"));
+        storage.genresList.add(new Genres(14, "Fantasy"));
+        storage.genresList.add(new Genres(36, "History"));
+        storage.genresList.add(new Genres(27, "Horror"));
+        storage.genresList.add(new Genres(10402, "Music"));
+        storage.genresList.add(new Genres(9648, "Mystery"));
+        storage.genresList.add(new Genres(10749, "Romance"));
+        storage.genresList.add(new Genres(878, "Science Fiction"));
+        storage.genresList.add(new Genres(10770, "TV Movie"));
+        storage.genresList.add(new Genres(53, "Thriller"));
+        storage.genresList.add(new Genres(10752, "War"));
+        storage.genresList.add(new Genres(37, "Western"));
     }
 }

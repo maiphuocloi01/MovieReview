@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.fragment.cast;
+package com.cnjava.moviereview.view.fragment.notification;
 
 import android.util.Log;
 
@@ -9,6 +9,7 @@ import com.cnjava.moviereview.model.CastDetail;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.repository.AccountRepository;
 import com.cnjava.moviereview.repository.MovieRepository;
+import com.cnjava.moviereview.view.fragment.cast.CastViewModel;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
 import javax.inject.Inject;
@@ -17,15 +18,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
 
 @HiltViewModel
-public class CastViewModel extends BaseViewModel {
+public class NotificationViewModel extends BaseViewModel {
 
-    private static final String TAG = CastViewModel.class.getSimpleName();
+    private static final String TAG = NotificationViewModel.class.getSimpleName();
 
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;
 
     @Inject
-    public CastViewModel(MovieRepository movieRepository, AccountRepository accountRepository) {
+    public NotificationViewModel(MovieRepository movieRepository, AccountRepository accountRepository) {
         this.movieRepository = movieRepository;
         this.accountRepository = accountRepository;
     }
@@ -39,9 +40,9 @@ public class CastViewModel extends BaseViewModel {
         return nowPlayingMovieLD;
     }
 
-    public void getCastDetail(String creditId) {
+    /*public void getCastDetail(String creditId) {
         mLiveDataIsLoading.setValue(true);
-        movieRepository.getCastDetail(creditId).subscribe(new CustomSingleObserver<CastDetail>() {
+        movieRepository.getCastDetail(creditId).subscribe(new CustomObserver<CastDetail>() {
             @Override
             public void onSuccess(@NonNull CastDetail castDetail) {
                 castDetailLD.setValue(castDetail);
@@ -54,6 +55,5 @@ public class CastViewModel extends BaseViewModel {
                 mLiveDataIsLoading.setValue(false);
             }
         });
-    }
-
+    }*/
 }

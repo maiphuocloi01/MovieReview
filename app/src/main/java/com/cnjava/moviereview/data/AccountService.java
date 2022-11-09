@@ -9,6 +9,7 @@ import com.cnjava.moviereview.model.User;
 
 import java.util.List;
 
+import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
@@ -88,15 +89,15 @@ public interface AccountService {
 
     @DELETE("reviews/{review_id}")
     @Headers("Content-type: application/json")
-    Single<Void> deleteReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+    Completable deleteReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
 
     @PUT("reviews/{review_id}/like")
     @Headers("Content-type: application/json")
-    Single<Void> likeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+    Completable likeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
 
     @PUT("reviews/{review_id}/dislike")
     @Headers("Content-type: application/json")
-    Single<Void> dislikeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
+    Completable dislikeReview(@Path("review_id") String review_id, @Header("Authorization") String auth);
 
     @GET("users/me/statistics")
     @Headers("Content-type: application/json")
@@ -120,5 +121,5 @@ public interface AccountService {
 
     @DELETE("favorites/{id}")
     @Headers("Content-type: application/json")
-    Single<Void> deleteFavorite(@Path("id") String id, @Header("Authorization") String auth);
+    Completable deleteFavorite(@Path("id") String id, @Header("Authorization") String auth);
 }

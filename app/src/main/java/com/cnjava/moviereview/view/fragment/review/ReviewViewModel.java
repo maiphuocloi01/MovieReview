@@ -17,8 +17,6 @@ import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.SingleObserver;
-import io.reactivex.rxjava3.disposables.Disposable;
 
 @HiltViewModel
 public class ReviewViewModel extends BaseViewModel {
@@ -52,7 +50,7 @@ public class ReviewViewModel extends BaseViewModel {
 
     public void getYourProfile(String token) {
         mLiveDataIsLoading.setValue(true);
-        accountRepository.getMyProfile(token).subscribe(new CustomObserver<User>() {
+        accountRepository.getMyProfile(token).subscribe(new CustomSingleObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
                 yourProfileLD.setValue(user);
@@ -68,7 +66,7 @@ public class ReviewViewModel extends BaseViewModel {
     }
 
     public void getReviewByMovieId(String movieId) {
-        accountRepository.getReviewByMovieId(movieId).subscribe(new CustomObserver<List<Review>>() {
+        accountRepository.getReviewByMovieId(movieId).subscribe(new CustomSingleObserver<List<Review>>() {
             @Override
             public void onSuccess(@NonNull List<Review> reviews) {
                 listReviewLD.setValue(reviews);

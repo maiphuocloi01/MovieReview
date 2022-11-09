@@ -79,7 +79,7 @@ public class NavigateFragment extends BaseFragment<FragmentNavigateBinding, Navi
 
 
     public void setActionShowFragment(String tag, Object data, boolean isBack, int anim) {
-        callBack.showFragment(tag, data, isBack, anim);
+        callBack.addFragment(tag, data, isBack, anim);
     }
 
     @Override

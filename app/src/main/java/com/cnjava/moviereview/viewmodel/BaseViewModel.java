@@ -9,14 +9,13 @@ import androidx.lifecycle.ViewModel;
 
 import com.cnjava.moviereview.data.Api;
 import com.cnjava.moviereview.data.UserApi;
-import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Translate;
-import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 
 import java.util.concurrent.TimeUnit;
 
+import io.reactivex.rxjava3.core.CompletableObserver;
 import io.reactivex.rxjava3.core.SingleObserver;
 import io.reactivex.rxjava3.disposables.CompositeDisposable;
 import io.reactivex.rxjava3.disposables.Disposable;
@@ -60,7 +59,20 @@ public abstract class BaseViewModel extends ViewModel {
         }
     }
 
-    public abstract class CustomObserver<T> implements SingleObserver<T> {
+    public abstract class CustomSingleObserver<T> implements SingleObserver<T> {
+        @Override
+        public void onSubscribe(Disposable d) {
+            mMainCompDisposable.add(d);
+        }
+
+        @Override
+        public void onError(Throwable e) {
+            mLiveDataOnError.setValue(e);
+            e.printStackTrace();
+        }
+    }
+
+    public abstract class CustomCompletableObserver implements CompletableObserver {
         @Override
         public void onSubscribe(Disposable d) {
             mMainCompDisposable.add(d);
@@ -79,7 +91,7 @@ public abstract class BaseViewModel extends ViewModel {
 
     protected Api getApi() {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL_USER  )
+                .baseUrl(Constants.BASE_URL_USER)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(new OkHttpClient.Builder().callTimeout(30, TimeUnit.SECONDS).build())
                 .build();

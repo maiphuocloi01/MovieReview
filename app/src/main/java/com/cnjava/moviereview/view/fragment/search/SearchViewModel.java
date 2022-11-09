@@ -54,7 +54,7 @@ public class SearchViewModel extends BaseViewModel {
 
     public void getTrending(String timeWindow) {
         mLiveDataIsLoading.setValue(true);
-        movieRepository.getTrending(timeWindow).subscribe(new CustomObserver<Movie>() {
+        movieRepository.getTrending(timeWindow).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 if (timeWindow.equals("day")) {
@@ -105,7 +105,7 @@ public class SearchViewModel extends BaseViewModel {
 
     public void searchMovie(String text) {
         mLiveDataIsLoading.setValue(true);
-        movieRepository.searchMovie(text).subscribe(new CustomObserver<Movie>() {
+        movieRepository.searchMovie(text).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 movieResultLD.setValue(movie);

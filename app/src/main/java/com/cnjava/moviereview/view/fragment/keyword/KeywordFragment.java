@@ -81,7 +81,7 @@ public class KeywordFragment extends BaseFragment<FragmentSearchKeywordBinding, 
     public void gotoSearchByKeywordId(int id) {
         Bundle bundle = new Bundle();
         bundle.putInt("keyword", id);
-        callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
     }
 
 }

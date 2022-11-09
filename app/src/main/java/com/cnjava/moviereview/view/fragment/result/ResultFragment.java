@@ -11,6 +11,8 @@ import com.cnjava.moviereview.view.fragment.BaseFragment;
 
 public class ResultFragment extends BaseFragment<FragmentResultBinding, ResultViewModel> {
 
+    public static final String TAG = ResultFragment.class.getName();
+
     private Object mData;
 
     @Override

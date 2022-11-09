@@ -126,7 +126,6 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
             if (review.id != null){
                 DialogUtils.hideLoadingDialog();
                 //MyApplication.getInstance().getStorage().reviewList = null;
-                callBack.reloadFragment(callBack.getBackStack());
                 callBack.backToPrev();
             }
         }

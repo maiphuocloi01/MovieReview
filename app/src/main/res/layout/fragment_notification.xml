@@ -41,7 +41,7 @@
                 <TextView
                     android:id="@+id/tv_shows_text"
                     android:padding="@dimen/_1sdp"
-                    android:text="@string/app_name"
+                    android:text="@string/notification"
                     android:textColor="@color/light_white"
                     android:layout_width="wrap_content"
                     android:fontFamily="@font/roboto_bold"
@@ -117,9 +117,37 @@
                 app:drawableEndCompat="@drawable/ic_forward"
                 app:drawableTint="@color/light_white" />-->
 
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                layout="@layout/item_favorite"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                layout="@layout/item_favorite"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                layout="@layout/item_favorite"/>
+
+            <include
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginVertical="@dimen/_10sdp"
+                android:layout_marginHorizontal="@dimen/_14sdp"
+                layout="@layout/item_favorite"/>
+
 
             <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvResult"
+                android:id="@+id/rv_top_rated"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="@dimen/_6sdp"

@@ -16,13 +16,13 @@ import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentLoginBinding;
 import com.cnjava.moviereview.model.Response;
-import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.forgotpassword.ForgotPasswordFragment;
+import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
@@ -62,7 +62,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         binding.tvForgotPassword.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(ForgotPasswordFragment.TAG, null, true, 0);
+                callBack.replaceFragment(ForgotPasswordFragment.TAG, null, true, 0);
             }
         });
 
@@ -118,7 +118,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         binding.tvRegister.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.showFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
+                callBack.replaceFragment(RegisterFragment.TAG, null, true, Constants.ANIM_SLIDE);
             }
         });
     }
@@ -133,29 +133,18 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         if (key.equals(Constants.KEY_LOGIN)) {
             Response token = (Response) data;
             Log.d(TAG, "apiSuccess: " + token.getAccessToken());
-            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN_2ND);
+            CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
             CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, token.getAccessToken());
-            CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN_2ND, token.getAccessToken());
-            if(binding.etUsername.getText() != null) {
+            CommonUtils.getInstance().savePref(Constants.SAVE_SESSION, token.getAccessToken());
+            if (binding.etUsername.getText() != null) {
                 CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString().trim());
             }
-            MyApplication.getInstance().getStorage().reviewList = null;
-            //CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString());
-            //callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
-            if (MyApplication.getInstance().getStorage().myUser == null) {
-                //DialogUtils.showLoadDataDialog(context);
-                Log.d(TAG, "myUser null");
-                if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                    Log.d(TAG, "getYourProfile: ");
-                    viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                }
-            }
-        } else if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
-            User user = (User) data;
-            DialogUtils.hideLoadingDialog();
-            MyApplication.getInstance().getStorage().myUser = user;
             Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
+            MyApplication.getInstance().getStorage().reviewList = null;
+            MyApplication.getInstance().getStorage().myUser = null;
+            DialogUtils.hideLoadingDialog();
             callBack.backToPrev();
+
         }
 
     }
@@ -171,9 +160,9 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             }.getType();
             Response errorResponse = gson.fromJson(res.charStream(), type);
             Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_LONG).show();
-        } else if (code == 999){
+        } else if (code == 999) {
             DialogUtils.hideLoadingDialog();
-            Toast.makeText(context, "Unable to connect Heroku, try again", Toast.LENGTH_SHORT).show();
+            Toast.makeText(context, "Unable to connect, try again", Toast.LENGTH_SHORT).show();
         }
     }
 }
