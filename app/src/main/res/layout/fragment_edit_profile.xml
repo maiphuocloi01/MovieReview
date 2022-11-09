@@ -32,7 +32,7 @@
             android:layout_alignParentBottom="true"
             android:layout_toLeftOf="@+id/iv_edit"
             android:layout_toRightOf="@+id/iv_back"
-            android:fontFamily="@font/roboto_bold"
+            android:fontFamily="@font/montserrat_bold"
             android:gravity="center"
             android:text="Your profile"
             android:textAlignment="center"
@@ -121,7 +121,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Email"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
@@ -165,7 +165,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Full name"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
@@ -209,7 +209,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Phone number"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
@@ -251,7 +251,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Birthday"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
@@ -297,7 +297,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:fontFamily="@font/roboto_regular"
+                        android:fontFamily="@font/montserrat_bold"
                         android:text="Gender"
                         android:textColor="@color/light_white"
                         android:textSize="@dimen/_12ssp" />
@@ -386,7 +386,7 @@
                 android:layout_marginBottom="5dp"
                 android:background="@drawable/bg_primary_corner_10"
                 android:visibility="gone"
-                android:fontFamily="@font/baloo_semibold"
+                android:fontFamily="@font/montserrat_bold"
                 android:padding="12dp"
                 android:stateListAnimator="@null"
                 android:text="Save"
@@ -407,7 +407,7 @@
                 android:foreground="?android:attr/selectableItemBackground"
                 android:background="@drawable/bg_transparent_corner_10_border_primary"
                 android:enabled="true"
-                android:fontFamily="@font/baloo_semibold"
+                android:fontFamily="@font/montserrat_bold"
                 android:padding="12dp"
                 android:visibility="gone"
                 android:text="Cancel"

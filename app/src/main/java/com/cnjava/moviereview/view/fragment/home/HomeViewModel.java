@@ -19,7 +19,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 @HiltViewModel
 public class HomeViewModel extends BaseViewModel {
 
-    private static final String TAG = "HomeViewModel";
+    private static final String TAG = HomeViewModel.class.getSimpleName();
 
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;

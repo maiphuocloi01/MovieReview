@@ -57,9 +57,9 @@
 
                     <ImageView
                         android:id="@+id/iv_poster"
+                        android:src="@drawable/ic_movie2"
                         android:layout_width="@dimen/_101sdp"
-                        android:layout_height="@dimen/_150sdp"
-                        android:scaleType="centerCrop" />
+                        android:layout_height="@dimen/_150sdp" />
 
                 </androidx.cardview.widget.CardView>
 
@@ -259,7 +259,7 @@
                     android:layout_marginTop="@dimen/_20sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:background="@drawable/bg_primary_corner_10"
-                    android:fontFamily="@font/baloo_semibold"
+                    android:fontFamily="@font/montserrat_bold"
                     android:paddingVertical="@dimen/_6sdp"
                     android:stateListAnimator="@null"
                     android:text="@string/write_your_review"
@@ -270,15 +270,11 @@
 
                 <TextView
                     android:id="@+id/tv_title_your_review"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="start"
-                    android:layout_marginTop="@dimen/_20sdp"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Your review"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@string/your_review" />
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/layout_your_review"
@@ -511,56 +507,15 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <TableRow
-                    android:id="@+id/tv_review"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
+                <TextView
+                    android:id="@+id/textRatingReview"
+                    style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:fontFamily="@font/baloo_medium"
-                        android:text="Ratings and reviews"
-                        android:textColor="@color/white"
-                        android:textSize="@dimen/_14ssp" />
-
-                    <View
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1" />
-
-                    <TableRow
-                        android:id="@+id/layout_add_review"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:gravity="center">
-
-                        <ImageView
-                            android:foreground="?android:attr/selectableItemBackground"
-                            android:id="@+id/iv_review"
-                            android:layout_width="@dimen/_20sdp"
-                            android:layout_height="@dimen/_20sdp"
-                            android:layout_marginEnd="@dimen/_3sdp"
-                            android:src="@drawable/ic_forward"
-                            app:tint="@color/white" />
-
-                        <!--<TextView
-                            android:id="@+id/tv_add_review"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:fontFamily="@font/roboto_bold"
-                            android:text="Add your review"
-                            android:gravity="center"
-                            android:layout_marginEnd="@dimen/_2sdp"
-                            android:textColor="@color/primary"
-                            android:textSize="@dimen/_10ssp" />-->
-
-                    </TableRow>
-
-
-                </TableRow>
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@string/ratings_and_reviews"
+                    app:drawableEndCompat="@drawable/ic_forward"
+                    app:drawableTint="@color/light_white" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_review"
@@ -579,7 +534,7 @@
                     android:layout_marginTop="@dimen/_8sdp"
                     android:layout_marginBottom="@dimen/_16sdp"
                     android:fontFamily="@font/roboto_regular"
-                    android:text="No reviews yet"
+                    android:text="@string/no_reviews_yet"
                     android:layout_marginHorizontal="@dimen/_12sdp"
                     android:textColor="@color/mid_white"
                     android:textSize="@dimen/_11ssp"
@@ -605,10 +560,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/_10sdp"
-                    android:fontFamily="@font/baloo_medium"
+                    android:fontFamily="@font/montserrat_bold"
                     android:text="Overview"
                     android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:textColor="@color/white"
+                    android:textColor="@color/light_white"
                     android:textSize="@dimen/_14ssp" />
 
                 <TextView
@@ -619,7 +574,7 @@
                     android:layout_marginHorizontal="@dimen/_14sdp"
                     android:fontFamily="@font/roboto_regular"
                     android:lineSpacingExtra="@dimen/_2sdp"
-                    android:textColor="@color/light_white"
+                    android:textColor="@color/lighter_white"
                     android:textSize="@dimen/_12ssp" />
 
                 <!--<ru.embersoft.expandabletextview.ExpandableTextView
@@ -659,9 +614,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserrat_bold"
                             android:text="Release"
-                            android:textColor="@color/white"
+                            android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
@@ -672,16 +627,16 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:textColor="@color/light_white"
+                            android:textColor="@color/lighter_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserrat_bold"
                             android:text="Budget"
-                            android:textColor="@color/white"
+                            android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
@@ -692,16 +647,16 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:textColor="@color/light_white"
+                            android:textColor="@color/lighter_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserrat_bold"
                             android:text="Rate Count"
-                            android:textColor="@color/white"
+                            android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
@@ -713,7 +668,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:textColor="@color/light_white"
+                            android:textColor="@color/lighter_white"
                             android:textSize="@dimen/_12ssp" />
 
 
@@ -731,9 +686,9 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserrat_bold"
                             android:text="Status"
-                            android:textColor="@color/white"
+                            android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
@@ -744,16 +699,16 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:textColor="@color/light_white"
+                            android:textColor="@color/lighter_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserrat_bold"
                             android:text="Revenue"
-                            android:textColor="@color/white"
+                            android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
@@ -764,16 +719,16 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:textColor="@color/light_white"
+                            android:textColor="@color/lighter_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="16dp"
-                            android:fontFamily="@font/roboto_bold"
+                            android:fontFamily="@font/montserrat_bold"
                             android:text="Popularity"
-                            android:textColor="@color/white"
+                            android:textColor="@color/light_white"
                             android:textSize="@dimen/_12ssp" />
 
                         <TextView
@@ -785,7 +740,7 @@
                             android:ellipsize="end"
                             android:fontFamily="@font/roboto_regular"
                             android:maxLines="1"
-                            android:textColor="@color/light_white"
+                            android:textColor="@color/lighter_white"
                             android:textSize="@dimen/_12ssp" />
 
 
@@ -797,14 +752,13 @@
 
                 <TextView
                     android:id="@+id/tv_cast"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Cast"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@string/cast"
+                    app:drawableEndCompat="@drawable/ic_forward"
+                    app:drawableTint="@color/light_white" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_cast"
@@ -818,15 +772,13 @@
 
                 <TextView
                     android:id="@+id/tv_video"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Video"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp"
-                    android:visibility="gone" />
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@string/video"
+                    app:drawableEndCompat="@drawable/ic_forward"
+                    app:drawableTint="@color/light_white" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_video"
@@ -842,15 +794,12 @@
 
                 <TextView
                     android:id="@+id/tv_collection"
-                    android:layout_width="wrap_content"
+                    style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Doctor Strange Collection"
-                    android:textColor="@color/white"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:textSize="@dimen/_14ssp"
-                    android:visibility="gone" />
+                    android:visibility="gone"
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@string/collection" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_collection"
@@ -865,14 +814,14 @@
                     tools:listitem="@layout/item_movie" />
 
                 <TextView
-                    android:layout_width="wrap_content"
+                    android:id="@+id/textRecommend"
+                    style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_18sdp"
-                    android:fontFamily="@font/baloo_medium"
-                    android:text="Recommendation"
-                    android:layout_marginHorizontal="@dimen/_12sdp"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/_14ssp" />
+                    android:layout_marginTop="@dimen/_6sdp"
+                    android:text="@string/recommendation"
+                    app:drawableEndCompat="@drawable/ic_forward"
+                    app:drawableTint="@color/light_white" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/rv_recommend"

@@ -1,13 +1,16 @@
 package com.cnjava.moviereview.data;
 
 import com.cnjava.moviereview.model.Actor;
+import com.cnjava.moviereview.model.CastDetail;
 import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Keyword;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
+import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Video;
 
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import retrofit2.http.GET;
 import retrofit2.http.Headers;
@@ -45,6 +48,10 @@ public interface MovieService {
     @Headers("Content-type: application/json")
     Single<Movie> searchMovie(@Query("query") String keyword);
 
+    @GET("search/movie")
+    @Headers("Content-type: application/json")
+    Observable<MovieName> autoCompleteSearch(@Query("query") String keyword);
+
     @GET("search/keyword")
     @Headers("Content-type: application/json")
     Single<Keyword> searchKeyword(@Query("query") String keyword);
@@ -76,4 +83,8 @@ public interface MovieService {
     @GET("movie/{movie_id}/external_ids")
     @Headers("Content-type: application/json")
     Single<Social> getSocial(@Path("movie_id") int movie_id);
+
+    @GET("credit/{credit_id}")
+    @Headers("Content-type: application/json")
+    Single<CastDetail> getCastDetail(@Path("credit_id") String credit_id);
 }

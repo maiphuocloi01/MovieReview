@@ -46,8 +46,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
                     .load(String.format(Constants.IMAGE_URL_YOUTUBE + item.key + "/0.jpg"))
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(R.drawable.progress_animation)
-                    .centerCrop()
-                    .error(R.drawable.ic_movie)
+                    .error(R.drawable.ic_movie2)
                     .into(holder.binding.ivPoster);
             holder.binding.tvName.setText(item.name);
             holder.binding.tvType.setText(item.type);

@@ -64,7 +64,7 @@
         android:textSize="@dimen/_22sdp"
         android:layout_gravity="center"
         android:layout_marginTop="@dimen/_28sdp"
-        android:fontFamily="@font/baloo_semibold"
+        android:fontFamily="@font/montserrat_bold"
         android:textColor="@color/light_white"
         android:text="Join Viewie"/>
 
@@ -212,7 +212,7 @@
         android:background="@drawable/bg_primary_corner_15"
         android:padding="@dimen/_8sdp"
         android:foreground="?android:attr/selectableItemBackground"
-        android:fontFamily="@font/baloo_semibold"
+        android:fontFamily="@font/montserrat_bold"
         android:stateListAnimator="@null"
         android:text="Register"
         android:textAllCaps="false"

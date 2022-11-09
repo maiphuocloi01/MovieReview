@@ -9,6 +9,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cnjava.moviereview.databinding.ItemRecommendSearchBinding;
+import com.cnjava.moviereview.model.MovieName;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +17,7 @@ import java.util.List;
 public class RecommendSearchAdapter extends RecyclerView.Adapter<RecommendSearchAdapter.MyViewHolder> {
 
     private Context context;
-    private List<String> listSearch = new ArrayList<>();
+    private MovieName listSearch;
     private RecommendSearchCallBack callBack;
 
     public interface RecommendSearchCallBack{
@@ -29,24 +30,24 @@ public class RecommendSearchAdapter extends RecyclerView.Adapter<RecommendSearch
         this.callBack = callBack;
     }
 
-    public void renewItems(List<String> listSearch) {
+    public void renewItems(MovieName listSearch) {
         this.listSearch = listSearch;
         notifyDataSetChanged();
     }
 
-    public void deleteItem(int position) {
+    /*public void deleteItem(int position) {
         this.listSearch.remove(position);
         notifyDataSetChanged();
-    }
+    }*/
 
     public void deleteAllItem() {
-        this.listSearch.clear();
-        this.listSearch = new ArrayList<>();
+        this.listSearch.results.clear();
+        this.listSearch.results = new ArrayList<>();
         notifyDataSetChanged();
     }
 
-    public void addItem(String name) {
-        this.listSearch.add(name);
+    public void addItem(MovieName.MovieNameResult name) {
+        this.listSearch.results.add(name);
         notifyDataSetChanged();
     }
 
@@ -59,12 +60,12 @@ public class RecommendSearchAdapter extends RecyclerView.Adapter<RecommendSearch
 
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
-        String name = listSearch.get(position);
-        holder.binding.tvSearch.setText(name);
+        MovieName.MovieNameResult name = listSearch.results.get(position);
+        holder.binding.tvSearch.setText(name.title);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.gotoSearch(name);
+                callBack.gotoSearch(name.title);
             }
         });
     }
@@ -72,10 +73,10 @@ public class RecommendSearchAdapter extends RecyclerView.Adapter<RecommendSearch
     @Override
     public int getItemCount() {
         if (listSearch != null){
-            if(listSearch.size() > 4){
+            if(listSearch.results.size() > 4){
                 return 4;
             }else {
-                return listSearch.size();
+                return listSearch.results.size();
             }
         }
         return 0;

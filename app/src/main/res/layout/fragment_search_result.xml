@@ -1,132 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:background="@color/dark"
-    android:layout_height="match_parent">
+    android:orientation="vertical">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
 
-        <TableRow
+
+        <androidx.appcompat.widget.SearchView
+            android:id="@+id/et_search1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/_14sdp"
-            android:layout_marginTop="@dimen/_30sdp"
+            android:layout_marginTop="@dimen/_38sdp"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:layout_width="match_parent">
+            android:background="@drawable/bg_light_dark_corner_20"
+            app:iconifiedByDefault="false"
+            android:cursorVisible="false"
+            app:queryBackground="@null"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            app:theme="@style/Widget.VieWie.SearchView"
+            app:queryHint="Search for movie..."
+            app:submitBackground="@null" />
 
-            <ImageView
-                android:id="@+id/iv_back"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentBottom="true"
-                android:src="@drawable/ic_back"
-                android:layout_gravity="center"
-                app:tint="@color/light_white" />
+        <!--<com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/layout_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/_14sdp"
+            android:layout_marginTop="@dimen/_38sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
+            android:background="@drawable/bg_light_dark_corner_20"
+            app:endIconMode="clear_text"
+            app:endIconTint="@color/light_white"
+            app:hintAnimationEnabled="false"
+            app:hintEnabled="false"
+            app:startIconDrawable="@drawable/ic_search"
+            app:startIconTint="@color/light_white">
 
-            <com.google.android.material.textfield.TextInputLayout
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/et_search"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_light_dark_corner_20"
-                app:hintAnimationEnabled="false"
-                app:endIconMode="clear_text"
-                android:layout_marginStart="@dimen/_10sdp"
-                app:endIconTint="@color/light_white"
-                app:hintEnabled="false">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/et_search"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@android:color/transparent"
-                    android:drawableStart="@drawable/ic_search"
-                    android:drawablePadding="@dimen/_10sdp"
-                    android:drawableTint="@color/light_white"
-                    android:hint="Search for movies..."
-                    android:inputType="text"
-                    android:singleLine="true"
-                    android:imeOptions="actionSearch"
-                    android:padding="@dimen/_10sdp"
-                    android:textColor="@color/light_white"
-                    android:textColorHint="@color/mid_white"
-                    android:textSize="@dimen/_12ssp" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-
-        </TableRow>
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:layout_width="match_parent"
-            android:layout_marginHorizontal="@dimen/_14sdp"
-            android:layout_height="wrap_content"
-            tools:listitem="@layout/item_recommend_search"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:id="@+id/rv_recommend_search"
-            tools:itemCount="4"
-            android:visibility="visible"
-            android:layout_marginBottom="@dimen/_2sdp"
-            android:layout_marginTop="@dimen/_2sdp"/>
+                android:background="@android:color/transparent"
+                android:hint="Search for movies..."
+                android:focusableInTouchMode="false"
+                android:imeOptions="actionSearch"
+                android:inputType="text"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="@dimen/_10sdp"
+                android:cursorVisible="false"
+                android:singleLine="true"
+                android:textColor="@color/light_white"
+                android:textColorHint="@color/mid_white"
+                android:textSize="@dimen/_12ssp" />
+        </com.google.android.material.textfield.TextInputLayout>
+-->
 
         <LinearLayout
             android:id="@+id/layout_search_result"
-            android:orientation="vertical"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_count_movie"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/_4sdp"
                 android:layout_marginHorizontal="@dimen/_16sdp"
-                android:fontFamily="@font/roboto_regular"
-                android:text=""
-                android:maxLines="2"
+                android:layout_marginTop="@dimen/_4sdp"
                 android:ellipsize="end"
+                android:fontFamily="@font/roboto_regular"
+                android:maxLines="2"
+                android:text=""
                 android:textColor="@color/mid_white"
                 android:textSize="@dimen/_12ssp" />
 
             <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rv_result"
                 android:layout_width="match_parent"
-                android:layout_marginHorizontal="@dimen/_10sdp"
                 android:layout_height="wrap_content"
-                tools:listitem="@layout/item_search_result"
+                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_marginTop="@dimen/_10sdp"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
-                android:id="@+id/rv_result"
-                android:layout_marginTop="@dimen/_10sdp"/>
-
-            <TextView
-                android:id="@+id/tv_recommend"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_14sdp"
-                android:layout_marginTop="15dp"
-                android:fontFamily="@font/roboto_bold"
-                android:text="Recommended for you"
-                android:visibility="gone"
-                android:textColor="@color/light_white"
-                android:textSize="@dimen/_12ssp" />
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:layout_width="match_parent"
-                android:layout_marginHorizontal="@dimen/_14sdp"
-                android:layout_height="wrap_content"
-                tools:listitem="@layout/item_movie"
-                android:orientation="horizontal"
-                android:visibility="gone"
-                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-                android:id="@+id/rv_recommend"
-                android:layout_marginTop="@dimen/_8sdp"/>
+                tools:listitem="@layout/item_search_result" />
 
         </LinearLayout>
-
 
 
     </LinearLayout>

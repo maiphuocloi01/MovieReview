@@ -43,12 +43,6 @@
     </style>
 
 
-    <style name="SplashScreenStyle" parent="Theme.AppCompat.DayNight.NoActionBar">
-        <item name="android:windowBackground">@drawable/ic_splash_screen</item>
-        <item name="android:windowTranslucentStatus">true</item>
-        <item name="android:windowTranslucentNavigation">true</item>
-    </style>
-
     <style name="RatingBarSmall" parent="android:style/Widget.Material.RatingBar.Small">
         <item name="colorControlNormal">@color/light_black</item>
         <item name="colorControlActivated">@color/primary</item>
@@ -67,6 +61,17 @@
     <style name="roundedImageViewRounded">
         <item name="cornerFamily">rounded</item>
         <item name="cornerSize">50%</item>
+    </style>
+
+    <style name="Toolbar.TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title">
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="android:textAlignment">center</item>
+        <item name="android:fontFamily">@font/roboto_bold</item>
+    </style>
+
+    <style name="ToolbarTheme" parent="@style/ThemeOverlay.AppCompat.ActionBar">
+        <!-- Customize color of navigation drawer icon and back arrow -->
+        <item name="colorControlNormal">@color/light_white</item>
     </style>
 
     <style name="MyDatePicker" parent="android:Widget.Material.Light.DatePicker">
@@ -100,5 +105,90 @@
         <item name="android:textSize">12sp</item>
     </style>
 
+    <style name="Widget.VieWie.TextView" parent="@android:style/Widget.TextView">
+        <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="android:textDirection">locale</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.InfoTitle" parent="@style/Widget.VieWie.TextView">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">start</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:alpha">0.9</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.InfoBody" parent="@style/Widget.VieWie.TextView">
+        <item name="android:textAppearance">?attr/textAppearanceBodyMedium</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">start</item>
+        <item name="android:maxLines">3</item>
+        <item name="android:textIsSelectable">true</item>
+        <item name="android:layout_marginStart">12dp</item>
+        <item name="android:letterSpacing">0</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.Line" parent="@style/Widget.VieWie.TextView">
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">start</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.Title" parent="@style/Widget.VieWie.TextView">
+        <item name="android:textAppearance">?attr/textAppearanceTitleLarge</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:gravity">start</item>
+        <item name="android:layout_gravity">center</item>
+        <item name="android:maxLines">1</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.Title.Clickable" parent="@style/Widget.VieWie.TextView.Title">
+        <item name="android:background">?android:attr/selectableItemBackground</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+        <item name="android:paddingStart">@dimen/_16sdp</item>
+        <item name="android:paddingEnd">@dimen/_16sdp</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.Title.Clickable.DetailContent" parent="@style/Widget.VieWie.TextView.Title.Clickable">
+        <item name="android:textColor">@color/light_white</item>
+        <item name="android:textSize">@dimen/_14ssp</item>
+        <item name="fontFamily">@font/montserrat_bold</item>
+        <item name="android:paddingStart">@dimen/_14sdp</item>
+        <item name="android:paddingEnd">@dimen/_14sdp</item>
+        <item name="android:paddingBottom">@dimen/_12sdp</item>
+        <item name="android:paddingTop">@dimen/_12sdp</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.Line.Headline" parent="@style/Widget.VieWie.TextView.Line">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
+    </style>
+
+    <style name="TextAppearance.Moviebase.Button" parent="@style/TextAppearance.MaterialComponents.Button">
+        <item name="android:textStyle">bold</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:fontFamily">@font/roboto_regular</item>
+        <item name="android:letterSpacing">0.025</item>
+        <item name="fontFamily">@font/roboto_regular</item>
+    </style>
+
+    <style name="Widget.VieWie.TextView.Button" parent="@style/Widget.VieWie.TextView">
+        <item name="android:textAppearance">@style/TextAppearance.Moviebase.Button</item>
+        <item name="android:background">@null</item>
+        <item name="android:focusable">true</item>
+        <item name="android:clickable">true</item>
+    </style>
+
+    <style name="Widget.VieWie.SearchView" parent="Widget.AppCompat.SearchView" >
+        <item name="android:textSize">@dimen/_12ssp</item>
+        <item name="android:editTextColor">@color/light_white</item>
+        <item name="android:textColorHint">@color/mid_white</item>
+    </style>
 
 </resources>

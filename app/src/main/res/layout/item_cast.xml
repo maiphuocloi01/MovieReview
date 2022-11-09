@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginHorizontal="10dp"
+    android:layout_marginHorizontal="@dimen/_4sdp"
     android:background="@color/transparent"
     android:layout_height="wrap_content">
 
@@ -23,9 +23,9 @@
                 android:id="@+id/iv_cast"
                 android:layout_width="@dimen/_101sdp"
                 android:layout_height="@dimen/_150sdp"
-                android:scaleType="centerCrop"
+                android:src="@drawable/ic_profile2"
                 android:layout_weight="1"
-                android:src="@drawable/img_cast"/>
+                android:background="@color/mid_black_20" />
 
         </androidx.cardview.widget.CardView>
 

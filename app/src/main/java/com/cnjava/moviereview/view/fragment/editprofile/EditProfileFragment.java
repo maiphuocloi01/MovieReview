@@ -168,7 +168,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                         .load(String.format(user.getAvatar()))
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .placeholder(R.drawable.progress_animation)
-                        .centerCrop()
                         .error(R.drawable.img_default_avt)
                         .into(binding.ivAvatar);
             } else {
@@ -253,7 +252,6 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                     Glide.with(context)
                             .load(String.format(user.getAvatar()))
                             .placeholder(R.drawable.progress_animation)
-                            .centerCrop()
                             .error(R.drawable.img_default_avt)
                             .into(binding.ivAvatar);
                 } else {

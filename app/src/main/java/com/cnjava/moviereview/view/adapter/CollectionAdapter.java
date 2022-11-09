@@ -45,8 +45,7 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .placeholder(R.drawable.progress_animation)
-                .centerCrop()
-                .error(R.drawable.ic_movie)
+                .error(R.drawable.ic_movie2)
                 .into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override

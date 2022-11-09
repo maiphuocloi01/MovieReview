@@ -3,34 +3,30 @@ package com.cnjava.moviereview.view.fragment.search;
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
 import android.os.Bundle;
-import android.text.Editable;
-import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
-import android.view.inputmethod.EditorInfo;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.content.ContextCompat;
 
 import com.cnjava.moviereview.MyApplication;
+import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentSearchBinding;
-import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.IMEUtils;
-import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.RecommendSearchAdapter;
+import com.cnjava.moviereview.view.adapter.ResultAdapter;
 import com.cnjava.moviereview.view.adapter.TrendingAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
 import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
+import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
 
-import java.lang.reflect.Type;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -67,71 +63,56 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
             binding.rvTrending.setAdapter(trendingAdapter);
         });
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
-
-        if (binding.etSearch.requestFocus()) {
-            IMEUtils.showSoftInput(binding.etSearch);
-        }
-
-        String jsonFileString = NumberUtils.getJsonFromAssets(context, "movieName.json");
-        Gson gson = new Gson();
-        Type listMovieNameType = new TypeToken<List<MovieName>>() {
-        }.getType();
-        List<MovieName> listMovieName = gson.fromJson(jsonFileString, listMovieNameType);
-        List<String> movieNames = listMovieName.stream()
-                .map(movieName -> movieName.name)
-                .collect(Collectors.toList());
-
         searchAdapter = new RecommendSearchAdapter(context, this);
         binding.rvRecommendSearch.setAdapter(searchAdapter);
-
-        binding.etSearch.addTextChangedListener(new TextWatcher() {
+        binding.etSearch.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!s.toString().equals("")) {
-                    ViewUtils.gone(binding.layoutRecommend);
-                    ViewUtils.show(binding.rvRecommendSearch);
-                    viewModel.autoCompleteSearchFromJson(movieNames, s.toString());
-                    viewModel.movieNamesLD().observe(getViewLifecycleOwner(), _names -> {
-                        Log.d(TAG, "onTextChanged: " + _names.size() + " " + _names);
-                        searchAdapter.renewItems(_names);
-                    });
-                } else {
-                    ViewUtils.show(binding.layoutRecommend);
-                    ViewUtils.gone(binding.rvRecommendSearch);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-
-            }
-        });
-
-        binding.etSearch.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                if (binding.etSearch.getText() != null) {
-                    hideSoftInput(binding.etSearch);
-                    Bundle bundle = new Bundle();
-                    bundle.putString("search", binding.etSearch.getText().toString().trim());
-                    callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            public boolean onQueryTextSubmit(String text) {
+                if (text != null) {
+                    searchMovie(text);
+                    /*Bundle bundle = new Bundle();
+                    bundle.putString("search", text.trim());
+                    callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);*/
                 }
                 return true;
             }
-            return false;
+
+            @Override
+            public boolean onQueryTextChange(String s) {
+                if (!s.equals("")) {
+                    ViewUtils.gone(binding.layoutRecommendName);
+                    ViewUtils.gone(binding.layoutRecommendMovie);
+                    ViewUtils.show(binding.rvRecommendSearch);
+                    ViewUtils.gone(binding.layoutSearchResult);
+                    viewModel.autoCompleteSearch(s);
+                    viewModel.movieNameLD().observe(getViewLifecycleOwner(), _names -> {
+                        searchAdapter.renewItems(_names);
+                    });
+                } else {
+                    ViewUtils.show(binding.layoutRecommendName);
+                    ViewUtils.show(binding.layoutRecommendMovie);
+                    ViewUtils.gone(binding.rvRecommendSearch);
+                    ViewUtils.gone(binding.layoutSearchResult);
+                }
+                return true;
+            }
         });
-
-        binding.layoutSearch.setStartIconOnClickListener(view -> callBack.backToPrev());
+        ImageView searchIcon = binding.etSearch.findViewById(androidx.appcompat.R.id.search_mag_icon);
+        ImageView closeIcon = binding.etSearch.findViewById(androidx.appcompat.R.id.search_close_btn);
+        searchIcon.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
+        closeIcon.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
     }
-
 
     @Override
     protected FragmentSearchBinding initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
         return FragmentSearchBinding.inflate(inflater, container, false);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        binding.etSearch.requestFocus();
+        IMEUtils.showSoftInput(binding.etSearch);
     }
 
     @Override
@@ -146,10 +127,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
 
     @Override
     public void selectTrending(String name) {
-        hideSoftInput(binding.etSearch);
-        Bundle bundle = new Bundle();
-        bundle.putString("search", name);
-        callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        searchMovie(name);
     }
 
     @Override
@@ -159,9 +137,30 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
 
     @Override
     public void gotoSearch(String name) {
+        searchMovie(name);
+    }
+
+    private void searchMovie(String text){
         hideSoftInput(binding.etSearch);
-        Bundle bundle = new Bundle();
-        bundle.putString("search", name);
-        callBack.showFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+        viewModel.searchMovie(text);
+        viewModel.movieResultLD().observe(getViewLifecycleOwner(), _result -> {
+            ResultAdapter resultAdapter;
+            resultAdapter = new ResultAdapter(context, _result, SearchFragment.this);
+            binding.rvResult.setAdapter(resultAdapter);
+            if (_result.results.size() > 0) {
+                binding.tvCountMovie.setText(String.format("Found %s results", _result.results.size()));
+                ViewUtils.show(binding.layoutSearchResult);
+                ViewUtils.gone(binding.layoutRecommendMovie);
+                ViewUtils.gone(binding.layoutRecommendName);
+                ViewUtils.gone(binding.rvRecommendSearch);
+            } else {
+                binding.tvCountMovie.setText(String.format("No results for %s", text));
+                binding.tvCountMovie.append(String.format("\nHere are some movies that you might like", text));
+                ViewUtils.gone(binding.rvRecommendSearch);
+                ViewUtils.show(binding.layoutSearchResult);
+                ViewUtils.show(binding.layoutRecommendMovie);
+                ViewUtils.gone(binding.layoutRecommendName);
+            }
+        });
     }
 }

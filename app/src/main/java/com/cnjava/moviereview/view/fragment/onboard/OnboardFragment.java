@@ -83,7 +83,6 @@ public class OnboardFragment extends BaseFragment<FragmentOnboardingBinding, Com
     }
 
     private int getItem(int i){
-
         return binding.vpOnboard.getCurrentItem() + i;
     }
 

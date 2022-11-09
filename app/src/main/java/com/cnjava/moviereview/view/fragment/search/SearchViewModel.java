@@ -1,38 +1,35 @@
 package com.cnjava.moviereview.view.fragment.search;
 
-import static com.cnjava.moviereview.util.StringConvert.removeDiacriticalMarks;
-
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
-import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
-import io.reactivex.rxjava3.core.Observable;
-import io.reactivex.rxjava3.core.Single;
-import io.reactivex.rxjava3.schedulers.Schedulers;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
 
 @HiltViewModel
 public class SearchViewModel extends BaseViewModel {
 
-    private static final String TAG = SearchViewModel.class.getSimpleName();
+    private static final String TAG = SearchViewModel.class.getName();
 
     private final MovieRepository movieRepository;
 
     private final MutableLiveData<Movie> trendingWeekLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> trendingDayLD = new MutableLiveData<>();
-    private final MutableLiveData<List<String>> movieNamesLD = new MutableLiveData<>();
+    private final MutableLiveData<MovieName> movieNameLD = new MutableLiveData<>();
+    private final MutableLiveData<Movie> movieResultLD = new MutableLiveData<>();
 
     public LiveData<Movie> trendingWeekLD() {
         return trendingWeekLD;
@@ -42,8 +39,12 @@ public class SearchViewModel extends BaseViewModel {
         return trendingDayLD;
     }
 
-    public LiveData<List<String>> movieNamesLD() {
-        return movieNamesLD;
+    public LiveData<MovieName> movieNameLD() {
+        return movieNameLD;
+    }
+
+    public LiveData<Movie> movieResultLD() {
+        return movieResultLD;
     }
 
     @Inject
@@ -72,24 +73,51 @@ public class SearchViewModel extends BaseViewModel {
         });
     }
 
-    public void autoCompleteSearchFromJson(List<String> movieNames, String nameSearch) {
-        Single<List<String>> result = Observable.fromStream(movieNames
-                .stream()
-                .filter(name -> removeDiacriticalMarks(name).toLowerCase().contains(removeDiacriticalMarks(nameSearch).toLowerCase()))
-                .limit(4)
-        ).collect(Collectors.toList());
-        result.subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new CustomObserver<List<String>>() {
+    public void autoCompleteSearch(String searchView) {
+        mLiveDataIsLoading.setValue(true);
+        movieRepository.autoCompleteSearch(searchView)
+                .debounce(300, TimeUnit.MILLISECONDS)
+                .distinctUntilChanged()
+                .subscribe(new Observer<MovieName>() {
                     @Override
-                    public void onSuccess(@NonNull List<String> strings) {
-                        movieNamesLD.setValue(strings);
+                    public void onSubscribe(@NonNull Disposable d) {
+                        mMainCompDisposable.add(d);
+                    }
+
+                    @Override
+                    public void onNext(@NonNull MovieName movieName) {
+                        movieNameLD.setValue(movieName);
+                        mLiveDataIsLoading.setValue(false);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
+                        mLiveDataIsLoading.setValue(false);
+                    }
+
+                    @Override
+                    public void onComplete() {
 
                     }
                 });
+    }
+
+    public void searchMovie(String text) {
+        mLiveDataIsLoading.setValue(true);
+        movieRepository.searchMovie(text).subscribe(new CustomObserver<Movie>() {
+            @Override
+            public void onSuccess(@NonNull Movie movie) {
+                movieResultLD.setValue(movie);
+                mLiveDataIsLoading.setValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.setValue(false);
+            }
+        });
+
     }
 }

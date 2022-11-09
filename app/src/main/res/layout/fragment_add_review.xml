@@ -36,6 +36,7 @@
             <ImageView
                 android:id="@+id/iv_poster"
                 android:layout_width="@dimen/_40sdp"
+                android:scaleType="centerInside"
                 android:layout_height="@dimen/_40sdp"
                 android:src="@drawable/img_poster" />
 

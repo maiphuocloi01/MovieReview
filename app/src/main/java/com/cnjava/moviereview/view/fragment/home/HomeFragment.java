@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -36,11 +38,12 @@ import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.category.CategoryFragment;
 import com.cnjava.moviereview.view.fragment.login.LoginFragment;
+import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.view.fragment.profile.ProfileFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
-import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
-import com.cnjava.moviereview.view.fragment.movie.DetailFragment;
 import com.cnjava.moviereview.view.fragment.search.SearchFragment;
+import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
+import com.google.android.material.appbar.AppBarLayout;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -106,8 +109,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         }
 
-        binding.etSearch.setShowSoftInputOnFocus(false);
-        binding.etSearch.setOnClickListener(view -> {
+        //binding.ivSearch.setShowSoftInputOnFocus(false);
+        binding.ivSearch.setOnClickListener(view -> {
             callBack.showFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE);
         });
 
@@ -160,13 +163,16 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             initMovieRecyclerView(movieUpcoming, UP_COMING);
         }
 
-        binding.vpPopular.setOffscreenPageLimit(3);
+        //binding.vpPopular.setOffscreenPageLimit(3);
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
-        compositePageTransformer.addTransformer(new MarginPageTransformer(30));
+        compositePageTransformer.addTransformer(new MarginPageTransformer(0));
         compositePageTransformer.addTransformer((page, position) -> {
             float r = 1 - Math.abs(position);
             page.setScaleY(0.85f + r * 0.15f);
         });
+
+
+        binding.appBarLayout.setOutlineProvider(null);
         binding.vpPopular.setPageTransformer(compositePageTransformer);
 
         binding.ivAvt.setOnClickListener(view -> {
@@ -181,9 +187,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         });
 
-        binding.tvViewAll.setOnClickListener(view -> {
-            callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE);
-        });
+        binding.textTrending.setOnClickListener(view -> callBack.showFragment(CategoryFragment.TAG, null, true, Constants.ANIM_SLIDE));
 
         binding.btCategory123.setOnClickListener(view -> {
             Bundle bundle = new Bundle();

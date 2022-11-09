@@ -32,7 +32,7 @@
                 android:layout_gravity="center"
                 android:scaleType="centerCrop"
                 app:strokeColor="@null"
-                android:src="@drawable/img_cover" />
+                android:background="@color/mid_black_20" />
 
             <LinearLayout
                 android:id="@+id/layout_user_info"

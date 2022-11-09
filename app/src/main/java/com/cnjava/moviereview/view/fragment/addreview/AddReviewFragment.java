@@ -52,6 +52,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
                 .load(String.format(Constants.IMAGE_URL + movieDetail.posterPath))
                 .transition(DrawableTransitionOptions.withCrossFade())
                 .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_movie2)
                 .into(binding.ivPoster);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
@@ -115,8 +116,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
 
                     Review review = new Review(content, star, movieReview);
                     DialogUtils.showLoadingDialog(context);
-                    if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                        Log.d(TAG, "addReview: ");
+                    if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                         viewModel.addReview(review, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                         IMEUtils.hideSoftInput(view);
 
@@ -134,11 +134,10 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if(key.equals(Constants.KEY_ADD_REVIEW)){
+        if (key.equals(Constants.KEY_ADD_REVIEW)) {
             Review review = (Review) data;
-            if (review.id != null){
+            if (review.id != null) {
                 DialogUtils.hideLoadingDialog();
-                //MyApplication.getInstance().getStorage().reviewList = null;
                 callBack.reloadFragment(callBack.getBackStack());
                 callBack.backToPrev();
             }
@@ -147,7 +146,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Co
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if(key.equals(Constants.KEY_ADD_REVIEW)){
+        if (key.equals(Constants.KEY_ADD_REVIEW)) {
             DialogUtils.hideLoadingDialog();
             Log.d(TAG, "apiError: " + code + data.toString());
         }

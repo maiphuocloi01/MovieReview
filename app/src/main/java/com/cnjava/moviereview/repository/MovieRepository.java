@@ -3,9 +3,11 @@ package com.cnjava.moviereview.repository;
 import com.cnjava.moviereview.data.MovieService;
 import com.cnjava.moviereview.data.TranslateService;
 import com.cnjava.moviereview.model.Actor;
+import com.cnjava.moviereview.model.CastDetail;
 import com.cnjava.moviereview.model.Collection;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieDetail;
+import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.model.Video;
@@ -13,6 +15,7 @@ import com.cnjava.moviereview.model.Video;
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
@@ -75,8 +78,25 @@ public class MovieRepository {
         return subscribe(movieService.getTrending(timeWindow));
     }
 
+    public Single<CastDetail> getCastDetail(String creditId){
+        return subscribe(movieService.getCastDetail(creditId));
+    }
+
+    public Observable<MovieName> autoCompleteSearch(String queryString){
+        return subscribeObservable(movieService.autoCompleteSearch(queryString));
+    }
+
+    public Single<Movie> searchMovie(String queryString){
+        return subscribe(movieService.searchMovie(queryString));
+    }
+
     private <T> Single<T> subscribe(Single<T> single) {
         return single.subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread());
+    }
+
+    private <T> Observable<T> subscribeObservable(Observable<T> observable) {
+        return observable.subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread());
     }
 }
