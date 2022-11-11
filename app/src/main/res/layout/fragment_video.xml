@@ -43,7 +43,7 @@
         app:srcCompat="@drawable/ic_close"
         app:tint="@color/lighter_white" />
 
-    <!--<ImageButton
+    <ImageButton
         android:id="@+id/iv_full_screen"
         android:layout_width="@dimen/_36sdp"
         android:layout_height="@dimen/_36sdp"
@@ -54,6 +54,6 @@
         app:layout_constraintEnd_toStartOf="@+id/iv_close_video"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_fullscreen"
-        app:tint="@color/lighter_white" />-->
+        app:tint="@color/lighter_white" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

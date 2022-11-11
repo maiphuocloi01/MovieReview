@@ -22,7 +22,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
     private VideoCallBack callBack;
 
     public interface VideoCallBack{
-        void gotoVideoYoutube(String key);
+        void gotoVideoYoutube(String key, Video video);
     }
 
     public VideoAdapter(Context context, Video video, VideoCallBack callBack) {
@@ -53,7 +53,7 @@ public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.MyViewHolder
             holder.binding.ivPoster.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    callBack.gotoVideoYoutube(item.key);
+                    callBack.gotoVideoYoutube(item.key, video);
                 }
             });
         }

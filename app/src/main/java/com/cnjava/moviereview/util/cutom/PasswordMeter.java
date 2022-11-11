@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.util;
+package com.cnjava.moviereview.util.cutom;
 
 public class PasswordMeter {
 

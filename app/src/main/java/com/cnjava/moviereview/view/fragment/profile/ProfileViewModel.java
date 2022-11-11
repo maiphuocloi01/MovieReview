@@ -13,6 +13,7 @@ import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.view.fragment.home.HomeViewModel;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,7 +23,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 
 @HiltViewModel
 public class ProfileViewModel extends BaseViewModel {
-    private static final String TAG = HomeViewModel.class.getSimpleName();
+    private static final String TAG = HomeViewModel.class.getName();
 
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;
@@ -50,18 +51,63 @@ public class ProfileViewModel extends BaseViewModel {
     }
 
     public void getYourProfile(String token) {
-        mLiveDataIsLoading.setValue(true);
+        mLiveDataIsLoading.postValue(true);
         accountRepository.getMyProfile(token).subscribe(new CustomSingleObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
-                yourProfileLD.setValue(user);
+                yourProfileLD.postValue(user);
+                mLiveDataIsLoading.postValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void deleteReview(String reviewId, String token) {
+        accountRepository.deleteReview(reviewId, token).subscribe(new CustomCompletableObserver() {
+            @Override
+            public void onComplete() {
                 mLiveDataIsLoading.setValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void dislikeReview(String reviewId, String token) {
+        accountRepository.dislikeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
+            @Override
+            public void onComplete() {
                 mLiveDataIsLoading.setValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void likeReview(String reviewId, String token) {
+        accountRepository.likeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
+            @Override
+            public void onComplete() {
+                mLiveDataIsLoading.setValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -70,31 +116,33 @@ public class ProfileViewModel extends BaseViewModel {
         accountRepository.getMyStatistics(token).subscribe(new CustomSingleObserver<Statistic>() {
             @Override
             public void onSuccess(@NonNull Statistic statistic) {
-                myStatisticsLD.setValue(statistic);
-                mLiveDataIsLoading.setValue(false);
+                myStatisticsLD.postValue(statistic);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
 
     public void getReviewByUserId(String userId) {
-        accountRepository.getReviewByUserId(userId).subscribe(new CustomSingleObserver<List<Review>>() {
-            @Override
-            public void onSuccess(@NonNull List<Review> reviews) {
-                reviewByUserIdLD.setValue(reviews);
-                mLiveDataIsLoading.setValue(false);
-            }
+        accountRepository.getReviewByUserId(userId)
+                .subscribe(new CustomSingleObserver<List<Review>>() {
+                    @Override
+                    public void onSuccess(@NonNull List<Review> reviews) {
+                        Collections.reverse(reviews);
+                        reviewByUserIdLD.postValue(reviews);
+                        mLiveDataIsLoading.postValue(false);
+                    }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
-            }
-        });
+                    @Override
+                    public void onError(@NonNull Throwable e) {
+                        Log.d(TAG, "onError: " + e.getMessage());
+                        mLiveDataIsLoading.postValue(false);
+                    }
+                });
     }
 }

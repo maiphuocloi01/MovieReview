@@ -21,6 +21,7 @@ public class NumberUtils {
         return formatter.format(currency) + " $";
     }
 
+
     public static String convertDateType1(int dayOfMonth, int month, int year){
         return dayOfMonth + "/" + month + "/" + year;
     }

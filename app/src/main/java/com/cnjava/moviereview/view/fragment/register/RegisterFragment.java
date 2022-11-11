@@ -29,13 +29,13 @@ import androidx.core.content.ContextCompat;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentRegisterBinding;
-import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.UserResponse;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
-import com.cnjava.moviereview.util.PasswordMeter;
+import com.cnjava.moviereview.util.cutom.PasswordMeter;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.login.LoginFragment;
@@ -290,14 +290,14 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             CommonUtils.getInstance().clearPref(Constants.USERNAME);
             callBack.backToPrev();
         } else if (key.equals(Constants.KEY_SEND_OTP)) {
-            Response response = (Response) data;
+            UserResponse userResponse = (UserResponse) data;
             //Toast.makeText(context, response.getToken(), Toast.LENGTH_SHORT).show();
             //Toast.makeText(context, otp, Toast.LENGTH_SHORT).show();
         } else if (key.equals(Constants.KEY_CONFIRM_OTP)) {
-            Response response = (Response) data;
+            UserResponse userResponse = (UserResponse) data;
             Log.d(TAG, "KEY_CONFIRM_OTP: ");
             DialogUtils.hideLoadingDialog();
-            if (response.getError() == null) {
+            if (userResponse.getError() == null) {
                 dialog.dismiss();
                 CommonUtils.getInstance().clearPref(Constants.USERNAME);
                 callBack.replaceFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
@@ -328,10 +328,10 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
                 //Toast.makeText(context, "invalid otp", Toast.LENGTH_SHORT).show();
                 ResponseBody res = (ResponseBody) data;
                 Gson gson = new Gson();
-                Type type = new TypeToken<Response>() {
+                Type type = new TypeToken<UserResponse>() {
                 }.getType();
-                Response errorResponse = gson.fromJson(res.charStream(), type);
-                Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_SHORT).show();
+                UserResponse errorUserResponse = gson.fromJson(res.charStream(), type);
+                Toast.makeText(context, errorUserResponse.getError(), Toast.LENGTH_SHORT).show();
                 /*try {
                     JSONObject jsonObj = new JSONObject(response.body().toString());
                     Toast.makeText(context, jsonObj.getString("error"), Toast.LENGTH_SHORT).show();

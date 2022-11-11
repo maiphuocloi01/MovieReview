@@ -20,7 +20,6 @@ import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
-import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentReviewBinding;
 import com.cnjava.moviereview.model.MovieDetail;
@@ -53,6 +52,8 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     private Object mData;
     private ReviewAdapter reviewAdapter;
     private List<Review> tempReviews = new ArrayList<>();
+    private ReviewViewModel reviewViewModel;
+    private MovieDetail movieDetail;
 
     @Override
     protected Class<CommonViewModel> getClassVM() {
@@ -68,20 +69,19 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.autoCompleteTxt.setDropDownBackgroundResource(R.drawable.bg_light_dark_corner_10);
         binding.rbAll.setChecked(true);
 
-        ReviewViewModel reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
 
-        MovieDetail movieDetail = (MovieDetail) mData;
-        reviewViewModel.getReviewByMovieId(String.valueOf(movieDetail.id));
-        reviewViewModel.listReviewLD().observe(this, _reviews -> {
-            initReview(_reviews);
-            initButtonFeatures(_reviews);
-            tempReviews = _reviews;
-            binding.autoCompleteTxt.setOnItemClickListener((parent, view, position, id) -> {
-                String item = parent.getItemAtPosition(position).toString();
-                sortReviewByDay(item, tempReviews);
+        movieDetail = (MovieDetail) mData;
+        if (reviewViewModel.movieReviewLD().getValue() == null) {
+            Log.d(TAG, "initViews: null");
+            reviewViewModel.getReviewByMovieId(String.valueOf(movieDetail.id));
+            reviewViewModel.movieReviewLD().observe(this, _reviews -> {
+                initListReview(_reviews);
             });
-        });
-        MyApplication.getInstance().getStorage().fragmentTag = TAG;
+        } else {
+            Log.d(TAG, "initViews: != null" + reviewViewModel.movieReviewLD().getValue().size());
+            initListReview(reviewViewModel.movieReviewLD().getValue());
+        }
 
         binding.tvName.setText(movieDetail.title);
         Glide.with(context)
@@ -95,7 +95,16 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
             callBack.backToPrev();
         });
 
+    }
 
+    private void initListReview(List<Review> reviews) {
+        initReview(reviews);
+        initButtonFeatures(reviews);
+        tempReviews = reviews;
+        binding.autoCompleteTxt.setOnItemClickListener((parent, view, position, id) -> {
+            String item = parent.getItemAtPosition(position).toString();
+            sortReviewByDay(item, tempReviews);
+        });
     }
 
     private void initButtonFeatures(List<Review> reviews) {
@@ -253,8 +262,17 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     }
 
     private void initReview(List<Review> listReview) {
-        reviewAdapter = new ReviewAdapter(context, listReview, this);
-        binding.rvReview.setAdapter(reviewAdapter);
+        if (reviewViewModel.yourProfileLD().getValue() == null) {
+            reviewViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            reviewViewModel.yourProfileLD().observe(this, _user -> {
+                reviewAdapter = new ReviewAdapter(context, listReview, _user, this);
+                binding.rvReview.setAdapter(reviewAdapter);
+            });
+        } else {
+            reviewAdapter = new ReviewAdapter(context, listReview, reviewViewModel.yourProfileLD().getValue(), this);
+            binding.rvReview.setAdapter(reviewAdapter);
+        }
+
     }
 
     @Override

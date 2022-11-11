@@ -11,7 +11,7 @@ import androidx.annotation.Nullable;
 
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.databinding.FragmentResetPasswordBinding;
-import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.UserResponse;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
@@ -82,10 +82,10 @@ public class ResetPasswordFragment extends BaseFragment<FragmentResetPasswordBin
             DialogUtils.hideLoadingDialog();
             ResponseBody res = (ResponseBody) data;
             Gson gson = new Gson();
-            Type type = new TypeToken<Response>() {
+            Type type = new TypeToken<UserResponse>() {
             }.getType();
-            Response errorResponse = gson.fromJson(res.charStream(), type);
-            Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_LONG).show();
+            UserResponse errorUserResponse = gson.fromJson(res.charStream(), type);
+            Toast.makeText(context, errorUserResponse.getError(), Toast.LENGTH_LONG).show();
         }
     }
 

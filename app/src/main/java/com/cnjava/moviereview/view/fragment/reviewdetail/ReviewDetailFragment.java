@@ -68,7 +68,7 @@ public class ReviewDetailFragment extends BaseFragment<FragmentReviewDetailBindi
         binding.tvContent.setText(review.content);
 
         binding.btShorten.setOnClickListener(view -> {
-            reviewDetailViewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), this::setScreenLoading);
+            reviewDetailViewModel.getLiveDataIsLoading().observe(this, this::setScreenLoading);
             reviewDetailViewModel.translateText(review.content);
             reviewDetailViewModel.translateLiveData().observe(this, translate -> {
                 binding.tvContent.setText(translate.getText().get(0));

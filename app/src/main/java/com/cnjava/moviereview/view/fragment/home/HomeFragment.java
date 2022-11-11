@@ -29,6 +29,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.Storage;
 import com.cnjava.moviereview.databinding.FragmentHomeBinding;
 import com.cnjava.moviereview.model.Movie;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
@@ -38,7 +39,6 @@ import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.category.CategoryFragment;
 import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
 import com.cnjava.moviereview.view.fragment.login.LoginFragment;
-import com.cnjava.moviereview.view.fragment.movie.MovieDetailFragment;
 import com.cnjava.moviereview.view.fragment.notification.NotificationFragment;
 import com.cnjava.moviereview.view.fragment.profile.ProfileFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
@@ -56,23 +56,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private static final int UP_COMING = 1;
     private static final int TOP_RATED = 2;
     private final Handler handler = new Handler(Looper.getMainLooper());
-    private Movie moviePopular;
-    private final Runnable runnable = new Runnable() {
-        @Override
-        public void run() {
-            if (moviePopular != null) {
-                int currentPosition = binding.vpPopular.getCurrentItem();
-                if (currentPosition == moviePopular.results.size() - 1) {
-                    binding.vpPopular.setCurrentItem(0);
-                } else {
-                    binding.vpPopular.setCurrentItem(currentPosition + 1);
-                }
-            }
-        }
-    };
-    private Movie movieNowPlaying;
-    private Movie movieUpcoming;
-    private Movie movieTopRated;
+    private Runnable runnable;
     private final Storage storage = MyApplication.getInstance().getStorage();
 
     @Override
@@ -83,10 +67,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     protected void initViews() {
 
-        viewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), this::setScreenLoading);
-        String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
-        Log.d(TAG, "initViews: " + token);
-        storage.fragmentTag = TAG;
+        viewModel.getLiveDataIsLoading().observe(this, this::setScreenLoading);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.height = (int) storage.HEIGHT_SCREEN;
         binding.vpPopular.setLayoutParams(params);
@@ -94,85 +75,64 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             CommonUtils.getInstance().savePref(Constants.ONBOARD, "1");
         }
 
-        if (storage.myUser == null) {
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                getYourProfileAndSaveToStorage();
-            }
+        if (viewModel.yourProfileLD().getValue() != null) {
+            User user = viewModel.yourProfileLD().getValue();
+            getYourProfileAndSaveToStorage(user);
         } else {
-            if (storage.myUser.getAvatar() != null) {
-                Glide.with(context)
-                        .load(storage.myUser.getAvatar())
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.img_default_avt)
-                        .into(binding.ivAvt);
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                viewModel.yourProfileLD().observe(this, this::getYourProfileAndSaveToStorage);
             }
         }
 
-        binding.ivSearch.setOnClickListener(view -> callBack.addFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE));
-
-
-        if (storage.moviePopular == null) {
+        if (viewModel.popularMovieLD().getValue() != null) {
+            initMovieRecyclerView(viewModel.popularMovieLD().getValue(), POPULAR);
+        } else {
             viewModel.getPopularMovie();
             viewModel.popularMovieLD().observe(this, _popularMovie -> {
-                moviePopular = _popularMovie;
-                storage.moviePopular = _popularMovie;
                 initMovieRecyclerView(_popularMovie, POPULAR);
             });
-        } else {
-            moviePopular = storage.moviePopular;
-            initMovieRecyclerView(moviePopular, POPULAR);
         }
 
-        if (storage.movieNowPlaying == null) {
-            viewModel.getNowPlayingMovie();
-            viewModel.nowPlayingMovieLD().observe(this, _nowPlayingMovie -> {
-                movieNowPlaying = _nowPlayingMovie;
-                storage.movieNowPlaying = _nowPlayingMovie;
-                initMovieRecyclerView(_nowPlayingMovie, NOW_PLAYING);
-            });
+        if (viewModel.upcomingMovieLD().getValue() != null) {
+            initMovieRecyclerView(viewModel.upcomingMovieLD().getValue(), UP_COMING);
         } else {
-            movieNowPlaying = storage.movieNowPlaying;
-            initMovieRecyclerView(movieNowPlaying, NOW_PLAYING);
-        }
-
-        if (storage.movieTopRated == null) {
-            viewModel.getTopRatedMovie();
-            viewModel.topRatedMovieLD().observe(this, _topRatedMovie -> {
-                movieTopRated = _topRatedMovie;
-                storage.movieTopRated = _topRatedMovie;
-                initMovieRecyclerView(_topRatedMovie, TOP_RATED);
-            });
-        } else {
-            movieTopRated = storage.movieTopRated;
-            initMovieRecyclerView(movieTopRated, TOP_RATED);
-        }
-
-        if (storage.movieUpcoming == null) {
             viewModel.getUpComingMovie();
             viewModel.upcomingMovieLD().observe(this, _upcomingMovie -> {
-                movieUpcoming = _upcomingMovie;
-                storage.movieUpcoming = _upcomingMovie;
                 initMovieRecyclerView(_upcomingMovie, UP_COMING);
             });
-        } else {
-            movieUpcoming = storage.movieUpcoming;
-            initMovieRecyclerView(movieUpcoming, UP_COMING);
         }
 
-        //binding.vpPopular.setOffscreenPageLimit(3);
+        if (viewModel.topRatedMovieLD().getValue() != null) {
+            initMovieRecyclerView(viewModel.topRatedMovieLD().getValue(), TOP_RATED);
+        } else {
+            viewModel.getTopRatedMovie();
+            viewModel.topRatedMovieLD().observe(this, _topRatedMovie -> {
+                initMovieRecyclerView(_topRatedMovie, TOP_RATED);
+            });
+        }
+
+        if (viewModel.nowPlayingMovieLD().getValue() != null) {
+            initMovieRecyclerView(viewModel.nowPlayingMovieLD().getValue(), NOW_PLAYING);
+        } else {
+            viewModel.getNowPlayingMovie();
+            viewModel.nowPlayingMovieLD().observe(this, _nowPlayingMovie -> {
+                initMovieRecyclerView(_nowPlayingMovie, NOW_PLAYING);
+            });
+        }
+
+
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         compositePageTransformer.addTransformer(new MarginPageTransformer(0));
         compositePageTransformer.addTransformer((page, position) -> {
             float r = 1 - Math.abs(position);
             page.setScaleY(0.85f + r * 0.15f);
         });
-
-
         binding.appBarLayout.setOutlineProvider(null);
         binding.vpPopular.setPageTransformer(compositePageTransformer);
 
         binding.ivAvt.setOnClickListener(view -> {
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null) {
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null || viewModel.yourProfileLD().getValue() == null) {
                 showAlertDialog();
             } else {
                 callBack.replaceFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
@@ -206,16 +166,17 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         });
 
         binding.ivNotification.setOnClickListener(view -> callBack.replaceFragment(NotificationFragment.TAG, null, true, Constants.ANIM_FADE));
+        binding.ivSearch.setOnClickListener(view -> callBack.addFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE));
 
     }
 
     private void setScreenLoading(boolean isLoading) {
         if (isLoading) {
             ViewUtils.show(binding.progressCircular);
-            ViewUtils.gone(binding.layoutHome);
+            ViewUtils.gone(binding.layoutHomeScreen);
         } else {
             ViewUtils.gone(binding.progressCircular);
-            ViewUtils.show(binding.layoutHome);
+            ViewUtils.show(binding.layoutHomeScreen);
         }
     }
 
@@ -228,22 +189,31 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     public void apiSuccess(String key, Object data) {
     }
 
-    private void getYourProfileAndSaveToStorage() {
-        viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-        viewModel.yourProfileLD().observe(this, _user -> {
-            storage.myUser = _user;
-            if (_user.getAvatar() != null) {
-                Glide.with(context)
-                        .load(_user.getAvatar())
-                        .transition(DrawableTransitionOptions.withCrossFade())
-                        .placeholder(R.drawable.img_default_avt)
-                        .into(binding.ivAvt);
-            }
-        });
+    private void getYourProfileAndSaveToStorage(User user) {
+        if (user.getAvatar() != null) {
+            Glide.with(context)
+                    .load(user.getAvatar())
+                    .transition(DrawableTransitionOptions.withCrossFade())
+                    .placeholder(R.drawable.img_default_avt)
+                    .into(binding.ivAvt);
+        }
     }
 
     private void initMovieRecyclerView(Movie movie, int type) {
         if (type == POPULAR) {
+            runnable = new Runnable() {
+                @Override
+                public void run() {
+                    if (movie != null) {
+                        int currentPosition = binding.vpPopular.getCurrentItem();
+                        if (currentPosition == movie.results.size() - 1) {
+                            binding.vpPopular.setCurrentItem(0);
+                        } else {
+                            binding.vpPopular.setCurrentItem(currentPosition + 1);
+                        }
+                    }
+                }
+            };
             PopularAdapter popularAdapter = new PopularAdapter(context, movie, this);
             binding.vpPopular.setAdapter(popularAdapter);
             binding.vpPopular.registerOnPageChangeCallback(new ViewPager2.OnPageChangeCallback() {
@@ -258,7 +228,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             MovieAdapter adapter = new MovieAdapter(context, movie, this);
             binding.rvPlaying.setAdapter(adapter);
         } else if (type == UP_COMING) {
-            MovieAdapter adapter = new MovieAdapter(context, movieUpcoming, this);
+            MovieAdapter adapter = new MovieAdapter(context, movie, this);
             binding.rvUpcoming.setAdapter(adapter);
         } else if (type == TOP_RATED) {
             MovieAdapter adapter = new MovieAdapter(context, movie, this);

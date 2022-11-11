@@ -7,9 +7,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
-import android.os.Bundle;
-import android.os.Parcelable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -29,9 +26,7 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
-import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
-import com.cnjava.moviereview.Storage;
 import com.cnjava.moviereview.databinding.FragmentDetailMovieBinding;
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.model.Collection;
@@ -44,7 +39,9 @@ import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.util.cutom.CustomCountDownTimer;
 import com.cnjava.moviereview.util.NumberUtils;
+import com.cnjava.moviereview.util.TimeUtils;
 import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.CastAdapter;
 import com.cnjava.moviereview.view.adapter.CollectionAdapter;
@@ -79,17 +76,12 @@ import dagger.hilt.android.AndroidEntryPoint;
 public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding, DetailViewModel> implements PopularAdapter.MovieCallBack, VideoAdapter.VideoCallBack, ReviewAdapter.ReviewCallBack, CastAdapter.CastCallBack {
 
     public static final String TAG = DetailMovieFragment.class.getName();
-    private final Storage storage = MyApplication.getInstance().getStorage();
     private Object mData;
     private int movieId;
     private boolean isSelect = false;
     private static final String FACEBOOK = "Facebook";
     private static final String TWITTER = "Twitter";
     private static final String HOMEPAGE = "Homepage";
-    private VideoAdapter videoAdapter;
-    private MovieAdapter movieAdapter;
-    private CastAdapter castAdapter;
-    private ReviewAdapter reviewAdapter;
 
 
     @Override
@@ -120,55 +112,103 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
         binding.collapsingToolbarLayout1.setTitleEnabled(false);
         viewModel.getLiveDataIsLoading().observe(this, this::setScreenLoading);
-        viewModel.getMovieDetail(movieId);
-        viewModel.movieDetailLD().observe(this, _movieDetail -> {
-            initMovieDetail(_movieDetail);
+
+        if (viewModel.movieDetailLD().getValue() == null) {
+            viewModel.getMovieDetail(movieId);
+            viewModel.movieDetailLD().observe(this, _movieDetail -> {
+                initMovieDetail(_movieDetail);
+                initSocialMedia(_movieDetail);
+                if (_movieDetail.collection != null) {
+                    initCollection(_movieDetail.collection);
+                }
+            });
+        } else {
+            MovieDetail movieDetail = viewModel.movieDetailLD().getValue();
+            assert movieDetail != null;
+            initMovieDetail(movieDetail);
+            initSocialMedia(movieDetail);
+            if (movieDetail.collection != null) {
+                initCollection(movieDetail.collection);
+            }
+        }
+
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            if (viewModel.myFavoriteLD().getValue() == null) {
+                viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                viewModel.myFavoriteLD().observe(this, _favorites -> initFavorite(_favorites, String.valueOf(movieId)));
+            } else {
+                initFavorite(viewModel.myFavoriteLD().getValue(), String.valueOf(movieId));
+            }
+        }
+
+        if (viewModel.actorLD().getValue() == null) {
+            viewModel.getCast(movieId);
+            viewModel.actorLD().observe(this, this::initActorList);
+        } else {
+            initActorList(viewModel.actorLD().getValue());
+        }
+
+        if (viewModel.recommendationLD().getValue() == null) {
+            viewModel.getRecommendation(movieId);
+            viewModel.recommendationLD().observe(this, this::initRecommendMovie);
+        } else {
+            initRecommendMovie(viewModel.recommendationLD().getValue());
+        }
+
+        if (viewModel.videoLD().getValue() == null) {
+            viewModel.getVideo(movieId);
+            viewModel.videoLD().observe(this, this::initVideoTrailer);
+        } else {
+            initVideoTrailer(viewModel.videoLD().getValue());
+        }
+
+        if (viewModel.movieReviewLD().getValue() == null) {
+            viewModel.getReviewByMovieId(String.valueOf(movieId));
+            viewModel.movieReviewLD().observe(this, _reviews -> {
+                initMovieReview(_reviews);
+            });
+        } else {
+            initMovieReview(viewModel.movieReviewLD().getValue());
+        }
+
+        binding.toolbar1.setNavigationOnClickListener(v -> callBack.backToPrev());
+
+    }
+
+    private void initMovieReview(List<Review> reviews) {
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            if (viewModel.yourProfileLD().getValue() == null) {
+                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                viewModel.yourProfileLD().observe(this, _user -> {
+                    initSomeReview(reviews, _user);
+                });
+            } else {
+                initSomeReview(reviews, viewModel.yourProfileLD().getValue());
+            }
+        } else {
+            initSomeReview(reviews, null);
+        }
+    }
+
+    private void initCollection(Collection collection) {
+        if (viewModel.collectionLD().getValue() == null) {
+            viewModel.getCollection(collection.id);
+            viewModel.collectionLD().observe(this, this::initCollectionMovie);
+        } else {
+            initCollectionMovie(viewModel.collectionLD().getValue());
+        }
+    }
+
+    private void initSocialMedia(MovieDetail movieDetail) {
+        if (viewModel.socialLD().getValue() == null) {
             viewModel.getSocial(movieId);
             viewModel.socialLD().observe(this, _social -> {
                 if (_social != null)
-                    initBindingButtonFeature(_movieDetail, _social);
+                    initBindingButtonFeature(movieDetail, _social);
             });
-            if (_movieDetail.collection != null) {
-                viewModel.getCollection(_movieDetail.collection.id);
-                viewModel.collectionLD().observe(this, this::initCollectionMovie);
-            }
-            binding.viewDetailMovie.textRatingReview.setOnClickListener(view -> callBack.replaceFragment(ReviewFragment.TAG, _movieDetail, true, Constants.ANIM_SLIDE));
-        });
-        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-            viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            viewModel.yourProfileLD().observe(this, _user -> {
-
-            });
-
-            viewModel.getMyFavorite(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            viewModel.myFavoriteLD().observe(this, _favorites -> initFavorite(_favorites, String.valueOf(movieId)));
+        } else {
+            initBindingButtonFeature(movieDetail, viewModel.socialLD().getValue());
         }
-        viewModel.getCast(movieId);
-        viewModel.actorLD().observe(this, this::initActorList);
-        viewModel.getRecommendation(movieId);
-        viewModel.recommendationLD().observe(this, this::initRecommendMovie);
-        viewModel.getVideo(movieId);
-        viewModel.videoLD().observe(this, this::initVideoTrailer);
-        viewModel.getReviewByMovieId(String.valueOf(movieId));
-        viewModel.movieReviewLD().observe(this, _reviews -> {
-            storage.reviewList = _reviews;
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                viewModel.yourProfileLD().observe(this, _user -> {
-                    initSomeReview(_reviews, _user);
-                });
-            } else {
-                initSomeReview(_reviews, null);
-            }
-        });
-
-        binding.toolbar1.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                callBack.backToPrev();
-            }
-        });
-
     }
 
     private void initSomeReview(List<Review> reviews, User user) {
@@ -196,7 +236,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
             ViewUtils.show(binding.viewDetailMovie.tvVideoDv);
             ViewUtils.show(binding.viewDetailMovie.rvVideoDv);
             binding.viewDetailMovie.rvVideoDv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            videoAdapter = new VideoAdapter(context, video, this);
+            VideoAdapter videoAdapter = new VideoAdapter(context, video, this);
             binding.viewDetailMovie.rvVideoDv.setAdapter(videoAdapter);
         } else {
             ViewUtils.gone(binding.viewDetailMovie.tvVideoDv);
@@ -210,7 +250,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
                 binding.viewDetailMovie.tvNoRecommend.setVisibility(View.VISIBLE);
 
             } else {
-                movieAdapter = new MovieAdapter(context, recommendation, this);
+                MovieAdapter movieAdapter = new MovieAdapter(context, recommendation, this);
                 binding.viewDetailMovie.rvRecommendDv.setAdapter(movieAdapter);
             }
         }
@@ -219,7 +259,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
     private void initActorList(Actor actor) {
         if (actor.cast.size() > 0) {
             binding.viewDetailMovie.rvCastDv.setLayoutManager(new LinearLayoutManager(context, LinearLayoutManager.HORIZONTAL, false));
-            castAdapter = new CastAdapter(context, actor, this);
+            CastAdapter castAdapter = new CastAdapter(context, actor, this);
             binding.viewDetailMovie.rvCastDv.setAdapter(castAdapter);
         } else {
             ViewUtils.gone(binding.viewDetailMovie.tvCast);
@@ -228,12 +268,6 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
 
 
     private void initBindingButtonFeature(MovieDetail detail, Social social) {
-
-        /*binding.ivBackDv.setOnClickListener(view -> {
-            binding.ivBackDv.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-            callBack.backToPrev();
-        });*/
-
         binding.viewDetailMovie.btAddReviewDv.setOnClickListener(view -> {
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                 callBack.replaceFragment(AddReviewFragment.TAG, detail, true, Constants.ANIM_FADE);
@@ -271,8 +305,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
     }
 
     private void initMovieDetail(MovieDetail detail) {
-        storage.movieDetail = detail;
-
+        binding.viewDetailMovie.textRatingReview.setOnClickListener(view -> callBack.replaceFragment(ReviewFragment.TAG, detail, true, Constants.ANIM_SLIDE));
         binding.appBarLayout1.addOnOffsetChangedListener(new AppBarLayout.OnOffsetChangedListener() {
             boolean isShow = true;
             int scrollRange = -1;
@@ -388,13 +421,13 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
                 ViewUtils.gone(binding.viewDetailMovie.tvTitleYourReviewDv);
             }
 
-            List<Review> threeFirstReview;
+            List<Review> firstReview;
             if (user != null) {
-                threeFirstReview = listReview.stream().filter(obj -> !obj.user.getId().equals(user.getId())).limit(3).collect(Collectors.toList());
+                firstReview = listReview.stream().filter(obj -> !obj.user.getId().equals(user.getId())).limit(1).collect(Collectors.toList());
             } else {
-                threeFirstReview = listReview.stream().limit(3).collect(Collectors.toList());
+                firstReview = listReview.stream().limit(1).collect(Collectors.toList());
             }
-            reviewAdapter = new ReviewAdapter(context, threeFirstReview, this);
+            ReviewAdapter reviewAdapter = new ReviewAdapter(context, firstReview, user, this);
             binding.viewDetailMovie.rvReview.setAdapter(reviewAdapter);
 
         } else {
@@ -416,7 +449,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
                 .error(R.drawable.img_default_avt)
                 .into(binding.viewDetailMovie.ivAvt);
         binding.viewDetailMovie.tvNameYourReview.setText(review.user.getName());
-        binding.viewDetailMovie.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
+        binding.viewDetailMovie.tvDate.setText(TimeUtils.getDescriptionTimeFromTimestamp(review.createdAt));
         binding.viewDetailMovie.tvContent.setText(review.content);
         binding.viewDetailMovie.tvRate.setText(String.valueOf((int) review.rating));
         if (!review.isDislike) {
@@ -576,8 +609,13 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
     }
 
     @Override
-    public void gotoVideoYoutube(String key) {
-        callBack.replaceFragment(VideoFragment.TAG, key, true, Constants.ANIM_FADE);
+    public void gotoVideoYoutube(String key, Video video) {
+        ArrayList<String> ids = new ArrayList<>();
+        ids.add(key);
+        List<String> ids2 = video.results.stream().filter(obj -> !obj.key.equals(key)).map(obj -> obj.key).collect(Collectors.toList());
+        ids.addAll(ids2);
+        callBack.gotoActivity(ids, video);
+        //callBack.replaceFragment(VideoFragment.TAG, key, true, Constants.ANIM_FADE);
         /*String urlYoutube = "https://www.youtube.com/watch?v=";
         Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(urlYoutube + key));
         startActivity(browserIntent);*/
@@ -609,10 +647,16 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
     private void setScreenLoading(boolean isLoading) {
         if (isLoading) {
             ViewUtils.show(binding.progressCircularDv);
-            ViewUtils.gone(binding.layoutMovieDetailDv);
+            ViewUtils.gone(binding.mainContent1);
         } else {
-            ViewUtils.gone(binding.progressCircularDv);
-            ViewUtils.show(binding.layoutMovieDetailDv);
+            new CustomCountDownTimer(300, 100) {
+                @Override
+                public void onFinish() {
+                    ViewUtils.gone(binding.progressCircularDv);
+                    ViewUtils.show(binding.mainContent1);
+                }
+            }.start();
+
         }
     }
 
@@ -664,7 +708,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
     }
 
     @Override
-    public void gotoCastDetail(String id) {
+    public void gotoCastDetail(Actor.Cast id) {
         callBack.replaceFragment(CastFragment.TAG, id, true, Constants.ANIM_FADE);
     }
 }

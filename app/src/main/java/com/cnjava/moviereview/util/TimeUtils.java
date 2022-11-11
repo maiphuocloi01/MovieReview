@@ -3,6 +3,11 @@ package com.cnjava.moviereview.util;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.Period;
+import java.time.ZoneId;
+import java.time.temporal.ChronoUnit;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -23,12 +28,14 @@ public class TimeUtils {
         DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS", Locale.ENGLISH);
         try {
             Date date = format.parse(strDate);
+            Calendar now = Calendar.getInstance();
+            now.setTime(new Date());
             SimpleDateFormat sdf1 = new SimpleDateFormat("HH:mm", Locale.ENGLISH);
             SimpleDateFormat sdf2 = new SimpleDateFormat("dd MMM", Locale.ENGLISH);
             SimpleDateFormat sdf3 = new SimpleDateFormat("dd MMM yyyy", Locale.ENGLISH);
             String timeHour = sdf1.format(date);
             String timeMonth = sdf2.format(date);
-            String timeYear = sdf2.format(date);
+            String timeYear = sdf3.format(date);
 
             long timestamp = date.getTime();
             long currentTime = System.currentTimeMillis();
@@ -48,7 +55,13 @@ public class TimeUtils {
                 } else {
                     timeStr = timeGap / MONTH + " months ago";
                 }*/
-                timeStr = timeMonth + " at " + timeHour;
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(date);
+                if(calendar.get(Calendar.YEAR) == now.get(Calendar.YEAR)){
+                    timeStr = timeMonth + " at " + timeHour;
+                } else {
+                    timeStr = timeYear;
+                }
             } else if (timeGap > DAY) {
                 if (timeGap / DAY == 1){
                     timeStr = "Yesterday at " + timeHour;
@@ -75,6 +88,31 @@ public class TimeUtils {
             e.printStackTrace();
         }
         return strDate;
+    }
+
+    public static int calculateAge(String strDate) {
+        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+        try {
+            Date date = format.parse(strDate);
+            int age = 0;
+            Calendar born = Calendar.getInstance();
+            Calendar now = Calendar.getInstance();
+            if (date != null) {
+                now.setTime(new Date());
+                born.setTime(date);
+                if (born.after(now)) {
+                    throw new IllegalArgumentException("Can't be born in the future");
+                }
+                age = now.get(Calendar.YEAR) - born.get(Calendar.YEAR);
+                if (now.get(Calendar.DAY_OF_YEAR) < born.get(Calendar.DAY_OF_YEAR)) {
+                    age -= 1;
+                }
+            }
+            return age;
+        } catch (ParseException e) {
+            throw new RuntimeException(e);
+        }
+
     }
 
 }

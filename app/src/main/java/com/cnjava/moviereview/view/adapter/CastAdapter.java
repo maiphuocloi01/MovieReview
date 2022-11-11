@@ -22,7 +22,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
     private CastCallBack callBack;
 
     public interface CastCallBack{
-        void gotoCastDetail(String id);
+        void gotoCastDetail(Actor.Cast cast);
     }
 
     public CastAdapter(Context context, Actor actor, CastCallBack callBack) {
@@ -52,7 +52,7 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
         holder.binding.ivCast.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.gotoCastDetail(item.creditId);
+                callBack.gotoCastDetail(item);
             }
         });
     }

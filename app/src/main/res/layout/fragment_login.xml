@@ -69,7 +69,7 @@
         android:textSize="@dimen/_22ssp" />
 
 
-    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+    <com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout
         android:id="@+id/layout_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -95,10 +95,10 @@
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:textSize="@dimen/_12ssp" />
-    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
+    </com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout>
 
 
-    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+    <com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout
         android:id="@+id/layout_password"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -125,7 +125,7 @@
             android:textColor="@color/light_white"
             android:textColorHint="@color/mid_white"
             android:textSize="@dimen/_12ssp" />
-    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
+    </com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout>
 
     <TextView
         android:id="@+id/tv_forgot_password"

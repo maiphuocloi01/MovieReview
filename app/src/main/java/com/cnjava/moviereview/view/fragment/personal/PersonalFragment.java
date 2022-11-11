@@ -125,7 +125,7 @@ public class PersonalFragment extends BaseFragment<FragmentPersonalBinding, Comm
         ViewUtils.show(binding.layoutTitlePersonal);
         ViewUtils.show(binding.layoutScroll);
         if (reviewList.size() > 0) {
-            myReviewAdapter = new MyReviewAdapter(context, reviewList, this);
+            myReviewAdapter = new MyReviewAdapter(context, reviewList, null, this);
             binding.rvReview.setAdapter(myReviewAdapter);
             ViewUtils.show(binding.rvReview);
             ViewUtils.gone(binding.layoutEmpty);

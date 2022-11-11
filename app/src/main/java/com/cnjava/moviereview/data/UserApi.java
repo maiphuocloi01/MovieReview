@@ -1,7 +1,7 @@
 package com.cnjava.moviereview.data;
 
 import com.cnjava.moviereview.model.Favorite;
-import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.UserResponse;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.User;
@@ -35,13 +35,13 @@ public interface UserApi {
 
     @POST("auth/otp")
     @Headers("Content-type: application/json")
-    Call<Response> sendOTP(@Body User user);
+    Call<UserResponse> sendOTP(@Body User user);
 
     @PUT("auth/otp/confirm")
     @Headers("Content-type: application/json")
-    Call<Response> confirmOTP(@Body Response response);
+    Call<UserResponse> confirmOTP(@Body UserResponse userResponse);
 
-    @PUT("auth/forgot-password ")
+    @PUT("auth/forgot-password")
     @Headers("Content-type: application/json")
     Call<Void> forgotPassword(@Body User user);
 
@@ -51,7 +51,7 @@ public interface UserApi {
 
     @POST("auth/login")
     @FormUrlEncoded
-    Call<Response> login(@Field("email") String username, @Field("password") String password);
+    Call<UserResponse> login(@Field("email") String username, @Field("password") String password);
 
     @GET("users/me")
     @Headers("Content-type: application/json")

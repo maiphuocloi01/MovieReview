@@ -1,5 +1,11 @@
 package com.cnjava.moviereview.util;
 
+import com.cnjava.moviereview.model.Genres;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 public class Constants {
 
     public static final String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
@@ -70,4 +76,26 @@ public class Constants {
     public static final String KEY_DELETE_FAVORITE = "KEY_DELETE_FAVORITE";
 
     public static final String EMPTY_STRING = "";
+    public static final List<Genres> genresList = Collections.unmodifiableList(
+            new ArrayList<Genres>() {{
+                add(new Genres(28, "Action"));
+                add(new Genres(12, "Adventure"));
+                add(new Genres(16, "Animation"));
+                add(new Genres(35, "Comedy"));
+                add(new Genres(80, "Crime"));
+                add(new Genres(99, "Documentary"));
+                add(new Genres(18, "Drama"));
+                add(new Genres(10751, "Family"));
+                add(new Genres(14, "Fantasy"));
+                add(new Genres(36, "History"));
+                add(new Genres(27, "Horror"));
+                add(new Genres(10402, "Music"));
+                add(new Genres(9648, "Mystery"));
+                add(new Genres(10749, "Romance"));
+                add(new Genres(878, "Science Fiction"));
+                add(new Genres(10770, "TV Movie"));
+                add(new Genres(53, "Thriller"));
+                add(new Genres(10752, "War"));
+                add(new Genres(37, "Western"));
+            }});
 }

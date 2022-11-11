@@ -4,10 +4,12 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.repository.MovieRepository;
+import com.cnjava.moviereview.util.cutom.SingleLiveEvent;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
 import java.util.concurrent.TimeUnit;
@@ -25,11 +27,21 @@ public class SearchViewModel extends BaseViewModel {
     private static final String TAG = SearchViewModel.class.getName();
 
     private final MovieRepository movieRepository;
+    private SavedStateHandle state;
 
     private final MutableLiveData<Movie> trendingWeekLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> trendingDayLD = new MutableLiveData<>();
     private final MutableLiveData<MovieName> movieNameLD = new MutableLiveData<>();
-    private final MutableLiveData<Movie> movieResultLD = new MutableLiveData<>();
+    public final SingleLiveEvent<Movie> movieResultLD = new SingleLiveEvent<>();
+    private String textSearch = "";
+
+    public String getTextSearch() {
+        return textSearch;
+    }
+
+    public void setTextSearch(String textSearch) {
+        this.textSearch = textSearch;
+    }
 
     public LiveData<Movie> trendingWeekLD() {
         return trendingWeekLD;
@@ -42,39 +54,38 @@ public class SearchViewModel extends BaseViewModel {
     public LiveData<MovieName> movieNameLD() {
         return movieNameLD;
     }
-
-    public LiveData<Movie> movieResultLD() {
+    /*public SingleLiveEvent<Movie> movieResultLD() {
         return movieResultLD;
-    }
+    }*/
 
     @Inject
-    public SearchViewModel(MovieRepository movieRepository) {
+    public SearchViewModel(MovieRepository movieRepository, SavedStateHandle savedStateHandle) {
         this.movieRepository = movieRepository;
+        this.state = savedStateHandle;
     }
 
     public void getTrending(String timeWindow) {
-        mLiveDataIsLoading.setValue(true);
+        mLiveDataIsLoading.postValue(true);
         movieRepository.getTrending(timeWindow).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 if (timeWindow.equals("day")) {
-                    trendingDayLD.setValue(movie);
+                    trendingDayLD.postValue(movie);
                 } else if (timeWindow.equals("week")) {
-                    trendingWeekLD.setValue(movie);
+                    trendingWeekLD.postValue(movie);
                 }
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
 
     public void autoCompleteSearch(String searchView) {
-        mLiveDataIsLoading.setValue(true);
         movieRepository.autoCompleteSearch(searchView)
                 .debounce(300, TimeUnit.MILLISECONDS)
                 .distinctUntilChanged()
@@ -86,14 +97,14 @@ public class SearchViewModel extends BaseViewModel {
 
                     @Override
                     public void onNext(@NonNull MovieName movieName) {
-                        movieNameLD.setValue(movieName);
-                        mLiveDataIsLoading.setValue(false);
+                        movieNameLD.postValue(movieName);
+                        mLiveDataIsLoading.postValue(false);
                     }
 
                     @Override
                     public void onError(@NonNull Throwable e) {
                         Log.d(TAG, "onError: " + e.getMessage());
-                        mLiveDataIsLoading.setValue(false);
+                        mLiveDataIsLoading.postValue(false);
                     }
 
                     @Override
@@ -104,18 +115,18 @@ public class SearchViewModel extends BaseViewModel {
     }
 
     public void searchMovie(String text) {
-        mLiveDataIsLoading.setValue(true);
+        mLiveDataIsLoading.postValue(true);
         movieRepository.searchMovie(text).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
-                movieResultLD.setValue(movie);
-                mLiveDataIsLoading.setValue(false);
+                movieResultLD.postValue(movie);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
 

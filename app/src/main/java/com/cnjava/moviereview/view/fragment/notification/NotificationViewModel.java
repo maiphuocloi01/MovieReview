@@ -20,7 +20,7 @@ import io.reactivex.rxjava3.annotations.NonNull;
 @HiltViewModel
 public class NotificationViewModel extends BaseViewModel {
 
-    private static final String TAG = NotificationViewModel.class.getSimpleName();
+    private static final String TAG = NotificationViewModel.class.getName();
 
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;

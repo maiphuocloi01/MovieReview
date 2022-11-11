@@ -61,7 +61,7 @@ public class NetworkModule {
     @Named("MOVIE")
     Retrofit provideRetrofit2(OkHttpClient.Builder client) {
         return new Retrofit.Builder()
-                .baseUrl(BASE_URL_USER)
+                .baseUrl(BASE_URL_GUEST)
                 .client(client.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJava3CallAdapterFactory.create())

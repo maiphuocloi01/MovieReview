@@ -15,14 +15,13 @@ import androidx.core.content.ContextCompat;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentLoginBinding;
-import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.UserResponse;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.IMEUtils;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.forgotpassword.ForgotPasswordFragment;
-import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.viewmodel.CommonViewModel;
 import com.google.gson.Gson;
@@ -131,7 +130,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
     @Override
     public void apiSuccess(String key, Object data) {
         if (key.equals(Constants.KEY_LOGIN)) {
-            Response token = (Response) data;
+            UserResponse token = (UserResponse) data;
             Log.d(TAG, "apiSuccess: " + token.getAccessToken());
             CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
             CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, token.getAccessToken());
@@ -156,10 +155,10 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
             DialogUtils.hideLoadingDialog();
             ResponseBody res = (ResponseBody) data;
             Gson gson = new Gson();
-            Type type = new TypeToken<Response>() {
+            Type type = new TypeToken<UserResponse>() {
             }.getType();
-            Response errorResponse = gson.fromJson(res.charStream(), type);
-            Toast.makeText(context, errorResponse.getError(), Toast.LENGTH_LONG).show();
+            UserResponse errorUserResponse = gson.fromJson(res.charStream(), type);
+            Toast.makeText(context, errorUserResponse.getError(), Toast.LENGTH_LONG).show();
         } else if (code == 999) {
             DialogUtils.hideLoadingDialog();
             Toast.makeText(context, "Unable to connect, try again", Toast.LENGTH_SHORT).show();

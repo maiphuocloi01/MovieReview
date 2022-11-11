@@ -10,8 +10,6 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemPopularMovieBinding;
 import com.cnjava.moviereview.model.Genres;
@@ -20,6 +18,7 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,7 +26,8 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
 
     private Context context;
     private Movie movie;
-    private List<Genres> genresStorage = MyApplication.getInstance().getStorage().genresList;
+
+    private final List<Genres> genresList = Constants.genresList;
 
     private MovieCallBack callBack;
 
@@ -58,41 +58,41 @@ public class PopularAdapter extends RecyclerView.Adapter<PopularAdapter.MyViewHo
         if (item.genreIds.size() >= 3) {
             //for (int i = 0; i < 3; i++) {
             int id1 = item.genreIds.get(0);
-            Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
+            Genres genres1 = genresList.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
             //sb.append(genres1.getName()).append(", ");
             ViewUtils.show(holder.binding.bgKey1);
             holder.binding.tvCategory11.setText(genres1.getName());
 
             int id2 = item.genreIds.get(1);
-            Genres genres2 = genresStorage.stream().filter(a -> a.getId() == id2).collect(Collectors.toList()).get(0);
+            Genres genres2 = genresList.stream().filter(a -> a.getId() == id2).collect(Collectors.toList()).get(0);
             ViewUtils.show(holder.binding.bgKey2);
             holder.binding.tvCategory22.setText(genres2.getName());
 
             int id3 = item.genreIds.get(2);
-            Genres genres3 = genresStorage.stream().filter(a -> a.getId() == id3).collect(Collectors.toList()).get(0);
+            Genres genres3 = genresList.stream().filter(a -> a.getId() == id3).collect(Collectors.toList()).get(0);
             ViewUtils.show(holder.binding.bgKey3);
             holder.binding.tvCategory33.setText(genres3.getName());
             //}
-        } else if (item.genreIds.size() == 2){
+        } else if (item.genreIds.size() == 2) {
             /*for (int i = 0; i < item.genreIds.size(); i++) {
                 int id = item.genreIds.get(i);
-                Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id).collect(Collectors.toList()).get(0);
+                Genres genres1 = Constants.genresList.stream().filter(a -> a.getId() == id).collect(Collectors.toList()).get(0);
                 sb.append(genres1.getName()).append(", ");
             }*/
             int id1 = item.genreIds.get(0);
-            Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
+            Genres genres1 = genresList.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
             //sb.append(genres1.getName()).append(", ");
             ViewUtils.show(holder.binding.bgKey1);
             holder.binding.tvCategory11.setText(genres1.getName());
 
             int id2 = item.genreIds.get(1);
-            Genres genres2 = genresStorage.stream().filter(a -> a.getId() == id2).collect(Collectors.toList()).get(0);
+            Genres genres2 = genresList.stream().filter(a -> a.getId() == id2).collect(Collectors.toList()).get(0);
             ViewUtils.show(holder.binding.bgKey2);
             holder.binding.tvCategory22.setText(genres2.getName());
 
-        } else if(item.genreIds.size() == 1){
+        } else if (item.genreIds.size() == 1) {
             int id1 = item.genreIds.get(0);
-            Genres genres1 = genresStorage.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
+            Genres genres1 = genresList.stream().filter(a -> a.getId() == id1).collect(Collectors.toList()).get(0);
             //sb.append(genres1.getName()).append(", ");
             ViewUtils.show(holder.binding.bgKey1);
             holder.binding.tvCategory11.setText(genres1.getName());

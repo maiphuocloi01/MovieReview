@@ -2,11 +2,10 @@ package com.cnjava.moviereview.viewmodel;
 
 import android.util.Log;
 
-import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cnjava.moviereview.model.Favorite;
-import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.UserResponse;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
@@ -101,8 +100,8 @@ public class CommonViewModel extends BaseViewModel {
     }
 
     public void confirmOTP(String email, String token){
-        Response response = new Response(email, token);
-        getUserApi().confirmOTP(response).enqueue(initHandleResponse(Constants.KEY_CONFIRM_OTP));
+        UserResponse userResponse = new UserResponse(email, token);
+        getUserApi().confirmOTP(userResponse).enqueue(initHandleResponse(Constants.KEY_CONFIRM_OTP));
     }
 
     public void forgotPassword(User user){

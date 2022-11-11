@@ -1,13 +1,11 @@
 package com.cnjava.moviereview.view.activity;
 
 
-import static com.cnjava.moviereview.util.Constants.ANIM_FADE;
-import static com.cnjava.moviereview.util.Constants.ANIM_SCALE;
-import static com.cnjava.moviereview.util.Constants.ANIM_SLIDE;
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 import static com.cnjava.moviereview.util.IMEUtils.isActive;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -20,15 +18,15 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
-import androidx.fragment.app.FragmentTransaction;
 
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.Storage;
 import com.cnjava.moviereview.databinding.ActivityMainBinding;
-import com.cnjava.moviereview.model.Genres;
+import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
@@ -38,6 +36,7 @@ import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.onboard.OnboardFragment;
 
 import java.lang.reflect.Constructor;
+import java.util.ArrayList;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -75,16 +74,17 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         initViews();
-        addGenres();
         new CountDownTimer(3100, 2000) {
             public void onFinish() {
                 if (!CommonUtils.isInternetOn(MainActivity.this)) {
                     System.exit(0);
                 } else {
+                    binding.layoutActivity.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.dark));
                     ViewUtils.gone(binding.animationView);
                     ViewUtils.show(binding.layoutMain);
                 }
             }
+
             public void onTick(long millisUntilFinished) {
                 if (!CommonUtils.isInternetOn(MainActivity.this)) {
                     Toast.makeText(MainActivity.this, "No connection", Toast.LENGTH_SHORT).show();
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     @Override
     public void addFragment(String tag, Object data, boolean isBack, int anim) {
-        Fragment frg = showFragment(tag, data, isBack);
+        Fragment frg = showFragment(tag, data);
         if (frg != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     @Override
     public void replaceFragment(String tag, Object data, boolean isBack, int anim) {
-        Fragment frg = showFragment(tag, data, isBack);
+        Fragment frg = showFragment(tag, data);
         if (frg != null) {
             getSupportFragmentManager()
                     .beginTransaction()
@@ -141,7 +141,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         }
     }
 
-    private Fragment showFragment(String tag, Object data, boolean isBack) {
+    private Fragment showFragment(String tag, Object data) {
         try {
             if (isActive(this)) {
                 hideSoftInput(this);
@@ -168,6 +168,10 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     @Override
     public void onBackPressed() {
+        if (getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG) instanceof HomeFragment
+                && getSupportFragmentManager().getBackStackEntryCount() < 2) {
+            System.exit(0);
+        }
         getSupportFragmentManager().popBackStack();
     }
 
@@ -217,6 +221,14 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         }
     }
 
+    @Override
+    public void gotoActivity(ArrayList<String> ids, Video video) {
+        Intent intent = new Intent(MainActivity.this, VideoActivity.class);
+        intent.putStringArrayListExtra("ids", ids);
+        intent.putExtra("video", video);
+        startActivity(intent);
+    }
+
     public void refreshFragment(Fragment currentFragment) {
         if (currentFragment != null) {
             getSupportFragmentManager()
@@ -253,7 +265,6 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
 
     @Override
     protected void onDestroy() {
-        storage.genresList = null;
         String saveSession = CommonUtils.getInstance().getPref(Constants.SAVE_SESSION);
         Log.d(TAG, "onDestroy: " + saveSession);
         if (saveSession == null) {
@@ -271,25 +282,4 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         super.onDestroy();
     }
 
-    private void addGenres() {
-        storage.genresList.add(new Genres(28, "Action"));
-        storage.genresList.add(new Genres(12, "Adventure"));
-        storage.genresList.add(new Genres(16, "Animation"));
-        storage.genresList.add(new Genres(35, "Comedy"));
-        storage.genresList.add(new Genres(80, "Crime"));
-        storage.genresList.add(new Genres(99, "Documentary"));
-        storage.genresList.add(new Genres(18, "Drama"));
-        storage.genresList.add(new Genres(10751, "Family"));
-        storage.genresList.add(new Genres(14, "Fantasy"));
-        storage.genresList.add(new Genres(36, "History"));
-        storage.genresList.add(new Genres(27, "Horror"));
-        storage.genresList.add(new Genres(10402, "Music"));
-        storage.genresList.add(new Genres(9648, "Mystery"));
-        storage.genresList.add(new Genres(10749, "Romance"));
-        storage.genresList.add(new Genres(878, "Science Fiction"));
-        storage.genresList.add(new Genres(10770, "TV Movie"));
-        storage.genresList.add(new Genres(53, "Thriller"));
-        storage.genresList.add(new Genres(10752, "War"));
-        storage.genresList.add(new Genres(37, "Western"));
-    }
 }

@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.SavedStateHandle;
 
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.model.Collection;
@@ -19,6 +20,7 @@ import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
 import java.util.List;
+import java.util.Objects;
 
 import javax.inject.Inject;
 
@@ -29,16 +31,14 @@ import io.reactivex.rxjava3.annotations.NonNull;
 @HiltViewModel
 public class DetailViewModel extends BaseViewModel {
     private static final String TAG = "DetailViewModel";
+    public static final String REVIEW_LIST = "REVIEW_LIST";
 
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;
+    private SavedStateHandle state;
 
-    @Inject
-    public DetailViewModel(MovieRepository movieRepository, AccountRepository accountRepository) {
-        this.movieRepository = movieRepository;
-        this.accountRepository = accountRepository;
-    }
 
+    //Livedata Variable
     private final MutableLiveData<MovieDetail> movieDetailLD = new MutableLiveData<>();
     private final MutableLiveData<Actor> actorLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> recommendationLD = new MutableLiveData<>();
@@ -46,8 +46,15 @@ public class DetailViewModel extends BaseViewModel {
     private final MutableLiveData<Social> socialLD = new MutableLiveData<>();
     private final MutableLiveData<Collection> collectionLD = new MutableLiveData<>();
     private final MutableLiveData<List<Favorite>> myFavoriteLD = new MutableLiveData<>();
-    private final MutableLiveData<List<Review>> movieReviewLD = new MutableLiveData<>();
     private final MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
+
+    @Inject
+    public DetailViewModel(MovieRepository movieRepository, AccountRepository accountRepository, SavedStateHandle savedStateHandle) {
+        this.movieRepository = movieRepository;
+        this.accountRepository = accountRepository;
+        this.state = savedStateHandle;
+    }
+
 
     public LiveData<MovieDetail> movieDetailLD() {
         return movieDetailLD;
@@ -77,27 +84,33 @@ public class DetailViewModel extends BaseViewModel {
         return myFavoriteLD;
     }
 
-    public LiveData<List<Review>> movieReviewLD() {
+    /*public LiveData<List<Review>> movieReviewLD() {
         return movieReviewLD;
-    }
+    }*/
 
     public LiveData<User> yourProfileLD() {
         return yourProfileLD;
     }
 
+    private final MutableLiveData<Review> reviewsByUserIdAndMovieIdLD = new MutableLiveData<>();
+
+    public LiveData<Review> reviewsByUserIdAndMovieIdLD() {
+        return reviewsByUserIdAndMovieIdLD;
+    }
+
     public void getMovieDetail(int id) {
-        mLiveDataIsLoading.setValue(true);
+        mLiveDataIsLoading.postValue(true);
         movieRepository.getMovieDetail(id).subscribe(new CustomSingleObserver<MovieDetail>() {
             @Override
             public void onSuccess(@NonNull MovieDetail movie) {
-                movieDetailLD.setValue(movie);
-                mLiveDataIsLoading.setValue(false);
+                movieDetailLD.postValue(movie);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -106,14 +119,14 @@ public class DetailViewModel extends BaseViewModel {
         movieRepository.getCast(id).subscribe(new CustomSingleObserver<Actor>() {
             @Override
             public void onSuccess(@NonNull Actor actor) {
-                actorLD.setValue(actor);
-                mLiveDataIsLoading.setValue(false);
+                actorLD.postValue(actor);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -122,14 +135,14 @@ public class DetailViewModel extends BaseViewModel {
         movieRepository.getRecommendation(id).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
-                recommendationLD.setValue(movie);
-                mLiveDataIsLoading.setValue(false);
+                recommendationLD.postValue(movie);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -138,14 +151,14 @@ public class DetailViewModel extends BaseViewModel {
         movieRepository.getVideo(id).subscribe(new CustomSingleObserver<Video>() {
             @Override
             public void onSuccess(@NonNull Video video) {
-                videoLD.setValue(video);
-                mLiveDataIsLoading.setValue(false);
+                videoLD.postValue(video);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -154,14 +167,14 @@ public class DetailViewModel extends BaseViewModel {
         movieRepository.getSocial(id).subscribe(new CustomSingleObserver<Social>() {
             @Override
             public void onSuccess(@NonNull Social social) {
-                socialLD.setValue(social);
-                mLiveDataIsLoading.setValue(false);
+                socialLD.postValue(social);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -170,14 +183,14 @@ public class DetailViewModel extends BaseViewModel {
         movieRepository.getCollection(collectionId).subscribe(new CustomSingleObserver<Collection>() {
             @Override
             public void onSuccess(@NonNull Collection collection) {
-                collectionLD.setValue(collection);
-                mLiveDataIsLoading.setValue(false);
+                collectionLD.postValue(collection);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -186,14 +199,14 @@ public class DetailViewModel extends BaseViewModel {
         accountRepository.getMyFavorite(token).subscribe(new CustomSingleObserver<List<Favorite>>() {
             @Override
             public void onSuccess(@NonNull List<Favorite> favorites) {
-                myFavoriteLD.setValue(favorites);
-                mLiveDataIsLoading.setValue(false);
+                myFavoriteLD.postValue(favorites);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -210,13 +223,30 @@ public class DetailViewModel extends BaseViewModel {
             @Override
             public void onSuccess(@NonNull List<Review> reviews) {
                 movieReviewLD.setValue(reviews);
-                mLiveDataIsLoading.setValue(false);
+                state.set(REVIEW_LIST, reviews);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void getReviewsByUserIdAndMovieId(String userId, String movieId) {
+        accountRepository.getReviewsByUserIdAndMovieId(userId, movieId).subscribe(new CustomSingleObserver<Review>() {
+            @Override
+            public void onSuccess(@NonNull Review review) {
+                reviewsByUserIdAndMovieIdLD.postValue(review);
+                mLiveDataIsLoading.postValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -225,14 +255,14 @@ public class DetailViewModel extends BaseViewModel {
         accountRepository.addFavorite(movie, token).subscribe(new CustomSingleObserver<Favorite>() {
             @Override
             public void onSuccess(@NonNull Favorite favorite) {
-                addFavoriteLD.setValue(favorite);
-                mLiveDataIsLoading.setValue(false);
+                addFavoriteLD.postValue(favorite);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -241,13 +271,13 @@ public class DetailViewModel extends BaseViewModel {
         accountRepository.deleteFavorite(movieId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -256,13 +286,13 @@ public class DetailViewModel extends BaseViewModel {
         accountRepository.deleteReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -271,13 +301,13 @@ public class DetailViewModel extends BaseViewModel {
         accountRepository.dislikeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
@@ -286,30 +316,30 @@ public class DetailViewModel extends BaseViewModel {
         accountRepository.likeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }
 
     public void getYourProfile(String token) {
-        mLiveDataIsLoading.setValue(true);
+        mLiveDataIsLoading.postValue(true);
         accountRepository.getMyProfile(token).subscribe(new CustomSingleObserver<User>() {
             @Override
             public void onSuccess(@NonNull User user) {
-                yourProfileLD.setValue(user);
-                mLiveDataIsLoading.setValue(false);
+                yourProfileLD.postValue(user);
+                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.setValue(false);
+                mLiveDataIsLoading.postValue(false);
             }
         });
     }

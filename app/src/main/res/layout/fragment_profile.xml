@@ -288,7 +288,7 @@
                     android:textStyle="bold" />
 
                 <ImageButton
-                    android:id="@+id/iv_logout"
+                    android:id="@+id/iv_favorite_list"
                     android:layout_width="@dimen/_30sdp"
                     android:layout_height="match_parent"
                     android:background="@drawable/bg_light_dark_corner_10"

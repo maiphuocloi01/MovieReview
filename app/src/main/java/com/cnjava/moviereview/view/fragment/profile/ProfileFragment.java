@@ -1,20 +1,17 @@
 package com.cnjava.moviereview.view.fragment.profile;
 
 import android.view.LayoutInflater;
-import android.view.View;
 import android.view.ViewGroup;
-import android.view.animation.AnimationUtils;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentProfileBinding;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
@@ -27,7 +24,6 @@ import com.cnjava.moviereview.view.fragment.editreview.EditReviewFragment;
 import com.cnjava.moviereview.view.fragment.favorite.FavoriteFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.view.fragment.setting.SettingFragment;
-import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -39,7 +35,7 @@ import java.util.stream.Collectors;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ProfileFragment extends BaseFragment<FragmentProfileBinding, CommonViewModel> implements MyReviewAdapter.MyReviewCallBack {
+public class ProfileFragment extends BaseFragment<FragmentProfileBinding, ProfileViewModel> implements MyReviewAdapter.MyReviewCallBack {
 
     public static final String TAG = ProfileFragment.class.getName();
     private MyReviewAdapter myReviewAdapter;
@@ -48,16 +44,12 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if (key.equals(Constants.KEY_GET_YOUR_PROFILE)) {
-            User user = (User) data;
-            MyApplication.getInstance().getStorage().myUser = user;
-            initViewUser(user);
-        }
+
     }
 
-    private void initReviewView(List<Review> reviewList) {
+    private void initReviewView(List<Review> reviewList, User user) {
         if (reviewList.size() > 0) {
-            myReviewAdapter = new MyReviewAdapter(context, reviewList, this);
+            myReviewAdapter = new MyReviewAdapter(context, reviewList, user, this);
             binding.rvReview.setAdapter(myReviewAdapter);
             ViewUtils.show(binding.rvReview);
             ViewUtils.gone(binding.layoutEmpty);
@@ -69,9 +61,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if (code == 999) {
 
-        }
     }
 
     private void setLoading(boolean isLoading) {
@@ -87,144 +77,112 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Common
     }
 
     @Override
-    protected Class<CommonViewModel> getClassVM() {
-        return CommonViewModel.class;
+    protected Class<ProfileViewModel> getClassVM() {
+        return ProfileViewModel.class;
     }
 
     @Override
     protected void initViews() {
 
-        ProfileViewModel profileViewModel = new ViewModelProvider(this).get(ProfileViewModel.class);
-
-        MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         binding.rbAll.setChecked(true);
-        profileViewModel.getLiveDataIsLoading().observe(this, this::setLoading);
+        viewModel.getLiveDataIsLoading().observe(this, this::setLoading);
 
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-            profileViewModel.getMyStatistics(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            profileViewModel.myStatisticsLD().observe(this, _statistic -> {
-                if ((int) _statistic.likes > 1) {
-                    binding.tvCountLike.setText((int) _statistic.likes + " likes");
-                } else {
-                    binding.tvCountLike.setText((int) _statistic.likes + " like");
-                }
-                if ((int) _statistic.reviews > 1) {
-                    binding.tvCountReview.setText((int) _statistic.reviews + " reviews");
-                } else {
-                    binding.tvCountReview.setText((int) _statistic.reviews + " review");
-                }
-                binding.tvAverageRate.setText(String.format(Locale.US, "%.1f scores", _statistic.avgStars));
-            });
 
-            profileViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            profileViewModel.yourProfileLD().observe(this, _user -> {
-                initViewUser(_user);
-                profileViewModel.getReviewByUserId(_user.getId());
-                profileViewModel.reviewByUserIdLD().observe(this, _reviews -> {
-                    reviewList = _reviews;
-                    Collections.reverse(reviewList);
-                    sortedReview = new ArrayList<>(reviewList);
-                    initReviewView(sortedReview);
+            if (viewModel.myStatisticsLD().getValue() == null) {
+                viewModel.getMyStatistics(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                viewModel.myStatisticsLD().observe(this, _statistic -> {
+                    initStatisticView(_statistic);
                 });
-            });
-
-        }
-
-        binding.ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.backToPrev();
+            } else {
+                initStatisticView(viewModel.myStatisticsLD().getValue());
             }
-        });
 
-        binding.ivSetting.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.replaceFragment(SettingFragment.TAG, null, true, Constants.ANIM_SLIDE);
-            }
-        });
-
-        if (MyApplication.getInstance().getStorage().myUser == null) {
-            //DialogUtils.showLoadDataDialog(context);
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            if (viewModel.yourProfileLD().getValue() == null) {
                 viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                viewModel.yourProfileLD().observe(this, _user -> {
+                    initViewUser(_user);
+                });
+            } else {
+                initViewUser(viewModel.yourProfileLD().getValue());
             }
-        } else {
-            initViewUser(MyApplication.getInstance().getStorage().myUser);
+
         }
 
-        binding.tvEditProfile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.tvEditProfile.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                if (MyApplication.getInstance().getStorage().myUser != null) {
-                    callBack.replaceFragment(EditProfileFragment.TAG, MyApplication.getInstance().getStorage().myUser, true, Constants.ANIM_SLIDE);
-                }
-            }
-        });
+        binding.ivBack.setOnClickListener(view -> callBack.backToPrev());
 
-        binding.ivLogout.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                binding.ivLogout.startAnimation(AnimationUtils.loadAnimation(context, androidx.appcompat.R.anim.abc_fade_in));
-                //showAlertDialog();
-                callBack.replaceFragment(FavoriteFragment.TAG, null, true, Constants.ANIM_SLIDE);
-            }
-        });
+        binding.ivSetting.setOnClickListener(view -> callBack.replaceFragment(SettingFragment.TAG, null, true, Constants.ANIM_SLIDE));
 
-        binding.rbAll.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                initReviewView(reviewList);
-            }
-        });
 
-        binding.rbTopLike.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortedReview = reviewList.stream()
-                        .sorted(Comparator.comparing(review -> review.like.size()))
-                        .collect(Collectors.toList());
-                Collections.reverse(sortedReview);
-                initReviewView(sortedReview);
-            }
-        });
+        binding.ivFavoriteList.setOnClickListener(view -> callBack.replaceFragment(FavoriteFragment.TAG, null, true, Constants.ANIM_SLIDE));
 
-        binding.rbTopScore.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortedReview = reviewList.stream()
-                        .sorted(Comparator.comparing(Review::getRating).reversed())
-                        .collect(Collectors.toList());
-                initReviewView(sortedReview);
-            }
-        });
 
-        binding.rbCritical.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                sortedReview = reviewList.stream()
-                        .filter(review -> review.content.length() > 150)
-                        .collect(Collectors.toList());
-                sortedReview = sortedReview.stream()
-                        .filter(review -> review.rating < 5.0)
-                        .collect(Collectors.toList());
-                initReviewView(sortedReview);
-            }
-        });
+    }
+
+    private void initStatisticView(Statistic statistic) {
+        if ((int) statistic.likes > 1) {
+            binding.tvCountLike.setText(getString(R.string.likes, (int) statistic.likes));
+        } else {
+            binding.tvCountLike.setText(getString(R.string.like, (int) statistic.likes));
+        }
+
+        if ((int) statistic.reviews > 1) {
+            binding.tvCountReview.setText(getString(R.string.reviews, (int) statistic.reviews));
+        } else {
+            binding.tvCountReview.setText(getString(R.string.review, (int) statistic.reviews));
+        }
+        binding.tvAverageRate.setText(String.format(Locale.US, "%.1f scores", statistic.avgStars));
     }
 
     private void initViewUser(User user) {
+        binding.rbCritical.setOnClickListener(view -> {
+            sortedReview = reviewList.stream()
+                    .filter(review -> review.content.length() > 150)
+                    .collect(Collectors.toList());
+            sortedReview = sortedReview.stream()
+                    .filter(review -> review.rating < 5.0)
+                    .collect(Collectors.toList());
+            initReviewView(sortedReview, user);
+        });
+        binding.rbAll.setOnClickListener(view -> initReviewView(reviewList, user));
+        binding.rbTopLike.setOnClickListener(view -> {
+            sortedReview = reviewList.stream()
+                    .sorted(Comparator.comparing(review -> review.like.size()))
+                    .collect(Collectors.toList());
+            Collections.reverse(sortedReview);
+            initReviewView(sortedReview, user);
+        });
+
+        binding.rbTopScore.setOnClickListener(view -> {
+            sortedReview = reviewList.stream()
+                    .sorted(Comparator.comparing(Review::getRating).reversed())
+                    .collect(Collectors.toList());
+            initReviewView(sortedReview, user);
+        });
+        if (viewModel.reviewByUserIdLD().getValue() == null) {
+            viewModel.getReviewByUserId(user.getId());
+            viewModel.reviewByUserIdLD().observe(this, _reviews -> {
+                reviewList = _reviews;
+                sortedReview = new ArrayList<>(reviewList);
+                initReviewView(sortedReview, user);
+            });
+        } else {
+            reviewList = viewModel.reviewByUserIdLD().getValue();
+            sortedReview = new ArrayList<>(reviewList);
+            initReviewView(sortedReview, user);
+        }
+
         binding.tvName.setText(user.getName());
         binding.tvEmail.setText(user.getEmail());
         if (user.getAvatar() != null) {
             Glide.with(context)
-                    .load(String.format(user.getAvatar()))
+                    .load(user.getAvatar())
                     .transition(DrawableTransitionOptions.withCrossFade())
                     .placeholder(R.drawable.progress_animation)
                     .into(binding.ivAvatar);
         }
+        binding.tvEditProfile.setOnClickListener(view -> callBack.replaceFragment(EditProfileFragment.TAG, user, true, Constants.ANIM_SLIDE));
     }
 
     @Override

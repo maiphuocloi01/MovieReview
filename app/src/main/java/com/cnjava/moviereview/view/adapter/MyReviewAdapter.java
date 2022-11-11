@@ -21,6 +21,7 @@ import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
+import com.cnjava.moviereview.util.TimeUtils;
 
 import java.util.List;
 
@@ -29,7 +30,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
     private Context context;
     private List<Review> listReview;
     private MyReviewCallBack callBack;
-    private User user = MyApplication.getInstance().getStorage().myUser;
+    private User user;
 
     public interface MyReviewCallBack{
         void gotoReviewDetail(Review review);
@@ -40,10 +41,11 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
         void gotoMovieDetail(String id);
     }
 
-    public MyReviewAdapter(Context context, List<Review> listReview, MyReviewCallBack callBack) {
+    public MyReviewAdapter(Context context, List<Review> listReview, User user, MyReviewCallBack callBack) {
         this.context = context;
         this.listReview = listReview;
         this.callBack = callBack;
+        this.user = user;
     }
 
     public void renewItems(List<Review> reviews) {
@@ -116,7 +118,7 @@ public class MyReviewAdapter extends RecyclerView.Adapter<MyReviewAdapter.MyView
             }
         }
         holder.binding.tvName.setText(review.user.getName());
-        holder.binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
+        holder.binding.tvDate.setText(TimeUtils.getDescriptionTimeFromTimestamp(review.createdAt));
         if(review.content != null) {
             holder.binding.tvContent.setText(review.content);
         }

@@ -1,8 +1,6 @@
 package com.cnjava.moviereview.view.adapter;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
@@ -15,39 +13,41 @@ import androidx.appcompat.widget.PopupMenu;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
-import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemReviewBinding;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
-import com.cnjava.moviereview.util.Constants;
-import com.cnjava.moviereview.util.NumberUtils;
+import com.cnjava.moviereview.util.TimeUtils;
 
 import java.util.List;
 
-import ru.embersoft.expandabletextview.ExpandableTextView;
 
 public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHolder> {
 
     private Context context;
     private List<Review> listReview;
     private ReviewCallBack callBack;
-    private User user = MyApplication.getInstance().getStorage().myUser;
+    private User user;
 
-    public interface ReviewCallBack{
+    public interface ReviewCallBack {
         void gotoReviewDetail(Review review);
+
         void likeReview(String id);
+
         void dislikeReview(String id);
+
         void deleteReview(String id);
+
         void updateReview(Review review);
+
         void gotoUserReview(String userId);
     }
 
-    public ReviewAdapter(Context context, List<Review> listReview, ReviewCallBack callBack) {
+    public ReviewAdapter(Context context, List<Review> listReview, User user, ReviewCallBack callBack) {
         this.context = context;
         this.listReview = listReview;
         this.callBack = callBack;
+        this.user = user;
     }
 
     public void renewItems(List<Review> reviews) {
@@ -82,7 +82,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Review review = listReview.get(position);
-        if(user != null) {
+        if (user != null) {
             if (!review.isDislike) {
                 for (String yourLike : review.like) {
                     if (yourLike.equals(user.getId())) {
@@ -103,7 +103,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
             }
         }
         holder.binding.tvName.setText(review.user.getName());
-        holder.binding.tvDate.setText(NumberUtils.convertDateType7(review.createdAt));
+        holder.binding.tvDate.setText(TimeUtils.getDescriptionTimeFromTimestamp(review.createdAt));
         holder.binding.tvContent.setText(review.content);
         holder.binding.tvRate.setText(String.valueOf((int) review.rating));
         Glide.with(context)
@@ -111,16 +111,16 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.img_default_avt)
                 .into(holder.binding.ivAvt);
-        if(review.like != null) {
+        if (review.like != null) {
             Log.d("TAG", "tvLike: ");
             holder.binding.tvLike.setText(String.valueOf(review.like.size()));
         }
-        if(review.dislike != null) {
+        if (review.dislike != null) {
             Log.d("TAG", "tvDislike: ");
             holder.binding.tvDislike.setText(String.valueOf(review.dislike.size()));
         }
         Log.d("TAG", "onBindViewHolder: " + review.like.size());
-        if(user != null) {
+        if (user != null) {
             if (review.user.getId().equals(user.getId())) {
                 holder.binding.ivMore.setVisibility(View.VISIBLE);
                 holder.binding.ivMore.setOnClickListener(new View.OnClickListener() {
@@ -239,7 +239,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
                 callBack.gotoUserReview(review.user.getId());
             }
         });
-        if(review.content.length() > 150) {
+        if (review.content.length() > 150) {
             holder.binding.tvShowMore.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -266,7 +266,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
-        if(listReview != null){
+        if (listReview != null) {
             return listReview.size();
         }
         return 0;
@@ -274,6 +274,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ItemReviewBinding binding;
+
         public MyViewHolder(ItemReviewBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

@@ -380,11 +380,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
-                android:maxLines="1"
-                android:textColor="@color/lighter_white"
-                android:textSize="@dimen/_12ssp" />
+                style="@style/Widget.VieWie.TextView.Line" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -397,14 +393,10 @@
 
             <TextView
                 android:id="@+id/tv_budget"
+                style="@style/Widget.VieWie.TextView.Line"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
-                android:maxLines="1"
-                android:textColor="@color/lighter_white"
-                android:textSize="@dimen/_12ssp" />
+                android:layout_marginTop="4dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -419,13 +411,9 @@
                 android:id="@+id/tv_rate_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:layout_marginBottom="16dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
-                android:maxLines="1"
-                android:textColor="@color/lighter_white"
-                android:textSize="@dimen/_12ssp" />
+                style="@style/Widget.VieWie.TextView.Line"
+                android:layout_marginTop="4dp" />
 
 
         </LinearLayout>
@@ -452,11 +440,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
-                android:maxLines="1"
-                android:textColor="@color/lighter_white"
-                android:textSize="@dimen/_12ssp" />
+                style="@style/Widget.VieWie.TextView.Line" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -472,11 +456,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
-                android:maxLines="1"
-                android:textColor="@color/lighter_white"
-                android:textSize="@dimen/_12ssp" />
+                style="@style/Widget.VieWie.TextView.Line" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -493,11 +473,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:layout_marginBottom="16dp"
-                android:ellipsize="end"
-                android:fontFamily="@font/roboto_regular"
-                android:maxLines="1"
-                android:textColor="@color/lighter_white"
-                android:textSize="@dimen/_12ssp" />
+                style="@style/Widget.VieWie.TextView.Line" />
 
 
         </LinearLayout>

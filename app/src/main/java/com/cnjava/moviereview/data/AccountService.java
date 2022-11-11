@@ -1,7 +1,7 @@
 package com.cnjava.moviereview.data;
 
 import com.cnjava.moviereview.model.Favorite;
-import com.cnjava.moviereview.model.Response;
+import com.cnjava.moviereview.model.UserResponse;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.Summary;
@@ -36,11 +36,11 @@ public interface AccountService {
 
     @POST("auth/otp")
     @Headers("Content-type: application/json")
-    Single<Response> sendOTP(@Body User user);
+    Single<UserResponse> sendOTP(@Body User user);
 
     @PUT("auth/otp/confirm")
     @Headers("Content-type: application/json")
-    Single<Response> confirmOTP(@Body Response response);
+    Single<UserResponse> confirmOTP(@Body UserResponse userResponse);
 
     @PUT("auth/forgot-password ")
     @Headers("Content-type: application/json")
@@ -52,7 +52,7 @@ public interface AccountService {
 
     @POST("auth/login")
     @FormUrlEncoded
-    Single<Response> login(@Field("email") String username, @Field("password") String password);
+    Single<UserResponse> login(@Field("email") String username, @Field("password") String password);
 
     @GET("users/me")
     @Headers("Content-type: application/json")
@@ -63,8 +63,8 @@ public interface AccountService {
     Single<Void> updateProfile(@Body User user, @Header("Authorization") String auth);
 
     @Multipart
-    @POST("Api/AccountController/UploadImage")
-    Single<ResponseBody> uploadImage(@Part MultipartBody.Part part, @Part("somedata") RequestBody requestBody);
+    @POST("user/image")
+    Single<ResponseBody> uploadImage(@Header("Authorization") String auth, @Part MultipartBody.Part part, @Part("file") RequestBody requestBody);
 
     //Review
     @GET("reviews/movies/{movie_id}")
@@ -82,6 +82,10 @@ public interface AccountService {
     @POST("reviews")
     @Headers("Content-type: application/json")
     Single<Review> addReview(@Body Review review, @Header("Authorization") String auth);
+
+    @GET("users/{userId}/{movieId}")
+    @Headers("Content-type: application/json")
+    Single<Review> getReviewsByUserIdAndMovieIdLD(@Path("userId") String userId, @Path("movieId") String movieId);
 
     @PUT("reviews/{review_id}")
     @Headers("Content-type: application/json")
@@ -114,6 +118,7 @@ public interface AccountService {
     @GET("favorites")
     @Headers("Content-type: application/json")
     Single<List<Favorite>> getMyFavorite(@Header("Authorization") String auth);
+
 
     @POST("favorites")
     @Headers("Content-type: application/json")

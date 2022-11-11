@@ -9,10 +9,12 @@ import androidx.lifecycle.ViewModel;
 
 import com.cnjava.moviereview.data.Api;
 import com.cnjava.moviereview.data.UserApi;
+import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import io.reactivex.rxjava3.core.CompletableObserver;
@@ -37,9 +39,14 @@ public abstract class BaseViewModel extends ViewModel {
 
     protected MutableLiveData<Boolean> mLiveDataIsLoading = new MutableLiveData<>();
     protected MutableLiveData<Throwable> mLiveDataOnError = new MutableLiveData<>();
+    protected MutableLiveData<List<Review>> movieReviewLD = new MutableLiveData<>();
 
     public LiveData<Boolean> getLiveDataIsLoading() {
         return mLiveDataIsLoading;
+    }
+
+    public LiveData<List<Review>> movieReviewLD() {
+        return movieReviewLD;
     }
 
     public LiveData<Throwable> getLiveDataOnError() {
@@ -54,7 +61,7 @@ public abstract class BaseViewModel extends ViewModel {
 
         @Override
         public void onError(Throwable e) {
-            mLiveDataOnError.setValue(e);
+            mLiveDataOnError.postValue(e);
             e.printStackTrace();
         }
     }
@@ -67,7 +74,7 @@ public abstract class BaseViewModel extends ViewModel {
 
         @Override
         public void onError(Throwable e) {
-            mLiveDataOnError.setValue(e);
+            mLiveDataOnError.postValue(e);
             e.printStackTrace();
         }
     }
@@ -80,7 +87,7 @@ public abstract class BaseViewModel extends ViewModel {
 
         @Override
         public void onError(Throwable e) {
-            mLiveDataOnError.setValue(e);
+            mLiveDataOnError.postValue(e);
             e.printStackTrace();
         }
     }

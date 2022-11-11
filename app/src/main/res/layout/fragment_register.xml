@@ -69,7 +69,7 @@
         android:text="Join Viewie"/>
 
 
-    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+    <com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_22sdp"
@@ -95,9 +95,9 @@
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
+    </com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout>
 
-    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+    <com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/_25sdp"
@@ -124,10 +124,10 @@
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
+    </com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout>
 
 
-    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+    <com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
@@ -153,7 +153,7 @@
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
+    </com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout>
 
     <TextView
         android:id="@+id/tv_meter"
@@ -167,7 +167,7 @@
         android:textColor="@color/colorRed"
         android:textSize="@dimen/_10ssp" />
 
-    <com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout
+    <com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout
         android:layout_width="match_parent"
         app:passwordToggleEnabled="true"
         android:layout_height="wrap_content"
@@ -195,7 +195,7 @@
             android:textColorHint="@color/mid_white"
             android:drawableTint="@color/light_white"
             android:textSize="@dimen/_12ssp" />
-    </com.cnjava.moviereview.util.NoChangingBackgroundTextInputLayout>
+    </com.cnjava.moviereview.util.cutom.NoChangingBackgroundTextInputLayout>
 
     <View
         android:layout_width="match_parent"

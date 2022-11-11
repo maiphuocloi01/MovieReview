@@ -19,13 +19,15 @@ public class Storage {
     public Movie movieTopRated;
     public Movie movieRecommend;
     public User myUser;
-    public List<Genres> genresList = new ArrayList<>();
-    //public List<Favorite> favoriteList;
+
+    public List<Favorite> favoriteList;
     public List<Review> reviewList;
     public MovieDetail movieDetail;
     public String fragmentTag;
 
     public float WIDTH_SCREEN = 0f;
     public float HEIGHT_SCREEN = 0f;
+
+
 
 }

@@ -14,6 +14,9 @@ import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.core.Completable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import okhttp3.ResponseBody;
 
 public class AccountRepository {
     private final AccountService accountService;
@@ -27,6 +30,14 @@ public class AccountRepository {
         return subscribe(accountService.getMyProfile("Bearer " + token));
     }
 
+    public Single<ResponseBody> uploadImage(String token, MultipartBody.Part part, RequestBody requestBody) {
+        return subscribe(accountService.uploadImage("Bearer " + token, part, requestBody));
+    }
+
+    public Single<Review> addReview(Review review, String token) {
+        return subscribe(accountService.addReview(review, "Bearer " + token));
+    }
+
     public Single<Statistic> getMyStatistics(String token) {
         return subscribe(accountService.getMyStatistics("Bearer " + token));
     }
@@ -37,6 +48,10 @@ public class AccountRepository {
 
     public Single<List<Favorite>> getMyFavorite(String token) {
         return subscribe(accountService.getMyFavorite("Bearer " + token));
+    }
+
+    public Single<Review> getReviewsByUserIdAndMovieId(String userId, String movieId) {
+        return subscribe(accountService.getReviewsByUserIdAndMovieIdLD(userId, movieId));
     }
 
     public Single<Favorite> addFavorite(Favorite.MovieFavorite movie, String token) {
@@ -62,6 +77,14 @@ public class AccountRepository {
     public Single<List<Review>> getReviewByMovieId(String movieId) {
         return subscribe(accountService.getReviewByMovieId(movieId));
     }
+
+    public Single<Void> updateProfile(User user, String token) {
+        return subscribe(accountService.updateProfile(user, "Bearer " + token));
+    }
+
+    /*public Single<ResponseBody> uploadImageAccount(MultipartBody.Part parts, RequestBody someData) {
+        return subscribe(accountService.uploadImage(parts, someData));
+    }*/
 
     private <T> Single<T> subscribe(Single<T> single) {
         return single.subscribeOn(Schedulers.io())
