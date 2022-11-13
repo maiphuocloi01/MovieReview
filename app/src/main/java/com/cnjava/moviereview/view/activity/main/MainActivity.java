@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.view.activity;
+package com.cnjava.moviereview.view.activity.main;
 
 
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
@@ -8,7 +8,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -33,7 +32,7 @@ import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
-import com.cnjava.moviereview.view.activity.main.MainViewModel;
+import com.cnjava.moviereview.view.activity.video.VideoActivity;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
@@ -54,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
     private Snackbar mSnackBar;
     boolean doubleBackToExitPressedOnce = false;
     private String sessionKey;
+    private int count = 0;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -92,11 +92,28 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
             viewModel.yourProfileLD().observe(this, me -> {
-                if(me == null){
-                    Log.d(TAG, "user null: ");
-                }
+                count++;
             });
         }
+        viewModel.getNowPlayingMovie();
+        viewModel.nowPlayingMovieLD().observe(this, me -> {
+            count++;
+        });
+
+        viewModel.getPopularMovie();
+        viewModel.popularMovieLD().observe(this, me -> {
+            count++;
+        });
+
+        viewModel.getTopRatedMovie();
+        viewModel.topRatedMovieLD().observe(this, me -> {
+            count++;
+        });
+
+        viewModel.getUpComingMovie();
+        viewModel.upcomingMovieLD().observe(this, me -> {
+            count++;
+        });
         /*new CountDownTimer(3100, 2000) {
             public void onFinish() {
                 if (!CommonUtils.isInternetOn(MainActivity.this)) {
@@ -120,7 +137,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         if (!CommonUtils.isInternetOn(MainActivity.this)) {
             System.exit(0);
         } else {
-            if(!loading) {
+            if(!loading && count >= 4) {
                 binding.layoutActivity.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.dark));
                 ViewUtils.gone(binding.animationView);
                 ViewUtils.show(binding.layoutMain);

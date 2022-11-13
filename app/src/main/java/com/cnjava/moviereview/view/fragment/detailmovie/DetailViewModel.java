@@ -36,7 +36,15 @@ public class DetailViewModel extends BaseViewModel {
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;
     private SavedStateHandle state;
+    private int movieId;
 
+    public int getMovieId() {
+        return movieId;
+    }
+
+    public void setMovieId(int movieId) {
+        this.movieId = movieId;
+    }
 
     //Livedata Variable
     private final MutableLiveData<MovieDetail> movieDetailLD = new MutableLiveData<>();

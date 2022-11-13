@@ -19,7 +19,7 @@
         android:usesCleartextTraffic="true">
 
         <activity
-            android:name=".view.activity.MainActivity"
+            android:name=".view.activity.main.MainActivity"
             android:exported="true"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan">
@@ -31,10 +31,13 @@
         </activity>
 
         <activity
-            android:name=".view.activity.VideoActivity"
+            android:name=".view.activity.video.VideoActivity"
             android:theme="@style/AppTheme"
-            android:resizeableActivity="true"
             android:supportsPictureInPicture="true"
+            android:launchMode="singleTask"
+            android:resizeableActivity="true"
+            android:taskAffinity=".PlayerActivity"
+            android:excludeFromRecents="true"
             android:configChanges="orientation|screenSize|keyboardHidden|smallestScreenSize|screenLayout"
             android:hardwareAccelerated="true" />
 

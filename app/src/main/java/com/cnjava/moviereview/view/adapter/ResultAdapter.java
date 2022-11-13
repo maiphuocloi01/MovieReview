@@ -14,6 +14,7 @@ import com.cnjava.moviereview.databinding.ItemSearchResultBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -48,11 +49,16 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
         if (item.overview != null) {
             holder.binding.tvOverview.setText(item.overview);
         }
-        Glide.with(context)
+        Picasso.get().load(Constants.IMAGE_URL + item.posterPath)
+                .resize(256, 384)
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_movie2)
+                .centerCrop().into(holder.binding.ivPoster);
+        /*Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.ic_movie2)
-                .into(holder.binding.ivPoster);
+                .into(holder.binding.ivPoster);*/
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

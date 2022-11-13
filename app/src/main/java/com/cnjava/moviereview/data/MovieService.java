@@ -22,6 +22,7 @@ import retrofit2.http.Query;
 public interface MovieService {
 
     String API_KEY = "5941024e8620246ad84260d2dfdac7ce";
+
     @GET("movie/popular?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Single<Movie> getPopularMovie();
@@ -46,11 +47,11 @@ public interface MovieService {
     @Headers("Content-type: application/json")
     Single<MovieDetail> getMovieDetail(@Path("id") int id);
 
-    @GET("search/movie?api_key=" + API_KEY)
+    @GET("search/movie?api_key=" + API_KEY + "&include_adult=false")
     @Headers("Content-type: application/json")
     Single<Movie> searchMovie(@Query("query") String keyword);
 
-    @GET("search/movie?api_key=" + API_KEY)
+    @GET("search/movie?api_key=" + API_KEY + "&include_adult=false")
     @Headers("Content-type: application/json")
     Single<Movie> searchMoviePaging(@Query("query") String keyword, @Query("page") int page);
 

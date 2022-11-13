@@ -59,8 +59,6 @@ public class CastFragment extends BaseFragment<FragmentCastBinding, CastViewMode
         Actor.Cast cast = (Actor.Cast) mData;
 
         binding.collapsingToolbarLayout.setTitleEnabled(false);
-        ExpandableTextView.onChange(binding.textOverview.textBody, binding.textOverview.buttonReadMore, 3);
-
         binding.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -107,11 +105,13 @@ public class CastFragment extends BaseFragment<FragmentCastBinding, CastViewMode
                 }
 
                 binding.textOverview.textBody.setText(people.biography);
-                Log.d(TAG, "initViews: " + ExpandableTextView.isEllipsized(binding.textOverview.textBody));
-                /*if (!ExpandableTextView.isEllipsized(binding.textOverview.textBody)){
+                if(people.biography.equals("")){
+                    binding.textOverview.textBody.setText(getString(R.string.do_not_have_biography));
                     binding.textOverview.buttonReadMore.setVisibility(View.GONE);
-                }*/
-
+                } else {
+                    ExpandableTextView.onChange(binding.textOverview.textBody, binding.textOverview.buttonReadMore, 3);
+                    ExpandableTextView.isEllipsized(binding.textOverview.textBody, 3, binding.textOverview.buttonReadMore);
+                }
             });
         } else {
             //displayCredit(viewModel.castDetailLD().getValue());

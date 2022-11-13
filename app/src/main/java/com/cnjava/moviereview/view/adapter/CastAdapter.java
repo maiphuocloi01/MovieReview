@@ -14,6 +14,7 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemCastBinding;
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.util.Constants;
+import com.squareup.picasso.Picasso;
 
 public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> {
 
@@ -43,9 +44,14 @@ public class CastAdapter extends RecyclerView.Adapter<CastAdapter.MyViewHolder> 
         Actor.Cast item = actor.cast.get(position);
         holder.binding.tvName.setText(item.name);
         holder.binding.tvCharacter.setText(item.character);
-        Glide.with(context)
+        /*Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.profilePath))
                 .transition(DrawableTransitionOptions.withCrossFade())
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_profile2)
+                .into(holder.binding.ivCast);*/
+        Picasso.get().load(Constants.IMAGE_URL + item.profilePath)
+                .resize(300, 450)
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.ic_profile2)
                 .into(holder.binding.ivCast);

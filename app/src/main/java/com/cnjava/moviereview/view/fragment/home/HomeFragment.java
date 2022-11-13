@@ -23,8 +23,6 @@ import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.Storage;
@@ -33,7 +31,6 @@ import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
-import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
@@ -46,6 +43,7 @@ import com.cnjava.moviereview.view.fragment.profile.ProfileFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.view.fragment.search.SearchFragment;
 import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
+import com.squareup.picasso.Picasso;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -88,38 +86,38 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             }
         }
 
-        if (viewModel.popularMovieLD().getValue() != null) {
-            initMovieRecyclerView(viewModel.popularMovieLD().getValue(), POPULAR);
+        if (mainViewModel.popularMovieLD().getValue() != null) {
+            initMovieRecyclerView(mainViewModel.popularMovieLD().getValue(), POPULAR);
         } else {
-            viewModel.getPopularMovie();
-            viewModel.popularMovieLD().observe(this, _popularMovie -> {
+            mainViewModel.getPopularMovie();
+            mainViewModel.popularMovieLD().observe(this, _popularMovie -> {
                 initMovieRecyclerView(_popularMovie, POPULAR);
             });
         }
 
-        if (viewModel.upcomingMovieLD().getValue() != null) {
-            initMovieRecyclerView(viewModel.upcomingMovieLD().getValue(), UP_COMING);
+        if (mainViewModel.upcomingMovieLD().getValue() != null) {
+            initMovieRecyclerView(mainViewModel.upcomingMovieLD().getValue(), UP_COMING);
         } else {
-            viewModel.getUpComingMovie();
-            viewModel.upcomingMovieLD().observe(this, _upcomingMovie -> {
+            mainViewModel.getUpComingMovie();
+            mainViewModel.upcomingMovieLD().observe(this, _upcomingMovie -> {
                 initMovieRecyclerView(_upcomingMovie, UP_COMING);
             });
         }
 
-        if (viewModel.topRatedMovieLD().getValue() != null) {
-            initMovieRecyclerView(viewModel.topRatedMovieLD().getValue(), TOP_RATED);
+        if (mainViewModel.topRatedMovieLD().getValue() != null) {
+            initMovieRecyclerView(mainViewModel.topRatedMovieLD().getValue(), TOP_RATED);
         } else {
-            viewModel.getTopRatedMovie();
-            viewModel.topRatedMovieLD().observe(this, _topRatedMovie -> {
+            mainViewModel.getTopRatedMovie();
+            mainViewModel.topRatedMovieLD().observe(this, _topRatedMovie -> {
                 initMovieRecyclerView(_topRatedMovie, TOP_RATED);
             });
         }
 
-        if (viewModel.nowPlayingMovieLD().getValue() != null) {
-            initMovieRecyclerView(viewModel.nowPlayingMovieLD().getValue(), NOW_PLAYING);
+        if (mainViewModel.nowPlayingMovieLD().getValue() != null) {
+            initMovieRecyclerView(mainViewModel.nowPlayingMovieLD().getValue(), NOW_PLAYING);
         } else {
-            viewModel.getNowPlayingMovie();
-            viewModel.nowPlayingMovieLD().observe(this, _nowPlayingMovie -> {
+            mainViewModel.getNowPlayingMovie();
+            mainViewModel.nowPlayingMovieLD().observe(this, _nowPlayingMovie -> {
                 initMovieRecyclerView(_nowPlayingMovie, NOW_PLAYING);
             });
         }
@@ -170,7 +168,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         });
 
         binding.ivNotification.setOnClickListener(view -> callBack.replaceFragment(NotificationFragment.TAG, null, true, Constants.ANIM_FADE));
-        binding.ivSearch.setOnClickListener(view -> callBack.addFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE));
+        binding.ivSearch.setOnClickListener(view -> callBack.replaceFragment(SearchFragment.TAG, null, true, Constants.ANIM_FADE));
 
     }
 
@@ -195,28 +193,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     private void getYourProfileAndSaveToStorage(User user) {
         if (user.getAvatar() != null) {
-            Glide.with(context)
-                    .load(user.getAvatar())
-                    .transition(DrawableTransitionOptions.withCrossFade())
+            Picasso.get().load(user.getAvatar())
+                    .resize(256, 256)
                     .placeholder(R.drawable.progress_animation)
-                    .centerCrop()
                     .error(R.drawable.ic_profile2)
-                    .into(binding.ivAvt);
+                    .centerCrop().into(binding.ivAvt);
         }
     }
 
     private void initMovieRecyclerView(Movie movie, int type) {
         if (type == POPULAR) {
-            runnable = new Runnable() {
-                @Override
-                public void run() {
-                    if (movie != null) {
-                        int currentPosition = binding.vpPopular.getCurrentItem();
-                        if (currentPosition == movie.results.size() - 1) {
-                            binding.vpPopular.setCurrentItem(0);
-                        } else {
-                            binding.vpPopular.setCurrentItem(currentPosition + 1);
-                        }
+            runnable = () -> {
+                if (movie != null) {
+                    int currentPosition = binding.vpPopular.getCurrentItem();
+                    if (currentPosition == movie.results.size() - 1) {
+                        binding.vpPopular.setCurrentItem(0);
+                    } else {
+                        binding.vpPopular.setCurrentItem(currentPosition + 1);
                     }
                 }
             };

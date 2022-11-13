@@ -35,4 +35,6 @@
     <string name="female">Female</string>
     <string name="coming_soon">Coming soon</string>
     <string name="setting">Setting</string>
+    <string name="do_not_have_biography">We do not have a biography</string>
+    <string name="do_not_have_overview">We do not have an overview</string>
 </resources>

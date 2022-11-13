@@ -1,7 +1,8 @@
-package com.cnjava.moviereview.view.activity;
+package com.cnjava.moviereview.view.activity.video;
 
 import android.content.pm.PackageManager;
 import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.views.YouTube
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.ui.DefaultPlayerUiController;
 
 import java.util.ArrayList;
+import java.util.Optional;
 
 import dagger.hilt.android.AndroidEntryPoint;
 
@@ -35,6 +37,7 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
     private Video video;
     private YouTubePlayer mYouTubePlayer;
     private TextView tvName;
+    private ImageView enterPipMode;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,8 +46,15 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
 
         ids = getIntent().getStringArrayListExtra("ids");
         video = (Video) getIntent().getSerializableExtra("video");
+        enterPipMode = findViewById(R.id.ivInPicture);
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
+            enterPipMode.setVisibility(View.GONE);
+        }
+        Optional<String> name = video.results.stream().filter(obj -> obj.key.equals(ids.get(0))).map(Video.VideoDetail::getName).findFirst();
         youTubePlayerView = findViewById(R.id.youtube_player_view);
         tvName = findViewById(R.id.tv_shows_text_video);
+        name.ifPresent(s -> tvName.setText(s));
+
 
         ImageView ivClose = findViewById(R.id.ivClose);
         ivClose.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +136,7 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
         );
 
     }*/
-
     private void initPictureInPicture() {
-        ImageView enterPipMode = findViewById(R.id.ivInPicture);
         enterPipMode.setOnClickListener(view -> {
             boolean supportsPIP = getPackageManager().hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE);
             if (supportsPIP)
@@ -138,7 +146,9 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
 
     @Override
     public void onPictureInPictureModeChanged(boolean isInPictureInPictureMode, Configuration newConfig) {
-        super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig);
+        }
 
         if (isInPictureInPictureMode) {
             youTubePlayerView.enterFullScreen();

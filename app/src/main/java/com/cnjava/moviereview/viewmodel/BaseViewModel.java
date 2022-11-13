@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.cnjava.moviereview.data.Api;
 import com.cnjava.moviereview.data.UserApi;
+import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.model.User;
@@ -53,6 +54,8 @@ public abstract class BaseViewModel extends ViewModel {
     public LiveData<Throwable> getLiveDataOnError() {
         return mLiveDataOnError;
     }
+
+
 
     public abstract class TranslateObserver<T extends Translate> implements SingleObserver<T> {
         @Override

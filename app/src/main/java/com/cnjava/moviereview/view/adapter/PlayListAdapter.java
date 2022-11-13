@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.cardview.widget.CardView;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
@@ -15,13 +17,17 @@ import com.cnjava.moviereview.databinding.ItemPlaylistBinding;
 import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.util.Constants;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.MyViewHolder> {
 
     private Context context;
     private Video video;
     private PlayListCallBack callBack;
+    List<CardView> cardViewList = new ArrayList<>();
 
-    public interface PlayListCallBack{
+    public interface PlayListCallBack {
         void gotoVideoYoutube(Video.VideoDetail videoResult);
     }
 
@@ -41,7 +47,7 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.MyView
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Video.VideoDetail item = video.results.get(position);
-        if(item.site.equals("YouTube")){
+        if (item.site.equals("YouTube")) {
             Glide.with(context)
                     .load(String.format(Constants.IMAGE_URL_YOUTUBE + item.key + "/0.jpg"))
                     .transition(DrawableTransitionOptions.withCrossFade())
@@ -50,9 +56,17 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.MyView
                     .into(holder.binding.ivPoster);
             holder.binding.tvName.setText(item.name);
             holder.binding.tvType.setText(item.type);
-            holder.binding.ivPoster.setOnClickListener(new View.OnClickListener() {
+            if (!cardViewList.contains(holder.binding.cardViewPlaylist)) {
+                //cardViewList.clear();
+                cardViewList.add(holder.binding.cardViewPlaylist);
+            }
+            holder.binding.cardViewPlaylist.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+                    for(CardView cardView : cardViewList){
+                        cardView.setCardBackgroundColor(ContextCompat.getColor(context, R.color.transparent));
+                    }
+                    holder.binding.cardViewPlaylist.setCardBackgroundColor(ContextCompat.getColor(context, R.color.mid_black_20));
                     callBack.gotoVideoYoutube(item);
                 }
             });
@@ -61,18 +75,15 @@ public class PlayListAdapter extends RecyclerView.Adapter<PlayListAdapter.MyView
 
     @Override
     public int getItemCount() {
-        if(video.results != null){
-            if (video.results.size() > 5) {
-                return 5;
-            } else {
-                return video.results.size();
-            }
+        if (video.results != null) {
+            return video.results.size();
         }
         return 0;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
         private ItemPlaylistBinding binding;
+
         public MyViewHolder(ItemPlaylistBinding binding) {
             super(binding.getRoot());
             this.binding = binding;

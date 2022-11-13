@@ -11,6 +11,7 @@
         android:autoLink="web"
         android:textColor="@color/lighter_white"
         android:textSize="@dimen/_11ssp"
+        android:lineSpacingExtra="@dimen/_2sdp"
         android:fontFamily="@font/roboto_regular"
         android:background="?android:attr/selectableItemBackground"
         android:clickable="true"

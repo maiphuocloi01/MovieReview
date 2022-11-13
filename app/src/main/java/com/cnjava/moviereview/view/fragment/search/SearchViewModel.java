@@ -90,7 +90,6 @@ public class SearchViewModel extends BaseViewModel {
                 } else if (timeWindow.equals("week")) {
                     trendingWeekLD.postValue(movie);
                 }
-                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
@@ -114,7 +113,6 @@ public class SearchViewModel extends BaseViewModel {
                     @Override
                     public void onNext(@NonNull MovieName movieName) {
                         movieNameLD.postValue(movieName);
-                        mLiveDataIsLoading.postValue(false);
                     }
 
                     @Override
@@ -135,7 +133,6 @@ public class SearchViewModel extends BaseViewModel {
             @Override
             public void onSuccess(@NonNull Movie movie) {
                 movieResultLD.postValue(movie);
-                mLiveDataIsLoading.postValue(false);
             }
 
             @Override
@@ -156,10 +153,10 @@ public class SearchViewModel extends BaseViewModel {
 
     @SuppressLint("UnsafeOptInUsageWarning")
     public void searchMoviePaging(String text) {
+        mLiveDataIsLoading.postValue(true);
         CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
         mMainCompDisposable.add(
                 PagingRx.cachedIn(movieRepository.searchMoviePaging(text), viewModelScope)
-                        .doOnSubscribe(obj -> mLiveDataIsLoading.postValue(true))
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(resultPagingData -> {
                             movieResultLD2.postValue(resultPagingData);

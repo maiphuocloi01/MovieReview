@@ -4,6 +4,7 @@ import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 
@@ -188,45 +189,21 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
             ViewUtils.show(binding.progressBar);
             ViewUtils.gone(binding.layoutContent);
         } else {
-            new Handler().postDelayed(() -> {
-                ViewUtils.gone(binding.progressBar);
-                ViewUtils.show(binding.layoutContent);
+            binding.progressBar.getHandler().postDelayed(() -> {
+                binding.progressBar.setVisibility(View.GONE);
+                ViewUtils.gone(binding.layoutContent);
             }, 1800);
-
         }
     }
 
     private void initResultSearch(PagingData<Movie.Result> result, String text) {
         searchMovieAdapter.submitData(getLifecycle(), result);
         if (searchMovieAdapter.getItemCount() > 0) {
-            //binding.tvCountMovie.setText(String.format("Found %s results", searchMovieAdapter.getItemCount()));
             ViewUtils.gone(binding.layoutRecommendMovie);
             ViewUtils.gone(binding.layoutRecommendName);
             ViewUtils.gone(binding.rvRecommendSearch);
             ViewUtils.show(binding.layoutSearchResult);
         } else {
-            //binding.tvCountMovie.setText(String.format("No results for %s", text));
-            //binding.tvCountMovie.append("\nHere are some movies that you might like");
-            ViewUtils.gone(binding.rvRecommendSearch);
-            ViewUtils.show(binding.layoutSearchResult);
-            ViewUtils.gone(binding.layoutRecommendMovie);
-            ViewUtils.gone(binding.layoutRecommendName);
-        }
-    }
-
-    private void initResultSearch1(Movie result, String text) {
-        //resultAdapter = new ResultAdapter(context, result, SearchFragment.this);
-        //searchMovieAdapter = new SearchMovieAdapter()
-        //binding.rvResult.setAdapter(resultAdapter);
-        if (result.results.size() > 0) {
-            //binding.tvCountMovie.setText(String.format("Found %s results", result.results.size()));
-            ViewUtils.gone(binding.layoutRecommendMovie);
-            ViewUtils.gone(binding.layoutRecommendName);
-            ViewUtils.gone(binding.rvRecommendSearch);
-            ViewUtils.show(binding.layoutSearchResult);
-        } else {
-            //binding.tvCountMovie.setText(String.format("No results for %s", text));
-            //binding.tvCountMovie.append("\nHere are some movies that you might like");
             ViewUtils.gone(binding.rvRecommendSearch);
             ViewUtils.show(binding.layoutSearchResult);
             ViewUtils.gone(binding.layoutRecommendMovie);

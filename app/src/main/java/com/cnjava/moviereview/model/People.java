@@ -1,5 +1,7 @@
 package com.cnjava.moviereview.model;
 
+import androidx.annotation.NonNull;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.util.ArrayList;
@@ -11,6 +13,7 @@ public class People {
     @SerializedName("also_known_as")
     public ArrayList<String> also_known_as;
     @SerializedName("biography")
+    @NonNull
     public String biography = "";
     @SerializedName("birthday")
     public String birthday = "";

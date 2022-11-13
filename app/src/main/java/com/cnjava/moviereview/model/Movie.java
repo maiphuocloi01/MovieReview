@@ -1,5 +1,7 @@
 package com.cnjava.moviereview.model;
 
+import androidx.annotation.Nullable;
+
 import com.google.gson.annotations.SerializedName;
 
 import java.io.Serializable;
@@ -22,8 +24,10 @@ public class Movie implements Serializable {
         public String backdropPath = "";
         @SerializedName("id")
         public int id;
-        @SerializedName("original_title")
+        @SerializedName("title")
         public String title = "";
+        @SerializedName("original_title")
+        public String original_title = "";
         @SerializedName("overview")
         public String overview = "";
         @SerializedName("poster_path")

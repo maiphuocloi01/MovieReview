@@ -14,6 +14,7 @@ import com.cnjava.moviereview.databinding.ItemMovieBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
+import com.squareup.picasso.Picasso;
 
 import java.util.Locale;
 
@@ -43,12 +44,17 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
         holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
         holder.binding.tvName.setText(item.title);
         holder.binding.tvStar.setText(String.format(Locale.US, "%.1f", item.voteAverage));
-        Glide.with(context)
+        /*Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))
                 .placeholder(R.drawable.progress_animation)
                 .error(R.drawable.ic_movie2)
                 .centerInside()
-                .into(holder.binding.ivPoster);
+                .into(holder.binding.ivPoster);*/
+        Picasso.get().load(Constants.IMAGE_URL + item.posterPath)
+                .resize(256, 384)
+                .placeholder(R.drawable.progress_animation)
+                .error(R.drawable.ic_movie2)
+                .centerCrop().into(holder.binding.ivPoster);
         holder.binding.getRoot().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

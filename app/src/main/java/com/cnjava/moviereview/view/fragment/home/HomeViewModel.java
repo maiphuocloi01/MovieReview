@@ -37,7 +37,7 @@ public class HomeViewModel extends BaseViewModel {
         this.state = savedStateHandle;
     }
 
-    private final MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
+    /*private final MutableLiveData<Movie> popularMovieLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
@@ -57,10 +57,10 @@ public class HomeViewModel extends BaseViewModel {
 
     public LiveData<Movie> topRatedMovieLD() {
         return topRatedMovieLD;
-    }
+    }*/
 
 
-    public void getPopularMovie() {
+    /*public void getPopularMovie() {
         mLiveDataIsLoading.postValue(true);
         movieRepository.getPopularMovie().subscribe(new CustomSingleObserver<Movie>() {
             @Override
@@ -123,7 +123,7 @@ public class HomeViewModel extends BaseViewModel {
                 mLiveDataIsLoading.postValue(false);
             }
         });
-    }
+    }*/
 
     /*public void getYourProfile(String token) {
         mLiveDataIsLoading.postValue(true);
