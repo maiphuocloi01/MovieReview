@@ -132,7 +132,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, CommonView
         if (key.equals(Constants.KEY_LOGIN)) {
             UserResponse token = (UserResponse) data;
             Log.d(TAG, "apiSuccess: " + token.getAccessToken());
-            CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
+            //CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
             CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, token.getAccessToken());
             CommonUtils.getInstance().savePref(Constants.SAVE_SESSION, token.getAccessToken());
             if (binding.etUsername.getText() != null) {

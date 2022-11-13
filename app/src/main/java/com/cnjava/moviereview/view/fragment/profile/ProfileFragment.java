@@ -1,10 +1,12 @@
 package com.cnjava.moviereview.view.fragment.profile;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -16,6 +18,7 @@ import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.adapter.MyReviewAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
@@ -41,6 +44,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     private MyReviewAdapter myReviewAdapter;
     private List<Review> reviewList;
     private List<Review> sortedReview;
+    private MainViewModel mainViewModel;
 
     @Override
     public void apiSuccess(String key, Object data) {
@@ -85,6 +89,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     protected void initViews() {
 
 
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         binding.rbAll.setChecked(true);
         viewModel.getLiveDataIsLoading().observe(this, this::setLoading);
 
@@ -99,13 +104,14 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
                 initStatisticView(viewModel.myStatisticsLD().getValue());
             }
 
-            if (viewModel.yourProfileLD().getValue() == null) {
-                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                viewModel.yourProfileLD().observe(this, _user -> {
+            if (mainViewModel.yourProfileLD().getValue() == null) {
+                mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                mainViewModel.yourProfileLD().observe(this, _user -> {
                     initViewUser(_user);
                 });
             } else {
-                initViewUser(viewModel.yourProfileLD().getValue());
+                Log.d(TAG, "yourProfileLD: ");
+                initViewUser(mainViewModel.yourProfileLD().getValue());
             }
 
         }

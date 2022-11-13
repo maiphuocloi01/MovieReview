@@ -1,10 +1,14 @@
 package com.cnjava.moviereview.view.fragment.search;
 
+import android.annotation.SuppressLint;
 import android.util.Log;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.SavedStateHandle;
+import androidx.lifecycle.ViewModelKt;
+import androidx.paging.PagingData;
+import androidx.paging.rxjava3.PagingRx;
 
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.MovieName;
@@ -12,14 +16,21 @@ import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.util.cutom.SingleLiveEvent;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
 
+import org.reactivestreams.Subscription;
+
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
 import dagger.hilt.android.lifecycle.HiltViewModel;
+import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
 import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Flowable;
+import io.reactivex.rxjava3.core.FlowableSubscriber;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.functions.Consumer;
+import kotlinx.coroutines.CoroutineScope;
 
 @HiltViewModel
 public class SearchViewModel extends BaseViewModel {
@@ -32,7 +43,8 @@ public class SearchViewModel extends BaseViewModel {
     private final MutableLiveData<Movie> trendingWeekLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> trendingDayLD = new MutableLiveData<>();
     private final MutableLiveData<MovieName> movieNameLD = new MutableLiveData<>();
-    public final SingleLiveEvent<Movie> movieResultLD = new SingleLiveEvent<>();
+    private final SingleLiveEvent<Movie> movieResultLD = new SingleLiveEvent<>();
+    private final MutableLiveData<PagingData<Movie.Result>> movieResultLD2 = new SingleLiveEvent<>();
     private String textSearch = "";
 
     public String getTextSearch() {
@@ -54,9 +66,14 @@ public class SearchViewModel extends BaseViewModel {
     public LiveData<MovieName> movieNameLD() {
         return movieNameLD;
     }
+
     /*public SingleLiveEvent<Movie> movieResultLD() {
         return movieResultLD;
     }*/
+
+    public LiveData<PagingData<Movie.Result>> movieResultLD2() {
+        return movieResultLD2;
+    }
 
     @Inject
     public SearchViewModel(MovieRepository movieRepository, SavedStateHandle savedStateHandle) {
@@ -65,7 +82,6 @@ public class SearchViewModel extends BaseViewModel {
     }
 
     public void getTrending(String timeWindow) {
-        mLiveDataIsLoading.postValue(true);
         movieRepository.getTrending(timeWindow).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
@@ -115,7 +131,6 @@ public class SearchViewModel extends BaseViewModel {
     }
 
     public void searchMovie(String text) {
-        mLiveDataIsLoading.postValue(true);
         movieRepository.searchMovie(text).subscribe(new CustomSingleObserver<Movie>() {
             @Override
             public void onSuccess(@NonNull Movie movie) {
@@ -131,4 +146,60 @@ public class SearchViewModel extends BaseViewModel {
         });
 
     }
+
+    @SuppressLint("UnsafeOptInUsageWarning")
+    public Flowable<PagingData<Movie.Result>> searchMoviePaging2() {
+        //mLiveDataIsLoading.postValue(true);
+        CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
+        return PagingRx.cachedIn(movieRepository.searchMoviePaging(textSearch), viewModelScope);
+    }
+
+    @SuppressLint("UnsafeOptInUsageWarning")
+    public void searchMoviePaging(String text) {
+        CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
+        mMainCompDisposable.add(
+                PagingRx.cachedIn(movieRepository.searchMoviePaging(text), viewModelScope)
+                        .doOnSubscribe(obj -> mLiveDataIsLoading.postValue(true))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(resultPagingData -> {
+                            movieResultLD2.postValue(resultPagingData);
+                            mLiveDataIsLoading.postValue(false);
+                        })
+        );
+
+
+        /*.subscribe(resultPagingData -> {
+                    mLiveDataIsLoading.postValue(false);
+                    movieResultLD2.postValue(resultPagingData);
+
+                }
+        )*/
+
+        /*movieRepository.searchMoviePaging(text)
+                .doOnSubscribe(obj -> mLiveDataIsLoading.postValue(true))
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new FlowableSubscriber<PagingData<Movie.Result>>() {
+                    @Override
+                    public void onSubscribe(@NonNull Subscription s) {
+                    }
+
+                    @Override
+                    public void onNext(PagingData<Movie.Result> resultPagingData) {
+                        movieResultLD2.postValue(resultPagingData);
+                        mLiveDataIsLoading.postValue(false);
+                    }
+
+                    @Override
+                    public void onError(Throwable t) {
+                        Log.d(TAG, "onError: " + t.getMessage());
+                        mLiveDataIsLoading.postValue(false);
+                    }
+
+                    @Override
+                    public void onComplete() {
+
+                    }
+                });*/
+    }
+
 }

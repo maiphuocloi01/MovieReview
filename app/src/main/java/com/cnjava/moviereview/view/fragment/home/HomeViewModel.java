@@ -41,7 +41,7 @@ public class HomeViewModel extends BaseViewModel {
     private final MutableLiveData<Movie> nowPlayingMovieLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> upcomingMovieLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> topRatedMovieLD = new MutableLiveData<>();
-    private final MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
+
 
     public LiveData<Movie> popularMovieLD() {
         return popularMovieLD;
@@ -58,11 +58,6 @@ public class HomeViewModel extends BaseViewModel {
     public LiveData<Movie> topRatedMovieLD() {
         return topRatedMovieLD;
     }
-
-    public LiveData<User> yourProfileLD() {
-        return yourProfileLD;
-    }
-
 
 
     public void getPopularMovie() {
@@ -130,7 +125,7 @@ public class HomeViewModel extends BaseViewModel {
         });
     }
 
-    public void getYourProfile(String token) {
+    /*public void getYourProfile(String token) {
         mLiveDataIsLoading.postValue(true);
         accountRepository.getMyProfile(token).subscribe(new CustomSingleObserver<User>() {
             @Override
@@ -138,13 +133,12 @@ public class HomeViewModel extends BaseViewModel {
                 yourProfileLD.postValue(user);
                 mLiveDataIsLoading.postValue(false);
             }
-
             @Override
             public void onError(@NonNull Throwable e) {
                 Log.d(TAG, "onError: " + e.getMessage());
                 mLiveDataIsLoading.postValue(false);
             }
         });
-    }
+    }*/
 
 }

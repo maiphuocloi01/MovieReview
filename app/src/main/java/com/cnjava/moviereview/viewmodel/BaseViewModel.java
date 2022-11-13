@@ -11,6 +11,7 @@ import com.cnjava.moviereview.data.Api;
 import com.cnjava.moviereview.data.UserApi;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Translate;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 

@@ -18,6 +18,7 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.viewpager2.widget.CompositePageTransformer;
 import androidx.viewpager2.widget.MarginPageTransformer;
 import androidx.viewpager2.widget.ViewPager2;
@@ -33,6 +34,7 @@ import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
@@ -58,6 +60,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     private final Handler handler = new Handler(Looper.getMainLooper());
     private Runnable runnable;
     private final Storage storage = MyApplication.getInstance().getStorage();
+    private MainViewModel mainViewModel;
 
     @Override
     protected Class<HomeViewModel> getClassVM() {
@@ -67,7 +70,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     @Override
     protected void initViews() {
 
-        viewModel.getLiveDataIsLoading().observe(this, this::setScreenLoading);
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
         params.height = (int) storage.HEIGHT_SCREEN;
         binding.vpPopular.setLayoutParams(params);
@@ -75,13 +78,13 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             CommonUtils.getInstance().savePref(Constants.ONBOARD, "1");
         }
 
-        if (viewModel.yourProfileLD().getValue() != null) {
-            User user = viewModel.yourProfileLD().getValue();
+        if (mainViewModel.yourProfileLD().getValue() != null) {
+            User user = mainViewModel.yourProfileLD().getValue();
             getYourProfileAndSaveToStorage(user);
         } else {
             if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                viewModel.yourProfileLD().observe(this, this::getYourProfileAndSaveToStorage);
+                mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                mainViewModel.yourProfileLD().observe(this, this::getYourProfileAndSaveToStorage);
             }
         }
 
@@ -132,7 +135,8 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         binding.vpPopular.setPageTransformer(compositePageTransformer);
 
         binding.ivAvt.setOnClickListener(view -> {
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null || viewModel.yourProfileLD().getValue() == null) {
+            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) == null
+                    || mainViewModel.yourProfileLD().getValue() == null) {
                 showAlertDialog();
             } else {
                 callBack.replaceFragment(ProfileFragment.TAG, null, true, Constants.ANIM_SLIDE);
@@ -170,7 +174,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
     }
 
-    private void setScreenLoading(boolean isLoading) {
+    /*private void setScreenLoading(boolean isLoading) {
         if (isLoading) {
             ViewUtils.show(binding.progressCircular);
             ViewUtils.gone(binding.layoutHomeScreen);
@@ -178,7 +182,7 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             ViewUtils.gone(binding.progressCircular);
             ViewUtils.show(binding.layoutHomeScreen);
         }
-    }
+    }*/
 
     @Override
     protected FragmentHomeBinding initViewBinding(@NonNull LayoutInflater inflater, @Nullable ViewGroup container) {
@@ -194,7 +198,9 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             Glide.with(context)
                     .load(user.getAvatar())
                     .transition(DrawableTransitionOptions.withCrossFade())
-                    .placeholder(R.drawable.img_default_avt)
+                    .placeholder(R.drawable.progress_animation)
+                    .centerCrop()
+                    .error(R.drawable.ic_profile2)
                     .into(binding.ivAvt);
         }
     }

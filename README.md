@@ -1,4 +1,4 @@
-## Hướng dẫn build và chạy thử source code
+## VieWie: The Movie Review App
 
 Tải về project:
 

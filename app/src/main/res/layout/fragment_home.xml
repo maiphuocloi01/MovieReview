@@ -5,13 +5,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ProgressBar
+    <!--<ProgressBar
         android:id="@+id/progress_circular"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="center"
         android:indeterminateTint="@color/primary"
-        android:visibility="gone" />
+        android:visibility="gone" />-->
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:id="@+id/layout_home_screen"
@@ -80,7 +80,6 @@
                     android:layout_marginStart="@dimen/_14sdp"
                     android:foreground="?android:attr/selectableItemBackground"
                     android:padding="@dimen/_1sdp"
-                    android:scaleType="centerInside"
                     app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
                     app:srcCompat="@drawable/ic_profile2"
                     app:strokeColor="@color/lighter_white_80"
@@ -132,7 +131,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
@@ -155,7 +154,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
@@ -177,7 +176,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/_6sdp"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_6sdp"
                     android:orientation="horizontal"
                     app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                     tools:itemCount="3"
@@ -202,7 +201,7 @@
                         android:id="@+id/bt_category123"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
                         android:layout_marginEnd="@dimen/_7sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_weight="1"
@@ -221,7 +220,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="@dimen/_7sdp"
-                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginTop="@dimen/_6sdp"
                         android:layout_marginBottom="@dimen/_10sdp"
                         android:layout_weight="1"
                         android:background="@drawable/bg_light_dark_corner_10"

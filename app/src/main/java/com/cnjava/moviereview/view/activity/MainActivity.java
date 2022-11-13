@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.Handler;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
@@ -21,19 +22,23 @@ import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.Storage;
+import com.cnjava.moviereview.data.receiver.CheckConnectionBroadcastReceiver;
 import com.cnjava.moviereview.databinding.ActivityMainBinding;
 import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.onboard.OnboardFragment;
+import com.google.android.material.snackbar.Snackbar;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -41,11 +46,14 @@ import java.util.ArrayList;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class MainActivity extends AppCompatActivity implements OnMainCallBack {
+public class MainActivity extends AppCompatActivity implements OnMainCallBack, CheckConnectionBroadcastReceiver.CheckConnectionListener {
 
     public static final String TAG = MainActivity.class.getName();
     private ActivityMainBinding binding;
     private final Storage storage = MyApplication.getInstance().getStorage();
+    private Snackbar mSnackBar;
+    boolean doubleBackToExitPressedOnce = false;
+    private String sessionKey;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -58,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         win.setAttributes(winParams);
     }
 
+    private MainViewModel viewModel;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -65,6 +75,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        viewModel = new ViewModelProvider(this).get(MainViewModel.class);
         DisplayMetrics displaymetrics = getResources().getDisplayMetrics();
         storage.WIDTH_SCREEN = displaymetrics.widthPixels / displaymetrics.density;
         storage.HEIGHT_SCREEN = displaymetrics.heightPixels / displaymetrics.density;
@@ -74,7 +85,19 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
         initViews();
-        new CountDownTimer(3100, 2000) {
+
+        viewModel.getLiveDataIsLoading().observe(this, loading -> {
+            loadingDataFromAPI(loading);
+        });
+        if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            viewModel.yourProfileLD().observe(this, me -> {
+                if(me == null){
+                    Log.d(TAG, "user null: ");
+                }
+            });
+        }
+        /*new CountDownTimer(3100, 2000) {
             public void onFinish() {
                 if (!CommonUtils.isInternetOn(MainActivity.this)) {
                     System.exit(0);
@@ -90,7 +113,19 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
                     Toast.makeText(MainActivity.this, "No connection", Toast.LENGTH_SHORT).show();
                 }
             }
-        }.start();
+        }.start();*/
+    }
+
+    private void loadingDataFromAPI(Boolean loading) {
+        if (!CommonUtils.isInternetOn(MainActivity.this)) {
+            System.exit(0);
+        } else {
+            if(!loading) {
+                binding.layoutActivity.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.dark));
+                ViewUtils.gone(binding.animationView);
+                ViewUtils.show(binding.layoutMain);
+            }
+        }
     }
 
     private void initViews() {
@@ -100,8 +135,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             frg.setData(this);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .addToBackStack(OnboardFragment.TAG)
-                    .add(R.id.layout_main, frg, OnboardFragment.class.getName())
+                    .replace(R.id.layout_main, frg, OnboardFragment.class.getName())
                     .commit();
         } else {
             HomeFragment frg = new HomeFragment();
@@ -109,8 +143,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
             frg.setData(this);
             getSupportFragmentManager()
                     .beginTransaction()
-                    .addToBackStack(HomeFragment.TAG)
-                    .add(R.id.layout_main, frg, HomeFragment.class.getName())
+                    .replace(R.id.layout_main, frg, HomeFragment.class.getName())
                     .commit();
         }
     }
@@ -163,16 +196,31 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
         if (isActive(this)) {
             hideSoftInput(MainActivity.this);
         }
-        getSupportFragmentManager().popBackStack();
+        super.onBackPressed();
+        //getSupportFragmentManager().popBackStack();
     }
 
     @Override
     public void onBackPressed() {
         if (getSupportFragmentManager().findFragmentByTag(HomeFragment.TAG) instanceof HomeFragment
-                && getSupportFragmentManager().getBackStackEntryCount() < 2) {
-            System.exit(0);
+                && getSupportFragmentManager().getBackStackEntryCount() < 1) {
+            if (doubleBackToExitPressedOnce) {
+                super.onBackPressed();
+                return;
+            }
+            this.doubleBackToExitPressedOnce = true;
+            Toast.makeText(this, "Please click BACK again to exit", Toast.LENGTH_SHORT).show();
+
+            new Handler().postDelayed(new Runnable() {
+
+                @Override
+                public void run() {
+                    doubleBackToExitPressedOnce = false;
+                }
+            }, 2000);
+        } else {
+            super.onBackPressed();
         }
-        getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -252,34 +300,66 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        if (sessionKey != null) {
+            CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, sessionKey);
+            sessionKey = null;
+        }
+    }
+
+    @Override
     protected void onPause() {
         super.onPause();
-        Log.d(TAG, "onPause: ");
+        String saveSession = CommonUtils.getInstance().getPref(Constants.SAVE_SESSION);
+        if (saveSession == null) {
+            sessionKey = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
+            CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, null);
+            CommonUtils.getInstance().savePref(Constants.SAVE_SESSION, null);
+            storage.myUser = null;
+            storage.reviewList = null;
+            storage.movieDetail = null;
+        }
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(TAG, "onStop: ");
     }
+
 
     @Override
     protected void onDestroy() {
-        String saveSession = CommonUtils.getInstance().getPref(Constants.SAVE_SESSION);
-        Log.d(TAG, "onDestroy: " + saveSession);
-        if (saveSession == null) {
-            CommonUtils.getInstance().clearPref(Constants.ACCESS_TOKEN);
-            CommonUtils.getInstance().clearPref(Constants.SAVE_SESSION);
-            storage.myUser = null;
-            storage.reviewList = null;
-            storage.movieDetail = null;
-            String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
-            Log.d(TAG, "onSaveSession null \n" + token);
-        } else {
-            String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
-            Log.d(TAG, "onDestroy: no clear \n" + token);
-        }
         super.onDestroy();
     }
 
+    public void showMessage(Boolean isConnected) {
+
+        if (!isConnected) {
+            String messageToUser = "No Internet Connection";
+
+            //Assume "rootLayout" as the root layout of every activity.
+            mSnackBar = Snackbar
+                    .make(findViewById(R.id.layout_activity), messageToUser, Snackbar.LENGTH_LONG)
+                    .setAction("Dismiss", view -> mSnackBar.dismiss());
+
+            mSnackBar.setDuration(Snackbar.LENGTH_INDEFINITE);
+            // Changing message text color
+            mSnackBar.setActionTextColor(Color.RED);
+            mSnackBar.show();
+        } else {
+            String messageToUser = "You are online now.";
+            mSnackBar = Snackbar
+                    .make(findViewById(R.id.layout_activity), messageToUser, Snackbar.LENGTH_SHORT);
+            mSnackBar.setDuration(Snackbar.LENGTH_SHORT);
+            mSnackBar.setActionTextColor(Color.WHITE);
+            mSnackBar.show();
+            //mSnackBar.dismiss();
+        }
+    }
+
+    @Override
+    public void onNetworkConnectionChanged(Boolean isConnected) {
+        showMessage(isConnected);
+    }
 }

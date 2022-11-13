@@ -36,7 +36,6 @@ public class ProfileViewModel extends BaseViewModel {
 
     private final MutableLiveData<Statistic> myStatisticsLD = new MutableLiveData<>();
     private final MutableLiveData<List<Review>> reviewByUserIdLD = new MutableLiveData<>();
-    private final MutableLiveData<User> yourProfileLD = new MutableLiveData<>();
 
     public LiveData<Statistic> myStatisticsLD() {
         return myStatisticsLD;
@@ -46,11 +45,8 @@ public class ProfileViewModel extends BaseViewModel {
         return reviewByUserIdLD;
     }
 
-    public LiveData<User> yourProfileLD() {
-        return yourProfileLD;
-    }
 
-    public void getYourProfile(String token) {
+    /*public void getYourProfile(String token) {
         mLiveDataIsLoading.postValue(true);
         accountRepository.getMyProfile(token).subscribe(new CustomSingleObserver<User>() {
             @Override
@@ -65,7 +61,7 @@ public class ProfileViewModel extends BaseViewModel {
                 mLiveDataIsLoading.postValue(false);
             }
         });
-    }
+    }*/
 
     public void deleteReview(String reviewId, String token) {
         accountRepository.deleteReview(reviewId, token).subscribe(new CustomCompletableObserver() {

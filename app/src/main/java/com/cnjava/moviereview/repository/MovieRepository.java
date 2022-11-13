@@ -1,5 +1,11 @@
 package com.cnjava.moviereview.repository;
 
+import androidx.paging.Pager;
+import androidx.paging.PagingConfig;
+import androidx.paging.PagingData;
+import androidx.paging.PagingSource;
+import androidx.paging.rxjava3.PagingRx;
+
 import com.cnjava.moviereview.data.MovieService;
 import com.cnjava.moviereview.data.TranslateService;
 import com.cnjava.moviereview.model.Actor;
@@ -15,9 +21,12 @@ import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.model.Video;
 
+import java.util.List;
+
 import javax.inject.Inject;
 
 import io.reactivex.rxjava3.android.schedulers.AndroidSchedulers;
+import io.reactivex.rxjava3.core.Flowable;
 import io.reactivex.rxjava3.core.Observable;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
@@ -104,6 +113,15 @@ public class MovieRepository {
     public Single<Movie> searchMovie(String queryString) {
         return subscribe(movieService.searchMovie(queryString));
     }
+
+    public Flowable<PagingData<Movie.Result>> searchMoviePaging(String queryString) {
+        Pager<Integer, Movie.Result> pager = new Pager<>(
+                new PagingConfig(10, 1, false, 20),
+                1,
+                () -> new MoviePagingSource(movieService, queryString));
+        return PagingRx.getFlowable(pager);
+    }
+
 
     public Single<People> getPeopleDetail(String personId) {
         return subscribe(movieService.getPeopleDetail(personId));

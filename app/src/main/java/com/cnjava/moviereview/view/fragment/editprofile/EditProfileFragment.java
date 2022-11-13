@@ -47,8 +47,8 @@ import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
 import com.cnjava.moviereview.util.NumberUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,6 +78,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
     private Object mData;
     private String filePath = null;
     private final String[] items = {"Male", "Female"};
+    private MainViewModel mainViewModel;
 
     @Override
     public void onAttach(@NonNull Context context) {
@@ -104,6 +105,7 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                 });
     }
 
+    private User user;
 
     @Override
     protected Class<EditProfileViewModel> getClassVM() {
@@ -113,7 +115,17 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
     @Override
     protected void initViews() {
 
-        User user = (User) mData;
+
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
+        if (mainViewModel.yourProfileLD().getValue() == null) {
+            mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            mainViewModel.yourProfileLD().observe(this, me -> {
+                user = me;
+            });
+        } else {
+            user = mainViewModel.yourProfileLD().getValue();
+        }
+
         //editProfileViewModel = new ViewModelProvider(this).get(EditProfileViewModel.class);
 
         if (user.getName() != null) {
@@ -246,7 +258,8 @@ public class EditProfileFragment extends BaseFragment<FragmentEditProfileBinding
                         DialogUtils.showLoadingDialog(context);
                     } else {
                         DialogUtils.hideLoadingDialog();
-                        callBack.backToPrev();
+                        mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                        callBack.reloadFragmentByTag(TAG);
                     }
                 });
                 if (filePath != null) {

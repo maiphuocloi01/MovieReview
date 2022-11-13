@@ -2,6 +2,7 @@ package com.cnjava.moviereview.view.fragment.search;
 
 import static com.cnjava.moviereview.util.IMEUtils.hideSoftInput;
 
+import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -10,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.SearchView;
 import androidx.core.content.ContextCompat;
+import androidx.paging.PagingData;
 
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentSearchBinding;
@@ -20,8 +22,9 @@ import com.cnjava.moviereview.util.ViewUtils;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
 import com.cnjava.moviereview.view.adapter.RecommendSearchAdapter;
-import com.cnjava.moviereview.view.adapter.ResultAdapter;
 import com.cnjava.moviereview.view.adapter.TrendingAdapter;
+import com.cnjava.moviereview.view.adapter.paging.SearchLoadStateAdapter;
+import com.cnjava.moviereview.view.adapter.paging.SearchMovieAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
 
@@ -31,14 +34,15 @@ import java.util.stream.Collectors;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchViewModel> implements TrendingAdapter.TrendingCallBack, PopularAdapter.MovieCallBack, RecommendSearchAdapter.RecommendSearchCallBack {
+public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchViewModel> implements SearchMovieAdapter.OnItemClickListener, TrendingAdapter.TrendingCallBack, PopularAdapter.MovieCallBack, RecommendSearchAdapter.RecommendSearchCallBack {
 
     public static final String TAG = SearchFragment.class.getName();
 
     private RecommendSearchAdapter searchAdapter;
     private static final String TODAY = "day";
     private static final String WEEK = "week";
-    private ResultAdapter resultAdapter;
+    private SearchMovieAdapter searchMovieAdapter;
+    private SearchLoadStateAdapter loadStateAdapter;
 
     @Override
     protected Class<SearchViewModel> getClassVM() {
@@ -54,6 +58,13 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         searchIcon.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
         closeIcon.setColorFilter(ContextCompat.getColor(context, R.color.light_white));
 
+        binding.rvResult.setHasFixedSize(true);
+        searchMovieAdapter = new SearchMovieAdapter(context, this);
+        loadStateAdapter = new SearchLoadStateAdapter(v -> searchMovieAdapter.retry());
+        binding.rvResult.setAdapter(searchMovieAdapter.withLoadStateFooter(loadStateAdapter));
+        /*binding.rvResult.setItemViewCacheSize(20);
+        binding.rvResult.setDrawingCacheQuality(View.DRAWING_CACHE_QUALITY_LOW);*/
+        binding.ivBack.setOnClickListener(view -> callBack.backToPrev());
         if (viewModel.trendingWeekLD().getValue() == null) {
             viewModel.getTrending(WEEK);
             viewModel.trendingWeekLD().observe(this, _movie -> {
@@ -125,8 +136,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     @Override
     public void onResume() {
         super.onResume();
-        if (viewModel.movieResultLD.getValue() != null) {
-            initResultSearch(viewModel.movieResultLD.getValue(), viewModel.getTextSearch());
+        if (viewModel.movieResultLD2().getValue() != null) {
+            initResultSearch(viewModel.movieResultLD2().getValue(), viewModel.getTextSearch());
         } else {
             binding.etSearch.requestFocus();
             IMEUtils.showSoftInput(binding.etSearch);
@@ -160,30 +171,71 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
 
     private void searchMovie(String text) {
         hideSoftInput(binding.etSearch);
+        binding.etSearch.clearFocus();
         viewModel.setTextSearch(text);
         binding.etSearch.setQuery(text, false);
-        viewModel.searchMovie(text);
-        viewModel.movieResultLD.observe(this, _result -> {
+        viewModel.getLiveDataIsLoading().observe(this, loading -> {
+            setLoading(loading);
+        });
+        viewModel.searchMoviePaging(text);
+        viewModel.movieResultLD2().observe(this, _result -> {
             initResultSearch(_result, text);
         });
     }
 
-    private void initResultSearch(Movie result, String text) {
-        resultAdapter = new ResultAdapter(context, result, SearchFragment.this);
-        binding.rvResult.setAdapter(resultAdapter);
-        if (result.results.size() > 0) {
-            binding.tvCountMovie.setText(String.format("Found %s results", result.results.size()));
+    private void setLoading(Boolean loading) {
+        if (loading) {
+            ViewUtils.show(binding.progressBar);
+            ViewUtils.gone(binding.layoutContent);
+        } else {
+            new Handler().postDelayed(() -> {
+                ViewUtils.gone(binding.progressBar);
+                ViewUtils.show(binding.layoutContent);
+            }, 1800);
+
+        }
+    }
+
+    private void initResultSearch(PagingData<Movie.Result> result, String text) {
+        searchMovieAdapter.submitData(getLifecycle(), result);
+        if (searchMovieAdapter.getItemCount() > 0) {
+            //binding.tvCountMovie.setText(String.format("Found %s results", searchMovieAdapter.getItemCount()));
             ViewUtils.gone(binding.layoutRecommendMovie);
             ViewUtils.gone(binding.layoutRecommendName);
             ViewUtils.gone(binding.rvRecommendSearch);
             ViewUtils.show(binding.layoutSearchResult);
         } else {
-            binding.tvCountMovie.setText(String.format("No results for %s", text));
-            binding.tvCountMovie.append("\nHere are some movies that you might like");
+            //binding.tvCountMovie.setText(String.format("No results for %s", text));
+            //binding.tvCountMovie.append("\nHere are some movies that you might like");
             ViewUtils.gone(binding.rvRecommendSearch);
             ViewUtils.show(binding.layoutSearchResult);
-            ViewUtils.show(binding.layoutRecommendMovie);
+            ViewUtils.gone(binding.layoutRecommendMovie);
             ViewUtils.gone(binding.layoutRecommendName);
         }
+    }
+
+    private void initResultSearch1(Movie result, String text) {
+        //resultAdapter = new ResultAdapter(context, result, SearchFragment.this);
+        //searchMovieAdapter = new SearchMovieAdapter()
+        //binding.rvResult.setAdapter(resultAdapter);
+        if (result.results.size() > 0) {
+            //binding.tvCountMovie.setText(String.format("Found %s results", result.results.size()));
+            ViewUtils.gone(binding.layoutRecommendMovie);
+            ViewUtils.gone(binding.layoutRecommendName);
+            ViewUtils.gone(binding.rvRecommendSearch);
+            ViewUtils.show(binding.layoutSearchResult);
+        } else {
+            //binding.tvCountMovie.setText(String.format("No results for %s", text));
+            //binding.tvCountMovie.append("\nHere are some movies that you might like");
+            ViewUtils.gone(binding.rvRecommendSearch);
+            ViewUtils.show(binding.layoutSearchResult);
+            ViewUtils.gone(binding.layoutRecommendMovie);
+            ViewUtils.gone(binding.layoutRecommendName);
+        }
+    }
+
+    @Override
+    public void onItemClick(Movie.Result movieResult) {
+        callBack.replaceFragment(DetailMovieFragment.TAG, movieResult.id, true, Constants.ANIM_SLIDE);
     }
 }

@@ -7,6 +7,7 @@ import static com.cnjava.moviereview.util.Constants.BASE_URL_USER;
 import com.cnjava.moviereview.data.AccountService;
 import com.cnjava.moviereview.data.MovieService;
 import com.cnjava.moviereview.data.TranslateService;
+import com.cnjava.moviereview.data.receiver.CheckConnectionBroadcastReceiver;
 
 import java.util.concurrent.TimeUnit;
 
@@ -26,6 +27,12 @@ import retrofit2.converter.gson.GsonConverterFactory;
 @Module
 @InstallIn(SingletonComponent.class)
 public class NetworkModule {
+
+    @Provides
+    @Singleton
+    CheckConnectionBroadcastReceiver providesCheckConnectionBroadcastReceiver() {
+        return new CheckConnectionBroadcastReceiver();
+    }
 
     @Singleton
     @Provides

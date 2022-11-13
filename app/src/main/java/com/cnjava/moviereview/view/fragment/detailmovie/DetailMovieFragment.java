@@ -23,6 +23,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.PopupMenu;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.bumptech.glide.Glide;
@@ -43,6 +44,7 @@ import com.cnjava.moviereview.util.cutom.CustomCountDownTimer;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.cnjava.moviereview.util.TimeUtils;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.adapter.CastAdapter;
 import com.cnjava.moviereview.view.adapter.CollectionAdapter;
 import com.cnjava.moviereview.view.adapter.GenresAdapter;
@@ -82,6 +84,7 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
     private static final String FACEBOOK = "Facebook";
     private static final String TWITTER = "Twitter";
     private static final String HOMEPAGE = "Homepage";
+    private MainViewModel mainViewModel;
 
 
     @Override
@@ -107,6 +110,8 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
 
     @Override
     protected void initViews() {
+
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         movieId = (int) mData;
         ((AppCompatActivity) requireActivity()).setSupportActionBar(binding.toolbar1);
         Objects.requireNonNull(((AppCompatActivity) requireActivity()).getSupportActionBar()).setDisplayHomeAsUpEnabled(true);
@@ -177,13 +182,13 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
 
     private void initMovieReview(List<Review> reviews) {
         if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
-            if (viewModel.yourProfileLD().getValue() == null) {
-                viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-                viewModel.yourProfileLD().observe(this, _user -> {
+            if (mainViewModel.yourProfileLD().getValue() == null) {
+                mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+                mainViewModel.yourProfileLD().observe(this, _user -> {
                     initSomeReview(reviews, _user);
                 });
             } else {
-                initSomeReview(reviews, viewModel.yourProfileLD().getValue());
+                initSomeReview(reviews, mainViewModel.yourProfileLD().getValue());
             }
         } else {
             initSomeReview(reviews, null);

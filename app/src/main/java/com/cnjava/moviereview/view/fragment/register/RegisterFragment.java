@@ -287,7 +287,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             //openSendOTPDialog();
             Toast.makeText(context, "Register success", Toast.LENGTH_SHORT).show();
             DialogUtils.hideLoadingDialog();
-            CommonUtils.getInstance().clearPref(Constants.USERNAME);
+            CommonUtils.getInstance().savePref(Constants.USERNAME, null);
             callBack.backToPrev();
         } else if (key.equals(Constants.KEY_SEND_OTP)) {
             UserResponse userResponse = (UserResponse) data;
@@ -299,7 +299,7 @@ public class RegisterFragment extends BaseFragment<FragmentRegisterBinding, Comm
             DialogUtils.hideLoadingDialog();
             if (userResponse.getError() == null) {
                 dialog.dismiss();
-                CommonUtils.getInstance().clearPref(Constants.USERNAME);
+                CommonUtils.getInstance().savePref(Constants.USERNAME, null);
                 callBack.replaceFragment(LoginFragment.TAG, null, false, Constants.ANIM_SLIDE);
             }
             //Toast.makeText(context, otp, Toast.LENGTH_SHORT).show();
