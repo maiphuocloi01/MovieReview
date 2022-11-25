@@ -34,6 +34,7 @@ import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.adapter.MovieAdapter;
 import com.cnjava.moviereview.view.adapter.PopularAdapter;
+import com.cnjava.moviereview.view.callback.SignInGoogleCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.category.CategoryFragment;
 import com.cnjava.moviereview.view.fragment.detailmovie.DetailMovieFragment;
@@ -41,8 +42,10 @@ import com.cnjava.moviereview.view.fragment.login.LoginFragment;
 import com.cnjava.moviereview.view.fragment.notification.NotificationFragment;
 import com.cnjava.moviereview.view.fragment.profile.ProfileFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
+import com.cnjava.moviereview.view.fragment.result.ResultFragment;
 import com.cnjava.moviereview.view.fragment.search.SearchFragment;
 import com.cnjava.moviereview.view.fragment.searchresult.SearchResultFragment;
+import com.google.firebase.auth.FirebaseUser;
 import com.squareup.picasso.Picasso;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -76,11 +79,11 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             CommonUtils.getInstance().savePref(Constants.ONBOARD, "1");
         }
 
-        if (mainViewModel.yourProfileLD().getValue() != null) {
-            User user = mainViewModel.yourProfileLD().getValue();
-            getYourProfileAndSaveToStorage(user);
-        } else {
-            if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+            if (mainViewModel.yourProfileLD().getValue() != null) {
+                User user = mainViewModel.yourProfileLD().getValue();
+                getYourProfileAndSaveToStorage(user);
+            } else {
                 mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                 mainViewModel.yourProfileLD().observe(this, this::getYourProfileAndSaveToStorage);
             }
@@ -122,6 +125,23 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
             });
         }
 
+        binding.textUpcoming.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_GET_UPCOMING_MOVIE);
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
+        });
+
+        binding.textNowPlaying.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_GET_NOW_PLAYING_MOVIE);
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
+        });
+
+        binding.textTopRated.setOnClickListener(view -> {
+            Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_GET_TOP_RATED_MOVIE);
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
+        });
 
         CompositePageTransformer compositePageTransformer = new CompositePageTransformer();
         compositePageTransformer.addTransformer(new MarginPageTransformer(0));
@@ -145,26 +165,34 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
 
         binding.btCategory123.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_SEARCH_MOVIE_BY_CATEGORY);
             bundle.putString("category", "28");
-            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            bundle.putString("name", "Action");
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
         });
 
         binding.btCategory2.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_SEARCH_MOVIE_BY_CATEGORY);
             bundle.putString("category", "14");
-            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            bundle.putString("name", "Fantasy");
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
         });
 
         binding.btCategory3.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_SEARCH_MOVIE_BY_CATEGORY);
             bundle.putString("category", "18");
-            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            bundle.putString("name", "Drama");
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
         });
 
         binding.btCategory4.setOnClickListener(view -> {
             Bundle bundle = new Bundle();
+            bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_SEARCH_MOVIE_BY_CATEGORY);
             bundle.putString("category", "12");
-            callBack.replaceFragment(SearchResultFragment.TAG, bundle, true, Constants.ANIM_SLIDE);
+            bundle.putString("name", "Adventure");
+            callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
         });
 
         binding.ivNotification.setOnClickListener(view -> callBack.replaceFragment(NotificationFragment.TAG, null, true, Constants.ANIM_FADE));
@@ -192,12 +220,14 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
     }
 
     private void getYourProfileAndSaveToStorage(User user) {
-        if (user.getAvatar() != null) {
-            Picasso.get().load(user.getAvatar())
-                    .resize(256, 256)
-                    .placeholder(R.drawable.progress_animation)
-                    .error(R.drawable.ic_profile2)
-                    .centerCrop().into(binding.ivAvt);
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null && user != null) {
+            if (user.getAvatar() != null) {
+                Picasso.get().load(user.getAvatar())
+                        .resize(256, 256)
+                        .placeholder(R.drawable.progress_animation)
+                        .error(R.drawable.ic_profile2)
+                        .centerCrop().into(binding.ivAvt);
+            }
         }
     }
 
@@ -323,4 +353,5 @@ public class HomeFragment extends BaseFragment<FragmentHomeBinding, HomeViewMode
         Log.d(TAG, "onDestroyView: ");
         super.onDestroyView();
     }
+
 }

@@ -8,15 +8,12 @@ import android.view.ViewGroup;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemSearchResultBinding;
 import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.NumberUtils;
 import com.squareup.picasso.Picasso;
-
-import java.util.ArrayList;
 
 public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHolder> {
 
@@ -43,7 +40,11 @@ public class ResultAdapter extends RecyclerView.Adapter<ResultAdapter.MyViewHold
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movie.Result item = movie.results.get(position);
         holder.binding.tvName.setText(item.title);
-        holder.binding.tvRate.setText(String.valueOf(item.voteAverage));
+        if (item.releaseDate == null || item.releaseDate.equals("")) {
+            holder.binding.tvDate.setText(context.getString(R.string.coming_soon));
+        } else {
+            holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        }
         if (item.releaseDate != null && !item.releaseDate.equals(""))
             holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
         if (item.overview != null) {

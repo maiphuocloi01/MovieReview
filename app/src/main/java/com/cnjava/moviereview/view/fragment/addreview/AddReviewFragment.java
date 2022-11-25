@@ -10,6 +10,7 @@ import android.view.animation.AnimationUtils;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions;
@@ -17,9 +18,11 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentAddReviewBinding;
 import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 
 import dagger.hilt.android.AndroidEntryPoint;
@@ -29,6 +32,7 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Ad
 
     public static final String TAG = AddReviewFragment.class.getName();
     private Object mData;
+    private MainViewModel mainViewModel;
 
     @Override
     protected Class<AddReviewViewModel> getClassVM() {
@@ -39,6 +43,8 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Ad
     protected void initViews() {
 
         MovieDetail movieDetail = (MovieDetail) mData;
+
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
 
         binding.tvName.setText(movieDetail.title);
         Glide.with(context)
@@ -96,15 +102,21 @@ public class AddReviewFragment extends BaseFragment<FragmentAddReviewBinding, Ad
                 viewModel.getLiveDataIsLoading().observe(this, loading -> {
                     if (loading) {
                         DialogUtils.showLoadingDialog(context);
-                    } else {
-                        DialogUtils.hideLoadingDialog();
                     }
                 });
                 if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                     viewModel.addReview(review, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                     viewModel.addReviewLD().observe(this, _review -> {
                         if (_review.id != null) {
-                            callBack.backToPrev();
+                            User user = mainViewModel.yourProfileLD().getValue();
+                            mainViewModel.getReviewByMovieId(movieReview.id);
+                            if (user != null) {
+                                mainViewModel.getReviewByUserId(user.getId());
+                            }
+                            mainViewModel.movieReviewLD().observe(this, reviews -> {
+                                DialogUtils.hideLoadingDialog();
+                                callBack.backToPrev();
+                            });
                         }
                     });
                 }

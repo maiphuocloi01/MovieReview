@@ -9,6 +9,7 @@ import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.model.MultiMedia;
 import com.cnjava.moviereview.model.People;
+import com.cnjava.moviereview.model.PeopleImage;
 import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Video;
 
@@ -31,13 +32,25 @@ public interface MovieService {
     @Headers("Content-type: application/json")
     Single<Movie> getNowPlayingMovie();
 
+    @GET("movie/now_playing?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Single<Movie> getNowPlayingMoviePaging(@Query("page") int page);
+
     @GET("movie/upcoming?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Single<Movie> getUpcomingMovie();
 
+    @GET("movie/upcoming?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Single<Movie> getUpcomingMoviePaging(@Query("page") int page);
+
     @GET("movie/top_rated?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Single<Movie> getTopRatedMovie();
+
+    @GET("movie/top_rated?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Single<Movie> getTopRatedMoviePaging(@Query("page") int page);
 
     @GET("trending/movie/{time_window}?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
@@ -59,7 +72,7 @@ public interface MovieService {
     @Headers("Content-type: application/json")
     Single<MultiMedia> searchMultiMedia(@Query("query") String query);
 
-    @GET("search/movie?api_key=" + API_KEY)
+    @GET("search/movie?api_key=" + API_KEY + "&include_adult=false")
     @Headers("Content-type: application/json")
     Observable<MovieName> autoCompleteSearch(@Query("query") String keyword);
 
@@ -89,7 +102,7 @@ public interface MovieService {
 
     @GET("discover/movie?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
-    Single<Movie> getMovieByCategory(@Query("sort_by") String sort, @Query("with_genres") String category);
+    Single<Movie> getMovieByCategory(@Query("with_genres") String category, @Query("page") int page);
 
     @GET("movie/{movie_id}/external_ids?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
@@ -102,4 +115,8 @@ public interface MovieService {
     @GET("person/{person_id}?api_key=" + API_KEY)
     @Headers("Content-type: application/json")
     Single<People> getPeopleDetail(@Path("person_id") String person_id);
+
+    @GET("person/{person_id}/images?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Single<PeopleImage> getPeopleImage(@Path("person_id") String person_id);
 }

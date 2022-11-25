@@ -35,15 +35,13 @@ public class ProfileViewModel extends BaseViewModel {
     }
 
     private final MutableLiveData<Statistic> myStatisticsLD = new MutableLiveData<>();
-    private final MutableLiveData<List<Review>> reviewByUserIdLD = new MutableLiveData<>();
+
 
     public LiveData<Statistic> myStatisticsLD() {
         return myStatisticsLD;
     }
 
-    public LiveData<List<Review>> reviewByUserIdLD() {
-        return reviewByUserIdLD;
-    }
+
 
 
     /*public void getYourProfile(String token) {
@@ -124,21 +122,5 @@ public class ProfileViewModel extends BaseViewModel {
         });
     }
 
-    public void getReviewByUserId(String userId) {
-        accountRepository.getReviewByUserId(userId)
-                .subscribe(new CustomSingleObserver<List<Review>>() {
-                    @Override
-                    public void onSuccess(@NonNull List<Review> reviews) {
-                        Collections.reverse(reviews);
-                        reviewByUserIdLD.postValue(reviews);
-                        mLiveDataIsLoading.postValue(false);
-                    }
 
-                    @Override
-                    public void onError(@NonNull Throwable e) {
-                        Log.d(TAG, "onError: " + e.getMessage());
-                        mLiveDataIsLoading.postValue(false);
-                    }
-                });
-    }
 }

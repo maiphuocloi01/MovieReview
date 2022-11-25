@@ -1,4 +1,4 @@
-package com.cnjava.moviereview.repository;
+package com.cnjava.moviereview.data.datasource;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,14 +15,15 @@ import javax.inject.Inject;
 import io.reactivex.rxjava3.core.Single;
 import io.reactivex.rxjava3.schedulers.Schedulers;
 
-public class MoviePagingSource extends RxPagingSource<Integer, Movie.Result> {
+public class SearchPagingSource extends RxPagingSource<Integer, Movie.Result> {
 
     private MovieService movieService;
     private Integer nextPageNumber;
     @NonNull
     private String mQuery;
 
-    public MoviePagingSource(@NonNull MovieService movieService, String query) {
+
+    public SearchPagingSource(@NonNull MovieService movieService, String query) {
         this.movieService = movieService;
         mQuery = query;
     }

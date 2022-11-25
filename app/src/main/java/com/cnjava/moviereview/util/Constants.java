@@ -9,7 +9,8 @@ import java.util.List;
 public class Constants {
 
     public static final String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
-    public static final String BASE_URL_USER = "http://viewieapi-env.eba-jprxedaw.ap-southeast-1.elasticbeanstalk.com/api/v1/";
+    //public static final String BASE_URL_USER = "http://viewieapi-env.eba-jprxedaw.ap-southeast-1.elasticbeanstalk.com/api/v1/";
+    public static final String BASE_URL_USER = "http://192.168.43.54:5000/api/v1/";
     public static final String BASE_URL_AI = "https://viewie-ai.herokuapp.com/";
     public static final String BASE_URL_TRANSLATE = "https://translate.yandex.net/api/v1.5/tr.json/";
     public static final String BASE_URL_UPlOAD_IMAGE = "https://nhom01nt118.azurewebsites.net/";
@@ -29,10 +30,12 @@ public class Constants {
     public static final int ANIM_FADE = 1;
     public static final int ANIM_SCALE = 2;
 
+
+    public static final String KEY_TYPE_RESULT = "type_result";
     public static final String KEY_GET_POPULAR_MOVIE = "KEY_GET_POPULAR_MOVIE";
-    public static final String KEY_GET_UPCOMING_MOVIE = "KEY_GET_UPCOMING_MOVIE";
-    public static final String KEY_GET_NOW_PLAYING_MOVIE = "KEY_GET_NOW_PLAYING_MOVIE";
-    public static final String KEY_GET_TOP_RATED_MOVIE = "KEY_GET_TOP_RATED_MOVIE";
+    public static final String KEY_GET_UPCOMING_MOVIE = "Upcoming Movie";
+    public static final String KEY_GET_NOW_PLAYING_MOVIE = "Now Playing Movie";
+    public static final String KEY_GET_TOP_RATED_MOVIE = "Top Rated Movie";
     public static final String KEY_GET_MOVIE_DETAIL = "KEY_GET_MOVIE_DETAIL";
     public static final String KEY_SEARCH_MOVIE = "KEY_SEARCH_MOVIE";
     public static final String KEY_SEARCH_MOVIE_BY_CATEGORY = "KEY_SEARCH_MOVIE_BY_CATEGORY";

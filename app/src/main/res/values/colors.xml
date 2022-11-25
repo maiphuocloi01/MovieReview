@@ -21,6 +21,7 @@
     <color name="mid_black_10">#19494F55</color>
     <color name="mid_white_50">#80585F68</color>
     <color name="dark">#181A20</color><!--181A20-->
+    <color name="bottom_nav">#DA181A20</color><!--181A20-->
     <color name="primary">#1565C0</color>
     <!--<color name="primary">#4fcca3</color>-->
     <color name="transparent">#00FFFFFF</color>

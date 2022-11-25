@@ -51,7 +51,11 @@ public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.MyView
         Favorite favorite = favoriteList.get(position);
         holder.binding.tvName.setText(favorite.movie.title);
         holder.binding.tvRate.setText(String.format(Locale.US, "%.1f", favorite.movie.rating));
-        holder.binding.tvDate.setText(NumberUtils.convertDateType3(favorite.movie.releaseDate));
+        if (favorite.movie.releaseDate == null || favorite.movie.releaseDate.equals("")) {
+            holder.binding.tvDate.setText(context.getString(R.string.coming_soon));
+        } else {
+            holder.binding.tvDate.setText(NumberUtils.convertDateType3(favorite.movie.releaseDate));
+        }
         holder.binding.tvOverview.setText(favorite.movie.overview);
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + favorite.movie.poster))

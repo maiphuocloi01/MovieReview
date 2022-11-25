@@ -32,12 +32,7 @@ public class AboutFragment extends BaseFragment<FragmentAboutBinding, CommonView
 
     @Override
     protected void initViews() {
-        binding.ivBack.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                callBack.backToPrev();
-            }
-        });
+        binding.ivBack.setOnClickListener(view -> callBack.backToPrev());
     }
 
     @Override

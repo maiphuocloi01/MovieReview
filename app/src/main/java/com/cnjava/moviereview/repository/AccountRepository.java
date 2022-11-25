@@ -5,6 +5,7 @@ import com.cnjava.moviereview.model.Favorite;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Statistic;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.model.UserResponse;
 
 import java.util.List;
 
@@ -30,6 +31,30 @@ public class AccountRepository {
         return subscribe(accountService.getMyProfile("Bearer " + token));
     }
 
+    public Single<UserResponse> login(String email, String password) {
+        return subscribe(accountService.login(email, password));
+    }
+
+    public Single<UserResponse> sendOTP(User user) {
+        return subscribe(accountService.sendOTP(user));
+    }
+
+    public Single<UserResponse> confirmOTP(UserResponse userResponse) {
+        return subscribe(accountService.confirmOTP(userResponse));
+    }
+
+    public Single<User> loginWithGoogle(User user) {
+        return subscribe(accountService.loginWithGoogle(user));
+    }
+
+    public Single<User> registration(User user) {
+        return subscribe(accountService.registration(user));
+    }
+
+    public Completable forgotPassword(User user) {
+        return subscribeCompletable(accountService.forgotPassword(user));
+    }
+
     public Single<ResponseBody> uploadImage(String token, MultipartBody.Part part, RequestBody requestBody) {
         return subscribe(accountService.uploadImage("Bearer " + token, part, requestBody));
     }
@@ -40,6 +65,10 @@ public class AccountRepository {
 
     public Single<Statistic> getMyStatistics(String token) {
         return subscribe(accountService.getMyStatistics("Bearer " + token));
+    }
+
+    public Single<Statistic> getStatisticsByUserId(String userId) {
+        return subscribe(accountService.getStatisticsByUserId(userId));
     }
 
     public Single<List<Review>> getReviewByUserId(String userId) {
@@ -63,7 +92,7 @@ public class AccountRepository {
     }
 
     public Completable deleteReview(String reviewId, String token) {
-        return subscribeCompletable(accountService.deleteFavorite(reviewId, "Bearer " + token));
+        return subscribeCompletable(accountService.deleteReview(reviewId, "Bearer " + token));
     }
 
     public Completable dislikeReview(String reviewId, String token) {
@@ -80,6 +109,10 @@ public class AccountRepository {
 
     public Single<Void> updateProfile(User user, String token) {
         return subscribe(accountService.updateProfile(user, "Bearer " + token));
+    }
+
+    public Single<Review> updateReview(String reviewId, Review review, String token) {
+        return subscribe(accountService.updateReview(reviewId, review, "Bearer " + token));
     }
 
     /*public Single<ResponseBody> uploadImageAccount(MultipartBody.Part parts, RequestBody someData) {

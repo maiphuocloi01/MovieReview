@@ -13,31 +13,39 @@ import android.widget.RatingBar;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.content.ContextCompat;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.bumptech.glide.Glide;
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentEditReviewBinding;
 import com.cnjava.moviereview.model.Review;
+import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.DialogUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
-import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
-public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, CommonViewModel> {
+import dagger.hilt.android.AndroidEntryPoint;
+
+@AndroidEntryPoint
+public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, EditReviewViewModel> {
 
     public static final String TAG = EditReviewFragment.class.getName();
     private Object mData;
+    private MainViewModel mainViewModel;
+    private User user;
 
     @Override
-    protected Class<CommonViewModel> getClassVM() {
-        return CommonViewModel.class;
+    protected Class<EditReviewViewModel> getClassVM() {
+        return EditReviewViewModel.class;
     }
 
     @Override
     protected void initViews() {
 
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
         Review review = (Review) mData;
 
@@ -56,6 +64,15 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
                 callBack.backToPrev();
             }
         });
+
+        if (mainViewModel.yourProfileLD().getValue() == null) {
+            mainViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            mainViewModel.yourProfileLD().observe(this, _user -> {
+                user = _user;
+            });
+        } else {
+            user = mainViewModel.yourProfileLD().getValue();
+        }
 
         binding.ratingBar.setOnRatingBarChangeListener(new RatingBar.OnRatingBarChangeListener() {
             @Override
@@ -103,9 +120,24 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
                     double star = (double) binding.ratingBar.getRating();
 
                     Review newReview = new Review(content, star);
-                    DialogUtils.showLoadingDialog(context);
+
                     if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                         Log.d(TAG, "addReview: ");
+                        viewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), loading -> {
+                            if (loading) {
+                                DialogUtils.showLoadingDialog(context);
+                            } else {
+                                if (mainViewModel.getMovieId() != 0) {
+                                    mainViewModel.getReviewByMovieId(String.valueOf(mainViewModel.getMovieId()));
+                                }
+                                mainViewModel.getReviewByUserId(user.getId());
+                                mainViewModel.reviewByUserIdLD().observe(getViewLifecycleOwner(), reviews -> {
+                                    DialogUtils.hideLoadingDialog();
+                                    callBack.backToPrev();
+                                });
+
+                            }
+                        });
                         viewModel.updateReview(review.id, newReview, CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
                     }
                 }
@@ -121,22 +153,11 @@ public class EditReviewFragment extends BaseFragment<FragmentEditReviewBinding, 
 
     @Override
     public void apiSuccess(String key, Object data) {
-        if(key.equals(Constants.KEY_UPDATE_REVIEW)){
-            Review review = (Review) data;
-            if (review.id != null){
-                DialogUtils.hideLoadingDialog();
-                //MyApplication.getInstance().getStorage().reviewList = null;
-                callBack.backToPrev();
-            }
-        }
+
     }
 
     @Override
     public void apiError(String key, int code, Object data) {
-        if(key.equals(Constants.KEY_UPDATE_REVIEW)){
-            DialogUtils.hideLoadingDialog();
-            Log.d(TAG, "apiError: " + code + data.toString());
-        }
     }
 
     @Override

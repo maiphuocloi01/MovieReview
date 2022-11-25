@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/layout_fragment_photo_view"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark"
+    android:clickable="true"
+    android:focusable="true"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/progress_circular_dv"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:indeterminateTint="@color/primary"
+        android:visibility="visible" />
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/layout_photo_fragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark"
+        android:visibility="gone"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/app_bar_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/dark"
+            android:elevation="0dp"
+            android:translationZ="0dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:layout_marginTop="@dimen/_15sdp"
+                android:background="@color/transparent"
+                android:gravity="center"
+                android:paddingEnd="@dimen/_15sdp"
+                app:layout_scrollFlags="noScroll">
+
+                <ImageView
+                    android:id="@+id/ivBack"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginEnd="@dimen/_12sdp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="false"
+                    android:paddingStart="@dimen/_15sdp"
+                    android:src="@drawable/ic_back"
+                    app:tint="@color/light_white" />
+
+                <TableRow
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1">
+
+                    <TextView
+                        android:id="@+id/tv_shows_text"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:fontFamily="@font/roboto_bold"
+                        android:maxLines="1"
+                        android:padding="@dimen/_1sdp"
+                        android:text="@string/app_name"
+                        android:textColor="@color/light_white"
+                        android:textSize="@dimen/_14ssp" />
+
+                </TableRow>
+
+
+                <ImageView
+                    android:id="@+id/ivDownload"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_marginStart="@dimen/_12sdp"
+                    android:background="?attr/selectableItemBackground"
+                    android:clickable="true"
+                    android:src="@drawable/ic_download"
+                    app:tint="@color/light_white" />
+
+                <!--<com.google.android.material.imageview.ShapeableImageView
+                    android:id="@+id/iv_avt"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_14sdp"
+                    android:foreground="?android:attr/selectableItemBackground"
+                    android:padding="@dimen/_1sdp"
+                    android:scaleType="centerInside"
+                    app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                    app:srcCompat="@drawable/ic_profile2"
+                    app:strokeColor="@color/lighter_white_80"
+                    app:strokeWidth="@dimen/_1sdp" />-->
+
+            </LinearLayout>
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            app:layout_anchorGravity="bottom"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <com.otaliastudios.zoom.ZoomImageView
+                android:id="@+id/photo_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scrollbars="vertical|horizontal"
+                app:alignment="center"
+                app:animationDuration="280"
+                app:flingEnabled="true"
+                app:horizontalPanEnabled="true"
+                app:maxZoom="2.5"
+                app:maxZoomType="zoom"
+                app:minZoom="0.7"
+                app:minZoomType="zoom"
+                app:oneFingerScrollEnabled="true"
+                app:overPinchable="true"
+                app:overScrollHorizontal="true"
+                app:overScrollVertical="true"
+                app:scrollEnabled="true"
+                app:threeFingersScrollEnabled="true"
+                app:transformation="centerInside"
+                app:transformationGravity="center"
+                app:twoFingersScrollEnabled="true"
+                app:verticalPanEnabled="true"
+                app:zoomEnabled="true" />
+
+        </LinearLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+</LinearLayout>

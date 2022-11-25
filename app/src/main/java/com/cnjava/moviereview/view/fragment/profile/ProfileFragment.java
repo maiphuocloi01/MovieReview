@@ -28,7 +28,6 @@ import com.cnjava.moviereview.view.fragment.favorite.FavoriteFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.cnjava.moviereview.view.fragment.setting.SettingFragment;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -42,8 +41,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
     public static final String TAG = ProfileFragment.class.getName();
     private MyReviewAdapter myReviewAdapter;
-    private List<Review> reviewList;
-    private List<Review> sortedReview;
     private MainViewModel mainViewModel;
 
     @Override
@@ -52,14 +49,47 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     private void initReviewView(List<Review> reviewList, User user) {
-        if (reviewList.size() > 0) {
-            myReviewAdapter = new MyReviewAdapter(context, reviewList, user, this);
-            binding.rvReview.setAdapter(myReviewAdapter);
-            ViewUtils.show(binding.rvReview);
-            ViewUtils.gone(binding.layoutEmpty);
-        } else {
-            ViewUtils.gone(binding.rvReview);
-            ViewUtils.show(binding.layoutEmpty);
+        setReviewAdapter(reviewList, user);
+        binding.rbCritical.setOnClickListener(view -> {
+            List<Review> sortedReview;
+            sortedReview = reviewList.stream()
+                    .filter(review -> review.content.length() > 150)
+                    .collect(Collectors.toList());
+            sortedReview = sortedReview.stream()
+                    .filter(review -> review.rating < 5.0)
+                    .collect(Collectors.toList());
+            setReviewAdapter(sortedReview, user);
+        });
+        binding.rbAll.setOnClickListener(view -> setReviewAdapter(reviewList, user));
+        binding.rbTopLike.setOnClickListener(view -> {
+            List<Review> sortedReview;
+            sortedReview = reviewList.stream()
+                    .sorted(Comparator.comparing(review -> review.like.size()))
+                    .collect(Collectors.toList());
+            Collections.reverse(sortedReview);
+            setReviewAdapter(sortedReview, user);
+        });
+
+        binding.rbTopScore.setOnClickListener(view -> {
+            List<Review> sortedReview;
+            sortedReview = reviewList.stream()
+                    .sorted(Comparator.comparing(Review::getRating).reversed())
+                    .collect(Collectors.toList());
+            setReviewAdapter(sortedReview, user);
+        });
+    }
+
+    private void setReviewAdapter(List<Review> reviewList, User user) {
+        if (reviewList != null) {
+            if (reviewList.size() > 0) {
+                myReviewAdapter = new MyReviewAdapter(context, reviewList, user, this);
+                binding.rvReview.setAdapter(myReviewAdapter);
+                ViewUtils.show(binding.rvReview);
+                ViewUtils.gone(binding.layoutEmpty);
+            } else {
+                ViewUtils.gone(binding.rvReview);
+                ViewUtils.show(binding.layoutEmpty);
+            }
         }
     }
 
@@ -71,12 +101,10 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     private void setLoading(boolean isLoading) {
         if (isLoading) {
             ViewUtils.show(binding.progressCircularProfile);
-            ViewUtils.gone(binding.layoutTitlePersonal);
-            ViewUtils.gone(binding.layoutScroll);
+            ViewUtils.gone(binding.layoutProfile);
         } else {
             ViewUtils.gone(binding.progressCircularProfile);
-            ViewUtils.show(binding.layoutTitlePersonal);
-            ViewUtils.show(binding.layoutScroll);
+            ViewUtils.show(binding.layoutProfile);
         }
     }
 
@@ -142,41 +170,16 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     }
 
     private void initViewUser(User user) {
-        binding.rbCritical.setOnClickListener(view -> {
-            sortedReview = reviewList.stream()
-                    .filter(review -> review.content.length() > 150)
-                    .collect(Collectors.toList());
-            sortedReview = sortedReview.stream()
-                    .filter(review -> review.rating < 5.0)
-                    .collect(Collectors.toList());
-            initReviewView(sortedReview, user);
-        });
-        binding.rbAll.setOnClickListener(view -> initReviewView(reviewList, user));
-        binding.rbTopLike.setOnClickListener(view -> {
-            sortedReview = reviewList.stream()
-                    .sorted(Comparator.comparing(review -> review.like.size()))
-                    .collect(Collectors.toList());
-            Collections.reverse(sortedReview);
-            initReviewView(sortedReview, user);
-        });
-
-        binding.rbTopScore.setOnClickListener(view -> {
-            sortedReview = reviewList.stream()
-                    .sorted(Comparator.comparing(Review::getRating).reversed())
-                    .collect(Collectors.toList());
-            initReviewView(sortedReview, user);
-        });
-        if (viewModel.reviewByUserIdLD().getValue() == null) {
-            viewModel.getReviewByUserId(user.getId());
-            viewModel.reviewByUserIdLD().observe(this, _reviews -> {
-                reviewList = _reviews;
-                sortedReview = new ArrayList<>(reviewList);
-                initReviewView(sortedReview, user);
+        if (mainViewModel.reviewByUserIdLD().getValue() == null) {
+            mainViewModel.getReviewByUserId(user.getId());
+            mainViewModel.reviewByUserIdLD().observe(this, _reviews -> {
+                initReviewView(_reviews, user);
             });
         } else {
-            reviewList = viewModel.reviewByUserIdLD().getValue();
-            sortedReview = new ArrayList<>(reviewList);
-            initReviewView(sortedReview, user);
+            List<Review> reviews = mainViewModel.reviewByUserIdLD().getValue();
+            if (reviews != null) {
+                initReviewView(reviews, user);
+            }
         }
 
         binding.tvName.setText(user.getName());

@@ -34,6 +34,10 @@ public interface AccountService {
     @Headers("Content-type: application/json")
     Single<User> registration(@Body User user);
 
+    @POST("auth/login-with-google")
+    @Headers("Content-type: application/json")
+    Single<User> loginWithGoogle(@Body User user);
+
     @POST("auth/otp")
     @Headers("Content-type: application/json")
     Single<UserResponse> sendOTP(@Body User user);
@@ -44,7 +48,7 @@ public interface AccountService {
 
     @PUT("auth/forgot-password ")
     @Headers("Content-type: application/json")
-    Single<Void> forgotPassword(@Body User user);
+    Completable forgotPassword(@Body User user);
 
     @GET("users/{user_id}")
     @Headers("Content-type: application/json")

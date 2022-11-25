@@ -1,6 +1,7 @@
 plugins {
     id 'com.android.application'
     id 'com.google.dagger.hilt.android'
+    id 'com.google.gms.google-services'
 }
 
 android {
@@ -41,6 +42,7 @@ dependencies {
     implementation "androidx.lifecycle:lifecycle-livedata:2.5.1"
     implementation "androidx.lifecycle:lifecycle-runtime:2.5.1"
     implementation "androidx.lifecycle:lifecycle-viewmodel-savedstate:2.5.1"
+    implementation 'com.google.android.gms:play-services-base:18.1.0'
     annotationProcessor "androidx.lifecycle:lifecycle-compiler:2.5.1"
     implementation 'androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1'
     implementation "androidx.lifecycle:lifecycle-common-java8:2.5.1"
@@ -79,4 +81,13 @@ dependencies {
 
     implementation "androidx.paging:paging-runtime:3.1.1"
     implementation "androidx.paging:paging-rxjava3:3.1.1"
+
+    implementation 'com.otaliastudios:zoomlayout:1.9.0'
+
+    // FIREBASE
+    implementation platform('com.google.firebase:firebase-bom:30.0.1')
+    implementation 'com.google.firebase:firebase-analytics'
+    implementation platform('com.google.firebase:firebase-bom:29.3.1')
+    implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.android.gms:play-services-auth:20.2.0'
 }

@@ -21,7 +21,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
     private CategoryCallBack callBack;
 
     public interface CategoryCallBack{
-        void gotoSearchByCategory(String name);
+        void gotoSearchByCategory(String id, String name);
     }
 
     public CategoryAdapter(Context context, List<Genres> genresList, CategoryCallBack callBack) {
@@ -44,7 +44,7 @@ public class CategoryAdapter extends RecyclerView.Adapter<CategoryAdapter.MyView
         holder.binding.btCategoryItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                callBack.gotoSearchByCategory(String.valueOf(item.getId()));
+                callBack.gotoSearchByCategory(String.valueOf(item.getId()), item.getName());
             }
         });
     }

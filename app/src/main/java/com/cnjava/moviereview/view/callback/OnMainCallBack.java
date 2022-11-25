@@ -24,4 +24,6 @@ public interface OnMainCallBack {
     void reloadAllBackStack();
 
     void gotoActivity(ArrayList<String> ids, Video video);
+
+    void loginWithGoogle();
 }

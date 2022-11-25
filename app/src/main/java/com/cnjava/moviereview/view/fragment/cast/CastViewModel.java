@@ -6,8 +6,8 @@ import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import com.cnjava.moviereview.model.CastDetail;
-import com.cnjava.moviereview.model.Movie;
 import com.cnjava.moviereview.model.People;
+import com.cnjava.moviereview.model.PeopleImage;
 import com.cnjava.moviereview.repository.AccountRepository;
 import com.cnjava.moviereview.repository.MovieRepository;
 import com.cnjava.moviereview.viewmodel.BaseViewModel;
@@ -32,13 +32,21 @@ public class CastViewModel extends BaseViewModel {
     }
 
     private final MutableLiveData<CastDetail> castDetailLD = new MutableLiveData<>();
+
     public LiveData<CastDetail> castDetailLD() {
         return castDetailLD;
     }
 
     private final MutableLiveData<People> peopleDetailLD = new MutableLiveData<>();
+
     public LiveData<People> peopleDetailLD() {
         return peopleDetailLD;
+    }
+
+    private final MutableLiveData<PeopleImage> peopleImageLD = new MutableLiveData<>();
+
+    public LiveData<PeopleImage> peopleImageLD() {
+        return peopleImageLD;
     }
 
     public void getCastDetail(String creditId) {
@@ -47,6 +55,22 @@ public class CastViewModel extends BaseViewModel {
             @Override
             public void onSuccess(@NonNull CastDetail castDetail) {
                 castDetailLD.postValue(castDetail);
+                mLiveDataIsLoading.postValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                Log.d(TAG, "onError: " + e.getMessage());
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void getPeopleImage(String creditId) {
+        movieRepository.getPeopleImage(creditId).subscribe(new CustomSingleObserver<PeopleImage>() {
+            @Override
+            public void onSuccess(@NonNull PeopleImage peopleImage) {
+                peopleImageLD.postValue(peopleImage);
                 mLiveDataIsLoading.postValue(false);
             }
 

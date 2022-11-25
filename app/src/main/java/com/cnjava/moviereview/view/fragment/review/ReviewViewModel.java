@@ -63,12 +63,38 @@ public class ReviewViewModel extends BaseViewModel {
         });
     }
 
-    public void getReviewByMovieId(String movieId) {
-        accountRepository.getReviewByMovieId(movieId).subscribe(new CustomSingleObserver<List<Review>>() {
+    public void dislikeReview(String reviewId, String token) {
+        accountRepository.dislikeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
-            public void onSuccess(@NonNull List<Review> reviews) {
-                movieReviewLD.postValue(reviews);
-                //state.set(DetailViewModel.REVIEW_LIST, reviews);
+            public void onComplete() {
+                mLiveDataIsLoading.postValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void likeReview(String reviewId, String token) {
+        accountRepository.likeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
+            @Override
+            public void onComplete() {
+                mLiveDataIsLoading.postValue(false);
+            }
+
+            @Override
+            public void onError(@NonNull Throwable e) {
+                mLiveDataIsLoading.postValue(false);
+            }
+        });
+    }
+
+    public void deleteReview(String reviewId, String token) {
+        accountRepository.deleteReview(reviewId, token).subscribe(new CustomCompletableObserver() {
+            @Override
+            public void onComplete() {
                 mLiveDataIsLoading.postValue(false);
             }
 
@@ -79,4 +105,5 @@ public class ReviewViewModel extends BaseViewModel {
             }
         });
     }
+
 }

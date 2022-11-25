@@ -4,7 +4,7 @@
     android:id="@+id/view_product"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginHorizontal="@dimen/_4sdp"
+    android:layout_marginHorizontal="@dimen/_5sdp"
     android:layout_marginVertical="@dimen/_5sdp"
     android:foreground="?android:attr/selectableItemBackground"
     app:cardBackgroundColor="@color/light_black"

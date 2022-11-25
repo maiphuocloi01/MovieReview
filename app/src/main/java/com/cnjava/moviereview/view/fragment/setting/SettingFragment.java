@@ -13,12 +13,15 @@ import android.widget.Button;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.cnjava.moviereview.MyApplication;
 import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.FragmentSettingBinding;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.about.AboutFragment;
 import com.cnjava.moviereview.view.fragment.changepassword.ChangePasswordFragment;
@@ -28,6 +31,7 @@ import com.cnjava.moviereview.viewmodel.CommonViewModel;
 public class SettingFragment extends BaseFragment<FragmentSettingBinding, CommonViewModel> {
 
     public static final String TAG = SettingFragment.class.getName();
+    private MainViewModel mainViewModel;
 
 
     @Override
@@ -48,6 +52,7 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
     @Override
     protected void initViews() {
 
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
         MyApplication.getInstance().getStorage().fragmentTag = TAG;
 
         binding.ivBack.setOnClickListener(view -> callBack.backToPrev());
@@ -116,6 +121,10 @@ public class SettingFragment extends BaseFragment<FragmentSettingBinding, Common
             MyApplication.getInstance().getStorage().reviewList = null;
             MyApplication.getInstance().getStorage().movieDetail = null;
             callBack.clearBackStack();
+            callBack.reloadFragmentByTag(HomeFragment.TAG);
+            mainViewModel.clearMovieReview();
+            mainViewModel.clearYourProfile();
+            mainViewModel.clearReviewByUserId();
             callBack.replaceFragment(HomeFragment.TAG, null, false, Constants.ANIM_SLIDE);
             dialog.dismiss();
         });

@@ -36,15 +36,7 @@ public class DetailViewModel extends BaseViewModel {
     private final MovieRepository movieRepository;
     private final AccountRepository accountRepository;
     private SavedStateHandle state;
-    private int movieId;
 
-    public int getMovieId() {
-        return movieId;
-    }
-
-    public void setMovieId(int movieId) {
-        this.movieId = movieId;
-    }
 
     //Livedata Variable
     private final MutableLiveData<MovieDetail> movieDetailLD = new MutableLiveData<>();
@@ -226,22 +218,7 @@ public class DetailViewModel extends BaseViewModel {
         return addFavoriteLD;
     }
 
-    public void getReviewByMovieId(String movieId) {
-        accountRepository.getReviewByMovieId(movieId).subscribe(new CustomSingleObserver<List<Review>>() {
-            @Override
-            public void onSuccess(@NonNull List<Review> reviews) {
-                movieReviewLD.setValue(reviews);
-                state.set(REVIEW_LIST, reviews);
-                mLiveDataIsLoading.postValue(false);
-            }
 
-            @Override
-            public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.postValue(false);
-            }
-        });
-    }
 
     public void getReviewsByUserIdAndMovieId(String userId, String movieId) {
         accountRepository.getReviewsByUserIdAndMovieId(userId, movieId).subscribe(new CustomSingleObserver<Review>() {
@@ -291,24 +268,26 @@ public class DetailViewModel extends BaseViewModel {
     }
 
     public void deleteReview(String reviewId, String token) {
+        mLiveDataIsSuccess.postValue(false);
         accountRepository.deleteReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
-                mLiveDataIsLoading.postValue(false);
+                mLiveDataIsSuccess.postValue(true);
             }
 
             @Override
             public void onError(@NonNull Throwable e) {
-                Log.d(TAG, "onError: " + e.getMessage());
-                mLiveDataIsLoading.postValue(false);
+
             }
         });
     }
 
     public void dislikeReview(String reviewId, String token) {
+        mLiveDataIsSuccess.postValue(false);
         accountRepository.dislikeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
+                mLiveDataIsSuccess.postValue(true);
                 mLiveDataIsLoading.postValue(false);
             }
 
@@ -321,9 +300,11 @@ public class DetailViewModel extends BaseViewModel {
     }
 
     public void likeReview(String reviewId, String token) {
+        mLiveDataIsSuccess.postValue(false);
         accountRepository.likeReview(reviewId, token).subscribe(new CustomCompletableObserver() {
             @Override
             public void onComplete() {
+                mLiveDataIsSuccess.postValue(true);
                 mLiveDataIsLoading.postValue(false);
             }
 

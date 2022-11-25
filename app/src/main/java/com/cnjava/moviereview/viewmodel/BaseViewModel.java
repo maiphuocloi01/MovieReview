@@ -14,6 +14,7 @@ import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.model.User;
 import com.cnjava.moviereview.util.Constants;
+import com.cnjava.moviereview.util.cutom.SingleLiveEvent;
 import com.cnjava.moviereview.view.callback.OnAPICallBack;
 
 import java.util.List;
@@ -40,16 +41,18 @@ public abstract class BaseViewModel extends ViewModel {
     protected CompositeDisposable mMainCompDisposable = new CompositeDisposable();
 
     protected MutableLiveData<Boolean> mLiveDataIsLoading = new MutableLiveData<>();
+    protected SingleLiveEvent<Boolean> mLiveDataIsSuccess = new SingleLiveEvent<>();
     protected MutableLiveData<Throwable> mLiveDataOnError = new MutableLiveData<>();
-    protected MutableLiveData<List<Review>> movieReviewLD = new MutableLiveData<>();
+
 
     public LiveData<Boolean> getLiveDataIsLoading() {
         return mLiveDataIsLoading;
     }
-
-    public LiveData<List<Review>> movieReviewLD() {
-        return movieReviewLD;
+    public LiveData<Boolean> getLiveDataIsSuccess() {
+        return mLiveDataIsSuccess;
     }
+
+
 
     public LiveData<Throwable> getLiveDataOnError() {
         return mLiveDataOnError;

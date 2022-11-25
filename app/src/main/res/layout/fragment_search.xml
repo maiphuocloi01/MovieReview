@@ -89,7 +89,6 @@
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/_2sdp"
                         android:layout_marginBottom="@dimen/_2sdp"
-                        android:paddingHorizontal="@dimen/_6sdp"
                         android:visibility="visible"
                         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                         tools:itemCount="4"
@@ -113,7 +112,6 @@
                             android:id="@+id/rv_trending"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:paddingHorizontal="@dimen/_14sdp"
                             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                             tools:itemCount="4"
                             tools:listitem="@layout/item_trending_search" />
@@ -151,14 +149,22 @@
         <LinearLayout
             android:id="@+id/layout_search_result"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
+
+            <!--<ImageView
+                android:id="@+id/iv_no_result"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:visibility="gone"
+                android:src="@drawable/img_search_empty"/>-->
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_result"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/_10sdp"
+                android:layout_height="match_parent"
                 app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
                 app:spanCount="2"
                 tools:listitem="@layout/item_search_result" />

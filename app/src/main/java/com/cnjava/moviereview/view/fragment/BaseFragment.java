@@ -65,12 +65,6 @@ public abstract class BaseFragment<B extends ViewBinding, V extends BaseViewMode
 
     @Override
     public void onDestroy() {
-        binding = null;
-        String token = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
-        Log.d(TAG, "onDestroyView: Frg" + token);
-        String token2 = CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN);
-        Log.d(TAG, "initViews onDestroyView: " + token2);
-        Log.d(TAG, "onDestroy: " + binding);
         super.onDestroy();
     }
 }

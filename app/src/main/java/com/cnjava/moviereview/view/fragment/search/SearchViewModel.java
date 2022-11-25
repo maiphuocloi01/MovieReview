@@ -44,7 +44,7 @@ public class SearchViewModel extends BaseViewModel {
     private final MutableLiveData<Movie> trendingDayLD = new MutableLiveData<>();
     private final MutableLiveData<MovieName> movieNameLD = new MutableLiveData<>();
     private final SingleLiveEvent<Movie> movieResultLD = new SingleLiveEvent<>();
-    private final MutableLiveData<PagingData<Movie.Result>> movieResultLD2 = new SingleLiveEvent<>();
+    private final MutableLiveData<PagingData<Movie.Result>> movieResultLD2 = new MutableLiveData<>();
     private String textSearch = "";
 
     public String getTextSearch() {
@@ -163,40 +163,6 @@ public class SearchViewModel extends BaseViewModel {
                             mLiveDataIsLoading.postValue(false);
                         })
         );
-
-
-        /*.subscribe(resultPagingData -> {
-                    mLiveDataIsLoading.postValue(false);
-                    movieResultLD2.postValue(resultPagingData);
-
-                }
-        )*/
-
-        /*movieRepository.searchMoviePaging(text)
-                .doOnSubscribe(obj -> mLiveDataIsLoading.postValue(true))
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new FlowableSubscriber<PagingData<Movie.Result>>() {
-                    @Override
-                    public void onSubscribe(@NonNull Subscription s) {
-                    }
-
-                    @Override
-                    public void onNext(PagingData<Movie.Result> resultPagingData) {
-                        movieResultLD2.postValue(resultPagingData);
-                        mLiveDataIsLoading.postValue(false);
-                    }
-
-                    @Override
-                    public void onError(Throwable t) {
-                        Log.d(TAG, "onError: " + t.getMessage());
-                        mLiveDataIsLoading.postValue(false);
-                    }
-
-                    @Override
-                    public void onComplete() {
-
-                    }
-                });*/
     }
 
 }

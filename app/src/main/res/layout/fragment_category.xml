@@ -1,82 +1,122 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:orientation="vertical"
     android:background="@color/dark"
-    android:clickable="true"
-    android:focusable="true"
-    xmlns:app="http://schemas.android.com/apk/res-auto">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginHorizontal="@dimen/_14sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_height="wrap_content"
         android:background="@color/dark"
-        android:gravity="center">
+        android:elevation="0dp"
+        android:translationZ="0dp">
 
-        <ImageView
-            android:id="@+id/iv_back"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/_15sdp"
+            android:background="@color/transparent"
+            android:gravity="center"
+            android:paddingHorizontal="@dimen/_15sdp"
+            app:layout_scrollFlags="noScroll">
+
+            <ImageView
+                android:id="@+id/ivBack"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:src="@drawable/ic_back"
+                app:tint="@color/light_white" />
+
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/tv_shows_text"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:padding="@dimen/_1sdp"
+                    android:text="Category"
+                    android:textColor="@color/light_white"
+                    android:textSize="@dimen/_14ssp" />
+
+            </TableRow>
+
+
+            <ImageView
+                android:id="@+id/ivListStyle"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="gone"
+                android:src="@drawable/ic_stack"
+                app:tint="@color/light_white" />
+
+            <!--<com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_avt"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="@dimen/_1sdp"
+                android:scaleType="centerInside"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                app:srcCompat="@drawable/ic_profile2"
+                app:strokeColor="@color/lighter_white_80"
+                app:strokeWidth="@dimen/_1sdp" />-->
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_constraintBottom_toBottomOf="parent">
+
+        <!--<ProgressBar
+            android:id="@+id/progress_circular"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_back"
-            app:tint="@color/light_white" />
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:indeterminateTint="@color/primary"
+            android:visibility="gone" />-->
 
-        <TextView
+        <!--<TextView
+            android:id="@+id/textUpcoming"
+            style="@style/Widget.VieWie.TextView.Title.Clickable.DetailContent"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_6sdp"
+            android:text="@string/upcoming_movies"
+            app:drawableEndCompat="@drawable/ic_forward"
+            app:drawableTint="@color/light_white" />-->
+
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_result"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignParentTop="true"
-            android:fontFamily="@font/montserrat_bold"
-            android:gravity="center"
-            android:text="Category"
-            android:textColor="@color/light_white"
-            android:textSize="@dimen/_14ssp" />
-
-    </RelativeLayout>
-
-    <com.google.android.material.textfield.TextInputLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_14sdp"
-        android:layout_marginTop="@dimen/_10sdp"
-        android:layout_marginBottom="@dimen/_10sdp"
-        android:background="@drawable/bg_light_dark_corner_20"
-        app:hintAnimationEnabled="false"
-        app:endIconMode="clear_text"
-        app:endIconTint="@color/light_white"
-        app:hintEnabled="false">
-
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/et_search"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:drawableStart="@drawable/ic_search"
-            android:drawablePadding="@dimen/_10sdp"
-            android:drawableTint="@color/light_white"
-            android:hint="Search for keyword..."
-            android:inputType="text"
-            android:singleLine="true"
-            android:imeOptions="actionSearch"
-            android:padding="@dimen/_10sdp"
-            android:textColor="@color/light_white"
-            android:textColorHint="@color/mid_white"
-            android:textSize="@dimen/_12ssp" />
-    </com.google.android.material.textfield.TextInputLayout>
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+            app:spanCount="2"
+            tools:listitem="@layout/item_category" />
 
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rv_result"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="@dimen/_10sdp"
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="2"
-        tools:listitem="@layout/item_category" />
+    </LinearLayout>
 
-</LinearLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

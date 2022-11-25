@@ -105,6 +105,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
                     ViewUtils.show(binding.layoutRecommendMovie);
                     ViewUtils.gone(binding.rvRecommendSearch);
                     ViewUtils.gone(binding.layoutSearchResult);
+                    ViewUtils.gone(binding.progressBar);
+                    ViewUtils.show(binding.layoutContent);
                 }
                 return true;
             }
@@ -112,6 +114,8 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     }
 
     private void initAutoComplete(String s) {
+        ViewUtils.gone(binding.progressBar);
+        ViewUtils.show(binding.layoutContent);
         ViewUtils.gone(binding.layoutRecommendName);
         ViewUtils.gone(binding.layoutRecommendMovie);
         ViewUtils.show(binding.rvRecommendSearch);
@@ -138,7 +142,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
     public void onResume() {
         super.onResume();
         if (viewModel.movieResultLD2().getValue() != null) {
-            initResultSearch(viewModel.movieResultLD2().getValue(), viewModel.getTextSearch());
+            initResultSearch(viewModel.movieResultLD2().getValue());
         } else {
             binding.etSearch.requestFocus();
             IMEUtils.showSoftInput(binding.etSearch);
@@ -172,7 +176,6 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
 
     private void searchMovie(String text) {
         hideSoftInput(binding.etSearch);
-        binding.etSearch.clearFocus();
         viewModel.setTextSearch(text);
         binding.etSearch.setQuery(text, false);
         viewModel.getLiveDataIsLoading().observe(this, loading -> {
@@ -180,7 +183,7 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         });
         viewModel.searchMoviePaging(text);
         viewModel.movieResultLD2().observe(this, _result -> {
-            initResultSearch(_result, text);
+            initResultSearch(_result);
         });
     }
 
@@ -196,18 +199,23 @@ public class SearchFragment extends BaseFragment<FragmentSearchBinding, SearchVi
         }
     }
 
-    private void initResultSearch(PagingData<Movie.Result> result, String text) {
+    private void initResultSearch(PagingData<Movie.Result> result) {
+        binding.etSearch.clearFocus();
         searchMovieAdapter.submitData(getLifecycle(), result);
         if (searchMovieAdapter.getItemCount() > 0) {
             ViewUtils.gone(binding.layoutRecommendMovie);
             ViewUtils.gone(binding.layoutRecommendName);
             ViewUtils.gone(binding.rvRecommendSearch);
             ViewUtils.show(binding.layoutSearchResult);
+            /*ViewUtils.gone(binding.ivNoResult);
+            ViewUtils.show(binding.rvResult);*/
         } else {
             ViewUtils.gone(binding.rvRecommendSearch);
             ViewUtils.show(binding.layoutSearchResult);
             ViewUtils.gone(binding.layoutRecommendMovie);
             ViewUtils.gone(binding.layoutRecommendName);
+            /*ViewUtils.show(binding.ivNoResult);
+            ViewUtils.gone(binding.rvResult);*/
         }
     }
 

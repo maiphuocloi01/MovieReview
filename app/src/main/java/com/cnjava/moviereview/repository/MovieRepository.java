@@ -3,11 +3,12 @@ package com.cnjava.moviereview.repository;
 import androidx.paging.Pager;
 import androidx.paging.PagingConfig;
 import androidx.paging.PagingData;
-import androidx.paging.PagingSource;
 import androidx.paging.rxjava3.PagingRx;
 
 import com.cnjava.moviereview.data.MovieService;
 import com.cnjava.moviereview.data.TranslateService;
+import com.cnjava.moviereview.data.datasource.MovieDataSource;
+import com.cnjava.moviereview.data.datasource.SearchPagingSource;
 import com.cnjava.moviereview.model.Actor;
 import com.cnjava.moviereview.model.CastDetail;
 import com.cnjava.moviereview.model.Collection;
@@ -17,11 +18,11 @@ import com.cnjava.moviereview.model.MovieDetail;
 import com.cnjava.moviereview.model.MovieName;
 import com.cnjava.moviereview.model.MultiMedia;
 import com.cnjava.moviereview.model.People;
+import com.cnjava.moviereview.model.PeopleImage;
 import com.cnjava.moviereview.model.Social;
 import com.cnjava.moviereview.model.Translate;
 import com.cnjava.moviereview.model.Video;
-
-import java.util.List;
+import com.cnjava.moviereview.util.Constants;
 
 import javax.inject.Inject;
 
@@ -94,8 +95,17 @@ public class MovieRepository {
         return subscribe(movieService.getMovieByKeywordId(keywordId));
     }
 
-    public Single<Movie> getMovieByCategory(String sort, String category) {
+    /*public Single<Movie> getMovieByCategory(String category) {
+        String sort = "popularity.desc";
         return subscribe(movieService.getMovieByCategory(sort, category));
+    }*/
+
+    public Flowable<PagingData<Movie.Result>> getMovieByCategory(String query) {
+        Pager<Integer, Movie.Result> pager = new Pager<>(
+                new PagingConfig(10, 1, false, 20),
+                1,
+                () -> new MovieDataSource(movieService, Constants.KEY_SEARCH_MOVIE_BY_CATEGORY, query));
+        return PagingRx.getFlowable(pager);
     }
 
     public Single<MultiMedia> searchMultiMedia(String query) {
@@ -118,21 +128,45 @@ public class MovieRepository {
         Pager<Integer, Movie.Result> pager = new Pager<>(
                 new PagingConfig(10, 1, false, 20),
                 1,
-                () -> new MoviePagingSource(movieService, queryString));
+                () -> new SearchPagingSource(movieService, queryString));
         return PagingRx.getFlowable(pager);
     }
 
+    public Flowable<PagingData<Movie.Result>> getUpComingMoviePaging() {
+        Pager<Integer, Movie.Result> pager = new Pager<>(
+                new PagingConfig(10, 1, false, 20),
+                1,
+                () -> new MovieDataSource(movieService, Constants.KEY_GET_UPCOMING_MOVIE, null));
+        return PagingRx.getFlowable(pager);
+    }
+
+    public Flowable<PagingData<Movie.Result>> getNowPlayingMoviePaging() {
+        Pager<Integer, Movie.Result> pager = new Pager<>(
+                new PagingConfig(10, 1, false, 20),
+                1,
+                () -> new MovieDataSource(movieService, Constants.KEY_GET_NOW_PLAYING_MOVIE, null));
+        return PagingRx.getFlowable(pager);
+    }
+
+    public Flowable<PagingData<Movie.Result>> getTopRatedMoviePaging() {
+        Pager<Integer, Movie.Result> pager = new Pager<>(
+                new PagingConfig(10, 1, false, 20),
+                1,
+                () -> new MovieDataSource(movieService, Constants.KEY_GET_TOP_RATED_MOVIE, null));
+        return PagingRx.getFlowable(pager);
+    }
 
     public Single<People> getPeopleDetail(String personId) {
         return subscribe(movieService.getPeopleDetail(personId));
     }
 
+    public Single<PeopleImage> getPeopleImage(String personId) {
+        return subscribe(movieService.getPeopleImage(personId));
+    }
+
     public Single<Keyword> searchKeyword(String keyword) {
         return subscribe(movieService.searchKeyword(keyword));
     }
-
-
-
 
     private <T> Single<T> subscribe(Single<T> single) {
         return single.subscribeOn(Schedulers.io())

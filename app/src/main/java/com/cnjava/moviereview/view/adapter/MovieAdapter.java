@@ -41,7 +41,11 @@ public class MovieAdapter extends RecyclerView.Adapter<MovieAdapter.MyViewHolder
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Movie.Result item = movie.results.get(position);
-        holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        if (item.releaseDate == null || item.releaseDate.equals("")) {
+            holder.binding.tvDate.setText(context.getString(R.string.coming_soon));
+        } else {
+            holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        }
         holder.binding.tvName.setText(item.title);
         holder.binding.tvStar.setText(String.format(Locale.US, "%.1f", item.voteAverage));
         /*Glide.with(context)

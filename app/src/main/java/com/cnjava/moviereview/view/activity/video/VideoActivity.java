@@ -13,6 +13,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cnjava.moviereview.R;
+import com.cnjava.moviereview.databinding.ActivityMainBinding;
+import com.cnjava.moviereview.databinding.ActivityVideoBinding;
 import com.cnjava.moviereview.model.Video;
 import com.cnjava.moviereview.view.adapter.PlayListAdapter;
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer;
@@ -31,31 +33,26 @@ import dagger.hilt.android.AndroidEntryPoint;
 @AndroidEntryPoint
 public class VideoActivity extends AppCompatActivity implements PlayListAdapter.PlayListCallBack {
 
-    private YouTubePlayerView youTubePlayerView;
     private ArrayList<String> ids;
     private int nextVideo = 0;
     private Video video;
     private YouTubePlayer mYouTubePlayer;
-    private TextView tvName;
-    private ImageView enterPipMode;
+    private ActivityVideoBinding binding;
+    private boolean isInPipMode = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_video);
+        binding = ActivityVideoBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
         ids = getIntent().getStringArrayListExtra("ids");
         video = (Video) getIntent().getSerializableExtra("video");
-        enterPipMode = findViewById(R.id.ivInPicture);
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) {
-            enterPipMode.setVisibility(View.GONE);
+            binding.ivInPicture.setVisibility(View.GONE);
         }
         Optional<String> name = video.results.stream().filter(obj -> obj.key.equals(ids.get(0))).map(Video.VideoDetail::getName).findFirst();
-        youTubePlayerView = findViewById(R.id.youtube_player_view);
-        tvName = findViewById(R.id.tv_shows_text_video);
-        name.ifPresent(s -> tvName.setText(s));
-
-
+        name.ifPresent(s -> binding.tvShowsTextVideo.setText(s));
         ImageView ivClose = findViewById(R.id.ivClose);
         ivClose.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,25 +61,21 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
             }
         });
 
-        RecyclerView rvPlayList = findViewById(R.id.rvResultPlayList);
-
-        PlayListAdapter videoAdapter = new PlayListAdapter(this, video, this);
-        rvPlayList.setAdapter(videoAdapter);
-
         initYouTubePlayerView();
     }
 
     private void initYouTubePlayerView() {
-        getLifecycle().addObserver(youTubePlayerView);
+        getLifecycle().addObserver(binding.youtubePlayerView);
         initPictureInPicture();
-
         YouTubePlayerListener listener = new AbstractYouTubePlayerListener() {
             @Override
             public void onReady(@NonNull YouTubePlayer youTubePlayer) {
                 mYouTubePlayer = youTubePlayer;
                 // using pre-made custom ui
-                DefaultPlayerUiController defaultPlayerUiController = new DefaultPlayerUiController(youTubePlayerView, youTubePlayer);
-                youTubePlayerView.setCustomPlayerUi(defaultPlayerUiController.getRootView());
+                binding.progressCircularProfile.setVisibility(View.GONE);
+                binding.rvResultPlayList.setVisibility(View.VISIBLE);
+                DefaultPlayerUiController defaultPlayerUiController = new DefaultPlayerUiController(binding.youtubePlayerView, youTubePlayer);
+                binding.youtubePlayerView.setCustomPlayerUi(defaultPlayerUiController.getRootView());
 
                 //setPlayNextVideoButtonClickListener(youTubePlayer);
 
@@ -99,7 +92,12 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
 
         // disable web ui
         IFramePlayerOptions options = new IFramePlayerOptions.Builder().controls(0).build();
-        youTubePlayerView.initialize(listener, options);
+        binding.youtubePlayerView.initialize(listener, options);
+
+        RecyclerView rvPlayList = findViewById(R.id.rvResultPlayList);
+
+        PlayListAdapter videoAdapter = new PlayListAdapter(this, video, this);
+        rvPlayList.setAdapter(videoAdapter);
     }
 
     @Override
@@ -108,9 +106,9 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
 
         // Checks the orientation of the screen
         if (newConfig.orientation == Configuration.ORIENTATION_LANDSCAPE) {
-            youTubePlayerView.enterFullScreen();
+            binding.youtubePlayerView.enterFullScreen();
         } else if (newConfig.orientation == Configuration.ORIENTATION_PORTRAIT) {
-            youTubePlayerView.exitFullScreen();
+            binding.youtubePlayerView.exitFullScreen();
         }
     }
 
@@ -137,7 +135,7 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
 
     }*/
     private void initPictureInPicture() {
-        enterPipMode.setOnClickListener(view -> {
+        binding.ivInPicture.setOnClickListener(view -> {
             boolean supportsPIP = getPackageManager().hasSystemFeature(PackageManager.FEATURE_PICTURE_IN_PICTURE);
             if (supportsPIP)
                 enterPictureInPictureMode();
@@ -151,20 +149,31 @@ public class VideoActivity extends AppCompatActivity implements PlayListAdapter.
         }
 
         if (isInPictureInPictureMode) {
-            youTubePlayerView.enterFullScreen();
+            binding.youtubePlayerView.enterFullScreen();
         } else {
-            youTubePlayerView.exitFullScreen();
+            binding.youtubePlayerView.exitFullScreen();
+        }
+        isInPipMode = isInPictureInPictureMode;
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(isInPipMode){
+            finish();
         }
     }
 
     @Override
     public void gotoVideoYoutube(Video.VideoDetail videoDetail) {
-        YouTubePlayerUtils.loadOrCueVideo(
-                mYouTubePlayer,
-                getLifecycle(),
-                videoDetail.key,
-                0f
-        );
-        tvName.setText(videoDetail.name);
+        if(mYouTubePlayer != null) {
+            YouTubePlayerUtils.loadOrCueVideo(
+                    mYouTubePlayer,
+                    getLifecycle(),
+                    videoDetail.key,
+                    0f
+            );
+            binding.tvShowsTextVideo.setText(videoDetail.name);
+        }
     }
 }

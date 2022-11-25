@@ -162,6 +162,16 @@
         android:layout_height="0dp"
         android:layout_weight="1" />
 
+    <com.google.android.gms.common.SignInButton
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:buttonSize="wide"
+        android:layout_marginHorizontal="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginBottom="@dimen/_8sdp"
+        android:foreground="?android:attr/selectableItemBackground" />
+
 
     <TableRow
         android:layout_width="match_parent"

@@ -17,6 +17,8 @@ import com.cnjava.moviereview.R;
 import com.cnjava.moviereview.databinding.ItemReviewBinding;
 import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.model.User;
+import com.cnjava.moviereview.util.CommonUtils;
+import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.TimeUtils;
 
 import java.util.List;
@@ -82,7 +84,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Review review = listReview.get(position);
-        if (user != null) {
+        if (user != null && CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             if (!review.isDislike) {
                 for (String yourLike : review.like) {
                     if (yourLike.equals(user.getId())) {
@@ -120,7 +122,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
             holder.binding.tvDislike.setText(String.valueOf(review.dislike.size()));
         }
         Log.d("TAG", "onBindViewHolder: " + review.like.size());
-        if (user != null) {
+        if (user != null && CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             if (review.user.getId().equals(user.getId())) {
                 holder.binding.ivMore.setVisibility(View.VISIBLE);
                 holder.binding.ivMore.setOnClickListener(new View.OnClickListener() {
@@ -151,7 +153,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 callBack.likeReview(review.id);
-                if (user != null) {
+                if (user != null && CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                     if (review.isLike) {
                         //unlike
                         holder.binding.ivLike.setImageResource(R.drawable.ic_like);
@@ -191,7 +193,7 @@ public class ReviewAdapter extends RecyclerView.Adapter<ReviewAdapter.MyViewHold
             @Override
             public void onClick(View view) {
                 callBack.dislikeReview(review.id);
-                if (user != null) {
+                if (user != null && CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
                     if (review.isDislike) {
                         //undislike
                         review.isDislike = false;

@@ -40,7 +40,11 @@ public class CollectionAdapter extends RecyclerView.Adapter<CollectionAdapter.My
     @Override
     public void onBindViewHolder(@NonNull MyViewHolder holder, int position) {
         Collection.Part item = collection.parts.get(position);
-        holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        if (item.releaseDate == null || item.releaseDate.equals("")) {
+            holder.binding.tvDate.setText(context.getString(R.string.coming_soon));
+        } else {
+            holder.binding.tvDate.setText(NumberUtils.convertDateType3(item.releaseDate));
+        }
         holder.binding.tvName.setText(item.title);
         Glide.with(context)
                 .load(String.format(Constants.IMAGE_URL + item.posterPath))

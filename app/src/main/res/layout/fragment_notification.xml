@@ -62,6 +62,7 @@
                 android:layout_marginStart="@dimen/_12sdp"
                 android:background="?attr/selectableItemBackground"
                 android:clickable="true"
+                android:visibility="gone"
                 android:src="@drawable/ic_stack"
                 app:tint="@color/light_white" />
 
@@ -88,15 +89,17 @@
         android:background="@color/dark"
         android:fillViewport="true"
         android:scrollbars="none"
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
-            android:layout_marginTop="@dimen/_64sdp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:gravity="center"
             android:orientation="vertical">
 
             <!--<ProgressBar
@@ -117,45 +120,22 @@
                 app:drawableEndCompat="@drawable/ic_forward"
                 app:drawableTint="@color/light_white" />-->
 
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:layout_marginHorizontal="@dimen/_14sdp"
-                layout="@layout/item_favorite"/>
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:layout_marginHorizontal="@dimen/_14sdp"
-                layout="@layout/item_favorite"/>
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:layout_marginHorizontal="@dimen/_14sdp"
-                layout="@layout/item_favorite"/>
-
-            <include
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginVertical="@dimen/_10sdp"
-                android:layout_marginHorizontal="@dimen/_14sdp"
-                layout="@layout/item_favorite"/>
-
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rv_top_rated"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/_6sdp"
                 android:layout_marginTop="@dimen/_10sdp"
                 android:orientation="vertical"
-                app:spanCount="2"
-                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-                tools:listitem="@layout/item_movie_layout1" />
+                android:visibility="gone"
+                app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                tools:listitem="@layout/item_favorite" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_100sdp"
+                android:layout_gravity="center"
+                android:src="@drawable/img_list_empty"/>
 
 
         </LinearLayout>

@@ -16,6 +16,8 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Toast;
 
+import androidx.activity.result.ActivityResultLauncher;
+import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.core.content.ContextCompat;
@@ -37,7 +39,19 @@ import com.cnjava.moviereview.view.callback.OnMainCallBack;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.home.HomeFragment;
 import com.cnjava.moviereview.view.fragment.onboard.OnboardFragment;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthCredential;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.auth.GoogleAuthProvider;
 
 import java.lang.reflect.Constructor;
 import java.util.ArrayList;
@@ -53,7 +67,14 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
     private Snackbar mSnackBar;
     boolean doubleBackToExitPressedOnce = false;
     private String sessionKey;
-    private int count = 0;
+    private boolean isSuccess = false;
+    private static final int RC_SIGN_IN = 9001;
+
+    // [START declare_auth]
+    private FirebaseAuth mAuth;
+    // [END declare_auth]
+
+    private GoogleSignInClient mGoogleSignInClient;
 
     public static void setWindowFlag(Activity activity, final int bits, boolean on) {
         Window win = activity.getWindow();
@@ -65,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         }
         win.setAttributes(winParams);
     }
+
 
     private MainViewModel viewModel;
 
@@ -84,64 +106,58 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN);
         setWindowFlag(this, WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS, false);
         getWindow().setStatusBarColor(Color.TRANSPARENT);
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id_new))
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
+        mAuth = FirebaseAuth.getInstance();
         initViews();
 
         viewModel.getLiveDataIsLoading().observe(this, loading -> {
             loadingDataFromAPI(loading);
         });
-        if(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
+        if (CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN) != null) {
             viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
             viewModel.yourProfileLD().observe(this, me -> {
-                count++;
+                isSuccess = true;
             });
         }
         viewModel.getNowPlayingMovie();
         viewModel.nowPlayingMovieLD().observe(this, me -> {
-            count++;
+            isSuccess = true;
         });
 
         viewModel.getPopularMovie();
         viewModel.popularMovieLD().observe(this, me -> {
-            count++;
+            isSuccess = true;
         });
 
         viewModel.getTopRatedMovie();
         viewModel.topRatedMovieLD().observe(this, me -> {
-            count++;
+            isSuccess = true;
         });
 
         viewModel.getUpComingMovie();
         viewModel.upcomingMovieLD().observe(this, me -> {
-            count++;
+            isSuccess = true;
         });
-        /*new CountDownTimer(3100, 2000) {
-            public void onFinish() {
-                if (!CommonUtils.isInternetOn(MainActivity.this)) {
-                    System.exit(0);
-                } else {
-                    binding.layoutActivity.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.dark));
-                    ViewUtils.gone(binding.animationView);
-                    ViewUtils.show(binding.layoutMain);
-                }
-            }
-
-            public void onTick(long millisUntilFinished) {
-                if (!CommonUtils.isInternetOn(MainActivity.this)) {
-                    Toast.makeText(MainActivity.this, "No connection", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }.start();*/
     }
 
     private void loadingDataFromAPI(Boolean loading) {
         if (!CommonUtils.isInternetOn(MainActivity.this)) {
+            Toast.makeText(MainActivity.this, "No connection", Toast.LENGTH_SHORT).show();
             System.exit(0);
         } else {
-            if(!loading && count >= 4) {
-                binding.layoutActivity.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.dark));
-                ViewUtils.gone(binding.animationView);
-                ViewUtils.show(binding.layoutMain);
-            }
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    binding.layoutActivity.setBackgroundColor(ContextCompat.getColor(MainActivity.this, R.color.dark));
+                    ViewUtils.gone(binding.animationView);
+                    ViewUtils.show(binding.layoutMain);
+
+                }
+            }, 1200);
         }
     }
 
@@ -213,8 +229,8 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         if (isActive(this)) {
             hideSoftInput(MainActivity.this);
         }
-        super.onBackPressed();
-        //getSupportFragmentManager().popBackStack();
+        //super.onBackPressed();
+        getSupportFragmentManager().popBackStack();
     }
 
     @Override
@@ -294,6 +310,11 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         startActivity(intent);
     }
 
+    @Override
+    public void loginWithGoogle() {
+        resultLauncher.launch(new Intent(mGoogleSignInClient.getSignInIntent()));
+    }
+
     public void refreshFragment(Fragment currentFragment) {
         if (currentFragment != null) {
             getSupportFragmentManager()
@@ -339,6 +360,46 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
         }
     }
 
+    ActivityResultLauncher<Intent> resultLauncher = registerForActivityResult(
+            new ActivityResultContracts.StartActivityForResult(),
+            result -> {
+                if (result.getResultCode() == Activity.RESULT_OK) {
+                    Intent intent = result.getData();
+                    Task<GoogleSignInAccount> task = GoogleSignIn.getSignedInAccountFromIntent(intent);
+                    try {
+                        // Google Sign In was successful, authenticate with Firebase
+                        GoogleSignInAccount account = task.getResult(ApiException.class);
+                        Log.d(TAG, "firebaseAuthWithGoogle:" + account.getId());
+                        firebaseAuthWithGoogle(account.getIdToken());
+                    } catch (ApiException e) {
+                        // Google Sign In failed, update UI appropriately
+                        Log.w(TAG, "Google sign in failed", e);
+                    }
+                }
+            }
+    );
+
+    private void firebaseAuthWithGoogle(String idToken) {
+        AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
+        mAuth.signInWithCredential(credential)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                            Log.d(TAG, "signInWithCredential:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            //updateUI(user);
+                            viewModel.setLoginSuccessLD(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                            Log.w(TAG, "signInWithCredential:failure", task.getException());
+                            //updateUI(null);
+                        }
+                    }
+                });
+    }
+
     @Override
     protected void onStop() {
         super.onStop();
@@ -374,6 +435,7 @@ public class MainActivity extends AppCompatActivity implements OnMainCallBack, C
             //mSnackBar.dismiss();
         }
     }
+
 
     @Override
     public void onNetworkConnectionChanged(Boolean isConnected) {

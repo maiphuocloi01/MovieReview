@@ -27,6 +27,7 @@ import com.cnjava.moviereview.model.Review;
 import com.cnjava.moviereview.util.CommonUtils;
 import com.cnjava.moviereview.util.Constants;
 import com.cnjava.moviereview.util.ViewUtils;
+import com.cnjava.moviereview.view.activity.main.MainViewModel;
 import com.cnjava.moviereview.view.adapter.ReviewAdapter;
 import com.cnjava.moviereview.view.fragment.BaseFragment;
 import com.cnjava.moviereview.view.fragment.editreview.EditReviewFragment;
@@ -34,7 +35,6 @@ import com.cnjava.moviereview.view.fragment.login.LoginFragment;
 import com.cnjava.moviereview.view.fragment.personal.PersonalFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
-import com.cnjava.moviereview.viewmodel.CommonViewModel;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -45,19 +45,19 @@ import java.util.stream.Collectors;
 import dagger.hilt.android.AndroidEntryPoint;
 
 @AndroidEntryPoint
-public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonViewModel> implements ReviewAdapter.ReviewCallBack {
+public class ReviewFragment extends BaseFragment<FragmentReviewBinding, ReviewViewModel> implements ReviewAdapter.ReviewCallBack {
 
     public static final String TAG = ReviewFragment.class.getName();
     private final String[] items = {"Newest", "Oldest"};
     private Object mData;
     private ReviewAdapter reviewAdapter;
     private List<Review> tempReviews = new ArrayList<>();
-    private ReviewViewModel reviewViewModel;
     private MovieDetail movieDetail;
+    private MainViewModel mainViewModel;
 
     @Override
-    protected Class<CommonViewModel> getClassVM() {
-        return CommonViewModel.class;
+    protected Class<ReviewViewModel> getClassVM() {
+        return ReviewViewModel.class;
     }
 
     @Override
@@ -69,18 +69,16 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
         binding.autoCompleteTxt.setDropDownBackgroundResource(R.drawable.bg_light_dark_corner_10);
         binding.rbAll.setChecked(true);
 
-        reviewViewModel = new ViewModelProvider(this).get(ReviewViewModel.class);
+        mainViewModel = new ViewModelProvider(requireActivity()).get(MainViewModel.class);
 
         movieDetail = (MovieDetail) mData;
-        if (reviewViewModel.movieReviewLD().getValue() == null) {
-            Log.d(TAG, "initViews: null");
-            reviewViewModel.getReviewByMovieId(String.valueOf(movieDetail.id));
-            reviewViewModel.movieReviewLD().observe(this, _reviews -> {
+        if (mainViewModel.movieReviewLD().getValue() == null) {
+            mainViewModel.getReviewByMovieId(String.valueOf(movieDetail.id));
+            mainViewModel.movieReviewLD().observe(this, _reviews -> {
                 initListReview(_reviews);
             });
         } else {
-            Log.d(TAG, "initViews: != null" + reviewViewModel.movieReviewLD().getValue().size());
-            initListReview(reviewViewModel.movieReviewLD().getValue());
+            initListReview(mainViewModel.movieReviewLD().getValue());
         }
 
         binding.tvName.setText(movieDetail.title);
@@ -262,14 +260,14 @@ public class ReviewFragment extends BaseFragment<FragmentReviewBinding, CommonVi
     }
 
     private void initReview(List<Review> listReview) {
-        if (reviewViewModel.yourProfileLD().getValue() == null) {
-            reviewViewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
-            reviewViewModel.yourProfileLD().observe(this, _user -> {
+        if (viewModel.yourProfileLD().getValue() == null) {
+            viewModel.getYourProfile(CommonUtils.getInstance().getPref(Constants.ACCESS_TOKEN));
+            viewModel.yourProfileLD().observe(this, _user -> {
                 reviewAdapter = new ReviewAdapter(context, listReview, _user, this);
                 binding.rvReview.setAdapter(reviewAdapter);
             });
         } else {
-            reviewAdapter = new ReviewAdapter(context, listReview, reviewViewModel.yourProfileLD().getValue(), this);
+            reviewAdapter = new ReviewAdapter(context, listReview, viewModel.yourProfileLD().getValue(), this);
             binding.rvReview.setAdapter(reviewAdapter);
         }
 
