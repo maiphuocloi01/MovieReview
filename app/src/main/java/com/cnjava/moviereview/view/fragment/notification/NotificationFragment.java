@@ -1,6 +1,7 @@
 package com.cnjava.moviereview.view.fragment.notification;
 
 import android.view.LayoutInflater;
+import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
@@ -33,7 +34,7 @@ public class NotificationFragment extends BaseFragment<FragmentNotificationBindi
 
     @Override
     protected void initViews() {
-
+        binding.ivBack.setOnClickListener(view -> callBack.backToPrev());
     }
 
     @Override

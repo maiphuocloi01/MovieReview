@@ -84,13 +84,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
             } else if (TextUtils.isEmpty(binding.etPassword.getText())) {
                 binding.layoutPassword.setError("Please fill your password");
             } else {
-                viewModel.getLiveDataIsLoading().observe(this, loading ->{
-                    if(loading){
-                        DialogUtils.showLoadingDialog(context);
-                    } else {
-                        DialogUtils.hideLoadingDialog();
-                    }
-                });
+                DialogUtils.showLoadingDialog(context);
                 viewModel.loginUser(binding.etUsername.getText().toString().trim(),
                         binding.etPassword.getText().toString());
                 viewModel.loginLD().observe(this, userResponse -> {
@@ -101,6 +95,7 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
                         CommonUtils.getInstance().savePref(Constants.USERNAME, binding.etUsername.getText().toString().trim());
                     }
                     Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
+                    DialogUtils.hideLoadingDialog();
                     callBack.backToPrev();
                 });
 
@@ -110,7 +105,8 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
                     Type type = new TypeToken<UserResponse>() {
                     }.getType();
                     UserResponse errorUserResponse = gson.fromJson(res.charStream(), type);*/
-                    Toast.makeText(context, error.getMessage(), Toast.LENGTH_LONG).show();
+                    Toast.makeText(context, error.getLocalizedMessage(), Toast.LENGTH_LONG).show();
+                    DialogUtils.hideLoadingDialog();
                 });
                 IMEUtils.hideSoftInput(view);
             }
@@ -128,11 +124,17 @@ public class LoginFragment extends BaseFragment<FragmentLoginBinding, LoginViewM
                             String token = task1.getResult().getToken();
                             CommonUtils.getInstance().savePref(Constants.ACCESS_TOKEN, token);
                             CommonUtils.getInstance().savePref(Constants.SAVE_SESSION, token);
+                            viewModel.getLiveDataIsLoading().observe(getViewLifecycleOwner(), loading ->{
+                                if(loading){
+                                    DialogUtils.showLoadingDialog(context);
+                                }
+                            });
                             User newUser = new User(firebaseUser.getEmail(), firebaseUser.getDisplayName(), true);
                             viewModel.loginWithGoogle(newUser);
                             viewModel.loginWithGoogleLD().observe(getViewLifecycleOwner(), user -> {
                                 mainViewModel.getYourProfile(token);
                                 mainViewModel.yourProfileLD().observe(getViewLifecycleOwner(), profile ->{
+                                    DialogUtils.hideLoadingDialog();
                                     Toast.makeText(context, "Login success", Toast.LENGTH_SHORT).show();
                                     callBack.backToPrev();
                                 });

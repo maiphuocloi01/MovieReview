@@ -9,8 +9,8 @@ import java.util.List;
 public class Constants {
 
     public static final String BASE_URL_GUEST = "https://api.themoviedb.org/3/";
-    //public static final String BASE_URL_USER = "http://viewieapi-env.eba-jprxedaw.ap-southeast-1.elasticbeanstalk.com/api/v1/";
-    public static final String BASE_URL_USER = "http://192.168.43.54:5000/api/v1/";
+    public static final String BASE_URL_USER = "http://viewieapi-env.eba-jprxedaw.ap-southeast-1.elasticbeanstalk.com/api/v1/";
+    //public static final String BASE_URL_USER = "http://192.168.43.54:5000/api/v1/";
     public static final String BASE_URL_AI = "https://viewie-ai.herokuapp.com/";
     public static final String BASE_URL_TRANSLATE = "https://translate.yandex.net/api/v1.5/tr.json/";
     public static final String BASE_URL_UPlOAD_IMAGE = "https://nhom01nt118.azurewebsites.net/";
@@ -41,7 +41,7 @@ public class Constants {
     public static final String KEY_SEARCH_MOVIE_BY_CATEGORY = "KEY_SEARCH_MOVIE_BY_CATEGORY";
     public static final String KEY_SEARCH_KEYWORD = "KEY_SEARCH_KEYWORD";
     public static final String KEY_GET_CAST = "KEY_GET_CAST";
-    public static final String KEY_GET_RECOMMENDATION = "KEY_GET_RECOMMENDATION";
+    public static final String KEY_GET_RECOMMENDATION = "Recommendation Movie";
     public static final String KEY_GET_MOVIE_BY_KEYWORD_ID = "KEY_GET_MOVIE_BY_KEYWORD_ID";
     public static final String KEY_GET_COLLECTION = "KEY_GET_COLLECTION";
     public static final String KEY_GET_VIDEO = "KEY_GET_VIDEO";

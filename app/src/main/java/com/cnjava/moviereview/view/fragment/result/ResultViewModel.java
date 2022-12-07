@@ -52,6 +52,12 @@ public class ResultViewModel extends BaseViewModel {
         return movieByCategoryLD;
     }
 
+    private final MutableLiveData<PagingData<Movie.Result>> movieRecommendationLD = new MutableLiveData<>();
+
+    public LiveData<PagingData<Movie.Result>> movieRecommendationLD() {
+        return movieRecommendationLD;
+    }
+
     private final MutableLiveData<PagingData<Movie.Result>> topRatedMovieLD = new MutableLiveData<>();
     private final MutableLiveData<Movie> recommendationLD = new MutableLiveData<>();
     private final MutableLiveData<Actor> actorLD = new MutableLiveData<>();
@@ -153,6 +159,20 @@ public class ResultViewModel extends BaseViewModel {
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(resultPagingData -> {
                             movieByCategoryLD.postValue(resultPagingData);
+                            mLiveDataIsLoading.postValue(false);
+                        })
+        );
+    }
+
+    @SuppressLint("UnsafeOptInUsageWarning")
+    public void getMovieRecommendation(String movieId) {
+        mLiveDataIsLoading.postValue(true);
+        CoroutineScope viewModelScope = ViewModelKt.getViewModelScope(this);
+        mMainCompDisposable.add(
+                PagingRx.cachedIn(movieRepository.getMovieRecommendation(movieId), viewModelScope)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(resultPagingData -> {
+                            movieRecommendationLD.postValue(resultPagingData);
                             mLiveDataIsLoading.postValue(false);
                         })
         );

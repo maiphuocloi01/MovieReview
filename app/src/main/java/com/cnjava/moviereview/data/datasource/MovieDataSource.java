@@ -19,9 +19,9 @@ public class MovieDataSource extends RxPagingSource<Integer, Movie.Result> {
     private String type;
     private String query;
 
-    public MovieDataSource(@NonNull MovieService movieService, String type, String query) {
+    public MovieDataSource(@NonNull MovieService movieService, String key, String query) {
         this.movieService = movieService;
-        this.type = type;
+        this.type = key;
         this.query = query;
     }
 
@@ -74,6 +74,11 @@ public class MovieDataSource extends RxPagingSource<Integer, Movie.Result> {
                     .onErrorReturn(LoadResult.Error::new);
         } else if(type.equals(Constants.KEY_SEARCH_MOVIE_BY_CATEGORY)){
             return movieService.getMovieByCategory(query, nextPageNumber)
+                    .subscribeOn(Schedulers.io())
+                    .map(obj -> toLoadResult(nextPageNumber, obj))
+                    .onErrorReturn(LoadResult.Error::new);
+        } else if(type.equals(Constants.KEY_GET_RECOMMENDATION)){
+            return movieService.getRecommendationPaging(query, nextPageNumber)
                     .subscribeOn(Schedulers.io())
                     .map(obj -> toLoadResult(nextPageNumber, obj))
                     .onErrorReturn(LoadResult.Error::new);

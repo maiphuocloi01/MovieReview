@@ -68,6 +68,10 @@ public interface MovieService {
     @Headers("Content-type: application/json")
     Single<Movie> searchMoviePaging(@Query("query") String keyword, @Query("page") int page);
 
+    @GET("movie/{movie_id}/recommendations?api_key=" + API_KEY)
+    @Headers("Content-type: application/json")
+    Single<Movie> getRecommendationPaging(@Path("movie_id") String movie_id, @Query("page") int page);
+
     @GET("search/multi?api_key=" + API_KEY + "&include_adult=false")
     @Headers("Content-type: application/json")
     Single<MultiMedia> searchMultiMedia(@Query("query") String query);

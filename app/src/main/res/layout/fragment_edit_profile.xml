@@ -1,61 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/dark"
-    android:orientation="vertical">
+    app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_48sdp"
-        android:layout_marginHorizontal="@dimen/_20sdp"
-        android:layout_marginTop="@dimen/_20sdp"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/app_bar_layout"
         android:background="@color/dark"
-        android:gravity="center">
+        android:elevation="0dp"
+        android:translationZ="0dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
-        <ImageView
-            android:id="@+id/iv_back"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:src="@drawable/ic_back"
-            app:tint="@color/light_white" />
-
-        <TextView
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentBottom="true"
-            android:layout_toLeftOf="@+id/iv_edit"
-            android:layout_toRightOf="@+id/iv_back"
-            android:fontFamily="@font/montserrat_bold"
+            android:layout_height="?attr/actionBarSize"
+            android:layout_marginTop="@dimen/_18sdp"
             android:gravity="center"
-            android:text="Your profile"
-            android:textAlignment="center"
-            android:textColor="@color/light_white"
-            android:textSize="@dimen/_15ssp" />
+            android:background="@color/transparent"
+            android:paddingHorizontal="@dimen/_14sdp"
+            app:layout_scrollFlags="noScroll">
 
-        <ImageView
-            android:id="@+id/iv_edit"
-            android:foreground="?android:attr/selectableItemBackground"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentBottom="true"
-            android:layout_gravity="center_vertical"
-            android:src="@drawable/ic_border_color"
-            app:tint="@color/primary" />
+            <ImageView
+                android:id="@+id/iv_back"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginEnd="@dimen/_12sdp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:src="@drawable/ic_back"
+                app:tint="@color/light_white" />
 
-    </RelativeLayout>
+            <TableRow
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1">
 
+                <TextView
+                    android:id="@+id/tv_shows_text"
+                    android:padding="@dimen/_1sdp"
+                    android:text="@string/your_profile"
+                    android:textColor="@color/light_white"
+                    android:layout_width="wrap_content"
+                    android:fontFamily="@font/roboto_bold"
+                    android:textSize="@dimen/_14ssp"
+                    android:layout_height="wrap_content"
+                    />
+
+            </TableRow>
+
+
+            <ImageView
+                android:id="@+id/iv_edit"
+                android:layout_width="@dimen/_20sdp"
+                android:layout_height="@dimen/_20sdp"
+                android:layout_marginStart="@dimen/_12sdp"
+                android:background="?attr/selectableItemBackground"
+                android:clickable="true"
+                android:visibility="visible"
+                android:src="@drawable/ic_border_color"
+                app:tint="@color/primary" />
+
+            <!--<ImageView
+                android:id="@+id/iv_edit"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentBottom="true"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/ic_border_color"
+                app:tint="@color/primary" />-->
+
+            <!--<com.google.android.material.imageview.ShapeableImageView
+                android:id="@+id/iv_avt"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_14sdp"
+                android:foreground="?android:attr/selectableItemBackground"
+                android:padding="@dimen/_1sdp"
+                android:scaleType="centerInside"
+                app:shapeAppearanceOverlay="@style/roundedImageViewRounded"
+                app:srcCompat="@drawable/ic_profile2"
+                app:strokeColor="@color/lighter_white_80"
+                app:strokeWidth="@dimen/_1sdp" />-->
+
+        </LinearLayout>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
+        app:layout_anchorGravity="bottom"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
         android:layout_width="match_parent"
+        android:background="@color/dark"
         android:layout_height="match_parent">
 
         <RelativeLayout
@@ -93,10 +133,10 @@
                     android:layout_height="@dimen/_24sdp"
                     android:layout_margin="@dimen/_16sdp"
                     android:background="@drawable/bg_mid_light_circle"
+                    android:foreground="?android:attr/selectableItemBackground"
                     android:padding="@dimen/_8sdp"
                     android:translationX="-18dp"
                     android:visibility="gone"
-                    android:foreground="?android:attr/selectableItemBackground"
                     app:layout_anchor="@id/iv_avatar"
                     app:layout_anchorGravity="right|bottom"
                     app:srcCompat="@drawable/ic_photo"
@@ -171,14 +211,14 @@
                         android:textSize="@dimen/_12ssp" />
 
 
-                   <!-- <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="1dp"
-                        android:fontFamily="@font/roboto_regular"
-                        android:text="*"
-                        android:textColor="@color/primary"
-                        android:textSize="@dimen/_12ssp" />-->
+                    <!-- <TextView
+                         android:layout_width="wrap_content"
+                         android:layout_height="wrap_content"
+                         android:layout_marginStart="1dp"
+                         android:fontFamily="@font/roboto_regular"
+                         android:text="*"
+                         android:textColor="@color/primary"
+                         android:textSize="@dimen/_12ssp" />-->
 
                 </TableRow>
 
@@ -418,5 +458,56 @@
         </RelativeLayout>
     </ScrollView>
 
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-</LinearLayout>
+
+<!--
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/dark"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_48sdp"
+        android:layout_marginHorizontal="@dimen/_20sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:background="@color/dark"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/iv_back"
+            android:foreground="?android:attr/selectableItemBackground"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:src="@drawable/ic_back"
+            app:tint="@color/light_white" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentBottom="true"
+            android:layout_toLeftOf="@+id/iv_edit"
+            android:layout_toRightOf="@+id/iv_back"
+            android:fontFamily="@font/montserrat_bold"
+            android:gravity="center"
+            android:text="Your profile"
+            android:textAlignment="center"
+            android:textColor="@color/light_white"
+            android:textSize="@dimen/_15ssp" />
+
+
+
+    </RelativeLayout>
+
+
+
+
+
+</LinearLayout>-->

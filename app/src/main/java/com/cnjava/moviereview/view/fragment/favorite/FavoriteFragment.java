@@ -38,8 +38,6 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Comm
     private void initFavoriteView(List<Favorite> listFavorite) {
         favoriteAdapter = new FavoriteAdapter(context, listFavorite, this);
         binding.rvResult.setAdapter(favoriteAdapter);
-        binding.progressCircular.setVisibility(View.GONE);
-        binding.layoutTitle.setVisibility(View.VISIBLE);
     }
 
     @Override
@@ -47,8 +45,6 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Comm
         if (code == 999) {
             if (key.equals(Constants.KEY_GET_FAVORITE)) {
                 Log.d(TAG, "apiError: " + data.toString());
-                binding.progressCircular.setVisibility(View.GONE);
-                binding.layoutTitle.setVisibility(View.VISIBLE);
                 Toast.makeText(context, "Unable connect to heroku", Toast.LENGTH_SHORT).show();
             }
         }
@@ -62,9 +58,6 @@ public class FavoriteFragment extends BaseFragment<FragmentFavoriteBinding, Comm
     @Override
     protected void initViews() {
 
-        MyApplication.getInstance().getStorage().fragmentTag = TAG;
-        binding.progressCircular.setVisibility(View.VISIBLE);
-        binding.layoutTitle.setVisibility(View.GONE);
 
         binding.ivBack.setOnClickListener(new View.OnClickListener() {
             @Override

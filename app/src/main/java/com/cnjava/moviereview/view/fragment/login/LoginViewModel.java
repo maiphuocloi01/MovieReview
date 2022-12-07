@@ -67,7 +67,6 @@ public class LoginViewModel extends BaseViewModel {
             @Override
             public void onSuccess(@NonNull User userResponse) {
                 loginWithGoogleLD.setValue(userResponse);
-                mLiveDataIsLoading.setValue(false);
             }
 
             @Override

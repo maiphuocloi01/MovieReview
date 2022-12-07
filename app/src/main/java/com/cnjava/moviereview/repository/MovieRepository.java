@@ -108,6 +108,14 @@ public class MovieRepository {
         return PagingRx.getFlowable(pager);
     }
 
+    public Flowable<PagingData<Movie.Result>> getMovieRecommendation(String query) {
+        Pager<Integer, Movie.Result> pager = new Pager<>(
+                new PagingConfig(10, 1, false, 20),
+                1,
+                () -> new MovieDataSource(movieService, Constants.KEY_GET_RECOMMENDATION, query));
+        return PagingRx.getFlowable(pager);
+    }
+
     public Single<MultiMedia> searchMultiMedia(String query) {
         return subscribe(movieService.searchMultiMedia(query));
     }

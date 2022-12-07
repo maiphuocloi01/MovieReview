@@ -97,6 +97,16 @@ public class ResultFragment extends BaseFragment<FragmentResultBinding, ResultVi
             } else {
                 initResultMovie(viewModel.movieByCategoryLD().getValue());
             }
+        } else if (bundle.getString(Constants.KEY_TYPE_RESULT).equals(Constants.KEY_GET_RECOMMENDATION)) {
+            binding.tvShowsText.setText(bundle.getString(Constants.KEY_TYPE_RESULT));
+            if (viewModel.movieRecommendationLD().getValue() == null) {
+                viewModel.getMovieRecommendation(bundle.getString("movieId"));
+                viewModel.movieRecommendationLD().observe(this, _result -> {
+                    initResultMovie(_result);
+                });
+            } else {
+                initResultMovie(viewModel.movieRecommendationLD().getValue());
+            }
         }
     }
 

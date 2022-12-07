@@ -63,6 +63,7 @@ import com.cnjava.moviereview.view.fragment.login.LoginFragment;
 import com.cnjava.moviereview.view.fragment.personal.PersonalFragment;
 import com.cnjava.moviereview.view.fragment.photoview.PhotoViewFragment;
 import com.cnjava.moviereview.view.fragment.register.RegisterFragment;
+import com.cnjava.moviereview.view.fragment.result.ResultFragment;
 import com.cnjava.moviereview.view.fragment.review.ReviewFragment;
 import com.cnjava.moviereview.view.fragment.reviewdetail.ReviewDetailFragment;
 import com.google.android.material.appbar.AppBarLayout;
@@ -270,10 +271,18 @@ public class DetailMovieFragment extends BaseFragment<FragmentDetailMovieBinding
             if (recommendation.results.size() == 0) {
                 binding.viewDetailMovie.tvNoRecommend.setText(R.string.no_recommend);
                 binding.viewDetailMovie.tvNoRecommend.setVisibility(View.VISIBLE);
-
             } else {
                 MovieAdapter movieAdapter = new MovieAdapter(context, recommendation, this);
                 binding.viewDetailMovie.rvRecommendDv.setAdapter(movieAdapter);
+                binding.viewDetailMovie.textRecommend.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        Bundle bundle = new Bundle();
+                        bundle.putString(Constants.KEY_TYPE_RESULT, Constants.KEY_GET_RECOMMENDATION);
+                        bundle.putString("movieId", String.valueOf(mainViewModel.getMovieId()));
+                        callBack.replaceFragment(ResultFragment.TAG, bundle, true, Constants.ANIM_FADE);
+                    }
+                });
             }
         }
     }
